@@ -6,7 +6,7 @@ export function SiteFooter() {
           UMANOTE
         </p>
         <p className="text-sm">
-          Sample horse-racing prediction site · Next.js + Docker · デモ用途のみ
+          JRA高配当候補の選別デモ · Next.js + Docker · 実馬券の的中保証はありません
         </p>
       </div>
     </footer>

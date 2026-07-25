@@ -1,0 +1,54 @@
+import type {
+  BetSlip,
+  JournalSettings,
+  JournalSummary,
+} from "./types";
+
+export const DEFAULT_JOURNAL_SETTINGS: JournalSettings = {
+  excludePendingFromReturnRate: true,
+  defaultVirtualStakeYen: 100,
+};
+
+export function isHit(slip: BetSlip): boolean {
+  return slip.payoutYen != null && slip.payoutYen > 0;
+}
+
+export function summarizeJournal(
+  slips: BetSlip[],
+  range: { from: string; to: string },
+  sourceFilter: "self" | "tipster" | "all",
+  settings: JournalSettings = DEFAULT_JOURNAL_SETTINGS,
+): JournalSummary {
+  const fromMs = Date.parse(range.from);
+  const toMs = Date.parse(range.to);
+
+  const filtered = slips.filter((slip) => {
+    if (sourceFilter !== "all" && slip.source !== sourceFilter) return false;
+    const t = Date.parse(slip.createdAt);
+    if (Number.isFinite(fromMs) && t < fromMs) return false;
+    if (Number.isFinite(toMs) && t > toMs) return false;
+    return true;
+  });
+
+  const pendingCount = filtered.filter((s) => s.payoutYen === null).length;
+  const settled = settings.excludePendingFromReturnRate
+    ? filtered.filter((s) => s.payoutYen !== null)
+    : filtered;
+
+  const stakeTotal = settled.reduce((sum, s) => sum + s.stakeYen, 0);
+  const payoutTotal = settled.reduce((sum, s) => sum + (s.payoutYen ?? 0), 0);
+  const hitCount = settled.filter(isHit).length;
+
+  return {
+    from: range.from,
+    to: range.to,
+    sourceFilter,
+    stakeTotal,
+    payoutTotal,
+    returnRatePercent: stakeTotal === 0 ? 0 : Math.round((payoutTotal / stakeTotal) * 1000) / 10,
+    profitYen: payoutTotal - stakeTotal,
+    betCount: filtered.length,
+    hitCount,
+    pendingCount,
+  };
+}

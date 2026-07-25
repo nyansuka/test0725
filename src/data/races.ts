@@ -1,29 +1,350 @@
-export type Horse = {
-  number: number;
-  name: string;
-  jockey: string;
-  odds: number;
-  confidence: number;
-  comment: string;
-};
+import type { Horse, OddsEntry, Race } from "@/domain/types";
 
-export type Race = {
-  id: string;
-  venue: string;
-  raceNumber: number;
-  title: string;
-  distance: string;
-  track: "芝" | "ダート";
-  startTime: string;
-  weather: string;
-  condition: string;
-  featured?: boolean;
-  horses: Horse[];
-};
+function horse(
+  partial: Omit<Horse, "factors"> & { factors?: Horse["factors"] },
+): Horse {
+  const {
+    factors = {
+      courseFit: 60,
+      paceFit: 60,
+      conditionFit: 60,
+      formSignal: 60,
+      valueGap: 60,
+      gateJockey: 55,
+    },
+    ...rest
+  } = partial;
+  return { ...rest, factors };
+}
+
+const tokyoHorses: Horse[] = [
+  horse({
+    number: 5,
+    bracket: 3,
+    name: "ミッドナイトゲイル",
+    jockey: "川田将雅",
+    oddsWin: 3.2,
+    runningStyle: "差",
+    factors: {
+      courseFit: 88,
+      paceFit: 82,
+      conditionFit: 70,
+      formSignal: 86,
+      valueGap: 40,
+      gateJockey: 72,
+    },
+    comment: "前走の末脚がこの枠でも再現しやすい。ペースが流れれば押し切り圏。",
+  }),
+  horse({
+    number: 9,
+    bracket: 5,
+    name: "サザンブレイズ",
+    jockey: "ルメール",
+    oddsWin: 4.8,
+    runningStyle: "逃",
+    factors: {
+      courseFit: 78,
+      paceFit: 85,
+      conditionFit: 68,
+      formSignal: 74,
+      valueGap: 45,
+      gateJockey: 70,
+    },
+    comment: "逃げ切り型。道中で楽に運べれば上位固定。",
+  }),
+  horse({
+    number: 2,
+    bracket: 1,
+    name: "コバルトフラッシュ",
+    jockey: "横山武史",
+    oddsWin: 6.1,
+    runningStyle: "先",
+    factors: {
+      courseFit: 80,
+      paceFit: 72,
+      conditionFit: 66,
+      formSignal: 70,
+      valueGap: 55,
+      gateJockey: 78,
+    },
+    comment: "内枠の恩恵が大きい。差し届く展開なら穴どころか本命級。",
+  }),
+  horse({
+    number: 11,
+    bracket: 6,
+    name: "グローリーリッジ",
+    jockey: "松山弘平",
+    oddsWin: 18.4,
+    runningStyle: "差",
+    factors: {
+      courseFit: 76,
+      paceFit: 74,
+      conditionFit: 64,
+      formSignal: 72,
+      valueGap: 82,
+      gateJockey: 58,
+    },
+    comment: "距離延長がプラス。上がり勝負になれば浮上。人気薄の複勝圏候補。",
+  }),
+  horse({
+    number: 7,
+    bracket: 4,
+    name: "シルバークレスト",
+    jockey: "戸崎圭太",
+    oddsWin: 22.5,
+    runningStyle: "追",
+    factors: {
+      courseFit: 70,
+      paceFit: 68,
+      conditionFit: 62,
+      formSignal: 78,
+      valueGap: 88,
+      gateJockey: 60,
+    },
+    comment: "休み明けで気配は上向き。人気薄の抑え候補。",
+  }),
+  horse({
+    number: 14,
+    bracket: 7,
+    name: "ナイトフォール",
+    jockey: "石橋脩",
+    oddsWin: 45.0,
+    runningStyle: "差",
+    factors: {
+      courseFit: 72,
+      paceFit: 70,
+      conditionFit: 60,
+      formSignal: 66,
+      valueGap: 90,
+      gateJockey: 52,
+    },
+    comment: "大外だが末脚一発。ハイペースなら3着内の可能性。",
+  }),
+];
+
+const tokyoOdds: OddsEntry[] = [
+  { betType: "win", selection: "7", odds: 22.5 },
+  { betType: "win", selection: "14", odds: 45.0 },
+  { betType: "place", selection: "11", odds: 4.2 },
+  { betType: "place", selection: "7", odds: 5.8 },
+  { betType: "quinella", selection: "5-7", odds: 28.4 },
+  { betType: "quinella", selection: "7-11", odds: 64.0 },
+  { betType: "wide", selection: "5-7", odds: 8.6 },
+  { betType: "wide", selection: "7-14", odds: 32.1 },
+  { betType: "exacta", selection: "5-7", odds: 48.0 },
+  { betType: "exacta", selection: "7-5", odds: 92.0 },
+  { betType: "trio", selection: "5-7-11", odds: 86.0 },
+  { betType: "trio", selection: "5-7-14", odds: 120.0 },
+  { betType: "trifecta", selection: "5-7-11", odds: 420.0 },
+  { betType: "bracket_quinella", selection: "3-4", odds: 24.5 },
+  { betType: "win", selection: "5", odds: 3.2 },
+  { betType: "win", selection: "11", odds: 18.4 },
+];
+
+const hanshinHorses: Horse[] = [
+  horse({
+    number: 4,
+    bracket: 2,
+    name: "オーロラライン",
+    jockey: "岩田康誠",
+    oddsWin: 2.9,
+    runningStyle: "先",
+    factors: {
+      courseFit: 84,
+      paceFit: 76,
+      conditionFit: 90,
+      formSignal: 80,
+      valueGap: 35,
+      gateJockey: 68,
+    },
+    comment: "稍重適性が明確。先行勢が潰れると一気に馬券内。",
+  }),
+  horse({
+    number: 8,
+    bracket: 4,
+    name: "ナイトパレード",
+    jockey: "坂井瑠星",
+    oddsWin: 5.5,
+    runningStyle: "差",
+    factors: {
+      courseFit: 78,
+      paceFit: 70,
+      conditionFit: 74,
+      formSignal: 72,
+      valueGap: 48,
+      gateJockey: 64,
+    },
+    comment: "スタミナ型。長い直線で粘れるかが焦点。",
+  }),
+  horse({
+    number: 1,
+    bracket: 1,
+    name: "フォレストコード",
+    jockey: "武豊",
+    oddsWin: 7.8,
+    runningStyle: "先",
+    factors: {
+      courseFit: 72,
+      paceFit: 68,
+      conditionFit: 70,
+      formSignal: 66,
+      valueGap: 58,
+      gateJockey: 80,
+    },
+    comment: "内枠からロスなく運べる。単勝より複勝向き。",
+  }),
+  horse({
+    number: 12,
+    bracket: 6,
+    name: "ミストブレイク",
+    jockey: "藤岡康太",
+    oddsWin: 26.0,
+    runningStyle: "追",
+    factors: {
+      courseFit: 74,
+      paceFit: 72,
+      conditionFit: 82,
+      formSignal: 70,
+      valueGap: 86,
+      gateJockey: 55,
+    },
+    comment: "稍重で末脚が生きるタイプ。人気薄の複勝圏。",
+  }),
+  horse({
+    number: 6,
+    bracket: 3,
+    name: "ストームリーフ",
+    jockey: "幸英明",
+    oddsWin: 38.0,
+    runningStyle: "差",
+    factors: {
+      courseFit: 68,
+      paceFit: 66,
+      conditionFit: 78,
+      formSignal: 64,
+      valueGap: 84,
+      gateJockey: 58,
+    },
+    comment: "時計のかかる馬場向き。展開ひとつで馬券圏内。",
+  }),
+];
+
+const hanshinOdds: OddsEntry[] = [
+  { betType: "win", selection: "12", odds: 26.0 },
+  { betType: "win", selection: "6", odds: 38.0 },
+  { betType: "quinella", selection: "4-12", odds: 42.0 },
+  { betType: "wide", selection: "4-12", odds: 12.5 },
+  { betType: "wide", selection: "8-12", odds: 22.0 },
+  { betType: "trio", selection: "4-8-12", odds: 95.0 },
+  { betType: "exacta", selection: "4-12", odds: 68.0 },
+  { betType: "trifecta", selection: "4-8-12", odds: 580.0 },
+  { betType: "place", selection: "12", odds: 6.4 },
+];
+
+const kyotoHorses: Horse[] = [
+  horse({
+    number: 6,
+    bracket: 3,
+    name: "ブラックサンダー",
+    jockey: "藤岡佑介",
+    oddsWin: 3.6,
+    runningStyle: "逃",
+    factors: {
+      courseFit: 90,
+      paceFit: 88,
+      conditionFit: 72,
+      formSignal: 82,
+      valueGap: 38,
+      gateJockey: 66,
+    },
+    comment: "ダート短距離の機動力が突出。スタートが決まれば先頭固定。",
+  }),
+  horse({
+    number: 10,
+    bracket: 5,
+    name: "レッドキャノン",
+    jockey: "池添謙一",
+    oddsWin: 5.2,
+    runningStyle: "追",
+    factors: {
+      courseFit: 76,
+      paceFit: 70,
+      conditionFit: 68,
+      formSignal: 74,
+      valueGap: 50,
+      gateJockey: 60,
+    },
+    comment: "追い込み一辺倒だが、このメンバーなら届く余地あり。",
+  }),
+  horse({
+    number: 3,
+    bracket: 2,
+    name: "アンバーパルス",
+    jockey: "浜中俊",
+    oddsWin: 8.9,
+    runningStyle: "先",
+    factors: {
+      courseFit: 72,
+      paceFit: 74,
+      conditionFit: 66,
+      formSignal: 60,
+      valueGap: 62,
+      gateJockey: 64,
+    },
+    comment: "枠なりの好位。展開ひとつで馬券圏内。",
+  }),
+  horse({
+    number: 15,
+    bracket: 8,
+    name: "カッパーボルト",
+    jockey: "菱田裕二",
+    oddsWin: 31.0,
+    runningStyle: "差",
+    factors: {
+      courseFit: 80,
+      paceFit: 72,
+      conditionFit: 70,
+      formSignal: 68,
+      valueGap: 88,
+      gateJockey: 50,
+    },
+    comment: "ダート適性は高いが人気薄。好位確保できれば激走圏。",
+  }),
+  horse({
+    number: 8,
+    bracket: 4,
+    name: "シャドウドライブ",
+    jockey: "和田竜二",
+    oddsWin: 19.8,
+    runningStyle: "先",
+    factors: {
+      courseFit: 74,
+      paceFit: 76,
+      conditionFit: 68,
+      formSignal: 70,
+      valueGap: 80,
+      gateJockey: 62,
+    },
+    comment: "先行力があり穴になりやすい。単勝より紐向き。",
+  }),
+];
+
+const kyotoOdds: OddsEntry[] = [
+  { betType: "win", selection: "15", odds: 31.0 },
+  { betType: "win", selection: "8", odds: 19.8 },
+  { betType: "quinella", selection: "6-15", odds: 55.0 },
+  { betType: "wide", selection: "6-15", odds: 14.2 },
+  { betType: "wide", selection: "10-15", odds: 24.0 },
+  { betType: "trio", selection: "6-10-15", odds: 110.0 },
+  { betType: "exacta", selection: "6-15", odds: 78.0 },
+  { betType: "trifecta", selection: "6-10-15", odds: 650.0 },
+  { betType: "bracket_quinella", selection: "3-8", odds: 36.0 },
+];
 
 export const races: Race[] = [
   {
     id: "tokyo-11",
+    authority: "JRA",
     venue: "東京",
     raceNumber: 11,
     title: "府中ステークス",
@@ -33,51 +354,13 @@ export const races: Race[] = [
     weather: "晴",
     condition: "良",
     featured: true,
-    horses: [
-      {
-        number: 5,
-        name: "ミッドナイトゲイル",
-        jockey: "川田将雅",
-        odds: 3.2,
-        confidence: 86,
-        comment: "前走の末脚がこの枠でも再現しやすい。ペースが流れれば押し切り圏。",
-      },
-      {
-        number: 9,
-        name: "サザンブレイズ",
-        jockey: "ルメール",
-        odds: 4.8,
-        confidence: 78,
-        comment: "逃げ切り型。道中で楽に運べれば上位固定。",
-      },
-      {
-        number: 2,
-        name: "コバルトフラッシュ",
-        jockey: "横山武史",
-        odds: 6.1,
-        confidence: 71,
-        comment: "内枠の恩恵が大きい。差し届く展開なら穴どころか本命級。",
-      },
-      {
-        number: 11,
-        name: "グローリーリッジ",
-        jockey: "松山弘平",
-        odds: 9.4,
-        confidence: 62,
-        comment: "距離延長がプラス。上がり勝負になれば浮上。",
-      },
-      {
-        number: 7,
-        name: "シルバークレスト",
-        jockey: "戸崎圭太",
-        odds: 12.5,
-        confidence: 55,
-        comment: "休み明けで気配は上向き。人気薄の抑え候補。",
-      },
-    ],
+    fieldSize: 16,
+    horses: tokyoHorses,
+    oddsBoard: tokyoOdds,
   },
   {
     id: "hanshin-10",
+    authority: "JRA",
     venue: "阪神",
     raceNumber: 10,
     title: "六甲特別",
@@ -86,35 +369,13 @@ export const races: Race[] = [
     startTime: "15:01",
     weather: "曇",
     condition: "稍重",
-    horses: [
-      {
-        number: 4,
-        name: "オーロラライン",
-        jockey: "岩田康誠",
-        odds: 2.9,
-        confidence: 81,
-        comment: "稍重適性が明確。先行勢が潰れると一気に馬券内。",
-      },
-      {
-        number: 8,
-        name: "ナイトパレード",
-        jockey: "坂井瑠星",
-        odds: 5.5,
-        confidence: 74,
-        comment: "スタミナ型。長い直線で粘れるかが焦点。",
-      },
-      {
-        number: 1,
-        name: "フォレストコード",
-        jockey: "武豊",
-        odds: 7.8,
-        confidence: 66,
-        comment: "内枠からロスなく運べる。単勝より複勝向き。",
-      },
-    ],
+    fieldSize: 14,
+    horses: hanshinHorses,
+    oddsBoard: hanshinOdds,
   },
   {
     id: "kyoto-9",
+    authority: "JRA",
     venue: "京都",
     raceNumber: 9,
     title: "朱雀ステークス",
@@ -123,41 +384,16 @@ export const races: Race[] = [
     startTime: "14:25",
     weather: "晴",
     condition: "良",
-    horses: [
-      {
-        number: 6,
-        name: "ブラックサンダー",
-        jockey: "藤岡佑介",
-        odds: 3.6,
-        confidence: 79,
-        comment: "ダート短距離の機動力が突出。スタートが決まれば先頭固定。",
-      },
-      {
-        number: 10,
-        name: "レッドキャノン",
-        jockey: "池添謙一",
-        odds: 5.2,
-        confidence: 70,
-        comment: "追い込み一辺倒だが、このメンバーなら届く余地あり。",
-      },
-      {
-        number: 3,
-        name: "アンバーパルス",
-        jockey: "浜中俊",
-        odds: 8.9,
-        confidence: 58,
-        comment: "枠なりの好位。展開ひとつで馬券圏内。",
-      },
-    ],
+    fieldSize: 16,
+    horses: kyotoHorses,
+    oddsBoard: kyotoOdds,
   },
 ];
 
-export function getFeaturedRace(): Race {
-  return races.find((race) => race.featured) ?? races[0];
+export function getRace(id: string): Race | undefined {
+  return races.find((race) => race.id === id);
 }
 
-export function getTopPicks(race: Race, count = 3): Horse[] {
-  return [...race.horses]
-    .sort((a, b) => b.confidence - a.confidence)
-    .slice(0, count);
+export function getFeaturedRace(): Race {
+  return races.find((race) => race.featured) ?? races[0];
 }

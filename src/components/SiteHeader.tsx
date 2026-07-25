@@ -1,23 +1,51 @@
-export function SiteHeader() {
+import Link from "next/link";
+
+const links = [
+  { href: "/longshots", label: "注目穴" },
+  { href: "/races", label: "レース" },
+  { href: "/journal", label: "成績日記" },
+  { href: "/method", label: "見方" },
+  { href: "/settings", label: "設定" },
+];
+
+type Props = {
+  variant?: "overlay" | "solid";
+};
+
+export function SiteHeader({ variant = "solid" }: Props) {
+  const overlay = variant === "overlay";
+
   return (
-    <header className="absolute inset-x-0 top-0 z-20">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 md:px-8">
-        <a
-          href="#top"
-          className="font-[family-name:var(--font-display)] text-lg font-bold tracking-[0.18em] text-sand md:text-xl"
+    <header
+      className={
+        overlay
+          ? "absolute inset-x-0 top-0 z-20"
+          : "border-b border-ink/10 bg-sand/95 backdrop-blur"
+      }
+    >
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-5 md:px-8">
+        <Link
+          href="/"
+          className={`font-[family-name:var(--font-display)] text-lg font-bold tracking-[0.18em] md:text-xl ${
+            overlay ? "text-sand" : "text-turf"
+          }`}
         >
           UMANOTE
-        </a>
-        <nav className="flex items-center gap-6 text-sm text-sand/80">
-          <a href="#featured" className="transition hover:text-sand">
-            本日の本命
-          </a>
-          <a href="#races" className="hidden transition hover:text-sand sm:inline">
-            レース一覧
-          </a>
-          <a href="#method" className="hidden transition hover:text-sand sm:inline">
-            予想の見方
-          </a>
+        </Link>
+        <nav
+          className={`flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm ${
+            overlay ? "text-sand/80" : "text-ink/70"
+          }`}
+        >
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`transition ${overlay ? "hover:text-sand" : "hover:text-ink"}`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>

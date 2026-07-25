@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Noto_Sans_JP, Source_Serif_4 } from "next/font/google";
+import { JournalProvider } from "@/components/JournalProvider";
+import { SettingsProvider } from "@/components/SettingsProvider";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({
@@ -21,8 +23,9 @@ const jp = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "UMANOTE | 競馬予想サンプル",
-  description: "サンプルデータの競馬予想Webサイト。ローカルDocker + Next.js構成。",
+  title: "UMANOTE | 高配当候補の選別",
+  description:
+    "JRA全券種のオッズゲートと複勝圏スコアで、穴になりうる買い目を見極めるデモサイト。",
 };
 
 export default function RootLayout({
@@ -36,7 +39,9 @@ export default function RootLayout({
       className={`${display.variable} ${body.variable} ${jp.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-[family-name:var(--font-jp)]">
-        {children}
+        <SettingsProvider>
+          <JournalProvider>{children}</JournalProvider>
+        </SettingsProvider>
       </body>
     </html>
   );

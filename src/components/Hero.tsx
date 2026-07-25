@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -26,24 +27,24 @@ export function Hero() {
           UMANOTE
         </p>
         <h1 className="animate-rise-delay-1 mt-5 max-w-xl font-[family-name:var(--font-jp)] text-2xl font-medium leading-snug text-sand sm:text-3xl">
-          今日のレースを、短く鋭く読む。
+          高配当候補を、短時間で見極める。
         </h1>
         <p className="animate-rise-delay-2 mt-4 max-w-md text-base leading-relaxed text-sand/80">
-          サンプルデータで動く競馬予想サイト。本命・対抗・穴候補を信頼度付きで一覧できます。
+          JRA全券種のオッズゲートと複勝圏スコアで、穴になりうる買い目を選別します。
         </p>
         <div className="animate-rise-delay-3 mt-8 flex flex-wrap items-center gap-4">
-          <a
-            href="#featured"
+          <Link
+            href="/longshots"
             className="inline-flex items-center bg-signal px-6 py-3 text-sm font-medium text-ink transition hover:bg-signal-soft"
           >
-            本日の本命を見る
-          </a>
-          <a
-            href="#races"
+            注目穴を見る
+          </Link>
+          <Link
+            href="/races"
             className="inline-flex items-center border border-sand/40 px-6 py-3 text-sm text-sand transition hover:border-sand hover:bg-sand/10"
           >
-            全レース一覧
-          </a>
+            レース一覧
+          </Link>
         </div>
       </div>
     </section>
