@@ -1,13 +1,16 @@
+"use client";
+
 import { BET_TYPE_LABELS, parseSelectionNumbers } from "@/domain/betTypes";
-import type { LongshotPick } from "@/domain/types";
+import type { LongshotPick, Race } from "@/domain/types";
 import Link from "next/link";
 import { LongshotMark } from "@/components/LongshotMark";
-import { getRace } from "@/data/races";
+import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import {
   formatPopularityParen,
   formatWinOdds,
   popularityByNumber,
 } from "@/domain/odds";
+import { evaluatePick } from "@/domain/results";
 import type { ReactNode } from "react";
 
 type Props = {
@@ -15,8 +18,7 @@ type Props = {
   emptyMessage?: string;
 };
 
-function SelectionCell({ pick }: { pick: LongshotPick }) {
-  const race = getRace(pick.raceId);
+function SelectionCell({ pick, race }: { pick: LongshotPick; race: Race | undefined }) {
   const pop = race ? popularityByNumber(race.horses) : new Map<number, number>();
 
   let body: ReactNode;
@@ -78,9 +80,14 @@ function SelectionCell({ pick }: { pick: LongshotPick }) {
 }
 
 export function LongshotTable({ picks, emptyMessage = "条件に合う候補がありません。" }: Props) {
+  const { races } = useRaceCatalog();
+  const byId = new Map(races.map((r) => [r.id, r]));
+
   if (picks.length === 0) {
     return <p className="py-10 text-center text-ink/60">{emptyMessage}</p>;
   }
+
+  const showOutcome = picks.some((p) => byId.get(p.raceId)?.result);
 
   return (
     <div className="overflow-x-auto">
@@ -94,54 +101,77 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
             <th className="py-3 pr-3 font-medium">オッズ</th>
             <th className="py-3 pr-3 font-medium">スコア</th>
             <th className="py-3 pr-3 font-medium">ラベル</th>
+            {showOutcome && <th className="py-3 pr-3 font-medium">結果</th>}
             <th className="py-3 font-medium">短評</th>
           </tr>
         </thead>
         <tbody>
-          {picks.map((pick) => (
-            <tr
-              key={`${pick.raceId}-${pick.betType}-${pick.selection}`}
-              className="border-b border-ink/10 align-top"
-            >
-              <td className="py-4 pr-3 text-lg">
-                {pick.label === "注目穴" ? <LongshotMark /> : null}
-              </td>
-              <td className="py-4 pr-3">
-                <Link href={`/races/${pick.raceId}`} className="font-medium text-turf hover:underline">
-                  {pick.venue} {pick.raceNumber}R
-                </Link>
-                <span className="mt-1 block text-xs text-ink/50">{pick.startTime}</span>
-              </td>
-              <td className="py-4 pr-3">{BET_TYPE_LABELS[pick.betType]}</td>
-              <SelectionCell pick={pick} />
-              <td className="py-4 pr-3 font-medium text-signal">
-                {formatWinOdds(pick.odds)}
-              </td>
-              <td className="min-w-[120px] py-4 pr-3">
-                <div className="flex items-center gap-2">
-                  <span className="font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
-                    {pick.relatedPlacePotential}
+          {picks.map((pick) => {
+            const race = byId.get(pick.raceId);
+            const outcome = evaluatePick(pick, race?.result);
+            return (
+              <tr
+                key={`${pick.raceId}-${pick.betType}-${pick.selection}`}
+                className="border-b border-ink/10 align-top"
+              >
+                <td className="py-4 pr-3 text-lg">
+                  {pick.label === "注目穴" ? <LongshotMark /> : null}
+                </td>
+                <td className="py-4 pr-3">
+                  <Link
+                    href={`/races/${pick.raceId}`}
+                    className="font-medium text-turf hover:underline"
+                  >
+                    {pick.venue} {pick.raceNumber}R
+                  </Link>
+                  <span className="mt-1 block text-xs text-ink/50">{pick.startTime}</span>
+                </td>
+                <td className="py-4 pr-3">{BET_TYPE_LABELS[pick.betType]}</td>
+                <SelectionCell pick={pick} race={race} />
+                <td className="py-4 pr-3 font-medium text-signal">
+                  {formatWinOdds(pick.odds)}
+                </td>
+                <td className="min-w-[120px] py-4 pr-3">
+                  <div className="flex items-center gap-2">
+                    <span className="font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
+                      {pick.relatedPlacePotential}
+                    </span>
+                  </div>
+                  <div className="mt-1 h-1.5 overflow-hidden bg-sand-dim">
+                    <div
+                      className="animate-bar h-full bg-turf"
+                      style={{ width: `${pick.relatedPlacePotential}%` }}
+                    />
+                  </div>
+                </td>
+                <td className="py-4 pr-3">
+                  <span
+                    className={
+                      pick.label === "注目穴" ? "font-medium text-signal" : "text-ink/60"
+                    }
+                  >
+                    {pick.label}
                   </span>
-                </div>
-                <div className="mt-1 h-1.5 overflow-hidden bg-sand-dim">
-                  <div
-                    className="animate-bar h-full bg-turf"
-                    style={{ width: `${pick.relatedPlacePotential}%` }}
-                  />
-                </div>
-              </td>
-              <td className="py-4 pr-3">
-                <span
-                  className={
-                    pick.label === "注目穴" ? "font-medium text-signal" : "text-ink/60"
-                  }
-                >
-                  {pick.label}
-                </span>
-              </td>
-              <td className="max-w-xs py-4 leading-relaxed text-ink/70">{pick.comment}</td>
-            </tr>
-          ))}
+                </td>
+                {showOutcome && (
+                  <td className="py-4 pr-3">
+                    <span
+                      className={
+                        outcome === "hit"
+                          ? "font-medium text-signal"
+                          : outcome === "miss"
+                            ? "text-ink/40"
+                            : "text-ink/55"
+                      }
+                    >
+                      {outcome === "hit" ? "的中" : outcome === "miss" ? "外れ" : "待ち"}
+                    </span>
+                  </td>
+                )}
+                <td className="max-w-xs py-4 leading-relaxed text-ink/70">{pick.comment}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

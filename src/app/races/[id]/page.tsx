@@ -1,20 +1,21 @@
+"use client";
+
 import { notFound } from "next/navigation";
+import { use } from "react";
 import { RaceDetail } from "@/components/RaceDetail";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { races } from "@/data/races";
+import { useRaceCatalog } from "@/components/RaceCatalogProvider";
+import { getRace } from "@/data/races";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-export function generateStaticParams() {
-  return races.map((race) => ({ id: race.id }));
-}
-
-export default async function RacePage({ params }: Props) {
-  const { id } = await params;
-  const race = races.find((item) => item.id === id);
+export default function RacePage({ params }: Props) {
+  const { id } = use(params);
+  const { races } = useRaceCatalog();
+  const race = races.find((r) => r.id === id) ?? getRace(id);
   if (!race) notFound();
 
   return (

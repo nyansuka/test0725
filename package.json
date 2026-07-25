@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "fetch:jra": "node scripts/fetch-jra-snapshot.mjs"
+    "fetch:jra": "node scripts/fetch-jra-snapshot.mjs",
+    "fetch:jra:results": "node scripts/fetch-jra-snapshot.mjs --results-only",
+    "watch:jra": "node scripts/watch-jra-snapshot.mjs"
   },
   "dependencies": {
     "next": "16.2.11",

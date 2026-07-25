@@ -32,17 +32,25 @@ docker compose down
 
 ## データ更新（公開Webから取得）
 
-開催日の出馬表・単複／連勝オッズを公開ページから取り込み、`src/data/snapshots/` に保存します。
+開催日の出馬表・単複／連勝オッズ・レース結果を公開ページから取り込み、`src/data/snapshots/` に保存します。
 
 ```bash
+# 全レースの出馬表＋オッズ＋結果（あるもの）
 docker compose exec web npm run fetch:jra
-# 日付指定例
-docker compose exec web npm run fetch:jra -- 2026-07-25
+
+# 終了済みレースの結果だけ差分更新
+docker compose exec web npm run fetch:jra:results
+
+# 自動監視（発走 + 8分後から結果を取りにいく）
+docker compose up fetcher
 ```
 
-- 取得元: netkeiba 公開の出馬表 HTML とオッズ API（デモ用途）
-- 反映先: `src/data/snapshots/latest.json`（アプリが読み込み）
-- スコア用の factors / comment はルールで付与（公開データではない）
+`docker compose up` すると `web` と一緒に `fetcher` も起動します（90秒間隔）。
+
+- 取得元: netkeiba 公開の出馬表 / オッズ API / 結果ページ（デモ用途）
+- 反映先: `src/data/snapshots/latest.json`
+- 画面は `/api/races` 経由で約1分ごとに再読込
+- スコア用 factors / comment はルール付与（公開データではない）
 - オッズ・結果は必ず主催者（JRA）発表と照合してください
 
 ## 補足

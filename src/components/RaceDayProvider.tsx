@@ -10,7 +10,8 @@ import {
   type ReactNode,
 } from "react";
 import { getJstDateString } from "@/domain/date";
-import { listRaceDates, liveRaceDate, races } from "@/data/races";
+import { useRaceCatalog } from "@/components/RaceCatalogProvider";
+import { listRaceDates, liveRaceDate } from "@/data/races";
 
 const STORAGE_KEY = "umanote-race-date";
 
@@ -26,23 +27,25 @@ type RaceDayContextValue = {
 
 const RaceDayContext = createContext<RaceDayContextValue | null>(null);
 
-function defaultRaceDate(today: string, available: string[]) {
+function defaultRaceDate(today: string, available: string[], fallbackLive: string) {
   if (available.includes(today)) return today;
-  if (available.includes(liveRaceDate)) return liveRaceDate;
+  if (available.includes(fallbackLive)) return fallbackLive;
   return available[0] ?? today;
 }
 
 export function RaceDayProvider({ children }: { children: ReactNode }) {
+  const { races, liveRaceDate: catalogLive } = useRaceCatalog();
   const today = getJstDateString();
-  const availableDates = useMemo(() => listRaceDates(races), []);
-  const initial = defaultRaceDate(today, availableDates);
+  const availableDates = useMemo(() => listRaceDates(races), [races]);
+  const live = catalogLive ?? liveRaceDate;
+  const initial = defaultRaceDate(today, availableDates, live);
   const [selectedDate, setSelectedDateState] = useState(initial);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setSelectedDateState(defaultRaceDate(today, availableDates));
+    setSelectedDateState(defaultRaceDate(today, availableDates, live));
     setHydrated(true);
-  }, [today, availableDates]);
+  }, [today, availableDates, live]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -54,8 +57,8 @@ export function RaceDayProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const goToday = useCallback(() => {
-    setSelectedDateState(defaultRaceDate(getJstDateString(), availableDates));
-  }, [availableDates]);
+    setSelectedDateState(defaultRaceDate(getJstDateString(), availableDates, live));
+  }, [availableDates, live]);
 
   const value = useMemo(
     () => ({

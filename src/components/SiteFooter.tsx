@@ -1,14 +1,19 @@
-import { snapshotMeta } from "@/data/races";
+"use client";
+
+import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 
 export function SiteFooter() {
-  const fetched = snapshotMeta.fetchedAt
+  const { fetchedAt, liveRaceDate, races, refreshing } = useRaceCatalog();
+  const liveCount = races.filter((r) => r.raceDate === liveRaceDate).length;
+  const resultCount = races.filter((r) => r.raceDate === liveRaceDate && r.result).length;
+  const fetched = fetchedAt
     ? new Intl.DateTimeFormat("ja-JP", {
         timeZone: "Asia/Tokyo",
         month: "short",
         day: "numeric",
         hour: "2-digit",
         minute: "2-digit",
-      }).format(new Date(snapshotMeta.fetchedAt))
+      }).format(new Date(fetchedAt))
     : "—";
 
   return (
@@ -18,8 +23,10 @@ export function SiteFooter() {
           UMANOTE
         </p>
         <p className="max-w-xl text-sm leading-relaxed">
-          JRA高配当候補の選別デモ · 公開Webデータ（{snapshotMeta.raceDate} / {snapshotMeta.raceCount}R ·
-          取得 {fetched}）を反映 · オッズは主催者発表と照合してください · 的中保証はありません
+          JRA高配当候補の選別デモ · 公開Webデータ（{liveRaceDate} / {liveCount}R · 結果{" "}
+          {resultCount}R · 取得 {fetched}
+          {refreshing ? " · 更新中" : ""}）· オッズ・結果は主催者発表と照合してください ·
+          的中保証はありません
         </p>
       </div>
     </footer>

@@ -72,7 +72,7 @@ async function fetchJson(url) {
 }
 
 function ymdFromArg() {
-  const arg = process.argv[2];
+  const arg = process.argv.slice(2).find((a) => /^\d{8}$/.test(a) || /^\d{4}-\d{2}-\d{2}$/.test(a));
   if (arg && /^\d{8}$/.test(arg)) {
     return `${arg.slice(0, 4)}-${arg.slice(4, 6)}-${arg.slice(6, 8)}`;
   }
@@ -340,7 +340,131 @@ async function fetchOddsBundle(raceId) {
   return { entries, placeRanges, officialDatetime: winPlace?.data?.official_datetime ?? null };
 }
 
-async function fetchOneRace(raceId, raceDate) {
+function parseResultHtml(html) {
+  if (!html.includes("All_Result_Table") && !/class="Rank">\s*\d+/.test(html)) {
+    return null;
+  }
+
+  const finishes = [];
+  const rows = [...html.matchAll(/<tr[^>]*HorseList[^>]*>([\s\S]*?)<\/tr>/gi)];
+  for (const rowMatch of rows) {
+    const row = rowMatch[1];
+    const rankRaw = row.match(/class="Rank"[^>]*>\s*([^<]+)/)?.[1]?.trim();
+    const rankNum = Number(rankRaw);
+    const rank = Number.isFinite(rankNum) ? rankNum : null;
+    const number = Number(
+      row.match(/<td class="Num Txt_C"[^>]*>\s*<div>\s*(\d+)/)?.[1] ??
+        row.match(/Txt_C">\s*<div>\s*(\d+)\s*<\/div>/)?.[1],
+    );
+    if (!number) continue;
+    const bracket = Number(row.match(/Waku(\d+)/)?.[1]);
+    const name = decodeHtml(
+      row.match(/title="([^"]+)"/)?.[1] ??
+        row.match(/HorseNameSpan[^>]*>\s*([^<]+)/)?.[1] ??
+        `馬${number}`,
+    );
+    const jockey = decodeHtml(
+      row.match(/JockeyNameSpan[^>]*>\s*([\s\S]*?)<\/span>/)?.[1]?.replace(/<[^>]+>/g, "") ??
+        "",
+    ).trim();
+    const time = row.match(/class="RaceTime"[^>]*>\s*([^<]+)/)?.[1]?.trim();
+    const popularity = Number(row.match(/OddsPeople[^>]*>\s*(\d+)/)?.[1]);
+    const oddsWin = Number(row.match(/Odds_Ninki[^>]*>\s*([\d.]+)/)?.[1]);
+    finishes.push({
+      rank,
+      number,
+      bracket: Number.isFinite(bracket) ? bracket : undefined,
+      name,
+      jockey: jockey || undefined,
+      time: time || undefined,
+      popularity: Number.isFinite(popularity) ? popularity : undefined,
+      oddsWin: Number.isFinite(oddsWin) ? oddsWin : undefined,
+    });
+  }
+
+  if (finishes.length === 0) return null;
+
+  const PAYOUT_ROW = {
+    Tansho: "win",
+    Fukusho: "place",
+    Wakuren: "bracket_quinella",
+    Umaren: "quinella",
+    Wide: "wide",
+    Umatan: "exacta",
+    Sanrenpuku: "trio",
+    Sanrentan: "trifecta",
+  };
+
+  const payouts = [];
+  for (const [cls, betType] of Object.entries(PAYOUT_ROW)) {
+    const rowHtml = html.match(new RegExp(`<tr class="${cls}"[\\s\\S]*?<\\/tr>`, "i"))?.[0];
+    if (!rowHtml) continue;
+
+    const payoutYenList = [...rowHtml.matchAll(/(\d[\d,]*)\s*円/g)].map((m) =>
+      Number(m[1].replace(/,/g, "")),
+    );
+    const popList = [...rowHtml.matchAll(/(\d+)\s*人気/g)].map((m) => Number(m[1]));
+
+    if (betType === "place" || betType === "wide") {
+      // 複数行: Result 内の数字列と払戻を対応
+      const nums = [...rowHtml.matchAll(/<span>(\d+)<\/span>/g)].map((m) => Number(m[1]));
+      if (betType === "place") {
+        for (let i = 0; i < Math.min(nums.length, payoutYenList.length); i++) {
+          payouts.push({
+            betType,
+            selection: String(nums[i]),
+            payoutYen: payoutYenList[i],
+            popularity: popList[i],
+          });
+        }
+      } else {
+        const pairs = [...rowHtml.matchAll(/<ul>([\s\S]*?)<\/ul>/g)].map((m) =>
+          [...m[1].matchAll(/<span>(\d+)<\/span>/g)].map((x) => Number(x[1])).filter(Boolean),
+        );
+        for (let i = 0; i < Math.min(pairs.length, payoutYenList.length); i++) {
+          const pair = pairs[i];
+          if (pair.length < 2) continue;
+          payouts.push({
+            betType,
+            selection: `${pair[0]}-${pair[1]}`,
+            payoutYen: payoutYenList[i],
+            popularity: popList[i],
+          });
+        }
+      }
+      continue;
+    }
+
+    const spans = [...rowHtml.matchAll(/<span>(\d+)<\/span>/g)].map((m) => Number(m[1]));
+    const selection =
+      betType === "win"
+        ? String(spans[0] ?? "")
+        : spans.filter(Boolean).slice(0, expectedSelectionLegs(betType)).join("-");
+    if (!selection || !payoutYenList[0]) continue;
+    payouts.push({
+      betType,
+      selection,
+      payoutYen: payoutYenList[0],
+      popularity: popList[0],
+    });
+  }
+
+  return {
+    status: "official",
+    finishedAt: new Date().toISOString(),
+    finishes,
+    payouts,
+  };
+}
+
+async function fetchRaceResult(raceId) {
+  const url = `https://race.netkeiba.com/race/result.html?race_id=${raceId}`;
+  const html = await fetchText(url);
+  await sleep(120);
+  return parseResultHtml(html);
+}
+
+async function fetchOneRace(raceId, raceDate, { withResult = true } = {}) {
   const shutubaUrl = `https://race.netkeiba.com/race/shutuba.html?race_id=${raceId}`;
   const html = await fetchText(shutubaUrl);
   await sleep(150);
@@ -398,7 +522,7 @@ async function fetchOneRace(raceId, raceDate) {
     小倉: "kokura",
   }[meta.venue] ?? meta.venue;
 
-  return {
+  const race = {
     id: `${slugVenue}-${compactDate(raceDate)}-${meta.raceNumber}`,
     sourceRaceId: raceId,
     authority: "JRA",
@@ -416,10 +540,120 @@ async function fetchOneRace(raceId, raceDate) {
     oddsBoard: board,
     oddsUpdatedAt: officialDatetime,
   };
+
+  if (withResult) {
+    const result = await fetchRaceResult(raceId);
+    if (result) race.result = result;
+  }
+
+  return race;
+}
+
+function jstNowParts() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(new Date());
+  const get = (t) => parts.find((p) => p.type === t)?.value;
+  return {
+    date: `${get("year")}-${get("month")}-${get("day")}`,
+    minutes: Number(get("hour")) * 60 + Number(get("minute")),
+  };
+}
+
+function startMinutes(hhmm) {
+  const [h, m] = hhmm.split(":").map(Number);
+  return h * 60 + m;
+}
+
+async function writeSnapshot(snapshot) {
+  const outDir = path.join(root, "src", "data", "snapshots");
+  await mkdir(outDir, { recursive: true });
+  const outPath = path.join(outDir, `${snapshot.raceDate}.json`);
+  const json = JSON.stringify(snapshot, null, 2);
+  await writeFile(outPath, json, "utf8");
+  await writeFile(path.join(outDir, "latest.json"), json, "utf8");
+  return outPath;
+}
+
+async function loadExistingSnapshot(raceDate) {
+  const { readFile } = await import("node:fs/promises");
+  const p = path.join(root, "src", "data", "snapshots", `${raceDate}.json`);
+  try {
+    return JSON.parse(await readFile(p, "utf8"));
+  } catch {
+    try {
+      return JSON.parse(await readFile(path.join(root, "src", "data", "snapshots", "latest.json"), "utf8"));
+    } catch {
+      return null;
+    }
+  }
+}
+
+/** 終了済みレースの結果だけ差分更新 */
+async function updateResultsOnly(raceDate, { graceMinutes = 8 } = {}) {
+  const existing = await loadExistingSnapshot(raceDate);
+  if (!existing?.races?.length) {
+    console.log("No existing snapshot; running full fetch...");
+    return null;
+  }
+
+  const now = jstNowParts();
+  let updated = 0;
+  for (const race of existing.races) {
+    if (race.result?.finishes?.length) continue;
+    if (!race.sourceRaceId) continue;
+    if (race.raceDate !== now.date && race.raceDate !== raceDate) continue;
+    const elapsed = now.date === race.raceDate ? now.minutes - startMinutes(race.startTime) : 999;
+    if (elapsed < graceMinutes) continue;
+
+    process.stdout.write(`result ${race.venue}${race.raceNumber}R ... `);
+    try {
+      const result = await fetchRaceResult(race.sourceRaceId);
+      if (result) {
+        race.result = result;
+        updated += 1;
+        console.log(`OK top=${result.finishes.filter((f) => f.rank === 1)[0]?.name ?? "?"}`);
+      } else {
+        console.log("not ready");
+      }
+    } catch (err) {
+      console.log(`FAIL ${err.message}`);
+    }
+  }
+
+  if (updated > 0) {
+    existing.fetchedAt = new Date().toISOString();
+    existing.source = "netkeiba (public pages / odds API + results)";
+    const out = await writeSnapshot(existing);
+    console.log(`Updated ${updated} results → ${out}`);
+  } else {
+    console.log("No new results");
+  }
+  return existing;
 }
 
 async function main() {
+  const args = process.argv.slice(2);
+  const resultsOnly = args.includes("--results-only");
+  const dateArg = args.find((a) => /^\d{4}-\d{2}-\d{2}$/.test(a) || /^\d{8}$/.test(a));
+  if (dateArg) process.argv[2] = dateArg;
   const raceDate = ymdFromArg();
+
+  if (resultsOnly) {
+    const snap = await updateResultsOnly(raceDate);
+    if (!snap) {
+      // fall through to full fetch
+    } else {
+      return;
+    }
+  }
+
   const kaisai = compactDate(raceDate);
   console.log(`Fetching JRA races for ${raceDate} ...`);
 
@@ -430,13 +664,23 @@ async function main() {
   }
   console.log(`Found ${raceIds.length} races`);
 
+  const previous = await loadExistingSnapshot(raceDate);
+  const prevBySource = new Map(
+    (previous?.races ?? []).filter((r) => r.sourceRaceId).map((r) => [r.sourceRaceId, r]),
+  );
+
   const races = [];
   for (const [i, id] of raceIds.entries()) {
     process.stdout.write(`[${i + 1}/${raceIds.length}] ${id} ... `);
     try {
-      const race = await fetchOneRace(id, raceDate);
+      const race = await fetchOneRace(id, raceDate, { withResult: true });
+      const prev = prevBySource.get(id);
+      if (!race.result && prev?.result) race.result = prev.result;
       races.push(race);
-      console.log(`${race.venue}${race.raceNumber}R ${race.title} horses=${race.horses.length} odds=${race.oddsBoard.length}`);
+      const flag = race.result ? " result" : "";
+      console.log(
+        `${race.venue}${race.raceNumber}R ${race.title} horses=${race.horses.length} odds=${race.oddsBoard.length}${flag}`,
+      );
     } catch (err) {
       console.log(`FAIL ${err.message}`);
     }
@@ -454,23 +698,32 @@ async function main() {
 
   const snapshot = {
     fetchedAt: new Date().toISOString(),
-    source: "netkeiba (public pages / odds API)",
+    source: "netkeiba (public pages / odds API + results)",
     raceDate,
     raceCount: races.length,
     venues: [...new Set(races.map((r) => r.venue))],
     races,
   };
 
-  const outDir = path.join(root, "src", "data", "snapshots");
-  await mkdir(outDir, { recursive: true });
-  const outPath = path.join(outDir, `${raceDate}.json`);
-  await writeFile(outPath, JSON.stringify(snapshot, null, 2), "utf8");
-  // also write as latest pointer for the app default
-  await writeFile(path.join(outDir, "latest.json"), JSON.stringify(snapshot, null, 2), "utf8");
-  console.log(`Wrote ${outPath} (${races.length} races)`);
+  const outPath = await writeSnapshot(snapshot);
+  console.log(`Wrote ${outPath} (${races.length} races, results=${races.filter((r) => r.result).length})`);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+const isDirectRun = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (isDirectRun) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
+export {
+  fetchOneRace,
+  fetchRaceResult,
+  updateResultsOnly,
+  writeSnapshot,
+  loadExistingSnapshot,
+  ymdFromArg,
+  jstNowParts,
+};

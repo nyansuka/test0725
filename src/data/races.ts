@@ -16,6 +16,7 @@ type SnapshotHorse = {
 
 type SnapshotRace = {
   id: string;
+  sourceRaceId?: string;
   authority: "JRA";
   raceDate: string;
   venue: string;
@@ -30,6 +31,7 @@ type SnapshotRace = {
   fieldSize?: number;
   horses: SnapshotHorse[];
   oddsBoard: OddsEntry[];
+  result?: Race["result"];
 };
 
 type SnapshotFile = {
@@ -370,6 +372,8 @@ function fromSnapshot(snap: SnapshotFile): Race[] {
     condition: r.condition,
     featured: r.featured,
     fieldSize: r.fieldSize ?? r.horses.length,
+    sourceRaceId: r.sourceRaceId,
+    result: r.result,
     horses: r.horses.map((h) =>
       horse({
         number: h.number,

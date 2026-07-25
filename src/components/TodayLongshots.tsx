@@ -5,6 +5,7 @@ import Link from "next/link";
 import { selectLongshots } from "@/domain/longshots";
 import type { Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
+import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
 import { RaceDayPicker } from "@/components/RaceDayPicker";
 import { LongshotTable } from "@/components/LongshotTable";
@@ -12,11 +13,13 @@ import { filterRacesByDate } from "@/data/races";
 import { formatJstDateLabel } from "@/domain/date";
 
 type Props = {
-  races: Race[];
+  races?: Race[];
   limit?: number;
 };
 
-export function TodayLongshots({ races, limit = 5 }: Props) {
+export function TodayLongshots({ races: racesProp, limit = 5 }: Props) {
+  const { races: catalogRaces } = useRaceCatalog();
+  const races = racesProp ?? catalogRaces;
   const { settings } = useSettings();
   const { selectedDate, today } = useRaceDay();
   const dayRaces = useMemo(

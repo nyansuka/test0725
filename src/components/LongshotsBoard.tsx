@@ -5,6 +5,7 @@ import { BET_TYPE_LABELS, ALL_BET_TYPES } from "@/domain/betTypes";
 import { selectLongshots } from "@/domain/longshots";
 import type { BetType, Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
+import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
 import { RaceDayPicker } from "@/components/RaceDayPicker";
 import { LongshotTable } from "@/components/LongshotTable";
@@ -14,10 +15,12 @@ import { formatJstDateLabel } from "@/domain/date";
 type SortKey = "score" | "odds" | "time";
 
 type Props = {
-  races: Race[];
+  races?: Race[];
 };
 
-export function LongshotsBoard({ races }: Props) {
+export function LongshotsBoard({ races: racesProp }: Props) {
+  const { races: catalogRaces } = useRaceCatalog();
+  const races = racesProp ?? catalogRaces;
   const { settings, setOddsThreshold, hydrated } = useSettings();
   const { selectedDate } = useRaceDay();
   const dayRaces = useMemo(

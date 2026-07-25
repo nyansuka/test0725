@@ -15,12 +15,14 @@ import { useSettings } from "@/components/SettingsProvider";
 import { LongshotTable } from "@/components/LongshotTable";
 import { LongshotMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import Link from "next/link";
+import { RaceResultPanel } from "@/components/RaceResultPanel";
 import {
   formatPopularity,
   formatWinOdds,
   placeOddsLabel,
   popularityByNumber,
 } from "@/domain/odds";
+import { evaluatePick } from "@/domain/results";
 
 const factorLabels = [
   ["courseFit", "コース"],
@@ -92,11 +94,35 @@ export function RaceDetail({ race }: Props) {
         </div>
       </div>
 
+      <RaceResultPanel race={race} />
+
       <section>
         <h2 className="text-xl font-semibold text-ink">このレースの注目穴</h2>
         <div className="mt-4">
           <LongshotTable picks={picks} emptyMessage="このレースに現在の設定で残る候補はありません。" />
         </div>
+        {race.result && picks.length > 0 && (
+          <ul className="mt-4 space-y-1 text-sm text-ink/65">
+            {picks.slice(0, 8).map((pick) => {
+              const outcome = evaluatePick(pick, race.result);
+              const label =
+                outcome === "hit" ? "的中" : outcome === "miss" ? "外れ" : "待ち";
+              const cls =
+                outcome === "hit"
+                  ? "text-signal font-medium"
+                  : outcome === "miss"
+                    ? "text-ink/40"
+                    : "text-ink/55";
+              return (
+                <li key={`${pick.betType}-${pick.selection}`}>
+                  <span className={cls}>{label}</span>
+                  {" · "}
+                  {BET_TYPE_LABELS[pick.betType]} {pick.selection}
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </section>
 
       <section>

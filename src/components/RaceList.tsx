@@ -10,11 +10,13 @@ import {
 } from "@/domain/longshots";
 import type { Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
+import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
 import { RaceDayPicker } from "@/components/RaceDayPicker";
 import { filterRacesByDate, groupRacesByVenue } from "@/data/races";
 import { LongshotMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import { formatJstDateLabel } from "@/domain/date";
+import { formatFinishLine, raceHasResult } from "@/domain/results";
 import {
   formatPopularity,
   formatPopularityParen,
@@ -24,7 +26,7 @@ import {
 } from "@/domain/odds";
 
 type Props = {
-  races: Race[];
+  races?: Race[];
 };
 
 const rankColor: Record<string, string> = {
@@ -35,7 +37,9 @@ const rankColor: Record<string, string> = {
   D: "bg-ink/5 text-ink/40",
 };
 
-export function RaceList({ races }: Props) {
+export function RaceList({ races: racesProp }: Props) {
+  const { races: catalogRaces } = useRaceCatalog();
+  const races = racesProp ?? catalogRaces;
   const { settings } = useSettings();
   const { selectedDate } = useRaceDay();
   const dayRaces = useMemo(
@@ -183,10 +187,18 @@ export function RaceList({ races }: Props) {
                             {markedHorses.size > 0 && (
                               <LongshotMark className="ml-2 text-base" />
                             )}
+                            {raceHasResult(race) && (
+                              <span className="ml-2 text-xs font-medium tracking-wide text-turf">
+                                結果済
+                              </span>
+                            )}
                           </p>
                           <p className="mt-1 text-sm text-ink/60">
                             {race.distance} · {race.weather}/{race.condition} · 候補 {pickCount}件
                             · 注目穴馬 {markedHorses.size}頭
+                            {raceHasResult(race) && race.result
+                              ? ` · ${formatFinishLine(race.result)}`
+                              : ""}
                           </p>
                         </div>
                         <span

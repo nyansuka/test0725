@@ -41,6 +41,32 @@ export type OddsEntry = {
 
 export type RaceExpectationRank = "S" | "A" | "B" | "C" | "D";
 
+export type HorseFinish = {
+  rank: number | null;
+  number: number;
+  bracket?: number;
+  name: string;
+  jockey?: string;
+  time?: string;
+  margin?: string;
+  popularity?: number;
+  oddsWin?: number;
+};
+
+export type PayoutLine = {
+  betType: BetType;
+  selection: string;
+  payoutYen: number;
+  popularity?: number;
+};
+
+export type RaceResult = {
+  status: "official" | "provisional";
+  finishedAt?: string;
+  finishes: HorseFinish[];
+  payouts: PayoutLine[];
+};
+
 export type Race = {
   id: string;
   authority: Authority;
@@ -58,6 +84,10 @@ export type Race = {
   fieldSize?: number;
   horses: Horse[];
   oddsBoard: OddsEntry[];
+  /** netkeiba レースID（12桁）。結果取得用 */
+  sourceRaceId?: string;
+  /** 確定／速報のレース結果 */
+  result?: RaceResult;
 };
 
 export type LongshotLabel = "注目穴" | "抑え候補";
