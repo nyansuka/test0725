@@ -1,15 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   EXPECTATION_RANK_HELP,
+  enrichHorseScores,
   raceExpectationRank,
   selectLongshots,
 } from "@/domain/longshots";
 import type { Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
 import { groupRacesByVenue } from "@/data/races";
+import { LongshotMark, longshotHorseNumbers } from "@/components/LongshotMark";
 
 type Props = {
   races: Race[];
@@ -34,12 +36,35 @@ export function RaceList({ races }: Props) {
         const picks = allPicks.filter((p) => p.raceId === race.id);
         return {
           race,
+          picks,
           pickCount: picks.length,
           rank: raceExpectationRank(picks),
+          markedHorses: longshotHorseNumbers(picks, race.id),
         };
       }),
     }));
   }, [races, allPicks]);
+
+  const [activeVenue, setActiveVenue] = useState(groups[0]?.venue ?? "");
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const hash = decodeURIComponent(window.location.hash.replace(/^#venue-/, ""));
+    if (hash && groups.some((g) => g.venue === hash)) {
+      setActiveVenue(hash);
+    }
+  }, [groups]);
+
+  function selectVenue(venue: string) {
+    setActiveVenue(venue);
+    setExpandedId(null);
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", `#venue-${venue}`);
+    }
+  }
+
+  const activeGroup = groups.find((g) => g.venue === activeVenue) ?? groups[0];
 
   return (
     <section id="races" className="bg-sand px-6 py-20 md:px-8 md:py-24">
@@ -49,64 +74,184 @@ export function RaceList({ races }: Props) {
         </p>
         <h2 className="mt-2 text-3xl font-bold text-ink md:text-4xl">レース一覧</h2>
         <p className="mt-3 max-w-2xl text-ink/70">
-          開催場ごとに全レース（1〜12R）を表示。{EXPECTATION_RANK_HELP}
+          開催場タブで切り替え、各レースを展開して出走内容を確認できます。注目穴馬には
+          <LongshotMark className="mx-0.5" /> が付きます。{EXPECTATION_RANK_HELP}
         </p>
 
-        <nav className="mt-8 flex flex-wrap gap-3 text-sm">
-          {groups.map(({ venue }) => (
-            <a
-              key={venue}
-              href={`#venue-${venue}`}
-              className="border border-ink/15 px-3 py-1.5 text-ink/70 transition hover:border-turf hover:text-turf"
-            >
-              {venue}
-            </a>
-          ))}
-        </nav>
-
-        <div className="mt-12 space-y-14">
-          {groups.map(({ venue, races: rows }) => (
-            <div key={venue} id={`venue-${venue}`}>
-              <div className="flex flex-wrap items-end justify-between gap-3 border-b border-ink/15 pb-3">
-                <h3 className="font-[family-name:var(--font-display)] text-2xl font-bold tracking-wide text-turf">
-                  {venue}
-                </h3>
-                <p className="text-sm text-ink/50">{rows.length} レース</p>
-              </div>
-              <ul className="divide-y divide-ink/10">
-                {rows.map(({ race, pickCount, rank }) => (
-                  <li key={race.id}>
-                    <Link
-                      href={`/races/${race.id}`}
-                      className="group flex flex-wrap items-center gap-4 py-4 transition hover:bg-sand-dim/50 md:gap-8"
-                    >
-                      <div className="w-24 shrink-0">
-                        <p className="font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
-                          {race.raceNumber}R
-                        </p>
-                        <p className="mt-0.5 text-sm text-ink/60">{race.startTime}</p>
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="text-lg font-semibold text-ink group-hover:text-turf">
-                          {race.title}
-                        </p>
-                        <p className="mt-1 text-sm text-ink/60">
-                          {race.distance} · {race.weather}/{race.condition} · 候補 {pickCount}件
-                        </p>
-                      </div>
-                      <span
-                        className={`inline-flex h-9 w-9 items-center justify-center font-[family-name:var(--font-display)] text-sm font-bold ${rankColor[rank]}`}
-                        title={`レース期待度 ${rank}`}
-                      >
-                        {rank}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        <div
+          role="tablist"
+          aria-label="開催場"
+          className="mt-8 flex flex-wrap gap-2 border-b border-ink/15 pb-0"
+        >
+          {groups.map(({ venue, races: venueRaces }) => {
+            const selected = venue === activeGroup?.venue;
+            return (
+              <button
+                key={venue}
+                type="button"
+                role="tab"
+                aria-selected={selected}
+                id={`tab-${venue}`}
+                onClick={() => selectVenue(venue)}
+                className={`-mb-px border-b-2 px-4 py-3 text-sm font-medium transition ${
+                  selected
+                    ? "border-turf text-turf"
+                    : "border-transparent text-ink/55 hover:text-ink"
+                }`}
+              >
+                {venue}
+                <span className="ml-2 text-xs font-normal text-ink/40">{venueRaces.length}R</span>
+              </button>
+            );
+          })}
         </div>
+
+        {activeGroup && (
+          <div
+            role="tabpanel"
+            aria-labelledby={`tab-${activeGroup.venue}`}
+            className="mt-8"
+          >
+            <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
+              <h3 className="font-[family-name:var(--font-display)] text-2xl font-bold tracking-wide text-turf">
+                {activeGroup.venue}
+              </h3>
+              <p className="text-sm text-ink/50">全 {activeGroup.races.length} レース</p>
+            </div>
+
+            <ul className="divide-y divide-ink/10 border-y border-ink/10">
+              {activeGroup.races.map(({ race, picks, pickCount, rank, markedHorses }) => {
+                const open = expandedId === race.id;
+                const horses = open ? enrichHorseScores(race) : [];
+                return (
+                  <li key={race.id} id={race.id}>
+                    <div className="flex flex-wrap items-stretch gap-2 py-3 md:gap-4">
+                      <button
+                        type="button"
+                        onClick={() => setExpandedId(open ? null : race.id)}
+                        className="group flex min-w-0 flex-1 flex-wrap items-center gap-4 py-2 text-left transition hover:bg-sand-dim/40 md:gap-8"
+                        aria-expanded={open}
+                      >
+                        <div className="w-24 shrink-0">
+                          <p className="font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
+                            {race.raceNumber}R
+                          </p>
+                          <p className="mt-0.5 text-sm text-ink/60">{race.startTime}</p>
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-lg font-semibold text-ink group-hover:text-turf">
+                            {race.title}
+                            {markedHorses.size > 0 && (
+                              <LongshotMark className="ml-2 text-base" />
+                            )}
+                          </p>
+                          <p className="mt-1 text-sm text-ink/60">
+                            {race.distance} · {race.weather}/{race.condition} · 候補 {pickCount}件
+                            · 注目穴馬 {markedHorses.size}頭
+                          </p>
+                        </div>
+                        <span
+                          className={`inline-flex h-9 w-9 items-center justify-center font-[family-name:var(--font-display)] text-sm font-bold ${rankColor[rank]}`}
+                          title={`レース期待度 ${rank}`}
+                        >
+                          {rank}
+                        </span>
+                        <span className="w-6 text-center text-ink/40" aria-hidden>
+                          {open ? "−" : "+"}
+                        </span>
+                      </button>
+                      <Link
+                        href={`/races/${race.id}`}
+                        className="shrink-0 self-center px-3 py-2 text-sm text-turf hover:underline"
+                      >
+                        詳細
+                      </Link>
+                    </div>
+
+                    {open && (
+                      <div className="mb-4 border border-ink/10 bg-sand-dim/30 px-4 py-4">
+                        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-ink/65">
+                          <span>発走 {race.startTime}</span>
+                          <span>{race.track}</span>
+                          <span>頭数 {race.horses.length}</span>
+                          <span>期待度 {rank}</span>
+                        </div>
+
+                        <div className="mt-4 overflow-x-auto">
+                          <table className="w-full min-w-[520px] text-left text-sm">
+                            <thead>
+                              <tr className="border-b border-ink/15 text-ink/45">
+                                <th className="py-2 pr-2 font-medium">印</th>
+                                <th className="py-2 pr-2 font-medium">馬番</th>
+                                <th className="py-2 pr-2 font-medium">馬名</th>
+                                <th className="py-2 pr-2 font-medium">騎手</th>
+                                <th className="py-2 pr-2 font-medium">単勝</th>
+                                <th className="py-2 font-medium">スコア</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {[...horses]
+                                .sort((a, b) => a.number - b.number)
+                                .map((horse) => {
+                                  const marked = markedHorses.has(horse.number);
+                                  return (
+                                    <tr
+                                      key={horse.number}
+                                      className={`border-b border-ink/10 ${marked ? "bg-signal/5" : ""}`}
+                                    >
+                                      <td className="py-2 pr-2 w-8">
+                                        {marked ? <LongshotMark /> : null}
+                                      </td>
+                                      <td className="py-2 pr-2 font-[family-name:var(--font-display)] font-semibold">
+                                        {horse.number}
+                                      </td>
+                                      <td className="py-2 pr-2 font-medium">{horse.name}</td>
+                                      <td className="py-2 pr-2 text-ink/60">{horse.jockey}</td>
+                                      <td className="py-2 pr-2">{horse.oddsWin.toFixed(1)}</td>
+                                      <td className="py-2 font-[family-name:var(--font-display)] text-turf">
+                                        {horse.placePotential}
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                            </tbody>
+                          </table>
+                        </div>
+
+                        {picks.length > 0 && (
+                          <div className="mt-4">
+                            <p className="text-xs tracking-wider text-ink/45">このレースの候補</p>
+                            <ul className="mt-2 space-y-1 text-sm text-ink/75">
+                              {picks.slice(0, 6).map((pick) => (
+                                <li key={`${pick.betType}-${pick.selection}`}>
+                                  {pick.label === "注目穴" && (
+                                    <LongshotMark className="mr-1" />
+                                  )}
+                                  {pick.label} · {pick.selection} · {pick.odds.toFixed(1)}倍 · スコア{" "}
+                                  {pick.relatedPlacePotential}
+                                </li>
+                              ))}
+                              {picks.length > 6 && (
+                                <li className="text-ink/45">ほか {picks.length - 6} 件…</li>
+                              )}
+                            </ul>
+                          </div>
+                        )}
+
+                        <Link
+                          href={`/races/${race.id}`}
+                          className="mt-4 inline-flex text-sm font-medium text-turf hover:underline"
+                        >
+                          レース詳細へ（カテゴリ内訳・オッズ板）
+                        </Link>
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
       </div>
     </section>
   );

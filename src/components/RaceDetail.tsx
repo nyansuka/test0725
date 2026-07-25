@@ -13,6 +13,7 @@ import { BET_TYPE_LABELS } from "@/domain/betTypes";
 import type { Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
 import { LongshotTable } from "@/components/LongshotTable";
+import { LongshotMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import Link from "next/link";
 
 const factorLabels = [
@@ -54,6 +55,7 @@ export function RaceDetail({ race }: Props) {
   );
   const passCount = boardRows.filter((r) => r.status === "pass").length;
   const rank = raceExpectationRank(picks);
+  const markedHorses = useMemo(() => longshotHorseNumbers(picks, race.id), [picks, race.id]);
   const [openId, setOpenId] = useState<number | null>(horses[0]?.number ?? null);
 
   return (
@@ -69,7 +71,7 @@ export function RaceDetail({ race }: Props) {
           </p>
           <p className="mt-2 text-sm">
             <Link href={`/races#venue-${race.venue}`} className="text-turf hover:underline">
-              ← {race.venue}の全レース
+              ← {race.venue}の全レース（タブ）
             </Link>
           </p>
         </div>
@@ -91,19 +93,31 @@ export function RaceDetail({ race }: Props) {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-ink">出走表とカテゴリ内訳</h2>
+        <h2 className="text-xl font-semibold text-ink">
+          出走表とカテゴリ内訳
+          <span className="ml-3 text-sm font-normal text-ink/50">
+            注目穴馬 <LongshotMark />
+          </span>
+        </h2>
         <div className="mt-6 space-y-3">
           {[...horses]
             .sort((a, b) => (b.placePotential ?? 0) - (a.placePotential ?? 0))
             .map((horse) => {
               const open = openId === horse.number;
+              const marked = markedHorses.has(horse.number);
               return (
-                <div key={horse.number} className="border border-ink/10 bg-sand-dim/30">
+                <div
+                  key={horse.number}
+                  className={`border border-ink/10 ${marked ? "bg-signal/5" : "bg-sand-dim/30"}`}
+                >
                   <button
                     type="button"
                     onClick={() => setOpenId(open ? null : horse.number)}
                     className="flex w-full flex-wrap items-center gap-4 px-4 py-4 text-left"
                   >
+                    <span className="w-6 text-lg text-signal" aria-hidden>
+                      {marked ? <LongshotMark /> : null}
+                    </span>
                     <span className="w-8 font-[family-name:var(--font-display)] text-xl font-semibold">
                       {horse.number}
                     </span>

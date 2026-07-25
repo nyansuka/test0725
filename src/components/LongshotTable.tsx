@@ -1,6 +1,7 @@
 import { BET_TYPE_LABELS } from "@/domain/betTypes";
 import type { LongshotPick } from "@/domain/types";
 import Link from "next/link";
+import { LongshotMark } from "@/components/LongshotMark";
 
 type Props = {
   picks: LongshotPick[];
@@ -17,6 +18,7 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
       <table className="w-full min-w-[760px] text-left text-sm">
         <thead>
           <tr className="border-b border-ink/20 text-ink/50">
+            <th className="py-3 pr-3 font-medium">印</th>
             <th className="py-3 pr-3 font-medium">レース</th>
             <th className="py-3 pr-3 font-medium">券種</th>
             <th className="py-3 pr-3 font-medium">買い目</th>
@@ -32,6 +34,9 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
               key={`${pick.raceId}-${pick.betType}-${pick.selection}`}
               className="border-b border-ink/10 align-top"
             >
+              <td className="py-4 pr-3 text-lg">
+                {pick.label === "注目穴" ? <LongshotMark /> : null}
+              </td>
               <td className="py-4 pr-3">
                 <Link href={`/races/${pick.raceId}`} className="font-medium text-turf hover:underline">
                   {pick.venue} {pick.raceNumber}R
@@ -41,9 +46,14 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
               <td className="py-4 pr-3">{BET_TYPE_LABELS[pick.betType]}</td>
               <td className="py-4 pr-3 font-[family-name:var(--font-display)] text-base font-semibold">
                 {pick.selection}
+                {pick.label === "注目穴" && (
+                  <span className="ml-1 text-sm font-normal text-signal">
+                    <LongshotMark />
+                  </span>
+                )}
               </td>
               <td className="py-4 pr-3 font-medium text-signal">{pick.odds.toFixed(1)}</td>
-              <td className="py-4 pr-3 min-w-[120px]">
+              <td className="min-w-[120px] py-4 pr-3">
                 <div className="flex items-center gap-2">
                   <span className="font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
                     {pick.relatedPlacePotential}
@@ -59,9 +69,7 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
               <td className="py-4 pr-3">
                 <span
                   className={
-                    pick.label === "注目穴"
-                      ? "text-signal font-medium"
-                      : "text-ink/60"
+                    pick.label === "注目穴" ? "font-medium text-signal" : "text-ink/60"
                   }
                 >
                   {pick.label}
