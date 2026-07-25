@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+:root {
+  --turf: #1f5c45;
+  --turf-deep: #0f2f24;
+  --ink: #141210;
+  --sand: #f3ebe0;
+  --sand-dim: #e6d9c8;
+  --signal: #d97706;
+  --signal-soft: #f59e0b;
+  --mist: rgba(243, 235, 224, 0.12);
+  --background: var(--sand);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-turf: var(--turf);
+  --color-turf-deep: var(--turf-deep);
+  --color-ink: var(--ink);
+  --color-sand: var(--sand);
+  --color-sand-dim: var(--sand-dim);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-jp: var(--font-jp);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), var(--font-jp), sans-serif;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--turf) 35%, white);
+  color: var(--ink);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rail-sweep {
+  from {
+    transform: translateX(-12%);
+  }
+  to {
+    transform: translateX(12%);
+  }
+}
+
+@keyframes bar-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.animate-rise {
+  animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-rise-delay-1 {
+  animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+.animate-rise-delay-2 {
+  animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+.animate-rise-delay-3 {
+  animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+
+.animate-rail {
+  animation: rail-sweep 10s ease-in-out infinite alternate;
+}
+
+.animate-bar {
+  transform-origin: left center;
+  animation: bar-fill 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-dot {
+  animation: pulse-dot 2.2s ease-in-out infinite;
+}
+
+.hero-grain {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 35%),
+    radial-gradient(circle at 80% 60%, rgba(217, 119, 6, 0.14), transparent 40%),
+    linear-gradient(180deg, rgba(15, 47, 36, 0.55), rgba(15, 47, 36, 0.82));
+}
+
+.section-rail {
+  background:
+    linear-gradient(90deg, transparent, rgba(31, 92, 69, 0.18), transparent);
+  height: 1px;
+}
