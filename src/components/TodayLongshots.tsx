@@ -45,7 +45,8 @@ export function TodayLongshots({ races: racesProp, limit = 5 }: Props) {
             </h2>
             <p className="mt-3 max-w-xl text-ink/70">
               {formatJstDateLabel(selectedDate)}
-              {isToday ? "（本日）" : ""} の候補。オッズ閾値・スコアは設定と連動します。
+              {isToday ? "（本日）" : ""}{" "}
+              の候補。短評は評価因子とループ蓄積の傾向（他日優先、無い場合は当日検証を注記）を含みます。
             </p>
           </div>
           <Link

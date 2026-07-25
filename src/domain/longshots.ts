@@ -1,6 +1,8 @@
 import type { BetType, LongshotLabel, LongshotPick, OddsEntry, Race, UserSelectionSettings } from "./types";
 import { parseSelectionNumbers } from "./betTypes";
 import { getScorer } from "./scoring";
+import { buildPickComment } from "./comment";
+import { getTrendIndex } from "./trendData";
 
 /** 注目穴 / 抑え候補の境界（scoreMin とは独立） */
 export const LABEL_SCORE_THRESHOLD = 70;
@@ -39,10 +41,25 @@ export function scoreHorse(horse: Race["horses"][number], race: Race): number {
   return getScorer().score(horse, race).placePotential;
 }
 
-function pickComment(race: Race, related: Race["horses"]): string {
-  if (related.length === 0) return "関係馬の評価が不足しています。";
-  const best = [...related].sort((a, b) => scoreHorse(b, race) - scoreHorse(a, race))[0];
-  return best.comment;
+function pickComment(
+  race: Race,
+  related: Race["horses"],
+  entry: OddsEntry,
+  label: LongshotLabel,
+): string {
+  return buildPickComment(
+    race,
+    related,
+    {
+      betType: entry.betType,
+      venue: race.venue,
+      track: race.track,
+      odds: entry.odds,
+      label,
+      excludeRaceDate: race.raceDate,
+    },
+    getTrendIndex(),
+  );
 }
 
 function labelFor(score: number): LongshotLabel {
@@ -84,22 +101,24 @@ export function classifyOddsEntry(
 
   const relatedPlacePotential = combinePlacePotential(related.map((h) => scoreHorse(h, race)));
   if (relatedPlacePotential < settings.scoreMin) {
+    const label = labelFor(relatedPlacePotential);
     return {
       entry,
       status: "pass",
       relatedHorseNumbers: related.map((h) => h.number),
       relatedPlacePotential,
-      comment: pickComment(race, related),
+      comment: pickComment(race, related, entry, label),
     };
   }
 
+  const label = labelFor(relatedPlacePotential);
   return {
     entry,
     status: "candidate",
     relatedHorseNumbers: related.map((h) => h.number),
     relatedPlacePotential,
-    label: labelFor(relatedPlacePotential),
-    comment: pickComment(race, related),
+    label,
+    comment: pickComment(race, related, entry, label),
   };
 }
 

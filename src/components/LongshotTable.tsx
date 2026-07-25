@@ -18,6 +18,35 @@ type Props = {
   emptyMessage?: string;
 };
 
+function CommentCell({ text }: { text: string }) {
+  const parts = text.split(" ／ ").map((s) => s.trim()).filter(Boolean);
+  if (parts.length <= 1) {
+    return <p className="leading-relaxed">{text}</p>;
+  }
+  return (
+    <div className="space-y-1.5 text-[13px] leading-snug">
+      {parts.map((part) => {
+        const isTrend = part.startsWith("傾向:");
+        const isEval = part.startsWith("評価:");
+        return (
+          <p
+            key={part}
+            className={
+              isTrend
+                ? "font-medium text-turf"
+                : isEval
+                  ? "text-ink/80"
+                  : "text-ink/65"
+            }
+          >
+            {part}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 function SelectionCell({ pick, race }: { pick: LongshotPick; race: Race | undefined }) {
   const pop = race ? popularityByNumber(race.horses) : new Map<number, number>();
 
@@ -168,7 +197,9 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
                     </span>
                   </td>
                 )}
-                <td className="max-w-xs py-4 leading-relaxed text-ink/70">{pick.comment}</td>
+                <td className="max-w-md py-4 text-ink/70">
+                  <CommentCell text={pick.comment} />
+                </td>
               </tr>
             );
           })}

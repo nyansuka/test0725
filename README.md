@@ -45,15 +45,38 @@ docker compose exec web npm run fetch:jra:results
 docker compose up fetcher
 ```
 
+### 改善ループ（日次 JSON 蓄積）
+
+発走前オッズを固定し、候補と結果突合を `src/data/loop/` に日付ごとに残します（詳細は同ディレクトリの README）。
+
+```bash
+# 朝〜直前: オッズ取得のあと凍結＋候補保存（既存凍結は上書きしない）
+docker compose exec web npm run loop:freeze
+
+# 結果揃い後: 突合と Precision / Recall
+docker compose exec web npm run loop:evaluate
+docker compose exec web npm run loop:report -- 2026-07-25
+```
+
 `docker compose up` すると `web` と一緒に `fetcher` も起動します（90秒間隔）。
 
 - 取得元: netkeiba 公開の出馬表 / オッズ API / 結果ページ（デモ用途）
 - 反映先: `src/data/snapshots/latest.json`
+- ループ蓄積: `src/data/loop/{snapshots,predictions,evaluations}/`
 - 画面は `/api/races` 経由で約1分ごとに再読込
 - スコア用 factors / comment はルール付与（公開データではない）
 - オッズ・結果は必ず主催者（JRA）発表と照合してください
 
-## 補足
+## サイトチェック（整合性）
+
+HTTP・API・短評（評価／傾向）・説明文の矛盾をまとめて検証します。PASS 時のみコミット／プッシュできます。
+
+```bash
+docker compose exec web npm run site:check
+docker compose exec web npm run site:check:push   # PASS かつ変更あり → commit & push
+```
+
+定期実行（エージェント／ターミナルで 30 分間隔など）も同じコマンドを使います。
 
 - 当日開催はスナップショットの実データ（例: 新潟・中京・札幌）、別日は日付切替デモ用の合成データです。
 - 開催日のデフォルトは日本時間の当日（当日データが無ければ最新スナップショット日）です。

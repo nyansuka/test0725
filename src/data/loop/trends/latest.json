@@ -1,0 +1,341 @@
+{
+  "builtAt": "2026-07-25T11:55:38.084Z",
+  "source": "src/data/loop/evaluations",
+  "dayCount": 1,
+  "dates": [
+    "2026-07-25"
+  ],
+  "minSamples": 20,
+  "overall": {
+    "candidates": 5944,
+    "hits": 36,
+    "pending": 0,
+    "settled": 5944,
+    "precision": 0.006056527590847914
+  },
+  "byDay": {
+    "2026-07-25": {
+      "candidates": 5944,
+      "hits": 36,
+      "pending": 0,
+      "settled": 5944,
+      "precision": 0.006056527590847914
+    }
+  },
+  "byBetType": {
+    "win": {
+      "candidates": 230,
+      "hits": 5,
+      "pending": 0,
+      "settled": 230,
+      "precision": 0.021739130434782608
+    },
+    "quinella": {
+      "candidates": 1065,
+      "hits": 3,
+      "pending": 0,
+      "settled": 1065,
+      "precision": 0.0028169014084507044
+    },
+    "wide": {
+      "candidates": 1023,
+      "hits": 7,
+      "pending": 0,
+      "settled": 1023,
+      "precision": 0.006842619745845552
+    },
+    "exacta": {
+      "candidates": 1181,
+      "hits": 3,
+      "pending": 0,
+      "settled": 1181,
+      "precision": 0.002540220152413209
+    },
+    "place": {
+      "candidates": 65,
+      "hits": 3,
+      "pending": 0,
+      "settled": 65,
+      "precision": 0.046153846153846156
+    },
+    "trio": {
+      "candidates": 992,
+      "hits": 1,
+      "pending": 0,
+      "settled": 992,
+      "precision": 0.0010080645161290322
+    },
+    "bracket_quinella": {
+      "candidates": 579,
+      "hits": 13,
+      "pending": 0,
+      "settled": 579,
+      "precision": 0.022452504317789293
+    },
+    "trifecta": {
+      "candidates": 809,
+      "hits": 1,
+      "pending": 0,
+      "settled": 809,
+      "precision": 0.0012360939431396785
+    }
+  },
+  "byVenue": {
+    "新潟": {
+      "candidates": 2013,
+      "hits": 15,
+      "pending": 0,
+      "settled": 2013,
+      "precision": 0.007451564828614009
+    },
+    "札幌": {
+      "candidates": 1767,
+      "hits": 14,
+      "pending": 0,
+      "settled": 1767,
+      "precision": 0.00792303338992643
+    },
+    "中京": {
+      "candidates": 2164,
+      "hits": 7,
+      "pending": 0,
+      "settled": 2164,
+      "precision": 0.003234750462107209
+    }
+  },
+  "byTrack": {
+    "芝": {
+      "candidates": 5944,
+      "hits": 36,
+      "pending": 0,
+      "settled": 5944,
+      "precision": 0.006056527590847914
+    }
+  },
+  "byLabel": {
+    "注目穴": {
+      "candidates": 1123,
+      "hits": 9,
+      "pending": 0,
+      "settled": 1123,
+      "precision": 0.008014247551202136
+    },
+    "抑え候補": {
+      "candidates": 4821,
+      "hits": 27,
+      "pending": 0,
+      "settled": 4821,
+      "precision": 0.005600497822028625
+    }
+  },
+  "byOddsBand": {
+    "20-49": {
+      "candidates": 532,
+      "hits": 18,
+      "pending": 0,
+      "settled": 532,
+      "precision": 0.03383458646616541
+    },
+    "100+": {
+      "candidates": 4869,
+      "hits": 14,
+      "pending": 0,
+      "settled": 4869,
+      "precision": 0.002875333744095297
+    },
+    "50-99": {
+      "candidates": 543,
+      "hits": 4,
+      "pending": 0,
+      "settled": 543,
+      "precision": 0.007366482504604052
+    }
+  },
+  "byVenueTrack": {
+    "新潟|芝": {
+      "candidates": 2013,
+      "hits": 15,
+      "pending": 0,
+      "settled": 2013,
+      "precision": 0.007451564828614009
+    },
+    "札幌|芝": {
+      "candidates": 1767,
+      "hits": 14,
+      "pending": 0,
+      "settled": 1767,
+      "precision": 0.00792303338992643
+    },
+    "中京|芝": {
+      "candidates": 2164,
+      "hits": 7,
+      "pending": 0,
+      "settled": 2164,
+      "precision": 0.003234750462107209
+    }
+  },
+  "daySlices": {
+    "2026-07-25": {
+      "overall": {
+        "candidates": 5944,
+        "hits": 36,
+        "pending": 0,
+        "settled": 5944,
+        "precision": 0.006056527590847914
+      },
+      "byBetType": {
+        "win": {
+          "candidates": 230,
+          "hits": 5,
+          "pending": 0,
+          "settled": 230,
+          "precision": 0.021739130434782608
+        },
+        "quinella": {
+          "candidates": 1065,
+          "hits": 3,
+          "pending": 0,
+          "settled": 1065,
+          "precision": 0.0028169014084507044
+        },
+        "wide": {
+          "candidates": 1023,
+          "hits": 7,
+          "pending": 0,
+          "settled": 1023,
+          "precision": 0.006842619745845552
+        },
+        "exacta": {
+          "candidates": 1181,
+          "hits": 3,
+          "pending": 0,
+          "settled": 1181,
+          "precision": 0.002540220152413209
+        },
+        "place": {
+          "candidates": 65,
+          "hits": 3,
+          "pending": 0,
+          "settled": 65,
+          "precision": 0.046153846153846156
+        },
+        "trio": {
+          "candidates": 992,
+          "hits": 1,
+          "pending": 0,
+          "settled": 992,
+          "precision": 0.0010080645161290322
+        },
+        "bracket_quinella": {
+          "candidates": 579,
+          "hits": 13,
+          "pending": 0,
+          "settled": 579,
+          "precision": 0.022452504317789293
+        },
+        "trifecta": {
+          "candidates": 809,
+          "hits": 1,
+          "pending": 0,
+          "settled": 809,
+          "precision": 0.0012360939431396785
+        }
+      },
+      "byVenue": {
+        "新潟": {
+          "candidates": 2013,
+          "hits": 15,
+          "pending": 0,
+          "settled": 2013,
+          "precision": 0.007451564828614009
+        },
+        "札幌": {
+          "candidates": 1767,
+          "hits": 14,
+          "pending": 0,
+          "settled": 1767,
+          "precision": 0.00792303338992643
+        },
+        "中京": {
+          "candidates": 2164,
+          "hits": 7,
+          "pending": 0,
+          "settled": 2164,
+          "precision": 0.003234750462107209
+        }
+      },
+      "byTrack": {
+        "芝": {
+          "candidates": 5944,
+          "hits": 36,
+          "pending": 0,
+          "settled": 5944,
+          "precision": 0.006056527590847914
+        }
+      },
+      "byLabel": {
+        "注目穴": {
+          "candidates": 1123,
+          "hits": 9,
+          "pending": 0,
+          "settled": 1123,
+          "precision": 0.008014247551202136
+        },
+        "抑え候補": {
+          "candidates": 4821,
+          "hits": 27,
+          "pending": 0,
+          "settled": 4821,
+          "precision": 0.005600497822028625
+        }
+      },
+      "byOddsBand": {
+        "20-49": {
+          "candidates": 532,
+          "hits": 18,
+          "pending": 0,
+          "settled": 532,
+          "precision": 0.03383458646616541
+        },
+        "100+": {
+          "candidates": 4869,
+          "hits": 14,
+          "pending": 0,
+          "settled": 4869,
+          "precision": 0.002875333744095297
+        },
+        "50-99": {
+          "candidates": 543,
+          "hits": 4,
+          "pending": 0,
+          "settled": 543,
+          "precision": 0.007366482504604052
+        }
+      },
+      "byVenueTrack": {
+        "新潟|芝": {
+          "candidates": 2013,
+          "hits": 15,
+          "pending": 0,
+          "settled": 2013,
+          "precision": 0.007451564828614009
+        },
+        "札幌|芝": {
+          "candidates": 1767,
+          "hits": 14,
+          "pending": 0,
+          "settled": 1767,
+          "precision": 0.00792303338992643
+        },
+        "中京|芝": {
+          "candidates": 2164,
+          "hits": 7,
+          "pending": 0,
+          "settled": 2164,
+          "precision": 0.003234750462107209
+        }
+      }
+    }
+  },
+  "note": "候補の過去的中率。馬単位の成績ではない。短評は excludeRaceDate 以外の daySlices を合算して参照する。"
+}

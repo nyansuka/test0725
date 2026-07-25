@@ -9,7 +9,13 @@
     "lint": "eslint",
     "fetch:jra": "node scripts/fetch-jra-snapshot.mjs",
     "fetch:jra:results": "node scripts/fetch-jra-snapshot.mjs --results-only",
-    "watch:jra": "node scripts/watch-jra-snapshot.mjs"
+    "watch:jra": "node scripts/watch-jra-snapshot.mjs",
+    "loop:freeze": "node scripts/loop-accumulate.mjs freeze",
+    "loop:evaluate": "node scripts/loop-accumulate.mjs evaluate",
+    "loop:report": "node scripts/loop-accumulate.mjs report",
+    "loop:trends": "node scripts/loop-build-trends.mjs",
+    "site:check": "node scripts/site-check.mjs",
+    "site:check:push": "node scripts/site-check-push.mjs"
   },
   "dependencies": {
     "next": "16.2.11",

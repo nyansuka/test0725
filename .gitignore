@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 改善ループの日次大物（trends のみリポジトリに載せる）
+/src/data/loop/evaluations/
+/src/data/loop/predictions/
+/src/data/loop/snapshots/
+/src/data/loop/reports/

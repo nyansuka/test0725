@@ -8,6 +8,10 @@ const steps = [
     body: "コース適性・展開・馬場・近況・人気乖離などから placePotential を算出。関係馬は下限合成。差し替え可能なルール実装です。",
   },
   {
+    title: "短評（評価＋傾向）",
+    body: "短評は①オッズ帯のベース文 ②因子トップの評価 ③改善ループ蓄積（券種・会場芝ダ等）の候補的中率。馬の前走成績ではなく、過去候補の統計です。他日があれば表示日を除外し、他日が無いときだけ当日検証を注記付きで使います。",
+  },
+  {
     title: "候補と見送り",
     body: "ゲート通過かつ最低スコア以上が注目穴ボードへ。ゲートのみ通過でスコア不足は詳細オッズ板で「見送り」と表示します。",
   },
@@ -26,7 +30,7 @@ export function Method() {
           S（高スコア候補が複数）〜 D（候補なし／薄い）。的中保証はありません。
         </p>
 
-        <ol className="mt-14 grid gap-10 md:grid-cols-3">
+        <ol className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, index) => (
             <li key={step.title}>
               <p className="font-[family-name:var(--font-display)] text-4xl font-bold text-signal-soft/80">
