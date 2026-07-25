@@ -35,8 +35,14 @@ export function JournalPanel() {
     if (!selection.trim()) return;
 
     let resolvedTipsterId = tipsterId || undefined;
-    if (source === "tipster" && newTipster.trim()) {
-      resolvedTipsterId = addTipster(newTipster.trim()).id;
+    if (source === "tipster") {
+      if (newTipster.trim()) {
+        resolvedTipsterId = addTipster(newTipster.trim()).id;
+      }
+      if (!resolvedTipsterId) {
+        window.alert("予想家を選択するか、新規名を入力してください。");
+        return;
+      }
     }
 
     const payoutRaw = payoutYen.trim();

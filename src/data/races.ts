@@ -17,378 +17,324 @@ function horse(
   return { ...rest, factors };
 }
 
-const tokyoHorses: Horse[] = [
-  horse({
-    number: 5,
-    bracket: 3,
-    name: "ミッドナイトゲイル",
-    jockey: "川田将雅",
-    oddsWin: 3.2,
-    runningStyle: "差",
-    factors: {
-      courseFit: 88,
-      paceFit: 82,
-      conditionFit: 70,
-      formSignal: 86,
-      valueGap: 40,
-      gateJockey: 72,
-    },
-    comment: "前走の末脚がこの枠でも再現しやすい。ペースが流れれば押し切り圏。",
-  }),
-  horse({
-    number: 9,
-    bracket: 5,
-    name: "サザンブレイズ",
-    jockey: "ルメール",
-    oddsWin: 4.8,
-    runningStyle: "逃",
-    factors: {
-      courseFit: 78,
-      paceFit: 85,
-      conditionFit: 68,
-      formSignal: 74,
-      valueGap: 45,
-      gateJockey: 70,
-    },
-    comment: "逃げ切り型。道中で楽に運べれば上位固定。",
-  }),
-  horse({
-    number: 2,
-    bracket: 1,
-    name: "コバルトフラッシュ",
-    jockey: "横山武史",
-    oddsWin: 6.1,
-    runningStyle: "先",
-    factors: {
-      courseFit: 80,
-      paceFit: 72,
-      conditionFit: 66,
-      formSignal: 70,
-      valueGap: 55,
-      gateJockey: 78,
-    },
-    comment: "内枠の恩恵が大きい。差し届く展開なら穴どころか本命級。",
-  }),
-  horse({
-    number: 11,
-    bracket: 6,
-    name: "グローリーリッジ",
-    jockey: "松山弘平",
-    oddsWin: 18.4,
-    runningStyle: "差",
-    factors: {
-      courseFit: 76,
-      paceFit: 74,
-      conditionFit: 64,
-      formSignal: 72,
-      valueGap: 82,
-      gateJockey: 58,
-    },
-    comment: "距離延長がプラス。上がり勝負になれば浮上。人気薄の複勝圏候補。",
-  }),
-  horse({
-    number: 7,
-    bracket: 4,
-    name: "シルバークレスト",
-    jockey: "戸崎圭太",
-    oddsWin: 22.5,
-    runningStyle: "追",
-    factors: {
-      courseFit: 70,
-      paceFit: 68,
-      conditionFit: 62,
-      formSignal: 78,
-      valueGap: 88,
-      gateJockey: 60,
-    },
-    comment: "休み明けで気配は上向き。人気薄の抑え候補。",
-  }),
-  horse({
-    number: 14,
-    bracket: 7,
-    name: "ナイトフォール",
-    jockey: "石橋脩",
-    oddsWin: 45.0,
-    runningStyle: "差",
-    factors: {
-      courseFit: 72,
-      paceFit: 70,
-      conditionFit: 60,
-      formSignal: 66,
-      valueGap: 90,
-      gateJockey: 52,
-    },
-    comment: "大外だが末脚一発。ハイペースなら3着内の可能性。",
-  }),
+const JOCKEYS = [
+  "川田将雅",
+  "ルメール",
+  "横山武史",
+  "松山弘平",
+  "戸崎圭太",
+  "武豊",
+  "坂井瑠星",
+  "岩田康誠",
 ];
 
-const tokyoOdds: OddsEntry[] = [
-  { betType: "win", selection: "7", odds: 22.5 },
-  { betType: "win", selection: "14", odds: 45.0 },
-  { betType: "place", selection: "11", odds: 4.2 },
-  { betType: "place", selection: "7", odds: 5.8 },
-  { betType: "quinella", selection: "5-7", odds: 28.4 },
-  { betType: "quinella", selection: "7-11", odds: 64.0 },
-  { betType: "wide", selection: "5-7", odds: 8.6 },
-  { betType: "wide", selection: "7-14", odds: 32.1 },
-  { betType: "exacta", selection: "5-7", odds: 48.0 },
-  { betType: "exacta", selection: "7-5", odds: 92.0 },
-  { betType: "trio", selection: "5-7-11", odds: 86.0 },
-  { betType: "trio", selection: "5-7-14", odds: 120.0 },
-  { betType: "trifecta", selection: "5-7-11", odds: 420.0 },
-  { betType: "bracket_quinella", selection: "3-4", odds: 24.5 },
-  { betType: "win", selection: "5", odds: 3.2 },
-  { betType: "win", selection: "11", odds: 18.4 },
+const NAMES = [
+  "アンバーライト",
+  "コバルトスカイ",
+  "シルバーエコー",
+  "ゴールドリーフ",
+  "クリムゾンロード",
+  "サファイアノート",
+  "エメラルドパス",
+  "アイボリーゲイル",
 ];
 
-const hanshinHorses: Horse[] = [
-  horse({
-    number: 4,
-    bracket: 2,
-    name: "オーロラライン",
-    jockey: "岩田康誠",
-    oddsWin: 2.9,
-    runningStyle: "先",
-    factors: {
-      courseFit: 84,
-      paceFit: 76,
-      conditionFit: 90,
-      formSignal: 80,
-      valueGap: 35,
-      gateJockey: 68,
-    },
-    comment: "稍重適性が明確。先行勢が潰れると一気に馬券内。",
-  }),
-  horse({
-    number: 8,
-    bracket: 4,
-    name: "ナイトパレード",
-    jockey: "坂井瑠星",
-    oddsWin: 5.5,
-    runningStyle: "差",
-    factors: {
-      courseFit: 78,
-      paceFit: 70,
-      conditionFit: 74,
-      formSignal: 72,
-      valueGap: 48,
-      gateJockey: 64,
-    },
-    comment: "スタミナ型。長い直線で粘れるかが焦点。",
-  }),
-  horse({
-    number: 1,
-    bracket: 1,
-    name: "フォレストコード",
-    jockey: "武豊",
-    oddsWin: 7.8,
-    runningStyle: "先",
-    factors: {
-      courseFit: 72,
-      paceFit: 68,
-      conditionFit: 70,
-      formSignal: 66,
-      valueGap: 58,
-      gateJockey: 80,
-    },
-    comment: "内枠からロスなく運べる。単勝より複勝向き。",
-  }),
-  horse({
-    number: 12,
-    bracket: 6,
-    name: "ミストブレイク",
-    jockey: "藤岡康太",
-    oddsWin: 26.0,
-    runningStyle: "追",
-    factors: {
-      courseFit: 74,
-      paceFit: 72,
-      conditionFit: 82,
-      formSignal: 70,
-      valueGap: 86,
-      gateJockey: 55,
-    },
-    comment: "稍重で末脚が生きるタイプ。人気薄の複勝圏。",
-  }),
-  horse({
-    number: 6,
-    bracket: 3,
-    name: "ストームリーフ",
-    jockey: "幸英明",
-    oddsWin: 38.0,
-    runningStyle: "差",
-    factors: {
-      courseFit: 68,
-      paceFit: 66,
-      conditionFit: 78,
-      formSignal: 64,
-      valueGap: 84,
-      gateJockey: 58,
-    },
-    comment: "時計のかかる馬場向き。展開ひとつで馬券圏内。",
-  }),
+const START_TIMES = [
+  "09:55",
+  "10:25",
+  "10:55",
+  "11:25",
+  "12:15",
+  "12:45",
+  "13:15",
+  "13:45",
+  "14:15",
+  "14:45",
+  "15:25",
+  "16:05",
 ];
 
-const hanshinOdds: OddsEntry[] = [
-  { betType: "win", selection: "12", odds: 26.0 },
-  { betType: "win", selection: "6", odds: 38.0 },
-  { betType: "quinella", selection: "4-12", odds: 42.0 },
-  { betType: "wide", selection: "4-12", odds: 12.5 },
-  { betType: "wide", selection: "8-12", odds: 22.0 },
-  { betType: "trio", selection: "4-8-12", odds: 95.0 },
-  { betType: "exacta", selection: "4-12", odds: 68.0 },
-  { betType: "trifecta", selection: "4-8-12", odds: 580.0 },
-  { betType: "place", selection: "12", odds: 6.4 },
-];
+const RACE_TITLES: Record<string, string[]> = {
+  東京: [
+    "3歳未勝利",
+    "3歳未勝利",
+    "3歳以上1勝クラス",
+    "3歳以上1勝クラス",
+    "2歳新馬",
+    "3歳以上2勝クラス",
+    "3歳以上2勝クラス",
+    "立川特別",
+    "多摩川ステークス",
+    "夏至ステークス",
+    "府中ステークス",
+    "晩夏ステークス",
+  ],
+  阪神: [
+    "3歳未勝利",
+    "3歳未勝利",
+    "3歳以上1勝クラス",
+    "3歳以上1勝クラス",
+    "2歳新馬",
+    "3歳以上2勝クラス",
+    "3歳以上2勝クラス",
+    "甲南特別",
+    "御影ステークス",
+    "六甲特別",
+    "兵庫ステークス",
+    "尼崎ステークス",
+  ],
+  京都: [
+    "3歳未勝利",
+    "3歳未勝利",
+    "3歳以上1勝クラス",
+    "3歳以上1勝クラス",
+    "2歳新馬",
+    "3歳以上2勝クラス",
+    "3歳以上2勝クラス",
+    "木津川特別",
+    "朱雀ステークス",
+    "貴船ステークス",
+    "清水ステークス",
+    "鴨川ステークス",
+  ],
+};
 
-const kyotoHorses: Horse[] = [
-  horse({
-    number: 6,
-    bracket: 3,
-    name: "ブラックサンダー",
-    jockey: "藤岡佑介",
-    oddsWin: 3.6,
-    runningStyle: "逃",
-    factors: {
-      courseFit: 90,
-      paceFit: 88,
-      conditionFit: 72,
-      formSignal: 82,
-      valueGap: 38,
-      gateJockey: 66,
-    },
-    comment: "ダート短距離の機動力が突出。スタートが決まれば先頭固定。",
-  }),
-  horse({
-    number: 10,
-    bracket: 5,
-    name: "レッドキャノン",
-    jockey: "池添謙一",
-    oddsWin: 5.2,
-    runningStyle: "追",
-    factors: {
-      courseFit: 76,
-      paceFit: 70,
-      conditionFit: 68,
-      formSignal: 74,
-      valueGap: 50,
-      gateJockey: 60,
-    },
-    comment: "追い込み一辺倒だが、このメンバーなら届く余地あり。",
-  }),
-  horse({
-    number: 3,
-    bracket: 2,
-    name: "アンバーパルス",
-    jockey: "浜中俊",
-    oddsWin: 8.9,
-    runningStyle: "先",
-    factors: {
-      courseFit: 72,
-      paceFit: 74,
-      conditionFit: 66,
-      formSignal: 60,
-      valueGap: 62,
-      gateJockey: 64,
-    },
-    comment: "枠なりの好位。展開ひとつで馬券圏内。",
-  }),
-  horse({
-    number: 15,
-    bracket: 8,
-    name: "カッパーボルト",
-    jockey: "菱田裕二",
-    oddsWin: 31.0,
-    runningStyle: "差",
-    factors: {
-      courseFit: 80,
-      paceFit: 72,
-      conditionFit: 70,
-      formSignal: 68,
-      valueGap: 88,
-      gateJockey: 50,
-    },
-    comment: "ダート適性は高いが人気薄。好位確保できれば激走圏。",
-  }),
-  horse({
-    number: 8,
-    bracket: 4,
-    name: "シャドウドライブ",
-    jockey: "和田竜二",
-    oddsWin: 19.8,
-    runningStyle: "先",
-    factors: {
-      courseFit: 74,
-      paceFit: 76,
-      conditionFit: 68,
-      formSignal: 70,
-      valueGap: 80,
-      gateJockey: 62,
-    },
-    comment: "先行力があり穴になりやすい。単勝より紐向き。",
-  }),
-];
+function makeHorses(seed: number, count: number): Horse[] {
+  const list: Horse[] = [];
+  for (let i = 0; i < count; i++) {
+    const number = i + 1;
+    const bracket = Math.ceil(number / 2);
+    const base = 48 + ((seed * 7 + i * 11) % 40);
+    const oddsWin = Number((2.4 + ((seed + i * 3) % 40) * 1.1).toFixed(1));
+    list.push(
+      horse({
+        number,
+        bracket: Math.min(bracket, 8),
+        name: `${NAMES[(seed + i) % NAMES.length]}${number}`,
+        jockey: JOCKEYS[(seed + i) % JOCKEYS.length],
+        oddsWin,
+        runningStyle: (["逃", "先", "差", "追"] as const)[i % 4],
+        factors: {
+          courseFit: Math.min(92, base + (i % 5) * 3),
+          paceFit: Math.min(90, base - 2 + (i % 4) * 4),
+          conditionFit: Math.min(90, base + (seed % 6)),
+          formSignal: Math.min(90, base + 4 - (i % 3)),
+          valueGap: Math.min(95, 40 + Math.floor(oddsWin) + (i % 5) * 5),
+          gateJockey: 50 + (bracket <= 3 ? 12 : 4),
+        },
+        comment:
+          oddsWin >= 15
+            ? "人気薄だが複勝圏の余地あり。展開次第で浮上。"
+            : "先行有利なら上位固定。人気相応の安定感。",
+      }),
+    );
+  }
+  return list;
+}
 
-const kyotoOdds: OddsEntry[] = [
-  { betType: "win", selection: "15", odds: 31.0 },
-  { betType: "win", selection: "8", odds: 19.8 },
-  { betType: "quinella", selection: "6-15", odds: 55.0 },
-  { betType: "wide", selection: "6-15", odds: 14.2 },
-  { betType: "wide", selection: "10-15", odds: 24.0 },
-  { betType: "trio", selection: "6-10-15", odds: 110.0 },
-  { betType: "exacta", selection: "6-15", odds: 78.0 },
-  { betType: "trifecta", selection: "6-10-15", odds: 650.0 },
-  { betType: "bracket_quinella", selection: "3-8", odds: 36.0 },
-];
+function makeOddsBoard(horses: Horse[], rich: boolean): OddsEntry[] {
+  const sorted = [...horses].sort((a, b) => a.oddsWin - b.oddsWin);
+  const favorite = sorted[0];
+  const long1 = sorted[sorted.length - 1];
+  const long2 = sorted[Math.max(0, sorted.length - 2)];
+  const mid = sorted[Math.floor(sorted.length / 2)];
 
-export const races: Race[] = [
+  const board: OddsEntry[] = [
+    { betType: "win", selection: String(favorite.number), odds: favorite.oddsWin },
+    { betType: "win", selection: String(long1.number), odds: Math.max(20, long1.oddsWin) },
+    { betType: "place", selection: String(long1.number), odds: Math.max(21, Number((long1.oddsWin * 0.55).toFixed(1))) },
+    {
+      betType: "quinella",
+      selection: `${favorite.number}-${long1.number}`,
+      odds: Number((favorite.oddsWin * long1.oddsWin * 0.45).toFixed(1)),
+    },
+    {
+      betType: "wide",
+      selection: `${favorite.number}-${long1.number}`,
+      odds: Number((Math.max(8, favorite.oddsWin * long1.oddsWin * 0.12)).toFixed(1)),
+    },
+  ];
+
+  // 複勝の高配当サンプル（閾値20以上）を必ず含める
+  board.push({
+    betType: "place",
+    selection: String(long2.number),
+    odds: 24.5,
+  });
+
+  if (rich) {
+    board.push(
+      {
+        betType: "quinella",
+        selection: `${long1.number}-${long2.number}`,
+        odds: Number((long1.oddsWin * long2.oddsWin * 0.35).toFixed(1)),
+      },
+      {
+        betType: "wide",
+        selection: `${mid.number}-${long1.number}`,
+        odds: 22.8,
+      },
+      {
+        betType: "exacta",
+        selection: `${favorite.number}-${long1.number}`,
+        odds: Number((favorite.oddsWin * long1.oddsWin * 0.85).toFixed(1)),
+      },
+      {
+        betType: "exacta",
+        selection: `${long1.number}-${favorite.number}`,
+        odds: Number((long1.oddsWin * favorite.oddsWin * 1.2).toFixed(1)),
+      },
+      {
+        betType: "trio",
+        selection: `${favorite.number}-${mid.number}-${long1.number}`,
+        odds: 96.0,
+      },
+      {
+        betType: "trifecta",
+        selection: `${favorite.number}-${mid.number}-${long1.number}`,
+        odds: 520.0,
+      },
+      {
+        betType: "bracket_quinella",
+        selection: `${favorite.bracket}-${long1.bracket}`,
+        odds: 26.0,
+      },
+    );
+  }
+
+  return board.map((e) => ({
+    ...e,
+    odds: Math.max(1.1, Number(e.odds.toFixed(1))),
+  }));
+}
+
+type VenueConfig = {
+  venue: string;
+  weather: string;
+  condition: string;
+  trackPattern: ("芝" | "ダート")[];
+  distances: string[];
+};
+
+const VENUES: VenueConfig[] = [
   {
-    id: "tokyo-11",
-    authority: "JRA",
     venue: "東京",
-    raceNumber: 11,
-    title: "府中ステークス",
-    distance: "芝1600m",
-    track: "芝",
-    startTime: "15:40",
     weather: "晴",
     condition: "良",
-    featured: true,
-    fieldSize: 16,
-    horses: tokyoHorses,
-    oddsBoard: tokyoOdds,
+    trackPattern: ["ダート", "ダート", "芝", "芝", "芝", "ダート", "芝", "芝", "芝", "芝", "芝", "芝"],
+    distances: [
+      "ダート1400m",
+      "ダート1600m",
+      "芝1800m",
+      "芝1400m",
+      "芝1600m",
+      "ダート2100m",
+      "芝2400m",
+      "芝1600m",
+      "芝1800m",
+      "芝1400m",
+      "芝1600m",
+      "芝2000m",
+    ],
   },
   {
-    id: "hanshin-10",
-    authority: "JRA",
     venue: "阪神",
-    raceNumber: 10,
-    title: "六甲特別",
-    distance: "芝2000m",
-    track: "芝",
-    startTime: "15:01",
     weather: "曇",
     condition: "稍重",
-    fieldSize: 14,
-    horses: hanshinHorses,
-    oddsBoard: hanshinOdds,
+    trackPattern: ["ダート", "ダート", "芝", "芝", "芝", "ダート", "芝", "芝", "芝", "芝", "ダート", "芝"],
+    distances: [
+      "ダート1200m",
+      "ダート1800m",
+      "芝1600m",
+      "芝1200m",
+      "芝1400m",
+      "ダート1400m",
+      "芝2200m",
+      "芝1400m",
+      "芝1600m",
+      "芝2000m",
+      "ダート1800m",
+      "芝1600m",
+    ],
   },
   {
-    id: "kyoto-9",
-    authority: "JRA",
     venue: "京都",
-    raceNumber: 9,
-    title: "朱雀ステークス",
-    distance: "ダート1400m",
-    track: "ダート",
-    startTime: "14:25",
     weather: "晴",
     condition: "良",
-    fieldSize: 16,
-    horses: kyotoHorses,
-    oddsBoard: kyotoOdds,
+    trackPattern: ["ダート", "ダート", "芝", "芝", "芝", "ダート", "芝", "ダート", "ダート", "芝", "芝", "芝"],
+    distances: [
+      "ダート1200m",
+      "ダート1800m",
+      "芝1400m",
+      "芝1800m",
+      "芝1200m",
+      "ダート1400m",
+      "芝2000m",
+      "ダート1400m",
+      "ダート1400m",
+      "芝1600m",
+      "芝1800m",
+      "芝2200m",
+    ],
   },
 ];
+
+/** 特に厚いオッズ板・馬データにするレース番号（1-indexed） */
+const FEATURED_RACE_NUMBERS: Record<string, number> = {
+  東京: 11,
+  阪神: 10,
+  京都: 9,
+};
+
+function buildVenueRaces(config: VenueConfig): Race[] {
+  const titles = RACE_TITLES[config.venue];
+  const featuredNum = FEATURED_RACE_NUMBERS[config.venue];
+
+  return Array.from({ length: 12 }, (_, idx) => {
+    const raceNumber = idx + 1;
+    const rich = raceNumber === featuredNum || raceNumber >= 9;
+    const horseCount = rich ? 8 : 6;
+    const seed = config.venue.charCodeAt(0) * 10 + raceNumber;
+    const horses = makeHorses(seed, horseCount);
+
+    // 注目レースは固定の穴馬コメントを少し寄せる
+    if (raceNumber === featuredNum) {
+      const longShot = [...horses].sort((a, b) => b.oddsWin - a.oddsWin)[0];
+      longShot.comment = "人気薄でも複勝圏の内容。高配当候補の軸・相手向き。";
+      longShot.factors = {
+        ...longShot.factors,
+        formSignal: Math.max(longShot.factors.formSignal, 72),
+        valueGap: Math.max(longShot.factors.valueGap, 85),
+      };
+    }
+
+    return {
+      id: `${slug(config.venue)}-${raceNumber}`,
+      authority: "JRA" as const,
+      venue: config.venue,
+      raceNumber,
+      title: titles[idx],
+      distance: config.distances[idx],
+      track: config.trackPattern[idx],
+      startTime: START_TIMES[idx],
+      weather: config.weather,
+      condition: config.condition,
+      featured: raceNumber === featuredNum,
+      fieldSize: horseCount,
+      horses,
+      oddsBoard: makeOddsBoard(horses, rich),
+    };
+  });
+}
+
+function slug(venue: string) {
+  const map: Record<string, string> = { 東京: "tokyo", 阪神: "hanshin", 京都: "kyoto" };
+  return map[venue] ?? venue;
+}
+
+export const races: Race[] = VENUES.flatMap(buildVenueRaces);
+
+export const venues = VENUES.map((v) => v.venue);
 
 export function getRace(id: string): Race | undefined {
   return races.find((race) => race.id === id);
@@ -396,4 +342,18 @@ export function getRace(id: string): Race | undefined {
 
 export function getFeaturedRace(): Race {
   return races.find((race) => race.featured) ?? races[0];
+}
+
+export function getRacesByVenue(venue: string): Race[] {
+  return races
+    .filter((r) => r.venue === venue)
+    .sort((a, b) => a.raceNumber - b.raceNumber);
+}
+
+export function groupRacesByVenue(list: Race[] = races): { venue: string; races: Race[] }[] {
+  const order = venues;
+  return order.map((venue) => ({
+    venue,
+    races: list.filter((r) => r.venue === venue).sort((a, b) => a.raceNumber - b.raceNumber),
+  }));
 }

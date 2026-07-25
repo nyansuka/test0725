@@ -135,13 +135,29 @@ placePotential = currentScorer.score(horse, race)
 - `oddsThreshold` 初期値: `20`（変更可能）
 - `scoreMin` 初期値: `60`（変更可能）
 
-### 5.3 出力ラベル（案）
+### 5.3 出力ラベル
 
-| ラベル | 条件イメージ |
-|--------|----------------|
-| 注目穴 | 閾値以上かつ relatedPlacePotential 上位 |
-| 抑え候補 | 閾値以上かつ relatedPlacePotential 中位 |
-| 見送り | ゲート通過でもスコア不足（詳細では表示可） |
+| ラベル | 条件 |
+|--------|------|
+| 注目穴 | オッズ≥閾値 かつ relatedPlacePotential ≥ scoreMin かつ ≥ 70 |
+| 抑え候補 | オッズ≥閾値 かつ relatedPlacePotential ≥ scoreMin かつ < 70 |
+| 見送り | オッズ≥閾値（ゲート通過）だが relatedPlacePotential < scoreMin。注目穴ボードには出さず、**レース詳細のオッズ板**で表示 |
+
+ラベル境界 70 は `LABEL_SCORE_THRESHOLD`（scoreMin とは独立）。
+
+### 5.3.1 レース期待度（S〜D）
+
+レース単位で、通過した注目穴候補の質・量から算出する（S が最上）。
+
+```
+edge = min(100, topScore*0.7 + min(highCount,4)*8 + min(pickCount,6)*3)
+  highCount = スコア≥70 の候補数
+S: edge≥85 かつ highCount≥2
+A: edge≥70
+B: edge≥55
+C: edge≥40
+D: それ未満、または候補なし
+```
 
 ### 5.4 検証の考え方（後続）
 
@@ -158,7 +174,7 @@ placePotential = currentScorer.score(horse, race)
 |------|------|
 | `/` トップ | ブランド + 今日の注目穴への導線 |
 | `/longshots` 注目穴ボード | **メイン画面。** 当日 JRA 全レース・全券種の高配当候補一覧 |
-| `/races` レース一覧 | JRA 会場・発走順の全レース |
+| `/races` レース一覧 | **開催場ごとに全レース（1〜12R）** を表示 |
 | `/races/[id]` レース詳細 | 出走表 + 券種別候補ハイライト + 根拠 |
 | `/journal` 成績日記 | **自分の購入／参考予想家の買い目の入力・一覧・回収率** |
 | `/method` 予想の見方 | フィルタ・スコア方針の説明（差し替え可能性も明記） |
@@ -417,15 +433,17 @@ summarizeJournal(
 ### Phase 0（現状）
 
 - Next.js App Router + Docker
-- 静的サンプル `src/data/races.ts`（単勝中心・本命寄り）
+- サンプルは **東京・阪神・京都の各12レース**（JRA・全券種 oddsBoard）
+- `/longshots`・`/settings`・会場別 `/races`・`/journal` を実装済み
 
-### Phase 1（選別の骨格）— 次にやる
+### Phase 1（選別の骨格）— 完了相当
 
 - `authority: "JRA"` と券種別 `oddsBoard` をデータモデルに追加
 - `selectLongshots` + `Scorer` インターフェース + ルール仮実装
 - サンプルに閾値以上の各券種候補を追加
 - `/longshots` と `/settings`（閾値・券種）を実装
 - トップを「注目穴」中心に改修
+- 会場ごとの全レース一覧・見送り表示・レース期待度 S〜D
 
 ### Phase 2（説明可能性）
 
@@ -506,6 +524,9 @@ src/
 | 開催区分なし | **JRA のみ**（地方除外） |
 | 横断ビューなし | `/longshots` + `/settings` |
 | 購入・実績の記録なし | **`/journal` で購入／参考買い目と回収率** |
+| レース期待度なし | **S〜D（候補の質×量）** |
+| 見送り非表示 | **詳細オッズ板で見送り表示** |
+| 会場横断の薄い一覧 | **会場ごとの全レース（1〜12R）** |
 
 ## 付録 B: 用語
 
@@ -515,6 +536,8 @@ src/
 | placePotential | その馬が 1〜3着に入る見込みの仮スコア |
 | relatedPlacePotential | 買い目に含まれる馬のポテンシャル合成値 |
 | Scorer | placePotential を計算する差し替え可能モジュール |
+| 見送り | オッズゲートは通過したが最低スコア未満の買い目 |
+| レース期待度 | レース単位の穴候補の厚み（S〜D） |
 | BetSlip | 自分の購入または予想家の参考買い目 1 件分の記録 |
 | 回収率 | 払戻合計 ÷ 投資合計 × 100（全体を主、的中のみは補助） |
 | 仮想投資 | 予想家の推奨買い目を比較するため仮定する投資額（初期 100 円等） |

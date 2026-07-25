@@ -122,6 +122,7 @@ export function LongshotsBoard({ races }: Props) {
           <span className="ml-auto text-ink/50">
             {hydrated ? `${picks.length} 件` : "読込中…"}
             {" · "}最低スコア {settings.scoreMin}
+            （券種ごとの見送りはレース詳細へ）
           </span>
         </div>
       </div>

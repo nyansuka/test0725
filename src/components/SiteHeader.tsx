@@ -4,7 +4,7 @@ const links = [
   { href: "/longshots", label: "注目穴" },
   { href: "/races", label: "レース" },
   { href: "/journal", label: "成績日記" },
-  { href: "/method", label: "見方" },
+  { href: "/method", label: "予想の見方" },
   { href: "/settings", label: "設定" },
 ];
 
