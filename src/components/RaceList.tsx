@@ -10,8 +10,11 @@ import {
 } from "@/domain/longshots";
 import type { Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
-import { groupRacesByVenue } from "@/data/races";
+import { useRaceDay } from "@/components/RaceDayProvider";
+import { RaceDayPicker } from "@/components/RaceDayPicker";
+import { filterRacesByDate, groupRacesByVenue } from "@/data/races";
 import { LongshotMark, longshotHorseNumbers } from "@/components/LongshotMark";
+import { formatJstDateLabel } from "@/domain/date";
 
 type Props = {
   races: Race[];
@@ -27,10 +30,18 @@ const rankColor: Record<string, string> = {
 
 export function RaceList({ races }: Props) {
   const { settings } = useSettings();
-  const allPicks = useMemo(() => selectLongshots(races, settings), [races, settings]);
+  const { selectedDate } = useRaceDay();
+  const dayRaces = useMemo(
+    () => filterRacesByDate(races, selectedDate),
+    [races, selectedDate],
+  );
+  const allPicks = useMemo(
+    () => selectLongshots(dayRaces, settings),
+    [dayRaces, settings],
+  );
 
   const groups = useMemo(() => {
-    return groupRacesByVenue(races).map(({ venue, races: venueRaces }) => ({
+    return groupRacesByVenue(dayRaces).map(({ venue, races: venueRaces }) => ({
       venue,
       races: venueRaces.map((race) => {
         const picks = allPicks.filter((p) => p.raceId === race.id);
@@ -43,10 +54,21 @@ export function RaceList({ races }: Props) {
         };
       }),
     }));
-  }, [races, allPicks]);
+  }, [dayRaces, allPicks]);
 
   const [activeVenue, setActiveVenue] = useState(groups[0]?.venue ?? "");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (groups.length === 0) {
+      setActiveVenue("");
+      return;
+    }
+    if (!groups.some((g) => g.venue === activeVenue)) {
+      setActiveVenue(groups[0].venue);
+      setExpandedId(null);
+    }
+  }, [groups, activeVenue]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -74,9 +96,19 @@ export function RaceList({ races }: Props) {
         </p>
         <h2 className="mt-2 text-3xl font-bold text-ink md:text-4xl">レース一覧</h2>
         <p className="mt-3 max-w-2xl text-ink/70">
-          開催場タブで切り替え、各レースを展開して出走内容を確認できます。注目穴馬には
+          開催日を選び、会場タブで全レース（1〜12R）を確認できます。注目穴馬には
           <LongshotMark className="mx-0.5" /> が付きます。{EXPECTATION_RANK_HELP}
         </p>
+
+        <div className="mt-8">
+          <RaceDayPicker />
+        </div>
+
+        {groups.length === 0 ? (
+          <p className="mt-12 border border-ink/10 bg-sand-dim/40 px-6 py-10 text-center text-ink/60">
+            {formatJstDateLabel(selectedDate)} の開催データがありません。別の日を選ぶか「本日に戻す」を押してください。
+          </p>
+        ) : null}
 
         <div
           role="tablist"

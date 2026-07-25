@@ -1,11 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BET_TYPE_LABELS, ALL_BET_TYPES } from "@/domain/betTypes";
 import { selectLongshots } from "@/domain/longshots";
 import type { BetType, Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
+import { useRaceDay } from "@/components/RaceDayProvider";
+import { RaceDayPicker } from "@/components/RaceDayPicker";
 import { LongshotTable } from "@/components/LongshotTable";
+import { filterRacesByDate } from "@/data/races";
+import { formatJstDateLabel } from "@/domain/date";
 
 type SortKey = "score" | "odds" | "time";
 
@@ -15,18 +19,29 @@ type Props = {
 
 export function LongshotsBoard({ races }: Props) {
   const { settings, setOddsThreshold, hydrated } = useSettings();
+  const { selectedDate } = useRaceDay();
+  const dayRaces = useMemo(
+    () => filterRacesByDate(races, selectedDate),
+    [races, selectedDate],
+  );
   const [sort, setSort] = useState<SortKey>("score");
   const [venue, setVenue] = useState<string>("all");
   const [track, setTrack] = useState<"all" | "芝" | "ダート">("all");
   const [betType, setBetType] = useState<"all" | BetType>("all");
 
   const venues = useMemo(
-    () => [...new Set(races.map((r) => r.venue))],
-    [races],
+    () => [...new Set(dayRaces.map((r) => r.venue))],
+    [dayRaces],
   );
 
+  useEffect(() => {
+    if (venue !== "all" && !venues.includes(venue)) {
+      setVenue("all");
+    }
+  }, [venues, venue]);
+
   const picks = useMemo(() => {
-    let list = selectLongshots(races, settings);
+    let list = selectLongshots(dayRaces, settings);
     if (venue !== "all") list = list.filter((p) => p.venue === venue);
     if (track !== "all") list = list.filter((p) => p.track === track);
     if (betType !== "all") list = list.filter((p) => p.betType === betType);
@@ -36,10 +51,17 @@ export function LongshotsBoard({ races }: Props) {
       return [...list].sort((a, b) => a.startTime.localeCompare(b.startTime));
     }
     return list;
-  }, [races, settings, venue, track, betType, sort]);
+  }, [dayRaces, settings, venue, track, betType, sort]);
 
   return (
     <div>
+      <div className="mb-6">
+        <RaceDayPicker />
+        <p className="mt-2 text-sm text-ink/55">
+          表示対象: {formatJstDateLabel(selectedDate)}
+          {dayRaces.length === 0 ? "（開催なし）" : ` · ${dayRaces.length} レース`}
+        </p>
+      </div>
       <div className="flex flex-col gap-6 border border-ink/10 bg-sand-dim/40 p-5 md:p-6">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <label className="block text-sm">

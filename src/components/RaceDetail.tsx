@@ -63,7 +63,7 @@ export function RaceDetail({ race }: Props) {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="font-[family-name:var(--font-display)] text-sm tracking-[0.2em] text-turf">
-            {race.venue} {race.raceNumber}R · {race.startTime} · JRA
+            {race.raceDate} · {race.venue} {race.raceNumber}R · {race.startTime} · JRA
           </p>
           <h1 className="mt-2 text-3xl font-bold text-ink md:text-5xl">{race.title}</h1>
           <p className="mt-3 text-ink/70">

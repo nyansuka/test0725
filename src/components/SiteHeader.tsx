@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RaceDayPicker } from "@/components/RaceDayPicker";
 
 const links = [
   { href: "/longshots", label: "注目穴" },
@@ -23,7 +24,7 @@ export function SiteHeader({ variant = "solid" }: Props) {
           : "border-b border-ink/10 bg-sand/95 backdrop-blur"
       }
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-5 md:px-8">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-5 md:px-8">
         <Link
           href="/"
           className={`font-[family-name:var(--font-display)] text-lg font-bold tracking-[0.18em] md:text-xl ${
@@ -32,21 +33,27 @@ export function SiteHeader({ variant = "solid" }: Props) {
         >
           UMANOTE
         </Link>
-        <nav
-          className={`flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm ${
-            overlay ? "text-sand/80" : "text-ink/70"
-          }`}
-        >
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`transition ${overlay ? "hover:text-sand" : "hover:text-ink"}`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2">
+          <RaceDayPicker
+            variant="compact"
+            className={overlay ? "text-sand/85" : "text-ink/70"}
+          />
+          <nav
+            className={`flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm ${
+              overlay ? "text-sand/80" : "text-ink/70"
+            }`}
+          >
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`transition ${overlay ? "hover:text-sand" : "hover:text-ink"}`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
       </div>
     </header>
   );

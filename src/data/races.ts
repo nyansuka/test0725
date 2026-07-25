@@ -1,4 +1,5 @@
 import type { Horse, OddsEntry, Race } from "@/domain/types";
+import { getJstDateString, shiftJstDate } from "@/domain/date";
 
 function horse(
   partial: Omit<Horse, "factors"> & { factors?: Horse["factors"] },
@@ -286,18 +287,18 @@ const FEATURED_RACE_NUMBERS: Record<string, number> = {
   京都: 9,
 };
 
-function buildVenueRaces(config: VenueConfig): Race[] {
+function buildVenueRaces(config: VenueConfig, raceDate: string): Race[] {
   const titles = RACE_TITLES[config.venue];
   const featuredNum = FEATURED_RACE_NUMBERS[config.venue];
+  const dateKey = raceDate.replace(/-/g, "");
 
   return Array.from({ length: 12 }, (_, idx) => {
     const raceNumber = idx + 1;
     const rich = raceNumber === featuredNum || raceNumber >= 9;
     const horseCount = rich ? 8 : 6;
-    const seed = config.venue.charCodeAt(0) * 10 + raceNumber;
+    const seed = config.venue.charCodeAt(0) * 10 + raceNumber + dateKey.length;
     const horses = makeHorses(seed, horseCount);
 
-    // 注目レースは固定の穴馬コメントを少し寄せる
     if (raceNumber === featuredNum) {
       const longShot = [...horses].sort((a, b) => b.oddsWin - a.oddsWin)[0];
       longShot.comment = "人気薄でも複勝圏の内容。高配当候補の軸・相手向き。";
@@ -309,8 +310,9 @@ function buildVenueRaces(config: VenueConfig): Race[] {
     }
 
     return {
-      id: `${slug(config.venue)}-${raceNumber}`,
+      id: `${slug(config.venue)}-${dateKey}-${raceNumber}`,
       authority: "JRA" as const,
+      raceDate,
       venue: config.venue,
       raceNumber,
       title: titles[idx],
@@ -332,27 +334,49 @@ function slug(venue: string) {
   return map[venue] ?? venue;
 }
 
-export const races: Race[] = VENUES.flatMap(buildVenueRaces);
+/** サンプル開催日: カレンダー当日（JST）と1週間前 */
+export const sampleToday = getJstDateString();
+export const samplePrevWeek = shiftJstDate(sampleToday, -7);
+
+function buildMeeting(raceDate: string, venueConfigs: VenueConfig[]): Race[] {
+  return venueConfigs.flatMap((config) => buildVenueRaces(config, raceDate));
+}
+
+export const races: Race[] = [
+  ...buildMeeting(sampleToday, VENUES),
+  // 日付切替のデモ用（東京・阪神のみ）
+  ...buildMeeting(samplePrevWeek, VENUES.filter((v) => v.venue !== "京都")),
+];
 
 export const venues = VENUES.map((v) => v.venue);
+
+export function listRaceDates(list: Race[] = races): string[] {
+  return [...new Set(list.map((r) => r.raceDate))].sort((a, b) => b.localeCompare(a));
+}
+
+export function filterRacesByDate(list: Race[], raceDate: string): Race[] {
+  return list.filter((r) => r.raceDate === raceDate);
+}
 
 export function getRace(id: string): Race | undefined {
   return races.find((race) => race.id === id);
 }
 
-export function getFeaturedRace(): Race {
-  return races.find((race) => race.featured) ?? races[0];
+export function getFeaturedRace(raceDate?: string): Race {
+  const pool = raceDate ? filterRacesByDate(races, raceDate) : races;
+  return pool.find((race) => race.featured) ?? pool[0] ?? races[0];
 }
 
-export function getRacesByVenue(venue: string): Race[] {
+export function getRacesByVenue(venue: string, raceDate?: string): Race[] {
   return races
-    .filter((r) => r.venue === venue)
+    .filter((r) => r.venue === venue && (!raceDate || r.raceDate === raceDate))
     .sort((a, b) => a.raceNumber - b.raceNumber);
 }
 
-export function groupRacesByVenue(list: Race[] = races): { venue: string; races: Race[] }[] {
+export function groupRacesByVenue(list: Race[]): { venue: string; races: Race[] }[] {
   const order = venues;
-  return order.map((venue) => ({
+  const present = order.filter((venue) => list.some((r) => r.venue === venue));
+  return present.map((venue) => ({
     venue,
     races: list.filter((r) => r.venue === venue).sort((a, b) => a.raceNumber - b.raceNumber),
   }));

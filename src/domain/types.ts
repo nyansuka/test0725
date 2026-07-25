@@ -44,6 +44,8 @@ export type RaceExpectationRank = "S" | "A" | "B" | "C" | "D";
 export type Race = {
   id: string;
   authority: Authority;
+  /** 開催日 YYYY-MM-DD（JST） */
+  raceDate: string;
   venue: string;
   raceNumber: number;
   title: string;

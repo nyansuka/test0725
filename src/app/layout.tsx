@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Noto_Sans_JP, Source_Serif_4 } from "next/font/google";
 import { JournalProvider } from "@/components/JournalProvider";
+import { RaceDayProvider } from "@/components/RaceDayProvider";
 import { SettingsProvider } from "@/components/SettingsProvider";
 import "./globals.css";
 
@@ -40,7 +41,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-[family-name:var(--font-jp)]">
         <SettingsProvider>
-          <JournalProvider>{children}</JournalProvider>
+          <RaceDayProvider>
+            <JournalProvider>{children}</JournalProvider>
+          </RaceDayProvider>
         </SettingsProvider>
       </body>
     </html>

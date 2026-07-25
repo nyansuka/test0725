@@ -139,7 +139,7 @@ export function JournalPanel() {
             >
               {races.map((r) => (
                 <option key={r.id} value={r.id}>
-                  {r.venue} {r.raceNumber}R {r.title}
+                  {r.raceDate} {r.venue} {r.raceNumber}R {r.title}
                 </option>
               ))}
             </select>
