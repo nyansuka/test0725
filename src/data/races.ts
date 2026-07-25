@@ -107,6 +107,8 @@ function makeHorses(seed: number, count: number): Horse[] {
     const bracket = Math.ceil(number / 2);
     const base = 48 + ((seed * 7 + i * 11) % 40);
     const oddsWin = Number((2.4 + ((seed + i * 3) % 40) * 1.1).toFixed(1));
+    const placeMin = Math.max(1.1, Number((oddsWin * 0.28).toFixed(1)));
+    const placeMax = Math.max(placeMin + 0.2, Number((oddsWin * 0.55).toFixed(1)));
     list.push(
       horse({
         number,
@@ -114,6 +116,7 @@ function makeHorses(seed: number, count: number): Horse[] {
         name: `${NAMES[(seed + i) % NAMES.length]}${number}`,
         jockey: JOCKEYS[(seed + i) % JOCKEYS.length],
         oddsWin,
+        oddsPlace: { min: placeMin, max: placeMax },
         runningStyle: (["逃", "先", "差", "追"] as const)[i % 4],
         factors: {
           courseFit: Math.min(92, base + (i % 5) * 3),

@@ -1,12 +1,81 @@
-import { BET_TYPE_LABELS } from "@/domain/betTypes";
+import { BET_TYPE_LABELS, parseSelectionNumbers } from "@/domain/betTypes";
 import type { LongshotPick } from "@/domain/types";
 import Link from "next/link";
 import { LongshotMark } from "@/components/LongshotMark";
+import { getRace } from "@/data/races";
+import {
+  formatPopularityParen,
+  formatWinOdds,
+  popularityByNumber,
+} from "@/domain/odds";
+import type { ReactNode } from "react";
 
 type Props = {
   picks: LongshotPick[];
   emptyMessage?: string;
 };
+
+function SelectionCell({ pick }: { pick: LongshotPick }) {
+  const race = getRace(pick.raceId);
+  const pop = race ? popularityByNumber(race.horses) : new Map<number, number>();
+
+  let body: ReactNode;
+
+  if (!race) {
+    body = pick.selection;
+  } else if (pick.betType === "bracket_quinella") {
+    const ranks = [...new Set(
+      pick.relatedHorseNumbers
+        .map((n) => pop.get(n))
+        .filter((r): r is number => r != null),
+    )].sort((a, b) => a - b);
+    body = (
+      <>
+        {pick.selection}{" "}
+        {ranks.map((r) => (
+          <span key={r} className="ml-1 text-sm font-medium text-ink/65">
+            {formatPopularityParen(r)}
+          </span>
+        ))}
+      </>
+    );
+  } else {
+    const parts = pick.selection.split(/[-–—/]/);
+    const nums = parseSelectionNumbers(pick.selection);
+    body = (
+      <>
+        {parts.map((part, i) => {
+          const n = nums[i];
+          const rank = n != null ? pop.get(n) : undefined;
+          return (
+            <span key={`${part}-${i}`}>
+              {i > 0 ? "-" : null}
+              {part.trim()}
+              {rank != null && (
+                <span className="ml-1 text-sm font-medium text-ink/65">
+                  {formatPopularityParen(rank)}
+                </span>
+              )}
+            </span>
+          );
+        })}
+      </>
+    );
+  }
+
+  return (
+    <td className="py-4 pr-3">
+      <span className="font-[family-name:var(--font-display)] text-base font-semibold text-ink">
+        {body}
+      </span>
+      {pick.label === "注目穴" && (
+        <span className="ml-1.5 align-middle text-base">
+          <LongshotMark />
+        </span>
+      )}
+    </td>
+  );
+}
 
 export function LongshotTable({ picks, emptyMessage = "条件に合う候補がありません。" }: Props) {
   if (picks.length === 0) {
@@ -15,7 +84,7 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[760px] text-left text-sm">
+      <table className="w-full min-w-[800px] text-left text-sm">
         <thead>
           <tr className="border-b border-ink/20 text-ink/50">
             <th className="py-3 pr-3 font-medium">印</th>
@@ -44,15 +113,10 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
                 <span className="mt-1 block text-xs text-ink/50">{pick.startTime}</span>
               </td>
               <td className="py-4 pr-3">{BET_TYPE_LABELS[pick.betType]}</td>
-              <td className="py-4 pr-3 font-[family-name:var(--font-display)] text-base font-semibold">
-                {pick.selection}
-                {pick.label === "注目穴" && (
-                  <span className="ml-1 text-sm font-normal text-signal">
-                    <LongshotMark />
-                  </span>
-                )}
+              <SelectionCell pick={pick} />
+              <td className="py-4 pr-3 font-medium text-signal">
+                {formatWinOdds(pick.odds)}
               </td>
-              <td className="py-4 pr-3 font-medium text-signal">{pick.odds.toFixed(1)}</td>
               <td className="min-w-[120px] py-4 pr-3">
                 <div className="flex items-center gap-2">
                   <span className="font-[family-name:var(--font-display)] text-lg font-semibold text-turf">

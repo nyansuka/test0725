@@ -15,6 +15,13 @@ import { RaceDayPicker } from "@/components/RaceDayPicker";
 import { filterRacesByDate, groupRacesByVenue } from "@/data/races";
 import { LongshotMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import { formatJstDateLabel } from "@/domain/date";
+import {
+  formatPopularity,
+  formatPopularityParen,
+  formatWinOdds,
+  placeOddsLabel,
+  popularityByNumber,
+} from "@/domain/odds";
 
 type Props = {
   races: Race[];
@@ -210,42 +217,55 @@ export function RaceList({ races }: Props) {
                         </div>
 
                         <div className="mt-4 overflow-x-auto">
-                          <table className="w-full min-w-[520px] text-left text-sm">
+                          <table className="w-full min-w-[640px] text-left text-sm">
                             <thead>
                               <tr className="border-b border-ink/15 text-ink/45">
                                 <th className="py-2 pr-2 font-medium">印</th>
                                 <th className="py-2 pr-2 font-medium">馬番</th>
                                 <th className="py-2 pr-2 font-medium">馬名</th>
                                 <th className="py-2 pr-2 font-medium">騎手</th>
+                                <th className="py-2 pr-2 font-medium">人気</th>
                                 <th className="py-2 pr-2 font-medium">単勝</th>
+                                <th className="py-2 pr-2 font-medium">複勝</th>
                                 <th className="py-2 font-medium">スコア</th>
                               </tr>
                             </thead>
                             <tbody>
-                              {[...horses]
-                                .sort((a, b) => a.number - b.number)
-                                .map((horse) => {
-                                  const marked = markedHorses.has(horse.number);
-                                  return (
-                                    <tr
-                                      key={horse.number}
-                                      className={`border-b border-ink/10 ${marked ? "bg-signal/5" : ""}`}
-                                    >
-                                      <td className="py-2 pr-2 w-8">
-                                        {marked ? <LongshotMark /> : null}
-                                      </td>
-                                      <td className="py-2 pr-2 font-[family-name:var(--font-display)] font-semibold">
-                                        {horse.number}
-                                      </td>
-                                      <td className="py-2 pr-2 font-medium">{horse.name}</td>
-                                      <td className="py-2 pr-2 text-ink/60">{horse.jockey}</td>
-                                      <td className="py-2 pr-2">{horse.oddsWin.toFixed(1)}</td>
-                                      <td className="py-2 font-[family-name:var(--font-display)] text-turf">
-                                        {horse.placePotential}
-                                      </td>
-                                    </tr>
-                                  );
-                                })}
+                              {(() => {
+                                const pop = popularityByNumber(horses);
+                                return [...horses]
+                                  .sort((a, b) => a.number - b.number)
+                                  .map((horse) => {
+                                    const marked = markedHorses.has(horse.number);
+                                    return (
+                                      <tr
+                                        key={horse.number}
+                                        className={`border-b border-ink/10 ${marked ? "bg-signal/5" : ""}`}
+                                      >
+                                        <td className="w-8 py-2 pr-2">
+                                          {marked ? <LongshotMark /> : null}
+                                        </td>
+                                        <td className="py-2 pr-2 font-[family-name:var(--font-display)] font-semibold">
+                                          {horse.number}
+                                        </td>
+                                        <td className="py-2 pr-2 font-medium">{horse.name}</td>
+                                        <td className="py-2 pr-2 text-ink/60">{horse.jockey}</td>
+                                        <td className="py-2 pr-2 font-medium text-ink">
+                                          {formatPopularity(pop.get(horse.number))}
+                                        </td>
+                                        <td className="py-2 pr-2 font-medium text-signal">
+                                          {formatWinOdds(horse.oddsWin)}
+                                        </td>
+                                        <td className="py-2 pr-2 text-ink/70">
+                                          {placeOddsLabel(horse, race)}
+                                        </td>
+                                        <td className="py-2 font-[family-name:var(--font-display)] text-turf">
+                                          {horse.placePotential}
+                                        </td>
+                                      </tr>
+                                    );
+                                  });
+                              })()}
                             </tbody>
                           </table>
                         </div>
@@ -254,15 +274,23 @@ export function RaceList({ races }: Props) {
                           <div className="mt-4">
                             <p className="text-xs tracking-wider text-ink/45">このレースの候補</p>
                             <ul className="mt-2 space-y-1 text-sm text-ink/75">
-                              {picks.slice(0, 6).map((pick) => (
-                                <li key={`${pick.betType}-${pick.selection}`}>
-                                  {pick.label === "注目穴" && (
-                                    <LongshotMark className="mr-1" />
-                                  )}
-                                  {pick.label} · {pick.selection} · {pick.odds.toFixed(1)}倍 · スコア{" "}
-                                  {pick.relatedPlacePotential}
-                                </li>
-                              ))}
+                              {picks.slice(0, 6).map((pick) => {
+                                const pop = popularityByNumber(race.horses);
+                                const popLabel = pick.relatedHorseNumbers
+                                  .map((n) => formatPopularityParen(pop.get(n)))
+                                  .filter(Boolean)
+                                  .join("");
+                                return (
+                                  <li key={`${pick.betType}-${pick.selection}`}>
+                                    {pick.label === "注目穴" && (
+                                      <LongshotMark className="mr-1" />
+                                    )}
+                                    {pick.label} · {pick.selection}
+                                    {popLabel ? ` ${popLabel}` : ""} · {formatWinOdds(pick.odds)} ·
+                                    スコア {pick.relatedPlacePotential}
+                                  </li>
+                                );
+                              })}
                               {picks.length > 6 && (
                                 <li className="text-ink/45">ほか {picks.length - 6} 件…</li>
                               )}

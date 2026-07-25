@@ -6,6 +6,8 @@ services:
     volumes:
       - .:/app
       - web_node_modules:/app/node_modules
+      # OneDrive 配下の .next キャッシュ不整合を避ける
+      - web_next:/app/.next
     environment:
       - WATCHPACK_POLLING=true
       - CHOKIDAR_USEPOLLING=true
@@ -14,3 +16,4 @@ services:
 
 volumes:
   web_node_modules:
+  web_next:

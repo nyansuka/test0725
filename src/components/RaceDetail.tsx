@@ -15,6 +15,12 @@ import { useSettings } from "@/components/SettingsProvider";
 import { LongshotTable } from "@/components/LongshotTable";
 import { LongshotMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import Link from "next/link";
+import {
+  formatPopularity,
+  formatWinOdds,
+  placeOddsLabel,
+  popularityByNumber,
+} from "@/domain/odds";
 
 const factorLabels = [
   ["courseFit", "コース"],
@@ -56,6 +62,7 @@ export function RaceDetail({ race }: Props) {
   const passCount = boardRows.filter((r) => r.status === "pass").length;
   const rank = raceExpectationRank(picks);
   const markedHorses = useMemo(() => longshotHorseNumbers(picks, race.id), [picks, race.id]);
+  const popularity = useMemo(() => popularityByNumber(race.horses), [race.horses]);
   const [openId, setOpenId] = useState<number | null>(horses[0]?.number ?? null);
 
   return (
@@ -123,7 +130,15 @@ export function RaceDetail({ race }: Props) {
                     </span>
                     <span className="min-w-[8rem] font-medium">{horse.name}</span>
                     <span className="text-sm text-ink/60">{horse.jockey}</span>
-                    <span className="text-sm">単勝 {horse.oddsWin.toFixed(1)}</span>
+                    <span className="min-w-[4.5rem] text-sm font-medium">
+                      {formatPopularity(popularity.get(horse.number))}
+                    </span>
+                    <span className="text-sm font-medium text-signal">
+                      単勝 {formatWinOdds(horse.oddsWin)}
+                    </span>
+                    <span className="text-sm text-ink/65">
+                      複勝 {placeOddsLabel(horse, race)}
+                    </span>
                     <span className="ml-auto font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
                       {horse.placePotential}
                     </span>
