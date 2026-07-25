@@ -30,10 +30,24 @@ docker compose down
 | `/journal` | 購入・参考買い目の成績日記 |
 | `/method` | 選別の見方 |
 
+## データ更新（公開Webから取得）
+
+開催日の出馬表・単複／連勝オッズを公開ページから取り込み、`src/data/snapshots/` に保存します。
+
+```bash
+docker compose exec web npm run fetch:jra
+# 日付指定例
+docker compose exec web npm run fetch:jra -- 2026-07-25
+```
+
+- 取得元: netkeiba 公開の出馬表 HTML とオッズ API（デモ用途）
+- 反映先: `src/data/snapshots/latest.json`（アプリが読み込み）
+- スコア用の factors / comment はルールで付与（公開データではない）
+- オッズ・結果は必ず主催者（JRA）発表と照合してください
+
 ## 補足
 
-- 表示データはすべてサンプルです。実レース結果や投票には使えません。
-- サンプルは東京・阪神・京都の各12レースです（開催日はカレンダー当日＋1週間前のデモ日）。
-- 開催日のデフォルトは日本時間の当日です。ヘッダーと各画面で変更できます。
+- 当日開催はスナップショットの実データ（例: 新潟・中京・札幌）、別日は日付切替デモ用の合成データです。
+- 開催日のデフォルトは日本時間の当日（当日データが無ければ最新スナップショット日）です。
 - ソース変更はボリュームマウントによりホットリロードされます。
 - 画面が古い場合は `docker compose down` → `docker compose up --build` のあと、ブラウザで Ctrl+Shift+R してください（`.next` は Docker ボリュームに分離済み）。

@@ -3,8 +3,9 @@ import {
   venues,
   groupRacesByVenue,
   filterRacesByDate,
-  sampleToday,
+  liveRaceDate,
   listRaceDates,
+  snapshotMeta,
 } from "../src/data/races";
 import { selectLongshots, classifyOddsEntry } from "../src/domain/longshots";
 import { DEFAULT_SETTINGS } from "../src/domain/betTypes";
@@ -12,17 +13,17 @@ import { getJstDateString } from "../src/domain/date";
 
 const today = getJstDateString();
 const dates = listRaceDates(races);
-const dayRaces = filterRacesByDate(races, sampleToday);
+const dayRaces = filterRacesByDate(races, liveRaceDate);
 const groups = groupRacesByVenue(dayRaces);
 
 console.log("jst today", today);
-console.log("sampleToday", sampleToday, "match", today === sampleToday);
+console.log("liveRaceDate", liveRaceDate, "fetched", snapshotMeta.fetchedAt);
 console.log("dates", dates.join(", "));
 console.log("venues", venues.join(","));
-console.log("total races", races.length, "today races", dayRaces.length);
+console.log("total races", races.length, "live races", dayRaces.length);
 for (const g of groups) {
   console.log(
-    "today",
+    "live",
     g.venue,
     g.races.length,
     `R1-R${g.races[g.races.length - 1]?.raceNumber ?? "?"}`,
@@ -32,7 +33,7 @@ for (const g of groups) {
 const picks = selectLongshots(dayRaces, DEFAULT_SETTINGS);
 const byBet: Record<string, number> = {};
 for (const p of picks) byBet[p.betType] = (byBet[p.betType] || 0) + 1;
-console.log("today candidates", picks.length, byBet);
+console.log("live candidates", picks.length, byBet);
 
 let placeCand = 0;
 let placePass = 0;

@@ -1,5 +1,58 @@
 import type { Horse, OddsEntry, Race } from "@/domain/types";
 import { getJstDateString, shiftJstDate } from "@/domain/date";
+import latestSnapshot from "@/data/snapshots/latest.json";
+
+type SnapshotHorse = {
+  number: number;
+  bracket?: number;
+  name: string;
+  jockey: string;
+  oddsWin: number;
+  oddsPlace?: { min: number; max: number };
+  runningStyle?: Horse["runningStyle"];
+  factors: Horse["factors"];
+  comment: string;
+};
+
+type SnapshotRace = {
+  id: string;
+  authority: "JRA";
+  raceDate: string;
+  venue: string;
+  raceNumber: number;
+  title: string;
+  distance: string;
+  track: "芝" | "ダート";
+  startTime: string;
+  weather: string;
+  condition: string;
+  featured?: boolean;
+  fieldSize?: number;
+  horses: SnapshotHorse[];
+  oddsBoard: OddsEntry[];
+};
+
+type SnapshotFile = {
+  fetchedAt: string;
+  source: string;
+  raceDate: string;
+  raceCount: number;
+  venues: string[];
+  races: SnapshotRace[];
+};
+
+const VENUE_ORDER = [
+  "札幌",
+  "函館",
+  "福島",
+  "新潟",
+  "東京",
+  "中山",
+  "中京",
+  "京都",
+  "阪神",
+  "小倉",
+];
 
 function horse(
   partial: Omit<Horse, "factors"> & { factors?: Horse["factors"] },
@@ -84,20 +137,63 @@ const RACE_TITLES: Record<string, string[]> = {
     "兵庫ステークス",
     "尼崎ステークス",
   ],
-  京都: [
-    "3歳未勝利",
-    "3歳未勝利",
-    "3歳以上1勝クラス",
-    "3歳以上1勝クラス",
-    "2歳新馬",
-    "3歳以上2勝クラス",
-    "3歳以上2勝クラス",
-    "木津川特別",
-    "朱雀ステークス",
-    "貴船ステークス",
-    "清水ステークス",
-    "鴨川ステークス",
-  ],
+};
+
+type VenueConfig = {
+  venue: string;
+  weather: string;
+  condition: string;
+  trackPattern: Array<"芝" | "ダート">;
+  distances: string[];
+};
+
+/** 日付切替デモ用の合成開催（スナップショット以外の日） */
+const DEMO_VENUES: VenueConfig[] = [
+  {
+    venue: "東京",
+    weather: "晴",
+    condition: "良",
+    trackPattern: ["ダート", "ダート", "芝", "芝", "芝", "ダート", "芝", "芝", "芝", "芝", "芝", "芝"],
+    distances: [
+      "ダート1400m",
+      "ダート1600m",
+      "芝1800m",
+      "芝1400m",
+      "芝1600m",
+      "ダート2100m",
+      "芝2400m",
+      "芝1600m",
+      "芝1800m",
+      "芝1400m",
+      "芝1600m",
+      "芝2000m",
+    ],
+  },
+  {
+    venue: "阪神",
+    weather: "曇",
+    condition: "稍重",
+    trackPattern: ["ダート", "ダート", "芝", "芝", "芝", "ダート", "芝", "芝", "芝", "芝", "ダート", "芝"],
+    distances: [
+      "ダート1200m",
+      "ダート1800m",
+      "芝1600m",
+      "芝1200m",
+      "芝1400m",
+      "ダート1400m",
+      "芝2200m",
+      "芝1400m",
+      "芝1600m",
+      "芝2000m",
+      "ダート1800m",
+      "芝1600m",
+    ],
+  },
+];
+
+const FEATURED_RACE_NUMBERS: Record<string, number> = {
+  東京: 11,
+  阪神: 10,
 };
 
 function makeHorses(seed: number, count: number): Horse[] {
@@ -146,152 +242,75 @@ function makeOddsBoard(horses: Horse[], rich: boolean): OddsEntry[] {
   const board: OddsEntry[] = [
     { betType: "win", selection: String(favorite.number), odds: favorite.oddsWin },
     { betType: "win", selection: String(long1.number), odds: Math.max(20, long1.oddsWin) },
-    { betType: "place", selection: String(long1.number), odds: Math.max(21, Number((long1.oddsWin * 0.55).toFixed(1))) },
+    {
+      betType: "place",
+      selection: String(long1.number),
+      odds: Math.max(21, Number((long1.oddsWin * 0.55).toFixed(1))),
+    },
     {
       betType: "quinella",
       selection: `${favorite.number}-${long1.number}`,
-      odds: Number((favorite.oddsWin * long1.oddsWin * 0.45).toFixed(1)),
+      odds: rich ? 48.2 : 22.5,
     },
     {
       betType: "wide",
-      selection: `${favorite.number}-${long1.number}`,
-      odds: Number((Math.max(8, favorite.oddsWin * long1.oddsWin * 0.12)).toFixed(1)),
+      selection: `${mid.number}-${long1.number}`,
+      odds: rich ? 26.8 : 18.4,
+    },
+    {
+      betType: "exacta",
+      selection: `${long1.number}-${favorite.number}`,
+      odds: rich ? 92.0 : 41.0,
+    },
+    {
+      betType: "bracket_quinella",
+      selection: `${favorite.bracket ?? 1}-${long1.bracket ?? 8}`,
+      odds: rich ? 35.5 : 19.2,
+    },
+    {
+      betType: "trio",
+      selection: `${favorite.number}-${mid.number}-${long1.number}`,
+      odds: rich ? 180.0 : 65.0,
+    },
+    {
+      betType: "trifecta",
+      selection: `${long2.number}-${long1.number}-${favorite.number}`,
+      odds: rich ? 920.0 : 210.0,
     },
   ];
 
-  // 複勝の高配当サンプル（閾値20以上）を必ず含める
-  board.push({
-    betType: "place",
-    selection: String(long2.number),
-    odds: 24.5,
-  });
-
-  if (rich) {
-    board.push(
-      {
-        betType: "quinella",
-        selection: `${long1.number}-${long2.number}`,
-        odds: Number((long1.oddsWin * long2.oddsWin * 0.35).toFixed(1)),
-      },
-      {
-        betType: "wide",
-        selection: `${mid.number}-${long1.number}`,
-        odds: 22.8,
-      },
-      {
-        betType: "exacta",
-        selection: `${favorite.number}-${long1.number}`,
-        odds: Number((favorite.oddsWin * long1.oddsWin * 0.85).toFixed(1)),
-      },
-      {
-        betType: "exacta",
-        selection: `${long1.number}-${favorite.number}`,
-        odds: Number((long1.oddsWin * favorite.oddsWin * 1.2).toFixed(1)),
-      },
-      {
-        betType: "trio",
-        selection: `${favorite.number}-${mid.number}-${long1.number}`,
-        odds: 96.0,
-      },
-      {
-        betType: "trifecta",
-        selection: `${favorite.number}-${mid.number}-${long1.number}`,
-        odds: 520.0,
-      },
-      {
-        betType: "bracket_quinella",
-        selection: `${favorite.bracket}-${long1.bracket}`,
-        odds: 26.0,
-      },
-    );
+  for (const h of horses) {
+    if (!board.some((e) => e.betType === "win" && e.selection === String(h.number))) {
+      board.push({ betType: "win", selection: String(h.number), odds: h.oddsWin });
+    }
+    const place = h.oddsPlace
+      ? Number(((h.oddsPlace.min + h.oddsPlace.max) / 2).toFixed(1))
+      : Number((h.oddsWin * 0.4).toFixed(1));
+    if (!board.some((e) => e.betType === "place" && e.selection === String(h.number))) {
+      board.push({ betType: "place", selection: String(h.number), odds: Math.max(1.1, place) });
+    }
   }
-
-  return board.map((e) => ({
-    ...e,
-    odds: Math.max(1.1, Number(e.odds.toFixed(1))),
-  }));
+  return board;
 }
 
-type VenueConfig = {
-  venue: string;
-  weather: string;
-  condition: string;
-  trackPattern: ("芝" | "ダート")[];
-  distances: string[];
-};
-
-const VENUES: VenueConfig[] = [
-  {
-    venue: "東京",
-    weather: "晴",
-    condition: "良",
-    trackPattern: ["ダート", "ダート", "芝", "芝", "芝", "ダート", "芝", "芝", "芝", "芝", "芝", "芝"],
-    distances: [
-      "ダート1400m",
-      "ダート1600m",
-      "芝1800m",
-      "芝1400m",
-      "芝1600m",
-      "ダート2100m",
-      "芝2400m",
-      "芝1600m",
-      "芝1800m",
-      "芝1400m",
-      "芝1600m",
-      "芝2000m",
-    ],
-  },
-  {
-    venue: "阪神",
-    weather: "曇",
-    condition: "稍重",
-    trackPattern: ["ダート", "ダート", "芝", "芝", "芝", "ダート", "芝", "芝", "芝", "芝", "ダート", "芝"],
-    distances: [
-      "ダート1200m",
-      "ダート1800m",
-      "芝1600m",
-      "芝1200m",
-      "芝1400m",
-      "ダート1400m",
-      "芝2200m",
-      "芝1400m",
-      "芝1600m",
-      "芝2000m",
-      "ダート1800m",
-      "芝1600m",
-    ],
-  },
-  {
-    venue: "京都",
-    weather: "晴",
-    condition: "良",
-    trackPattern: ["ダート", "ダート", "芝", "芝", "芝", "ダート", "芝", "ダート", "ダート", "芝", "芝", "芝"],
-    distances: [
-      "ダート1200m",
-      "ダート1800m",
-      "芝1400m",
-      "芝1800m",
-      "芝1200m",
-      "ダート1400m",
-      "芝2000m",
-      "ダート1400m",
-      "ダート1400m",
-      "芝1600m",
-      "芝1800m",
-      "芝2200m",
-    ],
-  },
-];
-
-/** 特に厚いオッズ板・馬データにするレース番号（1-indexed） */
-const FEATURED_RACE_NUMBERS: Record<string, number> = {
-  東京: 11,
-  阪神: 10,
-  京都: 9,
-};
+function slug(venue: string) {
+  const map: Record<string, string> = {
+    札幌: "sapporo",
+    函館: "hakodate",
+    福島: "fukushima",
+    新潟: "niigata",
+    東京: "tokyo",
+    中山: "nakayama",
+    中京: "chukyo",
+    京都: "kyoto",
+    阪神: "hanshin",
+    小倉: "kokura",
+  };
+  return map[venue] ?? venue;
+}
 
 function buildVenueRaces(config: VenueConfig, raceDate: string): Race[] {
-  const titles = RACE_TITLES[config.venue];
+  const titles = RACE_TITLES[config.venue] ?? Array.from({ length: 12 }, (_, i) => `${i + 1}R`);
   const featuredNum = FEATURED_RACE_NUMBERS[config.venue];
   const dateKey = raceDate.replace(/-/g, "");
 
@@ -318,7 +337,7 @@ function buildVenueRaces(config: VenueConfig, raceDate: string): Race[] {
       raceDate,
       venue: config.venue,
       raceNumber,
-      title: titles[idx],
+      title: titles[idx] ?? `${raceNumber}R`,
       distance: config.distances[idx],
       track: config.trackPattern[idx],
       startTime: START_TIMES[idx],
@@ -332,26 +351,64 @@ function buildVenueRaces(config: VenueConfig, raceDate: string): Race[] {
   });
 }
 
-function slug(venue: string) {
-  const map: Record<string, string> = { 東京: "tokyo", 阪神: "hanshin", 京都: "kyoto" };
-  return map[venue] ?? venue;
-}
-
-/** サンプル開催日: カレンダー当日（JST）と1週間前 */
-export const sampleToday = getJstDateString();
-export const samplePrevWeek = shiftJstDate(sampleToday, -7);
-
 function buildMeeting(raceDate: string, venueConfigs: VenueConfig[]): Race[] {
   return venueConfigs.flatMap((config) => buildVenueRaces(config, raceDate));
 }
 
+function fromSnapshot(snap: SnapshotFile): Race[] {
+  return snap.races.map((r) => ({
+    id: r.id,
+    authority: "JRA" as const,
+    raceDate: r.raceDate,
+    venue: r.venue,
+    raceNumber: r.raceNumber,
+    title: r.title,
+    distance: r.distance,
+    track: r.track,
+    startTime: r.startTime,
+    weather: r.weather,
+    condition: r.condition,
+    featured: r.featured,
+    fieldSize: r.fieldSize ?? r.horses.length,
+    horses: r.horses.map((h) =>
+      horse({
+        number: h.number,
+        bracket: h.bracket,
+        name: h.name,
+        jockey: h.jockey,
+        oddsWin: h.oddsWin,
+        oddsPlace: h.oddsPlace,
+        runningStyle: h.runningStyle,
+        factors: h.factors,
+        comment: h.comment,
+      }),
+    ),
+    oddsBoard: r.oddsBoard,
+  }));
+}
+
+const snapshot = latestSnapshot as SnapshotFile;
+export const snapshotMeta = {
+  fetchedAt: snapshot.fetchedAt,
+  source: snapshot.source,
+  raceDate: snapshot.raceDate,
+  raceCount: snapshot.raceCount,
+};
+
+/** 公開データ反映日（スナップショット） */
+export const liveRaceDate = snapshot.raceDate;
+/** カレンダー当日（JST） */
+export const sampleToday = getJstDateString();
+/** 日付切替デモ用 */
+export const samplePrevWeek = shiftJstDate(liveRaceDate, -7);
+
 export const races: Race[] = [
-  ...buildMeeting(sampleToday, VENUES),
-  // 日付切替のデモ用（東京・阪神のみ）
-  ...buildMeeting(samplePrevWeek, VENUES.filter((v) => v.venue !== "京都")),
+  ...fromSnapshot(snapshot),
+  // 開催日切替のデモ用（合成データ）
+  ...buildMeeting(samplePrevWeek, DEMO_VENUES),
 ];
 
-export const venues = VENUES.map((v) => v.venue);
+export const venues = VENUE_ORDER.filter((v) => races.some((r) => r.venue === v));
 
 export function listRaceDates(list: Race[] = races): string[] {
   return [...new Set(list.map((r) => r.raceDate))].sort((a, b) => b.localeCompare(a));
@@ -377,8 +434,7 @@ export function getRacesByVenue(venue: string, raceDate?: string): Race[] {
 }
 
 export function groupRacesByVenue(list: Race[]): { venue: string; races: Race[] }[] {
-  const order = venues;
-  const present = order.filter((venue) => list.some((r) => r.venue === venue));
+  const present = VENUE_ORDER.filter((venue) => list.some((r) => r.venue === venue));
   return present.map((venue) => ({
     venue,
     races: list.filter((r) => r.venue === venue).sort((a, b) => a.raceNumber - b.raceNumber),
