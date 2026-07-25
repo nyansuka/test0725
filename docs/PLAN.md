@@ -518,13 +518,12 @@ src/
 
 ## 10. 推奨する次の一手
 
-製品骨格（Phase 1 相当）は概ね揃った前提。次は **データ選別と改善ループ**（[DATA-AND-LOOP.md](./DATA-AND-LOOP.md)）。
+**データソースはプラン C（netkeiba＋改善ループ）。JV-Link 連携は保留。** 詳細は [DATA-AND-LOOP.md](./DATA-AND-LOOP.md)。
 
-1. Need×Auto（出走・オッズ・結果）の欠損確認と、発走前 **prediction スナップ保存** — `npm run loop:freeze`（`src/data/loop/`）  
-2. 結果突合 → 週次の再現率／適合率／候補密度 — `npm run loop:evaluate` / `loop:report`  
-3. Want から **前走・人気** だけ自動取り込み（合成 factors からの脱却開始）  
-4. 週次レビューで閾値・重み・合成方式を **1変更ずつ** 調整  
-5. Manual データは `/journal` に閉じ、選別スコア入力には混ぜない  
+1. 開催日運用: `fetch:jra` → 発走前 `loop:freeze` → 結果後 `loop:evaluate`  
+2. 週次: Recall / Precision / 候補密度を見て閾値・重みを **1変更ずつ**  
+3. （任意）Want の **前走・人気** を netkeiba から拡張（合成 factors からの脱却開始）  
+4. Manual データは `/journal` に閉じる。`site:check` で整合確認  
 
 ---
 
