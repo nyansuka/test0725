@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UMANOTE 構成計画書</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c1410;
+      --bg-elevated: #14201a;
+      --surface: #1a2b22;
+      --line: rgba(212, 175, 55, 0.22);
+      --gold: #d4af37;
+      --gold-soft: #e8c96a;
+      --turf: #3d8b5f;
+      --turf-bright: #5cba7d;
+      --text: #f2efe6;
+      --muted: #9aab9e;
+      --danger: #c45c4a;
+      --slide-pad: clamp(2rem, 5vw, 4.5rem);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Noto Sans JP", sans-serif;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(61, 139, 95, 0.18), transparent 55%),
+        radial-gradient(ellipse 70% 50% at 100% 100%, rgba(212, 175, 55, 0.08), transparent 50%),
+        repeating-linear-gradient(
+          -12deg,
+          transparent,
+          transparent 40px,
+          rgba(255, 255, 255, 0.012) 40px,
+          rgba(255, 255, 255, 0.012) 41px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .deck {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      width: 100%;
+    }
+
+    .slide {
+      display: none;
+      height: 100%;
+      padding: var(--slide-pad);
+      flex-direction: column;
+      justify-content: center;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .slide.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .brand {
+      font-family: "Bebas Neue", sans-serif;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      line-height: 1;
+    }
+
+    h1 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      letter-spacing: 0.06em;
+      line-height: 0.95;
+      color: var(--text);
+      margin: 0.4em 0 0.35em;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid var(--gold);
+      padding-left: 0.75rem;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold-soft);
+      margin: 1.25rem 0 0.6rem;
+    }
+
+    .lead {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--muted);
+      max-width: 42rem;
+      line-height: 1.7;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 1.5rem;
+    }
+
+    .meta span {
+      color: var(--turf-bright);
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .highlight {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem 2rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .slide { overflow-y: auto; justify-content: flex-start; padding-top: 3.5rem; padding-bottom: 5rem; }
+    }
+
+    .card-block {
+      background: linear-gradient(160deg, var(--surface), var(--bg-elevated));
+      border: 1px solid var(--line);
+      padding: 1.1rem 1.25rem;
+      border-radius: 2px;
+    }
+
+    .card-block strong {
+      display: block;
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+    }
+
+    .card-block p, .card-block li {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    ul.clean {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    ul.clean li {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    ul.clean li::before {
+      content: "";
+      width: 0.55rem;
+      height: 0.55rem;
+      margin-top: 0.45rem;
+      flex-shrink: 0;
+      background: var(--turf);
+      border-radius: 1px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.55rem 0.7rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: none;
+    }
+
+    td { color: var(--muted); }
+    td:first-child, th:first-child { color: var(--text); font-weight: 500; }
+
+    code, .mono {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.85em;
+      color: var(--turf-bright);
+    }
+
+    pre {
+      background: #08100c;
+      border: 1px solid var(--line);
+      padding: 1rem 1.15rem;
+      overflow-x: auto;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      color: var(--turf-bright);
+      margin-top: 0.75rem;
+    }
+
+    .tag {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.55rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .phase {
+      border-left: 3px solid var(--turf);
+      padding-left: 0.85rem;
+    }
+
+    .phase .num {
+      font-family: "Bebas Neue", sans-serif;
+      color: var(--gold);
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(12, 20, 16, 0.85);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+    }
+
+    .nav button {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--text);
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .nav button:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .progress-text {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      min-width: 4.5rem;
+      text-align: center;
+    }
+
+    .hint {
+      position: fixed;
+      top: 1.25rem;
+      right: var(--slide-pad);
+      z-index: 10;
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    .big-num {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .diff-arrow {
+      color: var(--turf-bright);
+      margin: 0 0.35rem;
+    }
+
+    .title-slide {
+      justify-content: flex-end;
+      padding-bottom: clamp(4rem, 12vh, 8rem);
+    }
+
+    .title-slide .rail {
+      width: 4rem;
+      height: 3px;
+      background: var(--gold);
+      margin: 1.25rem 0;
+    }
+
+    .compact table { font-size: 0.85rem; }
+    .compact th, .compact td { padding: 0.4rem 0.55rem; }
+
+    .two-col-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem 1.5rem;
+      list-style: none;
+    }
+
+    .two-col-list li {
+      font-size: 0.95rem;
+      color: var(--muted);
+      padding: 0.35rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .two-col-list li span {
+      color: var(--text);
+      font-family: "JetBrains Mono", monospace;
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="hint">← → / Space / クリックで進む</div>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 -->
+    <section class="slide active title-slide">
+      <div class="brand">UMANOTE</div>
+      <div class="rail"></div>
+      <h1>構成計画書</h1>
+      <p class="lead">JRA 全レース・全券種の高配当候補を、短時間で見極められるサイトをつくる。</p>
+      <p class="meta">最終更新 <span>2026-07-25</span>　／　Next.js + Docker</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="slide">
+      <span class="tag">01 / 目的</span>
+      <h2>何をつくるか</h2>
+      <ul class="clean">
+        <li><span class="highlight">JRA の全レース</span>を対象に、各券種で配当が閾値以上の候補を選別</li>
+        <li>関係馬が <span class="highlight">1〜3着に入る可能性</span>があるものを短時間で見極められる構成</li>
+        <li>本命探しではなく、<span class="highlight">高配当候補の選別</span>を第一機能とする</li>
+        <li>地方競馬（NAR 等）は対象外</li>
+      </ul>
+    </section>
+
+    <!-- 3 -->
+    <section class="slide">
+      <span class="tag">02 / 確定方針</span>
+      <h2>4つの決定事項</h2>
+      <div class="grid-2">
+        <div class="card-block">
+          <strong>01 オッズゲートの券種</strong>
+          <p>すべての券種（単勝・複勝・枠連・馬連・ワイド・馬単・3連複・3連単）</p>
+        </div>
+        <div class="card-block">
+          <strong>02 オッズ閾値</strong>
+          <p>変更可能。初期デフォルト <span class="mono">20倍</span>。設定 UI を早期に用意</p>
+        </div>
+        <div class="card-block">
+          <strong>03 スコア</strong>
+          <p>当面はルール＋仮スコア。将来差し替え可能な設計にする</p>
+        </div>
+        <div class="card-block">
+          <strong>04 対象レース</strong>
+          <p>JRA 全レースのみ（中央競馬）。地方競馬は含まない</p>
+        </div>
+      </div>
+      <h3>未確定（後続）</h3>
+      <p class="lead" style="font-size:0.95rem">データソース（サンプル継続 or 外部取込）／券種別の表示優先度</p>
+    </section>
+
+    <!-- 4 -->
+    <section class="slide">
+      <span class="tag">03 / 成功の定義</span>
+      <h2>「選別できる」状態</h2>
+      <table>
+        <thead>
+          <tr><th>#</th><th>条件</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>A</td><td>券種ごとに「オッズ ≥ ユーザー設定閾値」の候補を一覧できる</td></tr>
+          <tr><td>B</td><td>候補に紐づく馬の「1〜3着ポテンシャル」をスコア／ランクで見られる</td></tr>
+          <tr><td>C</td><td>なぜ候補にしたかの根拠（短評・指標）が表示される</td></tr>
+          <tr><td>D</td><td>当日の JRA 全レース横断で、候補をまとめて確認できる</td></tr>
+          <tr><td>E</td><td>オッズ閾値（および最低スコア）を画面上で変更できる</td></tr>
+        </tbody>
+      </table>
+      <p class="meta" style="margin-top:1rem">※ 実馬券の的中保証は対象外。デモ／検証用の選別ロジックとして扱う</p>
+    </section>
+
+    <!-- 5 -->
+    <section class="slide">
+      <span class="tag">04 / プロダクト方針</span>
+      <h2>コア価値と境界</h2>
+      <div class="grid-2">
+        <div>
+          <h3>やること</h3>
+          <ul class="clean">
+            <li><strong class="highlight">フィルタ</strong>　閾値未満は原則除外</li>
+            <li><strong class="highlight">評価</strong>　人気薄でも複勝圏に届くか数値化</li>
+            <li><strong class="highlight">範囲</strong>　JRA 10場のみ</li>
+            <li><strong class="highlight">提示</strong>　レース・当日横断・券種の3軸</li>
+          </ul>
+        </div>
+        <div>
+          <h3>やらないこと（初期）</h3>
+          <ul class="clean">
+            <li>自動投票・資金管理</li>
+            <li>地方競馬データの取り込み</li>
+            <li>リアルタイム高頻度更新</li>
+            <li>機械学習の本番運用</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="slide">
+      <span class="tag">05 / 選別ロジック</span>
+      <h2>Hard Filter — 全券種</h2>
+      <p class="lead" style="margin-bottom:1rem">候補単位は「馬」だけでなく <span class="highlight">券種 × 買い目</span></p>
+      <pre>candidate.odds >= oddsThreshold   // 初期値 20
+candidate.betType ∈ JRA全券種
+candidate.race.authority === "JRA"</pre>
+      <ul class="two-col-list" style="margin-top:1.25rem">
+        <li><span>win</span>単勝</li>
+        <li><span>place</span>複勝</li>
+        <li><span>bracket_quinella</span>枠連</li>
+        <li><span>quinella</span>馬連</li>
+        <li><span>wide</span>ワイド</li>
+        <li><span>exacta</span>馬単</li>
+        <li><span>trio</span>3連複</li>
+        <li><span>trifecta</span>3連単</li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section class="slide">
+      <span class="tag">05 / 選別ロジック</span>
+      <h2>Soft Score — placePotential</h2>
+      <p class="lead" style="margin-bottom:1rem">各馬に 0〜100 のスコア。当面は説明可能なルール＋仮実装</p>
+      <div class="grid-2">
+        <div class="card-block">
+          <strong>指標例（仮）</strong>
+          <p>コース適性／脚質×展開／馬場状態／枠・騎手／前走内容／人気との乖離</p>
+        </div>
+        <div class="card-block">
+          <strong>表示条件</strong>
+          <p class="mono" style="margin-top:0.35rem;line-height:1.6">odds ≥ oddsThreshold<br>AND relatedPlacePotential ≥ scoreMin<br>AND race.authority === "JRA"</p>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:1rem">
+        <div class="card-block">
+          <strong>oddsThreshold</strong>
+          <p class="big-num" style="font-size:2.5rem">20</p>
+          <p>倍（変更可能）</p>
+        </div>
+        <div class="card-block">
+          <strong>scoreMin</strong>
+          <p class="big-num" style="font-size:2.5rem">60</p>
+          <p>点（変更可能）</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="slide">
+      <span class="tag">05 / 出力ラベル</span>
+      <h2>候補のラベル案</h2>
+      <div class="grid-3">
+        <div class="card-block">
+          <strong>注目穴</strong>
+          <p>閾値以上かつ relatedPlacePotential 上位</p>
+        </div>
+        <div class="card-block">
+          <strong>抑え候補</strong>
+          <p>閾値以上かつ relatedPlacePotential 中位</p>
+        </div>
+        <div class="card-block">
+          <strong>見送り</strong>
+          <p>ゲート通過でもスコア不足（詳細では表示可）</p>
+        </div>
+      </div>
+      <h3>組み合わせ券の評価</h3>
+      <ul class="clean">
+        <li>単勝/複勝 → 対象馬の placePotential をそのまま使用</li>
+        <li>ワイド/馬連 → 2頭の合成（初期は平均 or 下限）</li>
+        <li>3連系 → 3頭の合成（将来変更可）</li>
+      </ul>
+    </section>
+
+    <!-- 9 -->
+    <section class="slide">
+      <span class="tag">06 / サイト構成</span>
+      <h2>画面一覧</h2>
+      <table class="compact">
+        <thead>
+          <tr><th>画面</th><th>役割</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">/</td><td>ブランド + 今日の注目穴への導線</td></tr>
+          <tr><td class="mono">/longshots</td><td><span class="highlight">メイン画面。</span>当日 JRA 全レース・全券種の高配当候補一覧</td></tr>
+          <tr><td class="mono">/races</td><td>JRA 会場・発走順の全レース</td></tr>
+          <tr><td class="mono">/races/[id]</td><td>出走表 + 券種別候補ハイライト + 根拠</td></tr>
+          <tr><td class="mono">/method</td><td>フィルタ・スコア方針の説明</td></tr>
+          <tr><td class="mono">/settings</td><td>オッズ閾値・最低スコア・券種 ON/OFF</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 10 -->
+    <section class="slide">
+      <span class="tag">06 / 注目穴ボード</span>
+      <h2>最重要画面の設計</h2>
+      <div class="grid-2">
+        <div>
+          <h3>1行の表示項目</h3>
+          <ul class="clean">
+            <li>会場 / R / 発走時刻</li>
+            <li>券種・買い目・オッズ</li>
+            <li>relatedPlacePotential（バー）</li>
+            <li>短評（1文）＋詳細リンク</li>
+          </ul>
+        </div>
+        <div>
+          <h3>操作</h3>
+          <ul class="clean">
+            <li>ソート: スコア / オッズ / 発走順</li>
+            <li>フィルタ: 会場・芝ダート・券種・閾値</li>
+            <li>閾値変更はボード上 or /settings と同期</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="slide">
+      <span class="tag">07 / データモデル</span>
+      <h2>ドメインの中核型</h2>
+      <div class="grid-2">
+        <div class="card-block">
+          <strong>Race / Horse</strong>
+          <p>authority は常に JRA。各馬に placePotential と factors。oddsBoard で券種別オッズを保持</p>
+        </div>
+        <div class="card-block">
+          <strong>LongshotPick</strong>
+          <p>raceId × betType × selection × odds × relatedPlacePotential × label</p>
+        </div>
+        <div class="card-block">
+          <strong>UserSelectionSettings</strong>
+          <p>oddsThreshold (20) / scoreMin (60) / enabledBetTypes</p>
+        </div>
+        <div class="card-block">
+          <strong>選別関数</strong>
+          <p class="mono">selectLongshots(races, settings): LongshotPick[]</p>
+          <p style="margin-top:0.4rem">UI は生データ直接判定せず、この結果のみ表示</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section class="slide">
+      <span class="tag">08 / 技術構成</span>
+      <h2>段階的フェーズ</h2>
+      <div class="grid-2">
+        <div class="phase card-block">
+          <div class="num">PHASE 0</div>
+          <p>現状: Next.js App Router + Docker。静的サンプル（単勝中心）</p>
+        </div>
+        <div class="phase card-block">
+          <div class="num">PHASE 1</div>
+          <p><span class="highlight">次にやる。</span>ドメイン骨格・/longshots・/settings・トップ改修</p>
+        </div>
+        <div class="phase card-block">
+          <div class="num">PHASE 2</div>
+          <p>説明可能性: 因子内訳・/method・設定永続化</p>
+        </div>
+        <div class="phase card-block">
+          <div class="num">PHASE 3–4</div>
+          <p>データ接続 → スコア差し替え・高度表示・通知</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="slide">
+      <span class="tag">09 / ロードマップ</span>
+      <h2>実装の順番</h2>
+      <table class="compact">
+        <thead>
+          <tr><th>順</th><th>項目</th><th>完了条件</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>計画反映</td><td>方針 1〜4 が文書化済み</td></tr>
+          <tr><td>2</td><td>ドメイン層 + JRA サンプル</td><td>selectLongshots が閾値・券種で動く</td></tr>
+          <tr><td>3</td><td>/settings</td><td>閾値・最低スコア・券種 ON/OFF</td></tr>
+          <tr><td>4</td><td>/longshots</td><td>設定に応じた候補一覧</td></tr>
+          <tr><td>5</td><td>レース詳細ハイライト</td><td>券種別候補が分かる</td></tr>
+          <tr><td>6</td><td>トップ改修</td><td>注目穴が第一導線</td></tr>
+          <tr><td>7–8</td><td>外部データ / スコア差し替え</td><td>実オッズ選別・新 Scorer 差し込み</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 14 -->
+    <section class="slide">
+      <span class="tag">10 / Next Step</span>
+      <h2>推奨する次の一手</h2>
+      <p class="lead" style="margin-bottom:1.25rem"><span class="highlight">Phase 1</span> から着手する</p>
+      <ul class="clean">
+        <li>データモデルを JRA + 全券種オッズ対応に拡張</li>
+        <li>Scorer IF とルール仮スコア、selectLongshots を追加</li>
+        <li>/settings で閾値変更可能にする</li>
+        <li>/longshots をメイン画面として実装</li>
+        <li>トップ／レース詳細を穴選別導線に合わせて更新</li>
+      </ul>
+    </section>
+
+    <!-- 15 -->
+    <section class="slide">
+      <span class="tag">付録 / 差分</span>
+      <h2>現状 → 計画後</h2>
+      <table>
+        <thead>
+          <tr><th>現状</th><th></th><th>計画後</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>単勝中心・本命／対抗</td><td class="diff-arrow">→</td><td>全券種の高配当候補選別</td></tr>
+          <tr><td>閾値の概念なし</td><td class="diff-arrow">→</td><td>変更可能なオッズ閾値（初期 20）</td></tr>
+          <tr><td>confidence 固定的</td><td class="diff-arrow">→</td><td>差し替え可能な placePotential</td></tr>
+          <tr><td>開催区分なし</td><td class="diff-arrow">→</td><td>JRA のみ（地方除外）</td></tr>
+          <tr><td>横断ビューなし</td><td class="diff-arrow">→</td><td>/longshots + /settings</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 16 -->
+    <section class="slide title-slide">
+      <div class="brand">UMANOTE</div>
+      <div class="rail"></div>
+      <h1>質問・議論</h1>
+      <p class="lead">高配当候補の選別を、JRA・全券種・閾値可変で。</p>
+      <p class="meta">本命探しではない。ゲート × スコアで絞り込む。</p>
+    </section>
+
+  </div>
+
+  <nav class="nav" aria-label="スライド操作">
+    <button type="button" id="prev" aria-label="前へ">‹</button>
+    <span class="progress-text" id="progress">1 / 16</span>
+    <button type="button" id="next" aria-label="次へ">›</button>
+  </nav>
+
+  <script>
+    const slides = [...document.querySelectorAll(".slide")];
+    const progress = document.getElementById("progress");
+    let i = 0;
+
+    function show(n) {
+      i = Math.max(0, Math.min(slides.length - 1, n));
+      slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+      progress.textContent = `${i + 1} / ${slides.length}`;
+    }
+
+    document.getElementById("prev").addEventListener("click", () => show(i - 1));
+    document.getElementById("next").addEventListener("click", () => show(i + 1));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+        e.preventDefault();
+        show(i + 1);
+      } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        e.preventDefault();
+        show(i - 1);
+      } else if (e.key === "Home") {
+        show(0);
+      } else if (e.key === "End") {
+        show(slides.length - 1);
+      }
+    });
+
+    document.getElementById("deck").addEventListener("click", (e) => {
+      if (e.target.closest(".nav") || e.target.closest("a, button")) return;
+      const mid = window.innerWidth / 2;
+      show(e.clientX < mid ? i - 1 : i + 1);
+    });
+  </script>
+</body>
+</html>
