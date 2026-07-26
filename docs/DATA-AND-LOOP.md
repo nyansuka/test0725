@@ -295,9 +295,10 @@ JV-Link はインストール済みでも、HTTP API ではないためサイト
 | §5 改善ループ | §5.4 検証の考え方（具体化） |
 | §6 最小実装 | §8 Phase 3「過去結果との突合」、§9 項目7付近 |
 
-次の一手の推奨順（**プラン C**）:
+運用の推奨順（**プラン C**）— 詳細は [SITE-CHECK.md](./SITE-CHECK.md):
 
-1. 開催日: `fetch:jra` → `loop:freeze`（発走前）→ 結果後 `loop:evaluate` / `loop:trends`  
-2. 週次: `loop:report` で Recall / Precision / 密度を見て **変更は1つだけ**  
-3. Want から「前走・人気」だけ netkeiba 拡張（D4）。JV-Link は保留  
-4. `site:check` 定期実行。PASS かつ変更ありなら commit / push  
+1. **開催日・朝:** `fetch:jra` → `loop:freeze`（オッズが揃ってから。薄い凍結は `--force` のみ）  
+2. **開催日・定期（〜30分）:** ライブ再 fetch（サイト更新）→ `loop:evaluate` / `loop:trends` → `site:check`（PASS かつ変更ありなら commit / push）。結果ポーリングは `fetcher` が常時担当  
+3. **週次:** `loop:report` で Recall / Precision / 密度を見て **変更は1つだけ**  
+4. Want から「前走・人気」だけ netkeiba 拡張（D4）。JV-Link は保留  
+
