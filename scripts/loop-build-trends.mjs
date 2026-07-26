@@ -43,7 +43,7 @@ function emptyBucket() {
 function bump(map, key, outcome) {
   if (!map[key]) map[key] = emptyBucket();
   map[key].candidates += 1;
-  if (outcome === "hit") map[key].hits += 1;
+  if (outcome === "win" || outcome === "place" || outcome === "hit") map[key].hits += 1;
   if (outcome === "pending") map[key].pending += 1;
 }
 
@@ -97,11 +97,11 @@ export async function buildTrends() {
       const track = row.track ?? null;
 
       overall.candidates += 1;
-      if (outcome === "hit") overall.hits += 1;
+      if (outcome === "win" || outcome === "place" || outcome === "hit") overall.hits += 1;
       if (outcome === "pending") overall.pending += 1;
 
       slice.overall.candidates += 1;
-      if (outcome === "hit") slice.overall.hits += 1;
+      if (outcome === "win" || outcome === "place" || outcome === "hit") slice.overall.hits += 1;
       if (outcome === "pending") slice.overall.pending += 1;
 
       bump(byDay, raceDate, outcome);

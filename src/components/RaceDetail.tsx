@@ -22,7 +22,7 @@ import {
   placeOddsLabel,
   popularityByNumber,
 } from "@/domain/odds";
-import { evaluatePick } from "@/domain/results";
+import { evaluatePick, outcomeLabel } from "@/domain/results";
 
 const factorLabels = [
   ["courseFit", "コース"],
@@ -105,14 +105,15 @@ export function RaceDetail({ race }: Props) {
           <ul className="mt-4 space-y-1 text-sm text-ink/65">
             {picks.slice(0, 8).map((pick) => {
               const outcome = evaluatePick(pick, race.result);
-              const label =
-                outcome === "hit" ? "的中" : outcome === "miss" ? "外れ" : "待ち";
+              const label = outcomeLabel(outcome);
               const cls =
-                outcome === "hit"
+                outcome === "win"
                   ? "text-signal font-medium"
-                  : outcome === "miss"
-                    ? "text-ink/40"
-                    : "text-ink/55";
+                  : outcome === "place"
+                    ? "text-turf font-medium"
+                    : outcome === "miss"
+                      ? "text-ink/40"
+                      : "text-ink/55";
               return (
                 <li key={`${pick.betType}-${pick.selection}`}>
                   <span className={cls}>{label}</span>

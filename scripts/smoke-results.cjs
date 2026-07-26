@@ -31,7 +31,12 @@ function get(path) {
       console.log("chukyo7", r?.title, r?.result?.finishes?.find((f) => f.rank === 1)?.name);
     } else {
       const ok = status === 200 && body.includes("UMANOTE");
-      const hasResult = body.includes("レース結果") || body.includes("結果済") || body.includes("的中");
+      const hasResult =
+        body.includes("レース結果") ||
+        body.includes("結果済") ||
+        body.includes("大当たり") ||
+        body.includes("馬券内") ||
+        body.includes("的中");
       console.log(p, status, ok ? "OK" : "FAIL", hasResult ? "has-result-ui" : "");
     }
   }

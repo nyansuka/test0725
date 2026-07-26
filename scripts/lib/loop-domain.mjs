@@ -143,55 +143,54 @@ export function selectLongshots(races, settings) {
   return picks.sort((a, b) => b.relatedPlacePotential - a.relatedPlacePotential);
 }
 
-function topN(result, n) {
-  return result.finishes
-    .filter((f) => f.rank != null && f.rank >= 1 && f.rank <= n)
-    .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))
-    .map((f) => f.number);
+function relatedNumbers(pick) {
+  if (pick.relatedHorseNumbers?.length) return pick.relatedHorseNumbers;
+  return parseSelectionNumbers(pick.selection);
 }
 
-function sameSet(a, b) {
-  if (a.length !== b.length) return false;
-  const sa = [...a].sort((x, y) => x - y);
-  const sb = [...b].sort((x, y) => x - y);
-  return sa.every((v, i) => v === sb[i]);
+/** 関係馬のうち最良着順（未着・欠場のみなら null） */
+export function bestRelatedRank(pick, result) {
+  if (!result?.finishes?.length) return null;
+  let best = null;
+  for (const n of relatedNumbers(pick)) {
+    const finish = result.finishes.find((f) => f.number === n);
+    if (finish?.rank == null || finish.rank < 1) continue;
+    if (best == null || finish.rank < best) best = finish.rank;
+  }
+  return best;
 }
 
-/** @returns {"hit"|"miss"|"pending"} */
+export function isInMoney(outcome) {
+  return outcome === "win" || outcome === "place";
+}
+
+export function outcomeLabel(outcome) {
+  switch (outcome) {
+    case "win":
+      return "大当たり";
+    case "place":
+      return "馬券内";
+    case "miss":
+      return "はずれ";
+    default:
+      return "待ち";
+  }
+}
+
+/**
+ * 複勝圏ベース判定（券種の厳密払戻とは別）
+ * @returns {"win"|"place"|"miss"|"pending"}
+ * - win … 1着（大当たり）
+ * - place … 2・3着（馬券内）
+ * - miss … 4着以下（はずれ）
+ */
 export function evaluatePick(pick, result) {
   if (!result?.finishes?.length) return "pending";
-  const nums = parseSelectionNumbers(pick.selection);
-  const first = topN(result, 1);
-  const top2 = topN(result, 2);
-  const top3 = topN(result, 3);
-
-  switch (pick.betType) {
-    case "win":
-      return nums[0] != null && first[0] === nums[0] ? "hit" : "miss";
-    case "place":
-      return nums[0] != null && top3.includes(nums[0]) ? "hit" : "miss";
-    case "quinella":
-      return nums.length >= 2 && sameSet(nums.slice(0, 2), top2) ? "hit" : "miss";
-    case "wide":
-      return nums.length >= 2 && nums.slice(0, 2).every((n) => top3.includes(n)) ? "hit" : "miss";
-    case "bracket_quinella": {
-      const related = pick.relatedHorseNumbers ?? [];
-      return related.filter((n) => top2.includes(n)).length >= 2 ? "hit" : "miss";
-    }
-    case "exacta":
-      return nums.length >= 2 && nums[0] === top2[0] && nums[1] === top2[1] ? "hit" : "miss";
-    case "trio":
-      return nums.length >= 3 && sameSet(nums.slice(0, 3), top3) ? "hit" : "miss";
-    case "trifecta":
-      return nums.length >= 3 &&
-        nums[0] === top3[0] &&
-        nums[1] === top3[1] &&
-        nums[2] === top3[2]
-        ? "hit"
-        : "miss";
-    default:
-      return "pending";
-  }
+  const rank = bestRelatedRank(pick, result);
+  if (rank == null) return "miss";
+  if (rank === 1) return "win";
+  if (rank <= 3) return "place";
+  return "miss";
 }
 
 function normKey(betType, selection) {

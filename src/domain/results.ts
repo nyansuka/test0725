@@ -1,60 +1,64 @@
-import type { BetType, LongshotPick, Race, RaceResult } from "./types";
+import type { BetType, Race, RaceResult } from "./types";
 import { parseSelectionNumbers } from "./betTypes";
 
-export type PickOutcome = "hit" | "miss" | "pending";
+/** 複勝圏ベースの結果判定（券種の厳密払戻とは別） */
+export type PickOutcome = "win" | "place" | "miss" | "pending";
 
-function topN(result: RaceResult, n: number): number[] {
-  return result.finishes
-    .filter((f) => f.rank != null && f.rank >= 1 && f.rank <= n)
-    .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))
-    .map((f) => f.number);
+export function isInMoney(outcome: PickOutcome): boolean {
+  return outcome === "win" || outcome === "place";
 }
 
-function sameSet(a: number[], b: number[]): boolean {
-  if (a.length !== b.length) return false;
-  const sa = [...a].sort((x, y) => x - y);
-  const sb = [...b].sort((x, y) => x - y);
-  return sa.every((v, i) => v === sb[i]);
-}
-
-/** 候補買い目が結果に的中したか（簡易判定） */
-export function evaluatePick(pick: LongshotPick, result: RaceResult | undefined): PickOutcome {
-  if (!result?.finishes?.length) return "pending";
-  const nums = parseSelectionNumbers(pick.selection);
-  const first = topN(result, 1);
-  const top2 = topN(result, 2);
-  const top3 = topN(result, 3);
-
-  switch (pick.betType) {
+export function outcomeLabel(outcome: PickOutcome): string {
+  switch (outcome) {
     case "win":
-      return nums[0] != null && first[0] === nums[0] ? "hit" : "miss";
+      return "大当たり";
     case "place":
-      return nums[0] != null && top3.includes(nums[0]) ? "hit" : "miss";
-    case "quinella":
-      return nums.length >= 2 && sameSet(nums.slice(0, 2), top2) ? "hit" : "miss";
-    case "wide":
-      return nums.length >= 2 && nums.slice(0, 2).every((n) => top3.includes(n))
-        ? "hit"
-        : "miss";
-    case "bracket_quinella": {
-      // 枠番そのものの厳密判定は省略。関係馬が2着以内に2頭いれば的中扱い
-      const related = pick.relatedHorseNumbers;
-      return related.filter((n) => top2.includes(n)).length >= 2 ? "hit" : "miss";
-    }
-    case "exacta":
-      return nums.length >= 2 && nums[0] === top2[0] && nums[1] === top2[1] ? "hit" : "miss";
-    case "trio":
-      return nums.length >= 3 && sameSet(nums.slice(0, 3), top3) ? "hit" : "miss";
-    case "trifecta":
-      return nums.length >= 3 &&
-        nums[0] === top3[0] &&
-        nums[1] === top3[1] &&
-        nums[2] === top3[2]
-        ? "hit"
-        : "miss";
+      return "馬券内";
+    case "miss":
+      return "はずれ";
     default:
-      return "pending";
+      return "待ち";
   }
+}
+
+function relatedNumbers(pick: PickLike): number[] {
+  if (pick.relatedHorseNumbers?.length) return pick.relatedHorseNumbers;
+  return parseSelectionNumbers(pick.selection);
+}
+
+type PickLike = {
+  selection: string;
+  relatedHorseNumbers?: number[];
+};
+
+/** 関係馬のうち最良着順（未着・欠場のみなら null） */
+export function bestRelatedRank(
+  pick: PickLike,
+  result: RaceResult | undefined,
+): number | null {
+  if (!result?.finishes?.length) return null;
+  let best: number | null = null;
+  for (const n of relatedNumbers(pick)) {
+    const finish = result.finishes.find((f) => f.number === n);
+    if (finish?.rank == null || finish.rank < 1) continue;
+    if (best == null || finish.rank < best) best = finish.rank;
+  }
+  return best;
+}
+
+/**
+ * 候補の結果判定（製品方針: 複勝圏ポテンシャル）
+ * - 1着 → 大当たり (win)
+ * - 2・3着 → 馬券内 (place) ※はずれにしない
+ * - 4着以下 → はずれ (miss)
+ */
+export function evaluatePick(pick: PickLike, result: RaceResult | undefined): PickOutcome {
+  if (!result?.finishes?.length) return "pending";
+  const rank = bestRelatedRank(pick, result);
+  if (rank == null) return "miss";
+  if (rank === 1) return "win";
+  if (rank <= 3) return "place";
+  return "miss";
 }
 
 export function formatFinishLine(result: RaceResult): string {

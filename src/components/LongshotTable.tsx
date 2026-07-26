@@ -10,7 +10,7 @@ import {
   formatWinOdds,
   popularityByNumber,
 } from "@/domain/odds";
-import { evaluatePick } from "@/domain/results";
+import { evaluatePick, outcomeLabel } from "@/domain/results";
 import type { ReactNode } from "react";
 
 type Props = {
@@ -186,14 +186,16 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
                   <td className="py-4 pr-3">
                     <span
                       className={
-                        outcome === "hit"
+                        outcome === "win"
                           ? "font-medium text-signal"
-                          : outcome === "miss"
-                            ? "text-ink/40"
-                            : "text-ink/55"
+                          : outcome === "place"
+                            ? "font-medium text-turf"
+                            : outcome === "miss"
+                              ? "text-ink/40"
+                              : "text-ink/55"
                       }
                     >
-                      {outcome === "hit" ? "的中" : outcome === "miss" ? "外れ" : "待ち"}
+                      {outcomeLabel(outcome)}
                     </span>
                   </td>
                 )}

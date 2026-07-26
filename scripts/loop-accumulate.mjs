@@ -198,13 +198,18 @@ async function cmdEvaluate(raceDate) {
   for (const pick of prediction.picks ?? []) {
     const result = resultByRace.get(pick.raceId);
     const outcome = evaluatePick(pick, result);
-    const pay = outcome === "hit" ? findPayoutYen(result, pick.betType, pick.selection) : null;
+    const success = outcome === "win" || outcome === "place";
+    const pay = success ? findPayoutYen(result, pick.betType, pick.selection) : null;
     const virtualStake = 100;
     if (outcome !== "pending") {
       stakeYen += virtualStake;
-      if (outcome === "hit") {
+      if (success) {
         candidateHits += 1;
-        payoutYen += pay ?? Math.round(pick.odds * virtualStake);
+        // 券種払戻があればそれを使い、大当たりで払戻不明ならオッズ概算。馬券内のみは払戻0扱い可
+        if (pay != null) payoutYen += pay;
+        else if (outcome === "win" && pick.betType === "win") {
+          payoutYen += Math.round(pick.odds * virtualStake);
+        }
       }
     } else {
       candidatePending += 1;
@@ -212,12 +217,12 @@ async function cmdEvaluate(raceDate) {
 
     byBet[pick.betType] ??= { candidates: 0, hits: 0, gateCorrect: 0, pending: 0 };
     byBet[pick.betType].candidates += 1;
-    if (outcome === "hit") byBet[pick.betType].hits += 1;
+    if (success) byBet[pick.betType].hits += 1;
     if (outcome === "pending") byBet[pick.betType].pending += 1;
 
     const lab = byLabel[pick.label] ?? (byLabel[pick.label] = { candidates: 0, hits: 0, pending: 0 });
     lab.candidates += 1;
-    if (outcome === "hit") lab.hits += 1;
+    if (success) lab.hits += 1;
     if (outcome === "pending") lab.pending += 1;
 
     rows.push({
@@ -259,7 +264,7 @@ async function cmdEvaluate(raceDate) {
         gatePending += 1;
         continue;
       }
-      if (outcome === "hit") {
+      if (outcome === "win" || outcome === "place") {
         gateCorrect += 1;
         byBet[entry.betType] ??= { candidates: 0, hits: 0, gateCorrect: 0, pending: 0 };
         byBet[entry.betType].gateCorrect += 1;
