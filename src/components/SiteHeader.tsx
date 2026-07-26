@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { RaceDayBar } from "@/components/RaceDayBar";
 
@@ -30,10 +31,19 @@ export function SiteHeader({ variant = "solid", showRaceDayBar = true }: Props) 
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-5 md:px-8">
           <Link
             href="/"
-            className={`font-[family-name:var(--font-display)] text-lg font-bold tracking-[0.18em] md:text-xl ${
+            className={`inline-flex items-center gap-2 font-[family-name:var(--font-display)] text-lg font-bold tracking-[0.18em] md:text-xl ${
               overlay ? "text-sand" : "text-turf"
             }`}
           >
+            <Image
+              src="/brand/mark.png"
+              alt=""
+              width={36}
+              height={36}
+              className="h-7 w-7 md:h-8 md:w-8"
+              aria-hidden
+              priority
+            />
             UMANOTE
           </Link>
           <nav

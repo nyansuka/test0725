@@ -28,6 +28,16 @@ export const metadata: Metadata = {
   title: "UMANOTE | 高配当候補の選別",
   description:
     "JRA全券種のオッズゲートと複勝圏スコアで、穴になりうる買い目を見極めるデモサイト。",
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png" }, { url: "/favicon.ico" }],
+    apple: [{ url: "/apple-icon.png" }],
+  },
+  openGraph: {
+    title: "UMANOTE | 高配当候補の選別",
+    description:
+      "JRA全券種のオッズゲートと複勝圏スコアで、穴になりうる買い目を見極めるデモサイト。",
+    images: [{ url: "/brand/og.png", width: 1200, height: 630, alt: "UMANOTE" }],
+  },
 };
 
 export default function RootLayout({

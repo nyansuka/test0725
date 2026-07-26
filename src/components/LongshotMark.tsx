@@ -1,7 +1,5 @@
 import type { LongshotPick } from "@/domain/types";
-
-/** 注目穴ラベルの関係馬に付ける印 */
-export const LONGSHOT_MARK = "♪";
+import Image from "next/image";
 
 /** レース内で「注目穴」候補に含まれる馬番の集合 */
 export function longshotHorseNumbers(
@@ -17,14 +15,22 @@ export function longshotHorseNumbers(
   return set;
 }
 
+/** 注目穴ラベルの関係馬に付ける蹄鉄印 */
 export function LongshotMark({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`inline-block text-signal ${className}`}
+      className={`inline-flex h-[1.15em] w-[1.15em] shrink-0 items-center justify-center align-[-0.15em] ${className}`}
       title="注目穴"
       aria-label="注目穴"
     >
-      {LONGSHOT_MARK}
+      <Image
+        src="/brand/horseshoe.png"
+        alt=""
+        width={36}
+        height={36}
+        className="h-full w-full object-contain"
+        aria-hidden
+      />
     </span>
   );
 }
