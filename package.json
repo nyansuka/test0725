@@ -15,9 +15,11 @@
     "loop:report": "node scripts/loop-accumulate.mjs report",
     "loop:trends": "node scripts/loop-build-trends.mjs",
     "site:check": "node scripts/site-check.mjs",
-    "site:check:push": "node scripts/site-check-push.mjs"
+    "site:check:push": "node scripts/site-check-push.mjs",
+    "journal:migrate": "node scripts/journal-migrate.mjs"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "next": "16.2.11",
     "react": "19.2.4",
     "react-dom": "19.2.4"

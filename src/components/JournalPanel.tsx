@@ -8,7 +8,17 @@ import { races } from "@/data/races";
 import { useJournal } from "@/components/JournalProvider";
 
 export function JournalPanel() {
-  const { slips, tipsters, addSlip, removeSlip, addTipster, updateSlip, hydrated } = useJournal();
+  const {
+    slips,
+    tipsters,
+    addSlip,
+    removeSlip,
+    addTipster,
+    updateSlip,
+    hydrated,
+    storage,
+    error,
+  } = useJournal();
   const [sourceFilter, setSourceFilter] = useState<"all" | "self" | "tipster">("all");
 
   const [source, setSource] = useState<BetSlipSource>("self");
@@ -89,6 +99,16 @@ export function JournalPanel() {
           </div>
         ))}
       </div>
+
+      <p className="text-sm text-ink/55">
+        保存先:{" "}
+        {storage === "neon"
+          ? "Neon DB"
+          : storage === "local"
+            ? "このブラウザ（DB未接続）"
+            : "接続確認中…"}
+        {error ? <span className="ml-2 text-signal">· {error}</span> : null}
+      </p>
 
       <div className="flex flex-wrap gap-2 text-sm">
         {(

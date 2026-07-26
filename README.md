@@ -82,3 +82,23 @@ docker compose exec web npm run site:check:push   # PASS かつ変更あり → 
 - 開催日のデフォルトは日本時間の当日（当日データが無ければ最新スナップショット日）です。
 - ソース変更はボリュームマウントによりホットリロードされます。
 - 画面が古い場合は `docker compose down` → `docker compose up --build` のあと、ブラウザで Ctrl+Shift+R してください（`.next` は Docker ボリュームに分離済み）。
+
+## 成績日記（Neon）と Vercel 公開
+
+成績日記は [Neon](https://console.neon.tech/)（PostgreSQL）に保存します。ローカルは `.env.local`、[Vercel](https://vercel.com/nanska) 本番は Project Settings の Environment Variables に同じキーを入れます。
+
+```bash
+# 初回のみスキーマ作成
+npm run journal:migrate
+# または
+docker compose exec web npm run journal:migrate
+```
+
+| 場所 | 設定 |
+|------|------|
+| ローカル | `.env.local` に `DATABASE_URL=...`（Git 管理外） |
+| Vercel | Settings → Environment Variables → `DATABASE_URL`（Production / Preview） |
+
+接続文字列は Neon の **pooled** 接続（ホスト名に `-pooler`）を推奨。チャットやリポジトリにパスワードを載せないこと。漏洩したら Neon でロールのパスワードを再発行する。
+
+Vercel は `main` への push で再デプロイされる想定です。`DATABASE_URL` 未設定のとき成績日記はブラウザ localStorage にフォールバックします。

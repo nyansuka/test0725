@@ -13,7 +13,8 @@ export default function JournalPage() {
           </p>
           <h1 className="mt-2 text-3xl font-bold text-ink md:text-5xl">成績日記</h1>
           <p className="mt-3 max-w-2xl text-ink/70">
-            自分の購入と参考予想家の買い目を記録し、回収率を集計します。選別スコアの計算には使いません。
+            自分の購入と参考予想家の買い目を記録し、回収率を集計します。データは Neon
+            PostgreSQL に保存します（接続できない場合のみブラウザに一時保存）。選別スコアの計算には使いません。
           </p>
           <div className="mt-10">
             <JournalPanel />

@@ -11,6 +11,9 @@ services:
     environment:
       - WATCHPACK_POLLING=true
       - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - path: .env.local
+        required: false
     stdin_open: true
     tty: true
 
