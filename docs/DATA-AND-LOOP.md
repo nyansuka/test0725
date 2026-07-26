@@ -1,6 +1,6 @@
 # データ選別と改善ループ計画
 
-最終更新: 2026-07-25  
+最終更新: 2026-07-26  
 親計画: [PLAN.md](./PLAN.md)  
 対象: UMANOTE（JRA・高配当候補選別）
 
@@ -150,10 +150,13 @@
 
 ```bash
 docker compose exec web npm run fetch:jra
-docker compose exec web npm run loop:freeze      # 発走前に一度
+docker compose exec web npm run loop:freeze      # 発走前に一度（オッズが揃ってから）
 docker compose exec web npm run loop:evaluate    # 結果後
 docker compose exec web npm run loop:report -- YYYY-MM-DD
+# 薄い凍結のやり直し: npm run loop:freeze -- YYYY-MM-DD --force
 ```
+
+注意: netkeiba オッズ API は `action=init` 無しだと発売中でも空になりやすい（fetcher 側で付与済み）。単勝が軒並み `99.9` なら再 fetch → `freeze --force`。
 
 詳細パスは `src/data/loop/README.md`。
 

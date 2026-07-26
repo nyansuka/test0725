@@ -20,6 +20,7 @@
 docker compose exec web npm run fetch:jra
 docker compose exec web npm run loop:freeze
 # 日付指定: npm run loop:freeze -- 2026-07-25
+# 薄い凍結のやり直し: npm run loop:freeze -- 2026-07-25 --force
 ```
 
 結果が揃ったあと（または fetcher が更新したあと）:
@@ -37,6 +38,7 @@ docker compose exec web sh -c "ODDS_THRESHOLD=30 SCORE_MIN=55 npm run loop:freez
 
 ## 注意
 
-- **freeze は結果が出る前に一度実行する。** 既存の `loop/snapshots` は上書きしない。
+- **freeze は結果が出る前に一度実行する。** 既存の `loop/snapshots` は原則上書きしない（`--force` のみ差し替え可）。
+- 発売前に凍らせて placeholder（単勝 99.9）だらけなら、再 `fetch` のあと `freeze --force`。
 - ライブの `src/data/snapshots/` は fetcher が結果で更新してよい。検証のオッズは常に `loop/snapshots` を使う。
 - factors が合成のあいだ、指標は「製品の挙動」評価である。

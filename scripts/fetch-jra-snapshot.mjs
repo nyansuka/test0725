@@ -306,14 +306,17 @@ async function fetchRaceIds(kaisaiDate) {
   return [...new Set(ids)].sort();
 }
 
+function oddsApiUrl(raceId, typeNum) {
+  // action=init が無いと発売中レースでも status=middle / reason=result odds empty になりがち
+  return `https://race.netkeiba.com/api/api_get_jra_odds.html?type=${typeNum}&race_id=${raceId}&is_ajax=1&action=init`;
+}
+
 async function fetchOddsBundle(raceId) {
   const entries = [];
   const placeRanges = new Map();
 
   // type=1 returns win+place together
-  const winPlace = await fetchJson(
-    `https://race.netkeiba.com/api/api_get_jra_odds.html?type=1&race_id=${raceId}&is_ajax=1`,
-  );
+  const winPlace = await fetchJson(oddsApiUrl(raceId, 1));
   await sleep(120);
   for (const e of flattenOdds(winPlace, 1)) {
     if (e.betType === "place" && e.placeMin != null) {
@@ -326,9 +329,7 @@ async function fetchOddsBundle(raceId) {
 
   // other bet types — keep only odds >= 8 to limit payload size while covering longshots
   for (const typeNum of [3, 4, 5, 6, 7, 8]) {
-    const payload = await fetchJson(
-      `https://race.netkeiba.com/api/api_get_jra_odds.html?type=${typeNum}&race_id=${raceId}&is_ajax=1`,
-    );
+    const payload = await fetchJson(oddsApiUrl(raceId, typeNum));
     await sleep(100);
     const flat = flattenOdds(payload, typeNum)
       .filter((e) => e.odds >= 8)

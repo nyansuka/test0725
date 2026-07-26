@@ -93,22 +93,51 @@ function settingsFromEnvOrDefault() {
   return settings;
 }
 
-async function cmdFreeze(raceDate) {
+function oddsQuality(races) {
+  let realWinRaces = 0;
+  let placeholderRaces = 0;
+  let comboEntries = 0;
+  for (const r of races ?? []) {
+    const board = r.oddsBoard ?? [];
+    const wins = board.filter((e) => e.betType === "win");
+    const combos = board.filter((e) => e.betType !== "win" && e.betType !== "place");
+    comboEntries += combos.length;
+    const horse99 = (r.horses ?? []).filter((h) => h.oddsWin === 99.9).length;
+    const field = (r.horses ?? []).length;
+    if (field > 0 && horse99 === field) placeholderRaces += 1;
+    else if (wins.some((e) => e.odds !== 99.9)) realWinRaces += 1;
+  }
+  return { realWinRaces, placeholderRaces, comboEntries, raceCount: races?.length ?? 0 };
+}
+
+async function cmdFreeze(raceDate, { force = false } = {}) {
   const frozenPath = path.join(loopRoot, "snapshots", `${raceDate}.json`);
   const predPath = path.join(loopRoot, "predictions", `${raceDate}.json`);
   const settings = settingsFromEnvOrDefault();
 
   let frozen;
-  if (await exists(frozenPath)) {
+  if (await exists(frozenPath) && !force) {
     console.log(`Freeze skip (exists): ${path.relative(root, frozenPath)}`);
     frozen = await readJson(frozenPath);
+    const q = oddsQuality(frozen.races);
+    if (q.placeholderRaces > 0 || q.comboEntries === 0) {
+      console.log(
+        `WARN thin freeze: realWin=${q.realWinRaces}/${q.raceCount} placeholder=${q.placeholderRaces} combos=${q.comboEntries} (re-fetch then freeze --force)`,
+      );
+    }
   } else {
     const live = await loadLiveSnapshot(raceDate);
     frozen = stripResults(live.data);
     frozen.raceDate = raceDate;
     frozen.sourceLivePath = path.relative(root, live.path).replace(/\\/g, "/");
+    if (force && (await exists(frozenPath))) {
+      console.log(`Freeze force overwrite: ${path.relative(root, frozenPath)}`);
+    }
     await writeJson(frozenPath, frozen);
-    console.log(`Frozen odds → ${path.relative(root, frozenPath)}`);
+    const q = oddsQuality(frozen.races);
+    console.log(
+      `Frozen odds → ${path.relative(root, frozenPath)} (realWin=${q.realWinRaces}/${q.raceCount} combos=${q.comboEntries})`,
+    );
   }
 
   const picks = selectLongshots(frozen.races ?? [], settings);
@@ -342,14 +371,17 @@ async function cmdReport(dates) {
 }
 
 async function main() {
-  const [, , cmd, ...rest] = process.argv;
+  const [, , cmd, ...argv] = process.argv;
+  const force = argv.includes("--force");
+  const rest = argv.filter((a) => a !== "--force");
   if (!cmd || !["freeze", "evaluate", "report"].includes(cmd)) {
     console.log(`Usage:
-  node scripts/loop-accumulate.mjs freeze [YYYY-MM-DD]
+  node scripts/loop-accumulate.mjs freeze [YYYY-MM-DD] [--force]
   node scripts/loop-accumulate.mjs evaluate [YYYY-MM-DD]
   node scripts/loop-accumulate.mjs report [YYYY-MM-DD ...]
 
 Env (freeze 時): ODDS_THRESHOLD, SCORE_MIN
+  --force … 既存の loop/snapshots を発走前オッズで差し替え（薄い凍結のやり直し用）
 `);
     process.exit(cmd ? 1 : 0);
   }
@@ -357,7 +389,7 @@ Env (freeze 時): ODDS_THRESHOLD, SCORE_MIN
   await mkdir(loopRoot, { recursive: true });
 
   if (cmd === "freeze") {
-    await cmdFreeze(normalizeDate(rest[0]));
+    await cmdFreeze(normalizeDate(rest[0]), { force });
     return;
   }
   if (cmd === "evaluate") {
