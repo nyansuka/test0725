@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { BET_TYPE_LABELS, ALL_BET_TYPES } from "@/domain/betTypes";
-import { selectLongshots } from "@/domain/longshots";
+import { groupLongshotPicks, selectLongshots } from "@/domain/longshots";
 import type { BetType, Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
 import { useRaceCatalog } from "@/components/RaceCatalogProvider";
@@ -55,6 +55,8 @@ export function LongshotsBoard({ races: racesProp }: Props) {
     }
     return list;
   }, [dayRaces, settings, venue, track, betType, sort]);
+
+  const groupCount = useMemo(() => groupLongshotPicks(picks).length, [picks]);
 
   return (
     <div>
@@ -145,7 +147,11 @@ export function LongshotsBoard({ races: racesProp }: Props) {
             </button>
           ))}
           <span className="ml-auto text-ink/50">
-            {hydrated ? `${picks.length} 件` : "読込中…"}
+            {hydrated
+              ? groupCount === picks.length
+                ? `${picks.length} 枠`
+                : `${groupCount} 枠 · ${picks.length} 買い目`
+              : "読込中…"}
             {" · "}最低スコア {settings.scoreMin}
             （券種ごとの見送りはレース詳細へ）
           </span>

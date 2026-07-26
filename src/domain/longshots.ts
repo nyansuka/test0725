@@ -154,6 +154,80 @@ export function selectLongshots(
   return picks.sort((a, b) => b.relatedPlacePotential - a.relatedPlacePotential);
 }
 
+/** 関係馬集合が同じ候補を1枠にまとめるキー（並びは呼び出し側の順を維持） */
+export function longshotGroupKey(pick: LongshotPick): string {
+  const nums = [...pick.relatedHorseNumbers].sort((a, b) => a - b);
+  if (nums.length > 0) return `${pick.raceId}::${nums.join("-")}`;
+  return `${pick.raceId}::${pick.betType}:${pick.selection}`;
+}
+
+export type LongshotPickGroup = {
+  key: string;
+  raceId: string;
+  venue: string;
+  raceNumber: number;
+  startTime: string;
+  track: "芝" | "ダート";
+  title: string;
+  relatedHorseNumbers: number[];
+  relatedPlacePotential: number;
+  /** 枠内の最上位ラベル（注目穴優先） */
+  label: LongshotLabel;
+  picks: LongshotPick[];
+  /**
+   * 関係馬が1頭だけで、各買い目もその馬単体（単勝・複勝など）のとき true。
+   * 注目馬と推奨買い目が同じ馬なので、馬情報と買い目を1枠にまとめて重複表示しない。
+   */
+  sameHorseAsSelection: boolean;
+};
+
+/** 並び順を保ったまま、関係馬が同じ候補をグループ化 */
+export function groupLongshotPicks(picks: LongshotPick[]): LongshotPickGroup[] {
+  const order: string[] = [];
+  const map = new Map<string, LongshotPick[]>();
+
+  for (const pick of picks) {
+    const key = longshotGroupKey(pick);
+    if (!map.has(key)) {
+      order.push(key);
+      map.set(key, []);
+    }
+    map.get(key)!.push(pick);
+  }
+
+  return order.map((key) => {
+    const groupPicks = map.get(key)!;
+    const head = groupPicks[0];
+    const relatedHorseNumbers = [...head.relatedHorseNumbers].sort((a, b) => a - b);
+    const sameHorseAsSelection =
+      relatedHorseNumbers.length === 1 &&
+      groupPicks.every((p) => {
+        if (p.relatedHorseNumbers.length !== 1) return false;
+        if (p.relatedHorseNumbers[0] !== relatedHorseNumbers[0]) return false;
+        return p.selection.trim() === String(relatedHorseNumbers[0]);
+      });
+    const label = groupPicks.some((p) => p.label === "注目穴") ? "注目穴" : head.label;
+    const relatedPlacePotential = Math.max(
+      ...groupPicks.map((p) => p.relatedPlacePotential),
+    );
+
+    return {
+      key,
+      raceId: head.raceId,
+      venue: head.venue,
+      raceNumber: head.raceNumber,
+      startTime: head.startTime,
+      track: head.track,
+      title: head.title,
+      relatedHorseNumbers,
+      relatedPlacePotential,
+      label,
+      picks: groupPicks,
+      sameHorseAsSelection,
+    };
+  });
+}
+
 /**
  * レース期待度（Sが最上）。
  * edge = topスコア*0.7 + 高スコア候補数*8 + 候補件数*3（上限100）

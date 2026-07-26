@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-26T02:58:43.388Z",
+  "fetchedAt": "2026-07-26T03:28:02.420Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-07-26",
   "raceCount": 36,
@@ -8284,7 +8284,28 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-26 11:17:04",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-07-26T03:28:02.420Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 9,
+            "bracket": 8,
+            "name": "ノヴァヴェローチェ",
+            "popularity": 3,
+            "oddsWin": 7.4
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "9",
+            "payoutYen": 740
+          }
+        ]
+      }
     },
     {
       "id": "sapporo-20260726-6",
