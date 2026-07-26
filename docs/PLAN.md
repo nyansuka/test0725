@@ -169,7 +169,8 @@ D: それ未満、または候補なし
 
 ### 5.4 検証の考え方（後続）
 
-詳細は **[DATA-AND-LOOP.md](./DATA-AND-LOOP.md)**（データ選別＋予想→結果の改善ループ）。
+詳細は **[DATA-AND-LOOP.md](./DATA-AND-LOOP.md)**（データ選別＋予想→結果の改善ループ）。  
+開催日結果に基づく改善棚卸しは **[IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md)**。
 
 要約:
 

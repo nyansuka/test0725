@@ -2,7 +2,8 @@
 
 最終更新: 2026-07-26  
 親計画: [PLAN.md](./PLAN.md)  
-対象: UMANOTE（JRA・高配当候補選別）
+対象: UMANOTE（JRA・高配当候補選別）  
+結果レビュー・改善棚卸し: [IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md)
 
 製品方針は固まった前提で、ここからは **(A) 何を取るか** と **(B) 予想→結果でどう回すか** を決める。
 
