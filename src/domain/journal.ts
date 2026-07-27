@@ -38,6 +38,7 @@ export function summarizeJournal(
   const stakeTotal = settled.reduce((sum, s) => sum + s.stakeYen, 0);
   const payoutTotal = settled.reduce((sum, s) => sum + (s.payoutYen ?? 0), 0);
   const hitCount = settled.filter(isHit).length;
+  const settledCount = settled.length;
 
   return {
     from: range.from,
@@ -49,6 +50,9 @@ export function summarizeJournal(
     profitYen: payoutTotal - stakeTotal,
     betCount: filtered.length,
     hitCount,
+    hitRatePercent:
+      settledCount === 0 ? null : Math.round((hitCount / settledCount) * 1000) / 10,
+    settledCount,
     pendingCount,
   };
 }

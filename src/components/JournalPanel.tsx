@@ -4,6 +4,12 @@ import { useMemo, useState, type FormEvent } from "react";
 import { ALL_BET_TYPES, BET_TYPE_LABELS } from "@/domain/betTypes";
 import { summarizeJournal, DEFAULT_JOURNAL_SETTINGS } from "@/domain/journal";
 import type { BetSlipSource, BetType, TipsterKind } from "@/domain/types";
+import { formatJstDateLabel } from "@/domain/date";
+import {
+  completedDayLabelStats,
+  formatPrecisionPercent,
+} from "@/domain/trends";
+import { getTrendIndex } from "@/domain/trendData";
 import { races } from "@/data/races";
 import { useJournal } from "@/components/JournalProvider";
 
@@ -33,12 +39,28 @@ export function JournalPanel() {
   const [tipsterKind, setTipsterKind] = useState<TipsterKind>("prediction_only");
   const [note, setNote] = useState("");
 
-  const summary = useMemo(() => {
+  const range = useMemo(() => {
     const now = new Date();
-    const from = new Date(now.getFullYear() - 1, 0, 1).toISOString();
-    const to = new Date(now.getFullYear() + 1, 11, 31).toISOString();
-    return summarizeJournal(slips, { from, to }, sourceFilter, DEFAULT_JOURNAL_SETTINGS);
-  }, [slips, sourceFilter]);
+    return {
+      from: new Date(now.getFullYear() - 1, 0, 1).toISOString(),
+      to: new Date(now.getFullYear() + 1, 11, 31).toISOString(),
+    };
+  }, []);
+
+  const summary = useMemo(
+    () => summarizeJournal(slips, range, sourceFilter, DEFAULT_JOURNAL_SETTINGS),
+    [slips, range, sourceFilter],
+  );
+
+  const selfSummary = useMemo(
+    () => summarizeJournal(slips, range, "self", DEFAULT_JOURNAL_SETTINGS),
+    [slips, range],
+  );
+
+  const longshotStats = useMemo(
+    () => completedDayLabelStats(getTrendIndex(), "注目穴"),
+    [],
+  );
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -84,12 +106,81 @@ export function JournalPanel() {
 
   return (
     <div className="space-y-12">
+      <section className="space-y-4">
+        <div>
+          <h2 className="text-lg font-semibold text-ink">終了日の的中率</h2>
+          <p className="mt-1 text-sm text-ink/55">
+            注目穴は結果が揃った開催日の候補的中（複勝圏）。自分買い目は払戻確定分の券的中です。
+          </p>
+        </div>
+        <div className="grid gap-4">
+          <div className="border border-ink/10 bg-sand-dim/40 px-4 py-5">
+            <p className="text-xs tracking-wider text-ink/50">注目穴の的中率</p>
+            <p className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-ink">
+              {formatPrecisionPercent(longshotStats.overall.precision)}
+            </p>
+            <p className="mt-2 text-sm text-ink/55">
+              {longshotStats.overall.settled > 0
+                ? `${longshotStats.overall.hits.toLocaleString()} / ${longshotStats.overall.settled.toLocaleString()} · ${longshotStats.days.length}日分`
+                : "終了した開催日がまだありません"}
+            </p>
+          </div>
+          <div className="border border-ink/10 bg-sand-dim/40 px-4 py-5">
+            <p className="text-xs tracking-wider text-ink/50">自分買い目の的中率</p>
+            <p className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-ink">
+              {selfSummary.hitRatePercent == null
+                ? "—"
+                : `${selfSummary.hitRatePercent}%`}
+            </p>
+            <p className="mt-2 text-sm text-ink/55">
+              {selfSummary.settledCount > 0
+                ? `${selfSummary.hitCount.toLocaleString()} / ${selfSummary.settledCount.toLocaleString()} · 確定分`
+                : "確定した自分の購入がまだありません"}
+              {selfSummary.pendingCount > 0
+                ? `（結果待ち ${selfSummary.pendingCount}）`
+                : null}
+            </p>
+          </div>
+        </div>
+        {longshotStats.days.length > 0 && (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[420px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-ink/20 text-ink/50">
+                  <th className="py-2 pr-3 font-medium">開催日</th>
+                  <th className="py-2 pr-3 font-medium">注目穴 的中率</th>
+                  <th className="py-2 font-medium">的中 / 件数</th>
+                </tr>
+              </thead>
+              <tbody>
+                {longshotStats.days.map((day) => (
+                  <tr key={day.date} className="border-b border-ink/10">
+                    <td className="py-2.5 pr-3">{formatJstDateLabel(day.date)}</td>
+                    <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-medium">
+                      {formatPrecisionPercent(day.precision)}
+                    </td>
+                    <td className="py-2.5 text-ink/70">
+                      {day.hits.toLocaleString()} / {day.settled.toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
           ["投資合計", `${summary.stakeTotal.toLocaleString()}円`],
           ["払戻合計", `${summary.payoutTotal.toLocaleString()}円`],
           ["回収率", `${summary.returnRatePercent}%`],
-          ["的中 / 件数", `${summary.hitCount} / ${summary.betCount}`],
+          [
+            "的中率 / 件数",
+            summary.hitRatePercent == null
+              ? `— · ${summary.betCount}`
+              : `${summary.hitRatePercent}% · ${summary.hitCount}/${summary.settledCount}`,
+          ],
         ].map(([label, value]) => (
           <div key={label} className="border border-ink/10 bg-sand-dim/40 px-4 py-5">
             <p className="text-xs tracking-wider text-ink/50">{label}</p>

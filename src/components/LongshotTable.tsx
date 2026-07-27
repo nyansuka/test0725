@@ -11,8 +11,41 @@ import {
   formatWinOdds,
   popularityByNumber,
 } from "@/domain/odds";
-import { evaluatePick, outcomeLabel } from "@/domain/results";
+import {
+  evaluateHorse,
+  evaluatePick,
+  horseFinishRank,
+  outcomeLabel,
+} from "@/domain/results";
 import { useMemo, type ReactNode } from "react";
+
+function outcomeClass(outcome: ReturnType<typeof evaluateHorse>): string {
+  if (outcome === "win") return "font-medium text-signal";
+  if (outcome === "place") return "font-medium text-turf";
+  if (outcome === "miss") return "text-ink/40";
+  return "text-ink/55";
+}
+
+function HorseOutcomeBadge({
+  horseNumber,
+  race,
+  show,
+}: {
+  horseNumber: number;
+  race: Race | undefined;
+  show: boolean;
+}) {
+  if (!show) return null;
+  const outcome = evaluateHorse(horseNumber, race?.result);
+  const rank = horseFinishRank(horseNumber, race?.result);
+  const text =
+    outcome === "pending"
+      ? outcomeLabel(outcome)
+      : rank != null
+        ? `${rank}着 · ${outcomeLabel(outcome)}`
+        : outcomeLabel(outcome);
+  return <span className={`ml-2 text-sm ${outcomeClass(outcome)}`}>{text}</span>;
+}
 
 type Props = {
   picks: LongshotPick[];
@@ -128,6 +161,7 @@ function HorseHeadline({
               <LongshotMark />
             </span>
           )}
+          <HorseOutcomeBadge horseNumber={n} race={race} show={Boolean(race?.result)} />
         </p>
       </div>
     );
@@ -153,6 +187,7 @@ function HorseHeadline({
                 {formatPopularityParen(h.rank)}
               </span>
             )}
+            <HorseOutcomeBadge horseNumber={h.n} race={race} show={Boolean(race?.result)} />
           </span>
         ))}
         {group.label === "注目穴" && (

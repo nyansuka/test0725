@@ -140,3 +140,51 @@ export function trendsExcludingDate(
     byVenueTrack: fin(maps.byVenueTrack),
   };
 }
+
+export type CompletedDayLabelStat = {
+  date: string;
+  candidates: number;
+  hits: number;
+  pending: number;
+  settled: number;
+  precision: number | null;
+};
+
+/** 結果が揃った日（pending=0）のラベル別候補的中を集計 */
+export function completedDayLabelStats(
+  trends: TrendIndex,
+  label: LongshotLabel | string = "注目穴",
+): {
+  days: CompletedDayLabelStat[];
+  overall: TrendBucket;
+} {
+  const days: CompletedDayLabelStat[] = [];
+  const acc = emptyRaw();
+
+  for (const date of trends.dates ?? []) {
+    const slice = trends.daySlices?.[date] ?? null;
+    const dayOverall = slice?.overall ?? trends.byDay?.[date];
+    if (!dayOverall || dayOverall.pending > 0) continue;
+
+    const bucket = slice?.byLabel?.[label];
+    if (!bucket || bucket.settled <= 0) continue;
+
+    days.push({
+      date,
+      candidates: bucket.candidates,
+      hits: bucket.hits,
+      pending: bucket.pending,
+      settled: bucket.settled,
+      precision: bucket.precision,
+    });
+    addBucket(acc, bucket);
+  }
+
+  days.sort((a, b) => b.date.localeCompare(a.date));
+  return { days, overall: finalizeBucket(acc) };
+}
+
+export function formatPrecisionPercent(precision: number | null | undefined): string {
+  if (precision == null || !Number.isFinite(precision)) return "—";
+  return `${(Math.round(precision * 1000) / 10).toFixed(1)}%`;
+}

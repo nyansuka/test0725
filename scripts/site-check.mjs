@@ -59,6 +59,13 @@ async function checkHttp() {
     }
   }
 
+  const longshots = await get("/longshots");
+  if (!longshots.body.includes("注目馬の的中")) {
+    fail("/longshots に「注目馬の的中」サマリー説明が無い");
+  } else {
+    ok("/longshots 注目馬サマリー");
+  }
+
   const method = await get("/method");
   if (!method.body.includes("短評")) {
     fail("/method に「短評」説明が無い");

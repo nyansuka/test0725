@@ -8,6 +8,7 @@ import { useSettings } from "@/components/SettingsProvider";
 import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
 import { RaceDayPicker } from "@/components/RaceDayPicker";
+import { FeaturedHorseSummaryBar } from "@/components/FeaturedHorseSummaryBar";
 import { LongshotTable } from "@/components/LongshotTable";
 import { filterRacesByDate } from "@/data/races";
 import { formatJstDateLabel } from "@/domain/date";
@@ -158,7 +159,11 @@ export function LongshotsBoard({ races: racesProp }: Props) {
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-6">
+        <FeaturedHorseSummaryBar picks={picks} races={races} />
+      </div>
+
+      <div className="mt-6">
         <LongshotTable picks={picks} />
       </div>
     </div>

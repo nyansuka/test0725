@@ -61,6 +61,89 @@ export function evaluatePick(pick: PickLike, result: RaceResult | undefined): Pi
   return "miss";
 }
 
+/** 単一頭の着順から複勝圏判定 */
+export function evaluateHorse(
+  horseNumber: number,
+  result: RaceResult | undefined,
+): PickOutcome {
+  if (!result?.finishes?.length) return "pending";
+  const finish = result.finishes.find((f) => f.number === horseNumber);
+  if (finish?.rank == null || finish.rank < 1) return "miss";
+  if (finish.rank === 1) return "win";
+  if (finish.rank <= 3) return "place";
+  return "miss";
+}
+
+export function horseFinishRank(
+  horseNumber: number,
+  result: RaceResult | undefined,
+): number | null {
+  if (!result?.finishes?.length) return null;
+  const finish = result.finishes.find((f) => f.number === horseNumber);
+  if (finish?.rank == null || finish.rank < 1) return null;
+  return finish.rank;
+}
+
+export type FeaturedHorseSummary = {
+  total: number;
+  settled: number;
+  hits: number;
+  wins: number;
+  places: number;
+  misses: number;
+  pending: number;
+  /** 確定頭に対する複勝圏的中率（%）。確定0は null */
+  hitRatePercent: number | null;
+};
+
+/**
+ * 表示中候補の関係馬をレース単位でユニークに数え、複勝圏的中を集計する。
+ * （同一馬が複数買い目に出ても1頭として扱う）
+ */
+export function summarizeFeaturedHorses(
+  picks: { raceId: string; relatedHorseNumbers: number[] }[],
+  raceById: Map<string, Race>,
+): FeaturedHorseSummary {
+  const seen = new Set<string>();
+  let hits = 0;
+  let wins = 0;
+  let places = 0;
+  let misses = 0;
+  let pending = 0;
+
+  for (const pick of picks) {
+    for (const n of pick.relatedHorseNumbers) {
+      const key = `${pick.raceId}#${n}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const outcome = evaluateHorse(n, raceById.get(pick.raceId)?.result);
+      if (outcome === "pending") pending += 1;
+      else if (outcome === "win") {
+        wins += 1;
+        hits += 1;
+      } else if (outcome === "place") {
+        places += 1;
+        hits += 1;
+      } else {
+        misses += 1;
+      }
+    }
+  }
+
+  const total = seen.size;
+  const settled = total - pending;
+  return {
+    total,
+    settled,
+    hits,
+    wins,
+    places,
+    misses,
+    pending,
+    hitRatePercent: settled === 0 ? null : Math.round((hits / settled) * 1000) / 10,
+  };
+}
+
 export function formatFinishLine(result: RaceResult): string {
   const top = result.finishes
     .filter((f) => f.rank != null && f.rank <= 3)

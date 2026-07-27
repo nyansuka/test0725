@@ -13,7 +13,9 @@ export default function LongshotsPage() {
           </p>
           <h1 className="mt-2 text-3xl font-bold text-ink md:text-5xl">注目穴ボード</h1>
           <p className="mt-3 max-w-2xl text-ink/70">
-            当日 JRA の全券種から、オッズ閾値以上かつ複勝圏スコア基準を満たす候補を一覧します。結果確定後は関係馬の着順で大当たり／馬券内／はずれを表示します。
+            当日 JRA の全券種から、オッズ閾値以上かつ複勝圏スコア基準を満たす候補を一覧します。結果確定後は
+            <span className="text-ink">注目馬の的中（複勝圏）</span>
+            を一覧上部に表示し、各馬の着順・買い目の大当たり／馬券内／はずれも示します。
           </p>
           <div className="mt-10">
             <LongshotsBoard />

@@ -153,6 +153,9 @@ export type JournalSummary = {
   profitYen: number;
   betCount: number;
   hitCount: number;
+  /** 確定件に対する的中率（%）。確定0件は null */
+  hitRatePercent: number | null;
+  settledCount: number;
   pendingCount: number;
 };
 
