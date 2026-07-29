@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-07-25T11:07:53.830Z",
+  "fetchedAt": "2026-07-29T10:52:06.227Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-07-25",
   "raceCount": 36,
@@ -17,8 +17,8 @@
       "venue": "札幌",
       "raceNumber": 1,
       "title": "3歳未勝利",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1000m",
+      "track": "ダート",
       "startTime": "10:00",
       "weather": "曇",
       "condition": "良",
@@ -40,7 +40,7 @@
             "conditionFit": 71,
             "formSignal": 69,
             "valueGap": 68,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -60,7 +60,7 @@
             "conditionFit": 78,
             "formSignal": 76,
             "valueGap": 70,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -80,7 +80,7 @@
             "conditionFit": 57,
             "formSignal": 55,
             "valueGap": 39,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -140,7 +140,7 @@
             "conditionFit": 78,
             "formSignal": 76,
             "valueGap": 58,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -160,7 +160,7 @@
             "conditionFit": 57,
             "formSignal": 55,
             "valueGap": 42,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -180,7 +180,7 @@
             "conditionFit": 64,
             "formSignal": 62,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         }
@@ -1073,10 +1073,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 10:05:37",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:46.543Z",
+        "finishedAt": "2026-07-29T10:51:03.100Z",
         "finishes": [
           {
             "rank": 1,
@@ -1210,7 +1209,8 @@
             "popularity": 6
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "sapporo-20260725-2",
@@ -2271,10 +2271,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 10:35:37",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:46.732Z",
+        "finishedAt": "2026-07-29T10:51:04.662Z",
         "finishes": [
           {
             "rank": 1,
@@ -2410,7 +2409,8 @@
             "popularity": 3
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "sapporo-20260725-3",
@@ -2420,8 +2420,8 @@
       "venue": "札幌",
       "raceNumber": 3,
       "title": "3歳未勝利",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1700m",
+      "track": "ダート",
       "startTime": "11:00",
       "weather": "曇",
       "condition": "良",
@@ -2443,7 +2443,7 @@
             "conditionFit": 73,
             "formSignal": 71,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -2463,7 +2463,7 @@
             "conditionFit": 80,
             "formSignal": 78,
             "valueGap": 84,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -2483,7 +2483,7 @@
             "conditionFit": 59,
             "formSignal": 57,
             "valueGap": 39,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -2543,7 +2543,7 @@
             "conditionFit": 80,
             "formSignal": 78,
             "valueGap": 41,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -2563,7 +2563,7 @@
             "conditionFit": 59,
             "formSignal": 57,
             "valueGap": 79,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -2583,7 +2583,7 @@
             "conditionFit": 66,
             "formSignal": 64,
             "valueGap": 44,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -2603,7 +2603,7 @@
             "conditionFit": 73,
             "formSignal": 71,
             "valueGap": 58,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -2623,7 +2623,7 @@
             "conditionFit": 80,
             "formSignal": 78,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         }
@@ -3846,10 +3846,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 11:07:42",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:46.907Z",
+        "finishedAt": "2026-07-29T10:51:06.598Z",
         "finishes": [
           {
             "rank": 1,
@@ -4008,7 +4007,8 @@
             "popularity": 2
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "sapporo-20260725-4",
@@ -5609,10 +5609,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 11:36:18",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:47.148Z",
+        "finishedAt": "2026-07-29T10:51:08.368Z",
         "finishes": [
           {
             "rank": 1,
@@ -5809,7 +5808,8 @@
             "popularity": 3
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "sapporo-20260725-5",
@@ -5819,8 +5819,8 @@
       "venue": "札幌",
       "raceNumber": 5,
       "title": "2歳新馬",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1700m",
+      "track": "ダート",
       "startTime": "12:20",
       "weather": "曇",
       "condition": "良",
@@ -5842,7 +5842,7 @@
             "conditionFit": 69,
             "formSignal": 67,
             "valueGap": 40,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -5862,7 +5862,7 @@
             "conditionFit": 76,
             "formSignal": 74,
             "valueGap": 48,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -5882,7 +5882,7 @@
             "conditionFit": 83,
             "formSignal": 81,
             "valueGap": 38,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -5942,7 +5942,7 @@
             "conditionFit": 76,
             "formSignal": 74,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         }
@@ -6510,10 +6510,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 12:26:28",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:47.312Z",
+        "finishedAt": "2026-07-29T10:51:10.384Z",
         "finishes": [
           {
             "rank": 1,
@@ -6624,7 +6623,8 @@
             "popularity": 2
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "sapporo-20260725-6",
@@ -8225,10 +8225,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 12:57:03",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:47.484Z",
+        "finishedAt": "2026-07-29T10:51:12.122Z",
         "finishes": [
           {
             "rank": 1,
@@ -8424,7 +8423,8 @@
             "popularity": 66
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "sapporo-20260725-7",
@@ -10060,10 +10060,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 13:26:33",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:47.715Z",
+        "finishedAt": "2026-07-29T10:51:14.508Z",
         "finishes": [
           {
             "rank": 1,
@@ -10267,7 +10266,8 @@
             "popularity": 99
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "sapporo-20260725-8",
@@ -10277,8 +10277,8 @@
       "venue": "札幌",
       "raceNumber": 8,
       "title": "3歳以上1勝クラス",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1700m",
+      "track": "ダート",
       "startTime": "13:50",
       "weather": "曇",
       "condition": "良",
@@ -10300,7 +10300,7 @@
             "conditionFit": 75,
             "formSignal": 73,
             "valueGap": 76,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -10320,7 +10320,7 @@
             "conditionFit": 82,
             "formSignal": 80,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -10340,7 +10340,7 @@
             "conditionFit": 61,
             "formSignal": 59,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -10420,7 +10420,7 @@
             "conditionFit": 61,
             "formSignal": 59,
             "valueGap": 39,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -10440,7 +10440,7 @@
             "conditionFit": 68,
             "formSignal": 66,
             "valueGap": 70,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -10460,7 +10460,7 @@
             "conditionFit": 75,
             "formSignal": 73,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -10480,7 +10480,7 @@
             "conditionFit": 82,
             "formSignal": 80,
             "valueGap": 67,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -10500,7 +10500,7 @@
             "conditionFit": 61,
             "formSignal": 59,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -10520,7 +10520,7 @@
             "conditionFit": 68,
             "formSignal": 66,
             "valueGap": 40,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         }
@@ -11803,10 +11803,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 13:57:08",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:47.883Z",
+        "finishedAt": "2026-07-29T10:51:16.413Z",
         "finishes": [
           {
             "rank": 1,
@@ -11982,7 +11981,8 @@
             "popularity": 23
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "sapporo-20260725-9",
@@ -13423,10 +13423,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 14:26:53",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:48.157Z",
+        "finishedAt": "2026-07-29T10:51:18.148Z",
         "finishes": [
           {
             "rank": 1,
@@ -13585,7 +13584,8 @@
             "popularity": 76
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "sapporo-20260725-10",
@@ -15076,10 +15076,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 14:57:28",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:48.339Z",
+        "finishedAt": "2026-07-29T10:51:20.012Z",
         "finishes": [
           {
             "rank": 1,
@@ -15247,7 +15246,8 @@
             "popularity": 19
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "sapporo-20260725-11",
@@ -16778,10 +16778,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 15:33:18",
-      "featured": true,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:48.516Z",
+        "finishedAt": "2026-07-29T10:51:21.947Z",
         "finishes": [
           {
             "rank": 1,
@@ -16958,7 +16957,8 @@
             "popularity": 3
           }
         ]
-      }
+      },
+      "featured": true
     },
     {
       "id": "sapporo-20260725-12",
@@ -16968,8 +16968,8 @@
       "venue": "札幌",
       "raceNumber": 12,
       "title": "桑園特別",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1700m",
+      "track": "ダート",
       "startTime": "16:01",
       "weather": "曇",
       "condition": "良",
@@ -16991,7 +16991,7 @@
             "conditionFit": 74,
             "formSignal": 72,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -17011,7 +17011,7 @@
             "conditionFit": 81,
             "formSignal": 79,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -17031,7 +17031,7 @@
             "conditionFit": 60,
             "formSignal": 58,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -17091,7 +17091,7 @@
             "conditionFit": 81,
             "formSignal": 79,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -17111,7 +17111,7 @@
             "conditionFit": 60,
             "formSignal": 58,
             "valueGap": 43,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -17131,7 +17131,7 @@
             "conditionFit": 67,
             "formSignal": 65,
             "valueGap": 39,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -17151,7 +17151,7 @@
             "conditionFit": 74,
             "formSignal": 72,
             "valueGap": 47,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -17171,7 +17171,7 @@
             "conditionFit": 81,
             "formSignal": 79,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -17191,7 +17191,7 @@
             "conditionFit": 60,
             "formSignal": 58,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         }
@@ -18444,10 +18444,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 16:08:08",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:48.763Z",
+        "finishedAt": "2026-07-29T10:51:23.815Z",
         "finishes": [
           {
             "rank": 1,
@@ -18615,7 +18614,8 @@
             "popularity": 9
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-1",
@@ -20021,10 +20021,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 09:59:12",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:49.003Z",
+        "finishedAt": "2026-07-29T10:51:25.725Z",
         "finishes": [
           {
             "rank": 1,
@@ -20182,7 +20181,8 @@
             "popularity": 1
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-2",
@@ -20192,8 +20192,8 @@
       "venue": "新潟",
       "raceNumber": 2,
       "title": "2歳新馬",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1200m",
+      "track": "ダート",
       "startTime": "10:20",
       "weather": "曇",
       "condition": "稍",
@@ -20215,7 +20215,7 @@
             "conditionFit": 77,
             "formSignal": 75,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -20235,7 +20235,7 @@
             "conditionFit": 56,
             "formSignal": 54,
             "valueGap": 88,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -20255,7 +20255,7 @@
             "conditionFit": 63,
             "formSignal": 61,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -20275,7 +20275,7 @@
             "conditionFit": 70,
             "formSignal": 68,
             "valueGap": 41,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -20375,7 +20375,7 @@
             "conditionFit": 77,
             "formSignal": 75,
             "valueGap": 41,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -20395,7 +20395,7 @@
             "conditionFit": 56,
             "formSignal": 54,
             "valueGap": 65,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -20415,7 +20415,7 @@
             "conditionFit": 63,
             "formSignal": 61,
             "valueGap": 42,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -20435,7 +20435,7 @@
             "conditionFit": 70,
             "formSignal": 68,
             "valueGap": 90,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -20455,7 +20455,7 @@
             "conditionFit": 77,
             "formSignal": 75,
             "valueGap": 67,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -20475,7 +20475,7 @@
             "conditionFit": 56,
             "formSignal": 54,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         }
@@ -21778,10 +21778,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 10:27:17",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:49.268Z",
+        "finishedAt": "2026-07-29T10:51:27.467Z",
         "finishes": [
           {
             "rank": 1,
@@ -21976,7 +21975,8 @@
             "popularity": 46
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-3",
@@ -23042,10 +23042,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 10:57:42",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:49.513Z",
+        "finishedAt": "2026-07-29T10:51:29.398Z",
         "finishes": [
           {
             "rank": 1,
@@ -23179,7 +23178,8 @@
             "popularity": 11
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-4",
@@ -23189,8 +23189,8 @@
       "venue": "新潟",
       "raceNumber": 4,
       "title": "3歳未勝利",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1200m",
+      "track": "ダート",
       "startTime": "11:20",
       "weather": "曇",
       "condition": "稍",
@@ -23212,7 +23212,7 @@
             "conditionFit": 78,
             "formSignal": 76,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -23232,7 +23232,7 @@
             "conditionFit": 57,
             "formSignal": 55,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -23252,7 +23252,7 @@
             "conditionFit": 64,
             "formSignal": 62,
             "valueGap": 41,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -23272,7 +23272,7 @@
             "conditionFit": 71,
             "formSignal": 69,
             "valueGap": 50,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -23292,7 +23292,7 @@
             "conditionFit": 78,
             "formSignal": 76,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -23392,7 +23392,7 @@
             "conditionFit": 57,
             "formSignal": 55,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -23412,7 +23412,7 @@
             "conditionFit": 64,
             "formSignal": 62,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -23432,7 +23432,7 @@
             "conditionFit": 71,
             "formSignal": 69,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -23452,7 +23452,7 @@
             "conditionFit": 78,
             "formSignal": 76,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -23472,7 +23472,7 @@
             "conditionFit": 57,
             "formSignal": 55,
             "valueGap": 40,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -23492,7 +23492,7 @@
             "conditionFit": 64,
             "formSignal": 62,
             "valueGap": 43,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         }
@@ -24795,10 +24795,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 11:27:03",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:49.746Z",
+        "finishedAt": "2026-07-29T10:51:31.081Z",
         "finishes": [
           {
             "rank": 1,
@@ -25003,7 +25002,8 @@
             "popularity": 3
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-5",
@@ -26494,10 +26494,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 11:57:28",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:49.976Z",
+        "finishedAt": "2026-07-29T10:51:32.616Z",
         "finishes": [
           {
             "rank": 1,
@@ -26665,7 +26664,8 @@
             "popularity": 1
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-6",
@@ -28301,10 +28301,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 15:17:13",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:50.160Z",
+        "finishedAt": "2026-07-29T10:51:34.296Z",
         "finishes": [
           {
             "rank": 1,
@@ -28507,7 +28506,8 @@
             "popularity": 15
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-7",
@@ -30203,10 +30203,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 15:54:13",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:50.415Z",
+        "finishedAt": "2026-07-29T10:51:36.194Z",
         "finishes": [
           {
             "rank": 1,
@@ -30434,7 +30433,8 @@
             "popularity": 27
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-8",
@@ -30444,8 +30444,8 @@
       "venue": "新潟",
       "raceNumber": 8,
       "title": "清津峡特別",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1800m",
+      "track": "ダート",
       "startTime": "16:20",
       "weather": "曇",
       "condition": "稍",
@@ -30467,7 +30467,7 @@
             "conditionFit": 76,
             "formSignal": 74,
             "valueGap": 57,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -30487,7 +30487,7 @@
             "conditionFit": 83,
             "formSignal": 81,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -30507,7 +30507,7 @@
             "conditionFit": 62,
             "formSignal": 60,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -30607,7 +30607,7 @@
             "conditionFit": 69,
             "formSignal": 67,
             "valueGap": 50,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -30627,7 +30627,7 @@
             "conditionFit": 76,
             "formSignal": 74,
             "valueGap": 56,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -30647,7 +30647,7 @@
             "conditionFit": 83,
             "formSignal": 81,
             "valueGap": 42,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -30667,7 +30667,7 @@
             "conditionFit": 62,
             "formSignal": 60,
             "valueGap": 40,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -30687,7 +30687,7 @@
             "conditionFit": 69,
             "formSignal": 67,
             "valueGap": 72,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -30707,7 +30707,7 @@
             "conditionFit": 76,
             "formSignal": 74,
             "valueGap": 75,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         }
@@ -32000,10 +32000,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 16:28:18",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:50.606Z",
+        "finishedAt": "2026-07-29T10:51:38.065Z",
         "finishes": [
           {
             "rank": 1,
@@ -32189,7 +32188,8 @@
             "popularity": 10
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-9",
@@ -33620,10 +33620,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 17:04:18",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:50.861Z",
+        "finishedAt": "2026-07-29T10:51:39.572Z",
         "finishes": [
           {
             "rank": 1,
@@ -33781,7 +33780,8 @@
             "popularity": 18
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-10",
@@ -33791,8 +33791,8 @@
       "venue": "新潟",
       "raceNumber": 10,
       "title": "3歳未勝利",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1800m",
+      "track": "ダート",
       "startTime": "17:35",
       "weather": "曇",
       "condition": "稍",
@@ -33814,7 +33814,7 @@
             "conditionFit": 78,
             "formSignal": 76,
             "valueGap": 49,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -33834,7 +33834,7 @@
             "conditionFit": 57,
             "formSignal": 55,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -33854,7 +33854,7 @@
             "conditionFit": 64,
             "formSignal": 62,
             "valueGap": 68,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -33874,7 +33874,7 @@
             "conditionFit": 71,
             "formSignal": 69,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -33894,7 +33894,7 @@
             "conditionFit": 78,
             "formSignal": 76,
             "valueGap": 58,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -33994,7 +33994,7 @@
             "conditionFit": 57,
             "formSignal": 55,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -34014,7 +34014,7 @@
             "conditionFit": 64,
             "formSignal": 62,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -34034,7 +34034,7 @@
             "conditionFit": 71,
             "formSignal": 69,
             "valueGap": 41,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -34054,7 +34054,7 @@
             "conditionFit": 78,
             "formSignal": 76,
             "valueGap": 77,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -34074,7 +34074,7 @@
             "conditionFit": 57,
             "formSignal": 55,
             "valueGap": 45,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -34094,7 +34094,7 @@
             "conditionFit": 64,
             "formSignal": 62,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         }
@@ -35422,10 +35422,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 17:43:07",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:51.089Z",
+        "finishedAt": "2026-07-29T10:51:41.184Z",
         "finishes": [
           {
             "rank": 1,
@@ -35630,7 +35629,8 @@
             "popularity": 6
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-11",
@@ -37351,10 +37351,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 18:08:07",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:51.280Z",
+        "finishedAt": "2026-07-29T10:51:43.085Z",
         "finishes": [
           {
             "rank": 1,
@@ -37584,7 +37583,8 @@
             "popularity": 117
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "niigata-20260725-12",
@@ -39285,10 +39285,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 18:37:07",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:51.498Z",
+        "finishedAt": "2026-07-29T10:51:45.058Z",
         "finishes": [
           {
             "rank": 1,
@@ -39510,7 +39509,8 @@
             "popularity": 178
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-1",
@@ -39520,8 +39520,8 @@
       "venue": "中京",
       "raceNumber": 1,
       "title": "2歳未勝利",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1200m",
+      "track": "ダート",
       "startTime": "09:40",
       "weather": "晴",
       "condition": "良",
@@ -39543,7 +39543,7 @@
             "conditionFit": 72,
             "formSignal": 70,
             "valueGap": 40,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -39563,7 +39563,7 @@
             "conditionFit": 79,
             "formSignal": 77,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -39583,7 +39583,7 @@
             "conditionFit": 58,
             "formSignal": 56,
             "valueGap": 50,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -39643,7 +39643,7 @@
             "conditionFit": 79,
             "formSignal": 77,
             "valueGap": 48,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -39663,7 +39663,7 @@
             "conditionFit": 58,
             "formSignal": 56,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -39683,7 +39683,7 @@
             "conditionFit": 65,
             "formSignal": 63,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -39703,7 +39703,7 @@
             "conditionFit": 72,
             "formSignal": 70,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         }
@@ -40816,10 +40816,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 09:46:17",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:51.713Z",
+        "finishedAt": "2026-07-29T10:51:46.915Z",
         "finishes": [
           {
             "rank": 1,
@@ -40969,7 +40968,8 @@
             "popularity": 5
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-2",
@@ -42530,10 +42530,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 10:16:42",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:51.911Z",
+        "finishedAt": "2026-07-29T10:51:48.582Z",
         "finishes": [
           {
             "rank": 1,
@@ -42720,7 +42719,8 @@
             "popularity": 26
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-3",
@@ -44246,10 +44246,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 10:47:52",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:52.087Z",
+        "finishedAt": "2026-07-29T10:51:50.157Z",
         "finishes": [
           {
             "rank": 1,
@@ -44426,7 +44425,8 @@
             "popularity": 1
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-4",
@@ -44436,8 +44436,8 @@
       "venue": "中京",
       "raceNumber": 4,
       "title": "3歳未勝利",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1800m",
+      "track": "ダート",
       "startTime": "11:10",
       "weather": "晴",
       "condition": "良",
@@ -44459,7 +44459,7 @@
             "conditionFit": 79,
             "formSignal": 77,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -44479,7 +44479,7 @@
             "conditionFit": 58,
             "formSignal": 56,
             "valueGap": 45,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -44499,7 +44499,7 @@
             "conditionFit": 65,
             "formSignal": 63,
             "valueGap": 65,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -44519,7 +44519,7 @@
             "conditionFit": 72,
             "formSignal": 70,
             "valueGap": 94,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -44539,7 +44539,7 @@
             "conditionFit": 79,
             "formSignal": 77,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -44559,7 +44559,7 @@
             "conditionFit": 58,
             "formSignal": 56,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -44659,7 +44659,7 @@
             "conditionFit": 65,
             "formSignal": 63,
             "valueGap": 67,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -44679,7 +44679,7 @@
             "conditionFit": 72,
             "formSignal": 70,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -44699,7 +44699,7 @@
             "conditionFit": 79,
             "formSignal": 77,
             "valueGap": 50,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -44719,7 +44719,7 @@
             "conditionFit": 58,
             "formSignal": 56,
             "valueGap": 44,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -44739,7 +44739,7 @@
             "conditionFit": 65,
             "formSignal": 63,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -44759,7 +44759,7 @@
             "conditionFit": 72,
             "formSignal": 70,
             "valueGap": 44,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         }
@@ -46087,10 +46087,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 11:18:06",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:52.294Z",
+        "finishedAt": "2026-07-29T10:51:51.719Z",
         "finishes": [
           {
             "rank": 1,
@@ -46304,7 +46303,8 @@
             "popularity": 4
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-5",
@@ -47970,10 +47970,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 11:47:31",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:52.456Z",
+        "finishedAt": "2026-07-29T10:51:53.317Z",
         "finishes": [
           {
             "rank": 1,
@@ -48186,7 +48185,8 @@
             "popularity": 19
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-6",
@@ -48196,8 +48196,8 @@
       "venue": "中京",
       "raceNumber": 6,
       "title": "四日市特別",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1400m",
+      "track": "ダート",
       "startTime": "15:01",
       "weather": "晴",
       "condition": "良",
@@ -48219,7 +48219,7 @@
             "conditionFit": 79,
             "formSignal": 77,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -48239,7 +48239,7 @@
             "conditionFit": 58,
             "formSignal": 56,
             "valueGap": 66,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -48259,7 +48259,7 @@
             "conditionFit": 65,
             "formSignal": 63,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -48279,7 +48279,7 @@
             "conditionFit": 72,
             "formSignal": 70,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -48299,7 +48299,7 @@
             "conditionFit": 79,
             "formSignal": 77,
             "valueGap": 88,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -48319,7 +48319,7 @@
             "conditionFit": 58,
             "formSignal": 56,
             "valueGap": 39,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -48419,7 +48419,7 @@
             "conditionFit": 65,
             "formSignal": 63,
             "valueGap": 78,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -48439,7 +48439,7 @@
             "conditionFit": 72,
             "formSignal": 70,
             "valueGap": 43,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -48459,7 +48459,7 @@
             "conditionFit": 79,
             "formSignal": 77,
             "valueGap": 49,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -48479,7 +48479,7 @@
             "conditionFit": 58,
             "formSignal": 56,
             "valueGap": 92,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -48499,7 +48499,7 @@
             "conditionFit": 65,
             "formSignal": 63,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -48519,7 +48519,7 @@
             "conditionFit": 72,
             "formSignal": 70,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         }
@@ -49847,10 +49847,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 15:07:46",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:52.652Z",
+        "finishedAt": "2026-07-29T10:51:55.029Z",
         "finishes": [
           {
             "rank": 1,
@@ -50063,7 +50062,8 @@
             "popularity": 10
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-7",
@@ -51554,10 +51554,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 15:42:41",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:52.850Z",
+        "finishedAt": "2026-07-29T10:51:57.022Z",
         "finishes": [
           {
             "rank": 1,
@@ -51724,7 +51723,8 @@
             "popularity": 11
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-8",
@@ -52800,10 +52800,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 16:18:13",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:53.023Z",
+        "finishedAt": "2026-07-29T10:51:59.417Z",
         "finishes": [
           {
             "rank": 1,
@@ -52938,7 +52937,8 @@
             "popularity": 1
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-9",
@@ -52948,8 +52948,8 @@
       "venue": "中京",
       "raceNumber": 9,
       "title": "3歳以上1勝クラス",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1400m",
+      "track": "ダート",
       "startTime": "16:45",
       "weather": "晴",
       "condition": "良",
@@ -52971,7 +52971,7 @@
             "conditionFit": 79,
             "formSignal": 77,
             "valueGap": 47,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -52991,7 +52991,7 @@
             "conditionFit": 58,
             "formSignal": 56,
             "valueGap": 40,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -53011,7 +53011,7 @@
             "conditionFit": 65,
             "formSignal": 63,
             "valueGap": 73,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -53031,7 +53031,7 @@
             "conditionFit": 72,
             "formSignal": 70,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -53051,7 +53051,7 @@
             "conditionFit": 79,
             "formSignal": 77,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -53071,7 +53071,7 @@
             "conditionFit": 58,
             "formSignal": 56,
             "valueGap": 52,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -53171,7 +53171,7 @@
             "conditionFit": 65,
             "formSignal": 63,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -53191,7 +53191,7 @@
             "conditionFit": 72,
             "formSignal": 70,
             "valueGap": 44,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -53211,7 +53211,7 @@
             "conditionFit": 79,
             "formSignal": 77,
             "valueGap": 82,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -53231,7 +53231,7 @@
             "conditionFit": 58,
             "formSignal": 56,
             "valueGap": 53,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
         },
@@ -53251,7 +53251,7 @@
             "conditionFit": 65,
             "formSignal": 63,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -53271,7 +53271,7 @@
             "conditionFit": 72,
             "formSignal": 70,
             "valueGap": 46,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         }
@@ -54599,10 +54599,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 16:52:03",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:53.238Z",
+        "finishedAt": "2026-07-29T10:52:01.078Z",
         "finishes": [
           {
             "rank": 1,
@@ -54816,7 +54815,8 @@
             "popularity": 76
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-10",
@@ -54826,8 +54826,8 @@
       "venue": "中京",
       "raceNumber": 10,
       "title": "3歳以上1勝クラス",
-      "distance": "芝1600m",
-      "track": "芝",
+      "distance": "ダート1800m",
+      "track": "ダート",
       "startTime": "17:20",
       "weather": "晴",
       "condition": "良",
@@ -54849,7 +54849,7 @@
             "conditionFit": 75,
             "formSignal": 73,
             "valueGap": 48,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -54869,7 +54869,7 @@
             "conditionFit": 82,
             "formSignal": 80,
             "valueGap": 42,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -54889,7 +54889,7 @@
             "conditionFit": 61,
             "formSignal": 59,
             "valueGap": 95,
-            "gateJockey": 62
+            "gateJockey": 54
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -54969,7 +54969,7 @@
             "conditionFit": 68,
             "formSignal": 66,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -54989,7 +54989,7 @@
             "conditionFit": 75,
             "formSignal": 73,
             "valueGap": 40,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -55009,7 +55009,7 @@
             "conditionFit": 82,
             "formSignal": 80,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -55029,7 +55029,7 @@
             "conditionFit": 61,
             "formSignal": 59,
             "valueGap": 95,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。"
         },
@@ -55049,7 +55049,7 @@
             "conditionFit": 68,
             "formSignal": 66,
             "valueGap": 49,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
@@ -55069,7 +55069,7 @@
             "conditionFit": 75,
             "formSignal": 73,
             "valueGap": 47,
-            "gateJockey": 54
+            "gateJockey": 62
           },
           "comment": "上位人気帯。安定感はあるが配当は薄め。"
         }
@@ -56342,10 +56342,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 17:27:58",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:53.478Z",
+        "finishedAt": "2026-07-29T10:52:02.710Z",
         "finishes": [
           {
             "rank": 1,
@@ -56530,7 +56529,8 @@
             "popularity": 21
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-11",
@@ -57596,10 +57596,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 17:56:47",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:53.649Z",
+        "finishedAt": "2026-07-29T10:52:04.485Z",
         "finishes": [
           {
             "rank": 1,
@@ -57733,7 +57732,8 @@
             "popularity": 1
           }
         ]
-      }
+      },
+      "featured": false
     },
     {
       "id": "chukyo-20260725-12",
@@ -59404,10 +59404,9 @@
         }
       ],
       "oddsUpdatedAt": "2026-07-25 18:27:27",
-      "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-07-25T11:07:53.830Z",
+        "finishedAt": "2026-07-29T10:52:06.226Z",
         "finishes": [
           {
             "rank": 1,
@@ -59621,7 +59620,8 @@
             "popularity": 12
           }
         ]
-      }
+      },
+      "featured": false
     }
   ]
 }

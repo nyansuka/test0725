@@ -1,4 +1,5 @@
 import type { Horse, HorseFactors, Race } from "../types";
+import { trackGateBiasScore } from "./trackGateBias.mjs";
 
 export type ScoreResult = {
   placePotential: number;
@@ -41,9 +42,8 @@ function topFactors(factors: HorseFactors, limit = 2): string[] {
 export const ruleBasedScorer: Scorer = {
   score(horse, race) {
     const factors: HorseFactors = { ...horse.factors };
-    if (factors.gateJockey == null) {
-      factors.gateJockey = horse.bracket != null && horse.bracket <= 3 ? 62 : 52;
-    }
+    // track 依存の枠バイアスは常に上書き（スナップショットの仮値に依存しない）
+    factors.gateJockey = trackGateBiasScore(race.track, horse.bracket);
 
     // 当日条件との軽い補正（サンプル用）
     if (race.condition.includes("稍") || race.condition.includes("重")) {

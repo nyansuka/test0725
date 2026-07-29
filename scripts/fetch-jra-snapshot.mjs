@@ -7,6 +7,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { trackGateBiasScore } from "../src/domain/scoring/trackGateBias.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
@@ -120,7 +121,8 @@ function parseRaceMeta(html, raceId) {
   const dataPlain = decodeHtml(data01.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ");
 
   const timeMatch = dataPlain.match(/(\d{1,2}:\d{2})\s*発走/);
-  const distMatch = dataPlain.match(/(芝|ダート|障)\s*(\d+)\s*m/);
+  // netkeiba はダートを「ダ1000m」と略記する（「ダート」表記は稀）
+  const distMatch = dataPlain.match(/(芝|ダート|ダ|障)\s*(\d+)\s*m/);
   const weatherMatch = dataPlain.match(/天候[:：]\s*([^\s/]+)/);
   const conditionMatch = dataPlain.match(/馬場[:：]\s*([^\s/]+)/);
 
@@ -128,9 +130,11 @@ function parseRaceMeta(html, raceId) {
   let track = "芝";
   let distance = "芝1600m";
   if (distMatch) {
-    const surfaceLabel =
-      distMatch[1] === "ダート" ? "ダート" : distMatch[1] === "障" ? "障害" : "芝";
-    track = distMatch[1] === "ダート" ? "ダート" : "芝";
+    const surface = distMatch[1];
+    const isDirt = surface === "ダート" || surface === "ダ";
+    const isSteeple = surface === "障";
+    const surfaceLabel = isDirt ? "ダート" : isSteeple ? "障害" : "芝";
+    track = isDirt ? "ダート" : "芝";
     distance = `${surfaceLabel}${distMatch[2]}m`;
   }
   const weather = weatherMatch?.[1] ?? "—";
@@ -267,7 +271,7 @@ function flattenOdds(payload, typeNum) {
   return out;
 }
 
-function synthesizeFactors(horse, oddsWin, fieldSize) {
+function synthesizeFactors(horse, oddsWin, fieldSize, track) {
   const popularityBias = Math.min(95, 35 + oddsWin * 1.8);
   const base = 52 + ((horse.number * 7 + fieldSize) % 28);
   return {
@@ -276,7 +280,7 @@ function synthesizeFactors(horse, oddsWin, fieldSize) {
     conditionFit: Math.min(90, base + 4),
     formSignal: Math.min(90, base + 2),
     valueGap: Math.min(95, Math.round(popularityBias)),
-    gateJockey: 50 + ((horse.bracket ?? 4) <= 3 ? 12 : 4),
+    gateJockey: trackGateBiasScore(track, horse.bracket),
   };
 }
 
@@ -493,7 +497,7 @@ async function fetchOneRace(raceId, raceDate, { withResult = true } = {}) {
             max: Math.max(1.3, Number((oddsWin * 0.55).toFixed(1))),
           },
       runningStyle: h.runningStyle,
-      factors: synthesizeFactors(h, oddsWin, rawHorses.length),
+      factors: synthesizeFactors(h, oddsWin, rawHorses.length, meta.track),
       comment: buildComment(oddsWin),
     };
   });
