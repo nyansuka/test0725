@@ -1,17 +1,24 @@
 "use client";
 
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { ALL_BET_TYPES, BET_TYPE_LABELS } from "@/domain/betTypes";
 import { summarizeJournal, DEFAULT_JOURNAL_SETTINGS } from "@/domain/journal";
-import type { BetSlipSource, BetType, TipsterKind } from "@/domain/types";
+import type { BetSlipSource, BetType, Race, TipsterKind } from "@/domain/types";
 import { formatJstDateLabel } from "@/domain/date";
 import {
   completedDayLabelStats,
   formatPrecisionPercent,
 } from "@/domain/trends";
 import { getTrendIndex } from "@/domain/trendData";
-import { races } from "@/data/races";
+import { summarizeByExpectationRank } from "@/domain/expectationRankStats";
+import { races as seedRaces } from "@/data/races";
 import { useJournal } from "@/components/JournalProvider";
+import { useSettings } from "@/components/SettingsProvider";
+
+function formatRate(value: number | null | undefined, suffix = "%"): string {
+  if (value == null || Number.isNaN(value)) return "—";
+  return `${value}${suffix}`;
+}
 
 export function JournalPanel() {
   const {
@@ -25,10 +32,15 @@ export function JournalPanel() {
     storage,
     error,
   } = useJournal();
+  const { settings, hydrated: settingsHydrated } = useSettings();
   const [sourceFilter, setSourceFilter] = useState<"all" | "self" | "tipster">("all");
+  const [corpus, setCorpus] = useState<Race[] | null>(null);
+  const [corpusDates, setCorpusDates] = useState<string[]>([]);
+  const [corpusError, setCorpusError] = useState<string | null>(null);
+  const [corpusLoading, setCorpusLoading] = useState(true);
 
   const [source, setSource] = useState<BetSlipSource>("self");
-  const [raceId, setRaceId] = useState(races[0]?.id ?? "");
+  const [raceId, setRaceId] = useState(seedRaces[0]?.id ?? "");
   const [betType, setBetType] = useState<BetType>("quinella");
   const [selection, setSelection] = useState("");
   const [stakeYen, setStakeYen] = useState(1000);
@@ -38,6 +50,34 @@ export function JournalPanel() {
   const [newTipster, setNewTipster] = useState("");
   const [tipsterKind, setTipsterKind] = useState<TipsterKind>("prediction_only");
   const [note, setNote] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setCorpusLoading(true);
+      try {
+        const res = await fetch("/api/evaluation-corpus", { cache: "no-store" });
+        if (!res.ok) throw new Error(`corpus ${res.status}`);
+        const data = (await res.json()) as {
+          races: Race[];
+          dates: string[];
+        };
+        if (cancelled) return;
+        setCorpus(Array.isArray(data.races) ? data.races : []);
+        setCorpusDates(data.dates ?? []);
+        setCorpusError(null);
+      } catch (err) {
+        if (cancelled) return;
+        setCorpus([]);
+        setCorpusError(err instanceof Error ? err.message : "コーパス取得失敗");
+      } finally {
+        if (!cancelled) setCorpusLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const range = useMemo(() => {
     const now = new Date();
@@ -61,6 +101,11 @@ export function JournalPanel() {
     () => completedDayLabelStats(getTrendIndex(), "注目穴"),
     [],
   );
+
+  const rankStats = useMemo(() => {
+    if (!corpus || !settingsHydrated) return null;
+    return summarizeByExpectationRank(corpus, settings);
+  }, [corpus, settings, settingsHydrated]);
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -106,6 +151,88 @@ export function JournalPanel() {
 
   return (
     <div className="space-y-12">
+      <section className="space-y-4">
+        <div>
+          <h2 className="text-lg font-semibold text-ink">レース期待度ランク別</h2>
+          <p className="mt-1 text-sm text-ink/55">
+            現在の設定（オッズ閾値 {settings.oddsThreshold} / 最低スコア {settings.scoreMin}
+            ）で候補を再選別し、期待度 S〜D ごとの複勝圏的中率と仮想回収率を集計します。設定変更ですぐ反映されます。
+          </p>
+        </div>
+
+        {corpusLoading || !settingsHydrated ? (
+          <p className="text-sm text-ink/50">ランク集計を読み込み中…</p>
+        ) : corpusError ? (
+          <p className="text-sm text-signal">コーパス取得エラー: {corpusError}</p>
+        ) : rankStats == null || rankStats.raceCount === 0 ? (
+          <p className="text-sm text-ink/50">結果付きの検証レースがまだありません。</p>
+        ) : (
+          <>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                ["対象レース", `${rankStats.raceCount}R`],
+                ["候補数", rankStats.candidateCount.toLocaleString()],
+                [
+                  "全体 的中率",
+                  formatRate(rankStats.overall.hitRatePercent),
+                ],
+                [
+                  "全体 仮想回収",
+                  formatRate(rankStats.overall.returnRatePercent),
+                ],
+              ].map(([label, value]) => (
+                <div key={label} className="border border-ink/10 bg-sand-dim/40 px-4 py-5">
+                  <p className="text-xs tracking-wider text-ink/50">{label}</p>
+                  <p className="mt-2 font-[family-name:var(--font-display)] text-2xl font-semibold text-ink">
+                    {value}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[640px] text-left text-sm">
+                <thead>
+                  <tr className="border-b border-ink/20 text-ink/50">
+                    <th className="py-2 pr-3 font-medium">期待度</th>
+                    <th className="py-2 pr-3 font-medium">レース数</th>
+                    <th className="py-2 pr-3 font-medium">候補</th>
+                    <th className="py-2 pr-3 font-medium">的中率</th>
+                    <th className="py-2 pr-3 font-medium">仮想回収率</th>
+                    <th className="py-2 font-medium">的中 / 確定</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rankStats.byRank.map((row) => (
+                    <tr key={row.rank} className="border-b border-ink/10">
+                      <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-semibold">
+                        {row.rank}
+                      </td>
+                      <td className="py-2.5 pr-3">{row.raceCount}</td>
+                      <td className="py-2.5 pr-3">{row.candidates.toLocaleString()}</td>
+                      <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-medium">
+                        {formatRate(row.hitRatePercent)}
+                      </td>
+                      <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-medium">
+                        {formatRate(row.returnRatePercent)}
+                      </td>
+                      <td className="py-2.5 text-ink/70">
+                        {row.settled > 0
+                          ? `${row.placeHits.toLocaleString()} / ${row.settled.toLocaleString()}`
+                          : "—"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-ink/45">
+              対象日: {corpusDates.map(formatJstDateLabel).join(" · ") || "—"}
+              {" · "}仮想投資 100円/候補 · 払戻突合できる券種のみ回収に加算
+            </p>
+          </>
+        )}
+      </section>
+
       <section className="space-y-4">
         <div>
           <h2 className="text-lg font-semibold text-ink">終了日の的中率</h2>
@@ -248,7 +375,7 @@ export function JournalPanel() {
               onChange={(e) => setRaceId(e.target.value)}
               className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
             >
-              {races.map((r) => (
+              {seedRaces.map((r) => (
                 <option key={r.id} value={r.id}>
                   {r.raceDate} {r.venue} {r.raceNumber}R {r.title}
                 </option>
@@ -385,7 +512,7 @@ export function JournalPanel() {
             </thead>
             <tbody>
               {visible.map((slip) => {
-                const race = races.find((r) => r.id === slip.raceId);
+                const race = seedRaces.find((r) => r.id === slip.raceId);
                 return (
                   <tr key={slip.id} className="border-b border-ink/10">
                     <td className="py-3 pr-3 text-xs text-ink/50">

@@ -169,3 +169,20 @@ export function payoutLabel(betType: BetType): string {
 export function raceHasResult(race: Race): boolean {
   return Boolean(race.result?.finishes?.length);
 }
+
+function payoutNormKey(betType: BetType, selection: string): string {
+  const nums = parseSelectionNumbers(selection);
+  return `${betType}:${nums.join("-")}`;
+}
+
+/** 確定払戻テーブルから券種・買い目の払戻円を探す（無ければ null） */
+export function findPayoutYen(
+  result: RaceResult | undefined,
+  betType: BetType,
+  selection: string,
+): number | null {
+  if (!result?.payouts?.length) return null;
+  const key = payoutNormKey(betType, selection);
+  const hit = result.payouts.find((p) => payoutNormKey(p.betType, p.selection) === key);
+  return hit ? hit.payoutYen : null;
+}

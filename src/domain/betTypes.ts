@@ -24,7 +24,7 @@ export const BET_TYPE_LABELS: Record<BetType, string> = {
 
 export const DEFAULT_SETTINGS = {
   oddsThreshold: 20,
-  scoreMin: 60,
+  scoreMin: 80,
   enabledBetTypes: [...ALL_BET_TYPES] as BetType[],
 };
 

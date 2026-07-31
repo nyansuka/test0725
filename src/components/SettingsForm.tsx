@@ -40,7 +40,7 @@ export function SettingsForm() {
             onChange={(e) => setScoreMin(Number(e.target.value) || 0)}
             className="mt-2 w-full border border-ink/15 bg-sand px-3 py-3"
           />
-          <p className="mt-2 text-xs text-ink/50">初期値 60。</p>
+          <p className="mt-2 text-xs text-ink/50">初期値 80。ボード・日記のランク集計と同期されます。</p>
         </label>
       </div>
 

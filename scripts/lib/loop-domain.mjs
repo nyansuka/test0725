@@ -16,7 +16,7 @@ export const ALL_BET_TYPES = [
 
 export const DEFAULT_SETTINGS = {
   oddsThreshold: 20,
-  scoreMin: 60,
+  scoreMin: 80,
   enabledBetTypes: [...ALL_BET_TYPES],
 };
 

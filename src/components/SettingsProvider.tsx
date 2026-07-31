@@ -12,7 +12,8 @@ import {
 import { ALL_BET_TYPES, DEFAULT_SETTINGS } from "@/domain/betTypes";
 import type { BetType, UserSelectionSettings } from "@/domain/types";
 
-const STORAGE_KEY = "umanote-selection-settings";
+/** v2: 既定 scoreMin 60→80。旧キーは読み捨てて新既定を適用 */
+const STORAGE_KEY = "umanote-selection-settings-v2";
 
 type SettingsContextValue = {
   settings: UserSelectionSettings;
