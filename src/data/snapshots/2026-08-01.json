@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-01T03:28:32.179Z",
+  "fetchedAt": "2026-08-01T03:58:33.678Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-08-01",
   "raceCount": 36,
@@ -9354,7 +9354,161 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-01 09:47:50",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-01T03:58:33.678Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 8,
+            "bracket": 8,
+            "name": "ウーマンズパワー",
+            "jockey": "横山琉",
+            "time": "0:58.3",
+            "popularity": 1,
+            "oddsWin": 1.6
+          },
+          {
+            "rank": 2,
+            "number": 7,
+            "bracket": 7,
+            "name": "テーオーナタリー",
+            "jockey": "★河原田",
+            "time": "0:58.4",
+            "popularity": 2,
+            "oddsWin": 6.4
+          },
+          {
+            "rank": 3,
+            "number": 4,
+            "bracket": 4,
+            "name": "セガンティーニ",
+            "jockey": "斎藤",
+            "time": "0:58.7",
+            "popularity": 4,
+            "oddsWin": 8.7
+          },
+          {
+            "rank": 4,
+            "number": 1,
+            "bracket": 1,
+            "name": "エスカレイト",
+            "jockey": "▲小林美",
+            "time": "0:59.2",
+            "popularity": 3,
+            "oddsWin": 7.7
+          },
+          {
+            "rank": 5,
+            "number": 2,
+            "bracket": 2,
+            "name": "グッバイウェーブ",
+            "jockey": "黛",
+            "time": "0:59.5",
+            "popularity": 8
+          },
+          {
+            "rank": 6,
+            "number": 3,
+            "bracket": 3,
+            "name": "パドゼフィール",
+            "jockey": "松本",
+            "time": "0:59.5",
+            "popularity": 7
+          },
+          {
+            "rank": 7,
+            "number": 9,
+            "bracket": 8,
+            "name": "アスコットアイ",
+            "jockey": "▲和田陽",
+            "time": "0:59.9",
+            "popularity": 6
+          },
+          {
+            "rank": 8,
+            "number": 5,
+            "bracket": 5,
+            "name": "メモリーデイズ",
+            "jockey": "小沢",
+            "time": "0:59.9",
+            "popularity": 5,
+            "oddsWin": 9
+          },
+          {
+            "rank": 9,
+            "number": 6,
+            "bracket": 6,
+            "name": "シェーンルスカ",
+            "jockey": "丹内",
+            "time": "1:00.4",
+            "popularity": 9
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "8",
+            "payoutYen": 160,
+            "popularity": 1
+          },
+          {
+            "betType": "place",
+            "selection": "8",
+            "payoutYen": 110,
+            "popularity": 1
+          },
+          {
+            "betType": "place",
+            "selection": "7",
+            "payoutYen": 160,
+            "popularity": 3
+          },
+          {
+            "betType": "place",
+            "selection": "4",
+            "payoutYen": 150,
+            "popularity": 2
+          },
+          {
+            "betType": "bracket_quinella",
+            "selection": "7-8",
+            "payoutYen": 540,
+            "popularity": 1
+          },
+          {
+            "betType": "quinella",
+            "selection": "7-8",
+            "payoutYen": 570,
+            "popularity": 1
+          },
+          {
+            "betType": "wide",
+            "selection": "7-8",
+            "payoutYen": 230,
+            "popularity": 1
+          },
+          {
+            "betType": "wide",
+            "selection": "4-8",
+            "payoutYen": 250,
+            "popularity": 2
+          },
+          {
+            "betType": "wide",
+            "selection": "4-7",
+            "payoutYen": 720,
+            "popularity": 9
+          },
+          {
+            "betType": "exacta",
+            "selection": "8-7",
+            "payoutYen": 800,
+            "popularity": 2
+          }
+        ]
+      }
     },
     {
       "id": "sapporo-20260801-7",
