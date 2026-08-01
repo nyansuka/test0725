@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-01T04:58:36.926Z",
+  "fetchedAt": "2026-08-01T05:28:38.055Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-08-01",
   "raceCount": 36,
@@ -13697,7 +13697,129 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-01 10:18:25",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-01T05:28:38.055Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 7,
+            "bracket": 7,
+            "name": "サタデーサンライズ",
+            "jockey": "北村友",
+            "time": "1:48.4",
+            "popularity": 3,
+            "oddsWin": 5.2
+          },
+          {
+            "rank": 2,
+            "number": 5,
+            "bracket": 5,
+            "name": "ウインベラーノ",
+            "jockey": "斎藤",
+            "time": "1:48.8",
+            "popularity": 6
+          },
+          {
+            "rank": 3,
+            "number": 1,
+            "bracket": 1,
+            "name": "ウィルサヴァイブ",
+            "jockey": "横山典",
+            "time": "1:49.0",
+            "popularity": 4
+          },
+          {
+            "rank": 4,
+            "number": 6,
+            "bracket": 6,
+            "name": "ジョイエッロ",
+            "jockey": "横山武",
+            "time": "1:49.1",
+            "popularity": 1,
+            "oddsWin": 2.3
+          },
+          {
+            "rank": 5,
+            "number": 4,
+            "bracket": 4,
+            "name": "ウインアクトゥール",
+            "jockey": "原田和",
+            "time": "1:49.1",
+            "popularity": 7
+          },
+          {
+            "rank": 6,
+            "number": 2,
+            "bracket": 2,
+            "name": "テルヒコウ",
+            "jockey": "武豊",
+            "time": "1:49.5",
+            "popularity": 2,
+            "oddsWin": 2.5
+          },
+          {
+            "rank": 7,
+            "number": 3,
+            "bracket": 3,
+            "name": "フォルテフィオーレ",
+            "jockey": "丹内",
+            "time": "1:50.6",
+            "popularity": 5
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "7",
+            "payoutYen": 520,
+            "popularity": 3
+          },
+          {
+            "betType": "place",
+            "selection": "7",
+            "payoutYen": 300,
+            "popularity": 3
+          },
+          {
+            "betType": "place",
+            "selection": "5",
+            "payoutYen": 790,
+            "popularity": 6
+          },
+          {
+            "betType": "quinella",
+            "selection": "5-7",
+            "payoutYen": 5560,
+            "popularity": 16
+          },
+          {
+            "betType": "wide",
+            "selection": "5-7",
+            "payoutYen": 1460,
+            "popularity": 16
+          },
+          {
+            "betType": "wide",
+            "selection": "1-7",
+            "payoutYen": 800,
+            "popularity": 11
+          },
+          {
+            "betType": "wide",
+            "selection": "1-5",
+            "payoutYen": 2290,
+            "popularity": 19
+          },
+          {
+            "betType": "exacta",
+            "selection": "7-5",
+            "payoutYen": 8890,
+            "popularity": 27
+          }
+        ]
+      }
     },
     {
       "id": "sapporo-20260801-10",
