@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-01T02:28:29.116Z",
+  "fetchedAt": "2026-08-01T02:38:59.545Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-08-01",
   "raceCount": 36,
@@ -6244,7 +6244,123 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-01 09:26:35",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-01T02:38:59.545Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 7,
+            "bracket": 6,
+            "name": "ミリオンクラウン",
+            "jockey": "☆舟山",
+            "time": "1:48.0",
+            "popularity": 4
+          },
+          {
+            "rank": 2,
+            "number": 1,
+            "bracket": 1,
+            "name": "アイドクレース",
+            "jockey": "横山武",
+            "time": "2.1/2",
+            "popularity": 1,
+            "oddsWin": 2
+          },
+          {
+            "rank": 3,
+            "number": 11,
+            "bracket": 8,
+            "name": "アドミラルシップ",
+            "jockey": "丹内",
+            "time": "3",
+            "popularity": 3,
+            "oddsWin": 5.6
+          },
+          {
+            "rank": 4,
+            "number": 6,
+            "bracket": 6,
+            "name": "ゴールドジェスター",
+            "jockey": "黛",
+            "time": "2",
+            "popularity": 7
+          },
+          {
+            "rank": 5,
+            "number": 4,
+            "bracket": 4,
+            "name": "ブルースカイブルー",
+            "jockey": "池添",
+            "time": "1",
+            "popularity": 2,
+            "oddsWin": 3.3
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "7",
+            "payoutYen": 1000,
+            "popularity": 4
+          },
+          {
+            "betType": "place",
+            "selection": "7",
+            "payoutYen": 200,
+            "popularity": 4
+          },
+          {
+            "betType": "place",
+            "selection": "1",
+            "payoutYen": 110,
+            "popularity": 1
+          },
+          {
+            "betType": "place",
+            "selection": "11",
+            "payoutYen": 150,
+            "popularity": 3
+          },
+          {
+            "betType": "bracket_quinella",
+            "selection": "1-6",
+            "payoutYen": 750,
+            "popularity": 3
+          },
+          {
+            "betType": "quinella",
+            "selection": "1-7",
+            "payoutYen": 1220,
+            "popularity": 4
+          },
+          {
+            "betType": "wide",
+            "selection": "1-7",
+            "payoutYen": 420,
+            "popularity": 5
+          },
+          {
+            "betType": "wide",
+            "selection": "7-11",
+            "payoutYen": 820,
+            "popularity": 10
+          },
+          {
+            "betType": "wide",
+            "selection": "1-11",
+            "payoutYen": 210,
+            "popularity": 2
+          },
+          {
+            "betType": "exacta",
+            "selection": "7-1",
+            "payoutYen": 2860,
+            "popularity": 8
+          }
+        ]
+      }
     },
     {
       "id": "sapporo-20260801-5",
