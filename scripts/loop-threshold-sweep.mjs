@@ -63,15 +63,16 @@ function evaluateSettings(frozen, resultByRace, settings) {
       candidatePending += 1;
     } else {
       stakeYen += virtualStake;
+      const ticketHit = pay != null && pay > 0;
+      if (ticketHit) {
+        ticketHits += 1;
+        payoutYen += pay;
+      } else if (outcome === "win" && pick.betType === "win") {
+        ticketHits += 1;
+        payoutYen += Math.round(pick.odds * virtualStake);
+      }
       if (success) {
         candidateHits += 1;
-        if (pay != null && pay > 0) {
-          ticketHits += 1;
-          payoutYen += pay;
-        } else if (outcome === "win" && pick.betType === "win") {
-          ticketHits += 1;
-          payoutYen += Math.round(pick.odds * virtualStake);
-        }
       }
     }
 
@@ -269,8 +270,8 @@ async function main() {
   const ranked = [...grid].sort((a, b) => b.utility - a.utility);
 
   // 1軸感度（もう一方は現行固定）
-  const oddsOnly = grid.filter((g) => g.scoreMin === 60);
-  const scoreOnly = grid.filter((g) => g.oddsThreshold === 20);
+  const oddsOnly = grid.filter((g) => g.scoreMin === 75);
+  const scoreOnly = grid.filter((g) => g.oddsThreshold === 25);
 
   // 密度ターゲット帯（製品: 数件〜十数件/レース）
   const densityTargets = grid

@@ -19,6 +19,9 @@ type JournalContextValue = {
   slips: BetSlip[];
   tipsters: Tipster[];
   addSlip: (slip: Omit<BetSlip, "id" | "createdAt"> & { createdAt?: string }) => void;
+  addSlips: (
+    inputs: Array<Omit<BetSlip, "id" | "createdAt"> & { createdAt?: string }>,
+  ) => number;
   updateSlip: (id: string, patch: Partial<BetSlip>) => void;
   removeSlip: (id: string) => void;
   addTipster: (name: string, channelOrMedia?: string) => Tipster;
@@ -41,7 +44,21 @@ function loadJson<T>(key: string, fallback: T): T {
 }
 
 function newId(prefix: string) {
-  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return `${prefix}-${crypto.randomUUID()}`;
+  }
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function buildSlip(
+  input: Omit<BetSlip, "id" | "createdAt"> & { createdAt?: string },
+): BetSlip {
+  return {
+    ...input,
+    id: newId("b"),
+    createdAt: input.createdAt ?? new Date().toISOString(),
+    hit: input.payoutYen != null ? input.payoutYen > 0 : undefined,
+  };
 }
 
 export function JournalProvider({ children }: { children: ReactNode }) {
@@ -171,12 +188,7 @@ export function JournalProvider({ children }: { children: ReactNode }) {
 
   const addSlip = useCallback(
     (input: Omit<BetSlip, "id" | "createdAt"> & { createdAt?: string }) => {
-      const slip: BetSlip = {
-        ...input,
-        id: newId("b"),
-        createdAt: input.createdAt ?? new Date().toISOString(),
-        hit: input.payoutYen != null ? input.payoutYen > 0 : undefined,
-      };
+      const slip = buildSlip(input);
       setSlips((prev) => [slip, ...prev]);
       if (storage === "neon") {
         void fetch("/api/journal", {
@@ -190,6 +202,29 @@ export function JournalProvider({ children }: { children: ReactNode }) {
           }
         });
       }
+    },
+    [storage],
+  );
+
+  /** 同一レースの複数買い目を一括追加（状態・DBともまとめて） */
+  const addSlips = useCallback(
+    (inputs: Array<Omit<BetSlip, "id" | "createdAt"> & { createdAt?: string }>) => {
+      if (inputs.length === 0) return 0;
+      const created = inputs.map((input) => buildSlip(input));
+      setSlips((prev) => [...created, ...prev]);
+      if (storage === "neon") {
+        void fetch("/api/journal", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "addSlips", slips: created }),
+        }).then(async (res) => {
+          if (!res.ok) {
+            const body = (await res.json().catch(() => ({}))) as { error?: string };
+            setError(body.error ?? "買い目の一括保存に失敗しました");
+          }
+        });
+      }
+      return created.length;
     },
     [storage],
   );
@@ -245,6 +280,7 @@ export function JournalProvider({ children }: { children: ReactNode }) {
       slips,
       tipsters,
       addSlip,
+      addSlips,
       updateSlip,
       removeSlip,
       addTipster,
@@ -256,6 +292,7 @@ export function JournalProvider({ children }: { children: ReactNode }) {
       slips,
       tipsters,
       addSlip,
+      addSlips,
       updateSlip,
       removeSlip,
       addTipster,

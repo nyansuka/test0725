@@ -99,7 +99,7 @@ export function formatTrendPhrase(
     ? `${view.dayCount}日分・当日検証含む`
     : `${view.dayCount}日分`;
 
-  return `傾向:${tone}${best.label}の候補的中率${pct(best.bucket.precision)}（n=${best.bucket.settled}・${dayNote}）`;
+  return `傾向:${tone}${best.label}の複勝圏的中率${pct(best.bucket.precision)}（n=${best.bucket.settled}・${dayNote}）`;
 }
 
 function factorHighlight(horse: Horse, race: Race): string {

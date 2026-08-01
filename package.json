@@ -9,6 +9,8 @@
     "lint": "eslint",
     "fetch:jra": "node scripts/fetch-jra-snapshot.mjs",
     "fetch:jra:results": "node scripts/fetch-jra-snapshot.mjs --results-only",
+    "fetch:jra:refresh-results": "node scripts/fetch-jra-snapshot.mjs --refresh-results",
+    "test:payout-parse": "node scripts/test-payout-parse.mjs",
     "watch:jra": "node scripts/watch-jra-snapshot.mjs",
     "loop:freeze": "node scripts/loop-accumulate.mjs freeze",
     "loop:evaluate": "node scripts/loop-accumulate.mjs evaluate",
@@ -16,7 +18,8 @@
     "loop:trends": "node scripts/loop-build-trends.mjs",
     "site:check": "node scripts/site-check.mjs",
     "site:check:push": "node scripts/site-check-push.mjs",
-    "journal:migrate": "node scripts/journal-migrate.mjs"
+    "journal:migrate": "node scripts/journal-migrate.mjs",
+    "test:journal-expand": "node scripts/test-journal-expand.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

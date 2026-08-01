@@ -15,8 +15,8 @@ export const ALL_BET_TYPES = [
 ];
 
 export const DEFAULT_SETTINGS = {
-  oddsThreshold: 20,
-  scoreMin: 80,
+  oddsThreshold: 25,
+  scoreMin: 75,
   enabledBetTypes: [...ALL_BET_TYPES],
 };
 
@@ -195,7 +195,10 @@ export function evaluatePick(pick, result) {
 
 function normKey(betType, selection) {
   const nums = parseSelectionNumbers(selection);
-  return `${betType}:${nums.join("-")}`;
+  // 順不同券種は昇順で突合（オッズ板と払戻の並び差を吸収）
+  const unordered = new Set(["quinella", "wide", "bracket_quinella", "trio"]);
+  const legs = unordered.has(betType) ? [...nums].sort((a, b) => a - b) : nums;
+  return `${betType}:${legs.join("-")}`;
 }
 
 export function findPayoutYen(result, betType, selection) {

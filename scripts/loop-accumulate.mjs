@@ -160,7 +160,7 @@ function emptyByBet() {
   return Object.fromEntries(
     DEFAULT_SETTINGS.enabledBetTypes.map((b) => [
       b,
-      { candidates: 0, hits: 0, gateCorrect: 0, pending: 0 },
+      { candidates: 0, hits: 0, ticketHits: 0, gateCorrect: 0, pending: 0 },
     ]),
   );
 }
@@ -186,43 +186,46 @@ async function cmdEvaluate(raceDate) {
 
   const rows = [];
   let candidateHits = 0;
+  let ticketHits = 0;
   let candidatePending = 0;
   let stakeYen = 0;
   let payoutYen = 0;
   const byBet = emptyByBet();
   const byLabel = {
-    注目穴: { candidates: 0, hits: 0, pending: 0 },
-    抑え候補: { candidates: 0, hits: 0, pending: 0 },
+    注目穴: { candidates: 0, hits: 0, ticketHits: 0, pending: 0 },
+    抑え候補: { candidates: 0, hits: 0, ticketHits: 0, pending: 0 },
   };
 
   for (const pick of prediction.picks ?? []) {
     const result = resultByRace.get(pick.raceId);
     const outcome = evaluatePick(pick, result);
-    const success = outcome === "win" || outcome === "place";
-    const pay = success ? findPayoutYen(result, pick.betType, pick.selection) : null;
+    const placeHit = outcome === "win" || outcome === "place";
+    const pay = findPayoutYen(result, pick.betType, pick.selection);
+    const payoutTicket = pay != null && pay > 0;
+    const proxyWinTicket = !payoutTicket && outcome === "win" && pick.betType === "win";
+    const isTicketHit = payoutTicket || proxyWinTicket;
     const virtualStake = 100;
     if (outcome !== "pending") {
       stakeYen += virtualStake;
-      if (success) {
-        candidateHits += 1;
-        // 券種払戻があればそれを使い、大当たりで払戻不明ならオッズ概算。馬券内のみは払戻0扱い可
-        if (pay != null) payoutYen += pay;
-        else if (outcome === "win" && pick.betType === "win") {
-          payoutYen += Math.round(pick.odds * virtualStake);
-        }
+      if (placeHit) candidateHits += 1;
+      if (isTicketHit) {
+        ticketHits += 1;
+        payoutYen += payoutTicket ? pay : Math.round(pick.odds * virtualStake);
       }
     } else {
       candidatePending += 1;
     }
 
-    byBet[pick.betType] ??= { candidates: 0, hits: 0, gateCorrect: 0, pending: 0 };
+    byBet[pick.betType] ??= { candidates: 0, hits: 0, ticketHits: 0, gateCorrect: 0, pending: 0 };
     byBet[pick.betType].candidates += 1;
-    if (success) byBet[pick.betType].hits += 1;
+    if (placeHit) byBet[pick.betType].hits += 1;
+    if (outcome !== "pending" && isTicketHit) byBet[pick.betType].ticketHits += 1;
     if (outcome === "pending") byBet[pick.betType].pending += 1;
 
-    const lab = byLabel[pick.label] ?? (byLabel[pick.label] = { candidates: 0, hits: 0, pending: 0 });
+    const lab = byLabel[pick.label] ?? (byLabel[pick.label] = { candidates: 0, hits: 0, ticketHits: 0, pending: 0 });
     lab.candidates += 1;
-    if (success) lab.hits += 1;
+    if (placeHit) lab.hits += 1;
+    if (outcome !== "pending" && isTicketHit) lab.ticketHits += 1;
     if (outcome === "pending") lab.pending += 1;
 
     rows.push({
@@ -236,11 +239,13 @@ async function cmdEvaluate(raceDate) {
       label: pick.label,
       relatedPlacePotential: pick.relatedPlacePotential,
       outcome,
+      placeCircleHit: placeHit,
+      ticketHit: outcome !== "pending" && isTicketHit,
       payoutYen: pay,
     });
   }
 
-  // ゲート正解集合: 凍結オッズ ≥ 閾値 かつ 的中
+  // ゲート正解集合: 凍結オッズ ≥ 閾値 かつ 的中（複勝圏）
   let gateCorrect = 0;
   let gatePending = 0;
   const gateHits = [];
@@ -266,7 +271,7 @@ async function cmdEvaluate(raceDate) {
       }
       if (outcome === "win" || outcome === "place") {
         gateCorrect += 1;
-        byBet[entry.betType] ??= { candidates: 0, hits: 0, gateCorrect: 0, pending: 0 };
+        byBet[entry.betType] ??= { candidates: 0, hits: 0, ticketHits: 0, gateCorrect: 0, pending: 0 };
         byBet[entry.betType].gateCorrect += 1;
         gateHits.push({
           raceId: race.id,
@@ -282,8 +287,12 @@ async function cmdEvaluate(raceDate) {
 
   const candidates = prediction.picks?.length ?? 0;
   const settledCandidates = candidates - candidatePending;
-  const precision =
+  const placePrecision =
     settledCandidates > 0 ? candidateHits / settledCandidates : null;
+  const ticketPrecision =
+    settledCandidates > 0 ? ticketHits / settledCandidates : null;
+  // 互換: precision は当面 place。主指標は ticketPrecision
+  const precision = placePrecision;
   const recall = gateCorrect > 0 ? candidateHits / gateCorrect : null;
   const raceCount = frozen.races?.length ?? 0;
   const density = raceCount > 0 ? candidates / raceCount : null;
@@ -305,18 +314,23 @@ async function cmdEvaluate(raceDate) {
       raceCount,
       candidates,
       candidateHits,
+      ticketHits,
       candidatePending,
       settledCandidates,
       gateCorrect,
       gatePending,
       passMisses: missPasses,
+      /** @deprecated 互換。placePrecision と同値。主指標は ticketPrecision */
       precision,
+      placePrecision,
+      ticketPrecision,
       recall,
       density,
       virtualStakeYen: stakeYen,
       virtualPayoutYen: payoutYen,
       virtualReturnRatePercent: virtualReturnRate,
-      note: "factors が合成の場合、指標は製品挙動の評価であり真の適性モデル評価ではない",
+      primaryMetric: "ticketPrecision",
+      note: "主指標は ticketPrecision（券種払戻）。placePrecision は関係馬≤3着の参考。factors が合成の場合は製品挙動評価",
     },
     byBetType: byBet,
     byLabel,
@@ -335,10 +349,10 @@ async function cmdEvaluate(raceDate) {
 
   console.log(`Evaluation → ${path.relative(root, evalPath)}`);
   console.log(
-    `  candidates=${candidates} hits=${candidateHits} pending=${candidatePending} gateCorrect=${gateCorrect}`,
+    `  candidates=${candidates} ticketHits=${ticketHits} placeHits=${candidateHits} pending=${candidatePending} gateCorrect=${gateCorrect}`,
   );
   console.log(
-    `  precision=${precision == null ? "—" : precision.toFixed(3)} recall=${recall == null ? "—" : recall.toFixed(3)} density=${density == null ? "—" : density.toFixed(2)} virtualRR=${virtualReturnRate ?? "—"}%`,
+    `  ticketP=${ticketPrecision == null ? "—" : ticketPrecision.toFixed(4)} placeP=${placePrecision == null ? "—" : placePrecision.toFixed(3)} recall=${recall == null ? "—" : recall.toFixed(3)} density=${density == null ? "—" : density.toFixed(2)} virtualRR=${virtualReturnRate ?? "—"}%`,
   );
   return evaluation;
 }
@@ -361,15 +375,20 @@ async function cmdReport(dates) {
   const reportPath = path.join(loopRoot, "reports", `report-${jstToday()}.json`);
   const report = {
     createdAt: new Date().toISOString(),
+    primaryMetric: "ticketPrecision",
     days: summaries.length,
     summaries,
   };
   await writeJson(reportPath, report);
 
-  console.log(`Report → ${path.relative(root, reportPath)}`);
+  console.log(`Report → ${path.relative(root, reportPath)} (primary=ticketPrecision)`);
   for (const s of summaries) {
+    const tick = s.ticketPrecision ?? (s.settledCandidates > 0 && s.ticketHits != null
+      ? s.ticketHits / s.settledCandidates
+      : null);
+    const place = s.placePrecision ?? s.precision;
     console.log(
-      `  ${s.raceDate}  P=${s.precision == null ? "—" : s.precision.toFixed(3)}  R=${s.recall == null ? "—" : s.recall.toFixed(3)}  n=${s.candidates}  hits=${s.candidateHits}`,
+      `  ${s.raceDate}  ticketP=${tick == null ? "—" : tick.toFixed(4)}  placeP=${place == null ? "—" : place.toFixed(3)}  R=${s.recall == null ? "—" : s.recall.toFixed(3)}  n=${s.candidates}  ticketHits=${s.ticketHits ?? "—"}  dens=${s.density == null ? "—" : s.density.toFixed(1)}  RR=${s.virtualReturnRatePercent ?? "—"}%`,
     );
   }
   return report;

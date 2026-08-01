@@ -2,6 +2,8 @@
  * loop/evaluations を集約して短評用の傾向インデックスを作る。
  *
  *   node scripts/loop-build-trends.mjs
+ *
+ * 主指標: ticketPrecision（券種払戻）。precision は複勝圏（互換）。
  */
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -37,14 +39,15 @@ function oddsBand(odds) {
 }
 
 function emptyBucket() {
-  return { candidates: 0, hits: 0, pending: 0 };
+  return { candidates: 0, hits: 0, ticketHits: 0, pending: 0 };
 }
 
-function bump(map, key, outcome) {
+function bump(map, key, { placeHit, ticketHit, pending }) {
   if (!map[key]) map[key] = emptyBucket();
   map[key].candidates += 1;
-  if (outcome === "win" || outcome === "place" || outcome === "hit") map[key].hits += 1;
-  if (outcome === "pending") map[key].pending += 1;
+  if (placeHit) map[key].hits += 1;
+  if (ticketHit) map[key].ticketHits += 1;
+  if (pending) map[key].pending += 1;
 }
 
 function withPrecision(bucket) {
@@ -52,12 +55,30 @@ function withPrecision(bucket) {
   return {
     ...bucket,
     settled,
+    /** 複勝圏（互換・参考） */
     precision: settled > 0 ? bucket.hits / settled : null,
+    placePrecision: settled > 0 ? bucket.hits / settled : null,
+    /** 主指標: 券種払戻ヒット */
+    ticketPrecision: settled > 0 ? (bucket.ticketHits ?? 0) / settled : null,
   };
 }
 
 function finalize(map) {
   return Object.fromEntries(Object.entries(map).map(([k, v]) => [k, withPrecision(v)]));
+}
+
+function rowFlags(row) {
+  const outcome = row.outcome;
+  const pending = outcome === "pending";
+  const placeHit =
+    row.placeCircleHit === true ||
+    outcome === "win" ||
+    outcome === "place" ||
+    outcome === "hit";
+  const ticketHit =
+    row.ticketHit === true ||
+    (typeof row.payoutYen === "number" && row.payoutYen > 0);
+  return { placeHit: !pending && placeHit, ticketHit: !pending && ticketHit, pending };
 }
 
 export async function buildTrends() {
@@ -92,32 +113,34 @@ export async function buildTrends() {
     byDay[raceDate] = emptyBucket();
 
     for (const row of ev.rows ?? []) {
-      const outcome = row.outcome;
+      const flags = rowFlags(row);
       const venue = row.venue ?? venueFromRaceId(row.raceId);
       const track = row.track ?? null;
 
       overall.candidates += 1;
-      if (outcome === "win" || outcome === "place" || outcome === "hit") overall.hits += 1;
-      if (outcome === "pending") overall.pending += 1;
+      if (flags.placeHit) overall.hits += 1;
+      if (flags.ticketHit) overall.ticketHits += 1;
+      if (flags.pending) overall.pending += 1;
 
       slice.overall.candidates += 1;
-      if (outcome === "win" || outcome === "place" || outcome === "hit") slice.overall.hits += 1;
-      if (outcome === "pending") slice.overall.pending += 1;
+      if (flags.placeHit) slice.overall.hits += 1;
+      if (flags.ticketHit) slice.overall.ticketHits += 1;
+      if (flags.pending) slice.overall.pending += 1;
 
-      bump(byDay, raceDate, outcome);
-      bump(byBetType, row.betType, outcome);
-      bump(byVenue, venue, outcome);
-      bump(byLabel, row.label ?? "—", outcome);
-      bump(byOddsBand, oddsBand(Number(row.odds) || 0), outcome);
-      bump(slice.byBetType, row.betType, outcome);
-      bump(slice.byVenue, venue, outcome);
-      bump(slice.byLabel, row.label ?? "—", outcome);
-      bump(slice.byOddsBand, oddsBand(Number(row.odds) || 0), outcome);
+      bump(byDay, raceDate, flags);
+      bump(byBetType, row.betType, flags);
+      bump(byVenue, venue, flags);
+      bump(byLabel, row.label ?? "—", flags);
+      bump(byOddsBand, oddsBand(Number(row.odds) || 0), flags);
+      bump(slice.byBetType, row.betType, flags);
+      bump(slice.byVenue, venue, flags);
+      bump(slice.byLabel, row.label ?? "—", flags);
+      bump(slice.byOddsBand, oddsBand(Number(row.odds) || 0), flags);
       if (track) {
-        bump(byTrack, track, outcome);
-        bump(byVenueTrack, `${venue}|${track}`, outcome);
-        bump(slice.byTrack, track, outcome);
-        bump(slice.byVenueTrack, `${venue}|${track}`, outcome);
+        bump(byTrack, track, flags);
+        bump(byVenueTrack, `${venue}|${track}`, flags);
+        bump(slice.byTrack, track, flags);
+        bump(slice.byVenueTrack, `${venue}|${track}`, flags);
       }
     }
 
@@ -135,6 +158,7 @@ export async function buildTrends() {
   const trends = {
     builtAt: new Date().toISOString(),
     source: "src/data/loop/evaluations",
+    primaryMetric: "ticketPrecision",
     dayCount: files.length,
     dates: files.map((f) => f.replace(/\.json$/, "")),
     minSamples: 20,
@@ -147,13 +171,13 @@ export async function buildTrends() {
     byOddsBand: finalize(byOddsBand),
     byVenueTrack: finalize(byVenueTrack),
     daySlices,
-    note: "候補の過去的中率。馬単位の成績ではない。短評は excludeRaceDate 以外の daySlices を合算して参照する。",
+    note: "主指標 ticketPrecision=券種払戻ヒット。precision/placePrecision=関係馬≤3着（参考）。短評は excludeRaceDate 以外の daySlices を合算。",
   };
 
   await mkdir(path.dirname(outPath), { recursive: true });
   await writeFile(outPath, `${JSON.stringify(trends, null, 2)}\n`, "utf8");
   console.log(
-    `Trends → ${path.relative(root, outPath)} (days=${trends.dayCount}, candidates=${overall.candidates})`,
+    `Trends → ${path.relative(root, outPath)} (days=${trends.dayCount}, candidates=${overall.candidates}, ticketP=${trends.overall.ticketPrecision?.toFixed(4) ?? "—"})`,
   );
   return trends;
 }

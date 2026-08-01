@@ -33,6 +33,7 @@ export async function GET() {
 
 type PostBody =
   | { action: "addSlip"; slip: BetSlip }
+  | { action: "addSlips"; slips: BetSlip[] }
   | { action: "addTipster"; tipster: Tipster }
   | { action: "migrate"; slips: BetSlip[]; tipsters: Tipster[] };
 
@@ -48,6 +49,11 @@ export async function POST(req: Request) {
     if (body.action === "addSlip") {
       const slip = await insertSlip(body.slip);
       return NextResponse.json({ slip });
+    }
+    if (body.action === "addSlips") {
+      const slips = body.slips ?? [];
+      const n = await upsertManySlips(slips);
+      return NextResponse.json({ count: n, slips });
     }
     if (body.action === "addTipster") {
       const tipster = await insertTipster(body.tipster);

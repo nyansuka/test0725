@@ -1,14 +1,28 @@
 "use client";
 
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent, type KeyboardEvent } from "react";
 import { ALL_BET_TYPES, BET_TYPE_LABELS } from "@/domain/betTypes";
 import {
   summarizeJournal,
   DEFAULT_JOURNAL_SETTINGS,
-  filledBetLines,
+  expandBetLinesForSave,
   type JournalBetLine,
 } from "@/domain/journal";
 import type { BetSlipSource, BetType, Race, TipsterKind } from "@/domain/types";
+
+type DraftTicket = {
+  id: string;
+  source: BetSlipSource;
+  raceId: string;
+  betType: BetType;
+  selection: string;
+  stakeYen: number;
+  oddsAtPurchase?: number;
+  payoutYen: number | null;
+  tipsterId?: string;
+  tipsterKind?: TipsterKind;
+  note?: string;
+};
 import { formatJstDateLabel } from "@/domain/date";
 import {
   completedDayLabelStats,
@@ -27,7 +41,10 @@ function formatRate(value: number | null | undefined, suffix = "%"): string {
 }
 
 function newLineId() {
-  return `line-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return `line-${crypto.randomUUID()}`;
+  }
+  return `line-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
 function createBetLine(
@@ -53,7 +70,7 @@ export function JournalPanel() {
   const {
     slips,
     tipsters,
-    addSlip,
+    addSlips,
     removeSlip,
     addTipster,
     updateSlip,
@@ -77,6 +94,8 @@ export function JournalPanel() {
   const [newTipster, setNewTipster] = useState("");
   const [tipsterKind, setTipsterKind] = useState<TipsterKind>("prediction_only");
   const [note, setNote] = useState("");
+  const [draft, setDraft] = useState<DraftTicket[]>([]);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (!raceId && raceOptions[0]?.id) setRaceId(raceOptions[0].id);
@@ -145,10 +164,19 @@ export function JournalPanel() {
     setBetLines((prev) => prev.map((line) => (line.id === id ? { ...line, ...patch } : line)));
   }
 
-  function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    const lines = filledBetLines(betLines);
-    if (lines.length === 0) {
+  const previewTickets = useMemo(() => expandBetLinesForSave(betLines), [betLines]);
+
+  function resolveTipsterForAdd(): string | undefined {
+    if (source !== "tipster") return undefined;
+    if (newTipster.trim()) {
+      return addTipster(newTipster.trim()).id;
+    }
+    return tipsterId || undefined;
+  }
+
+  /** 入力中の買い目を下書きカートへ追加（まだ DB には書かない） */
+  function onAddToDraft() {
+    if (previewTickets.length === 0) {
       window.alert("買い目が入った券種を1行以上入力してください。");
       return;
     }
@@ -157,43 +185,80 @@ export function JournalPanel() {
       return;
     }
 
-    let resolvedTipsterId = tipsterId || undefined;
-    if (source === "tipster") {
-      if (newTipster.trim()) {
-        resolvedTipsterId = addTipster(newTipster.trim()).id;
-      }
-      if (!resolvedTipsterId) {
-        window.alert("予想家を選択するか、新規名を入力してください。");
-        return;
-      }
+    const resolvedTipsterId = resolveTipsterForAdd();
+    if (source === "tipster" && !resolvedTipsterId) {
+      window.alert("予想家を選択するか、新規名を入力してください。");
+      return;
     }
 
     const sharedNote = note.trim() || undefined;
-    for (const line of lines) {
-      const payoutRaw = line.payoutYen.trim();
+    const next: DraftTicket[] = previewTickets.map((ticket) => {
+      const payoutRaw = ticket.payoutYen.trim();
       const payout = payoutRaw === "" ? null : Number(payoutRaw);
-      addSlip({
+      return {
+        id: newLineId(),
         source,
         raceId,
-        betType: line.betType,
-        selection: line.selection.trim(),
+        betType: ticket.betType,
+        selection: ticket.selection,
         stakeYen:
           source === "tipster"
             ? DEFAULT_JOURNAL_SETTINGS.defaultVirtualStakeYen
-            : line.stakeYen,
-        oddsAtPurchase: line.oddsAtPurchase.trim()
-          ? Number(line.oddsAtPurchase)
+            : ticket.stakeYen,
+        oddsAtPurchase: ticket.oddsAtPurchase.trim()
+          ? Number(ticket.oddsAtPurchase)
           : undefined,
         payoutYen: Number.isFinite(payout as number) ? payout : null,
         tipsterId: source === "tipster" ? resolvedTipsterId : undefined,
         tipsterKind: source === "tipster" ? tipsterKind : undefined,
         note: sharedNote,
-      });
-    }
+      };
+    });
 
+    setDraft((prev) => [...prev, ...next]);
     setBetLines(defaultBetLines());
     setNote("");
     setNewTipster("");
+  }
+
+  /** 下書きをまとめて本保存 */
+  function onSaveDraft() {
+    if (draft.length === 0) {
+      window.alert("追加済みの買い目がありません。先に「追加する」でカートへ入れてください。");
+      return;
+    }
+    setSaving(true);
+    try {
+      const createdAt = new Date().toISOString();
+      addSlips(
+        draft.map(({ id: _id, ...ticket }) => ({
+          ...ticket,
+          createdAt,
+        })),
+      );
+      setDraft([]);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function removeDraftItem(id: string) {
+    setDraft((prev) => prev.filter((d) => d.id !== id));
+  }
+
+  function onFormKeyDown(e: KeyboardEvent<HTMLFormElement>) {
+    if (e.key !== "Enter") return;
+    const target = e.target as HTMLElement;
+    if (target.tagName === "TEXTAREA") return;
+    if (target.tagName === "BUTTON") return;
+    // 入力中の Enter で送信・追加しない（複数レースを連続追加しやすくする）
+    if (target.tagName === "INPUT" || target.tagName === "SELECT") {
+      e.preventDefault();
+    }
+  }
+
+  function onFormSubmit(e: FormEvent) {
+    e.preventDefault();
   }
 
   const visible = slips.filter(
@@ -405,10 +470,16 @@ export function JournalPanel() {
         )}
       </div>
 
-      <form onSubmit={onSubmit} className="space-y-4 border border-ink/10 bg-sand-dim/30 p-5 md:p-6">
+      <form
+        onSubmit={onFormSubmit}
+        onKeyDown={onFormKeyDown}
+        className="space-y-4 border border-ink/10 bg-sand-dim/30 p-5 md:p-6"
+      >
         <h2 className="text-lg font-semibold">履歴を追加</h2>
         <p className="text-sm text-ink/55">
-          同一レースに馬連・ワイドなど複数券種を行で追加できます（例: 馬連 1-2,3,4 / ワイド 1-2,3,4）。
+          「追加する」で下書きに積み、レースを変えて続けて入れられます。最後に「保存する」でまとめて確定します。買い目は
+          <span className="text-ink/80"> 1-2,3,4 </span>
+          のように書くと軸ながしで複数点に展開されます（投資額は1点あたり）。
         </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <label className="block text-sm">
@@ -501,7 +572,7 @@ export function JournalPanel() {
               }
               className="border border-ink/15 px-3 py-1.5 text-sm text-ink/70 hover:border-ink/40"
             >
-              ＋ 券種を追加
+              ＋ 券種行を増やす
             </button>
           </div>
           <ul className="space-y-3">
@@ -531,7 +602,7 @@ export function JournalPanel() {
                   <input
                     value={line.selection}
                     onChange={(e) => updateBetLine(line.id, { selection: e.target.value })}
-                    placeholder="例: 1-2,3,4"
+                    placeholder="例: 1-2,3,4 → 3点"
                     className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
                   />
                 </label>
@@ -588,14 +659,90 @@ export function JournalPanel() {
           </ul>
         </div>
 
-        <button
-          type="submit"
-          className="bg-turf px-5 py-2.5 text-sm font-medium text-sand hover:bg-turf-deep"
-        >
-          {filledBetLines(betLines).length > 1
-            ? `${filledBetLines(betLines).length}件まとめて保存`
-            : "保存する"}
-        </button>
+        {previewTickets.length > 0 ? (
+          <p className="text-xs text-ink/50">
+            今回の展開:{" "}
+            {previewTickets
+              .slice(0, 12)
+              .map((t) => `${BET_TYPE_LABELS[t.betType]} ${t.selection}`)
+              .join(" · ")}
+            {previewTickets.length > 12 ? ` …他${previewTickets.length - 12}` : ""}
+          </p>
+        ) : null}
+
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={onAddToDraft}
+            className="bg-turf px-5 py-2.5 text-sm font-medium text-sand hover:bg-turf-deep"
+          >
+            {previewTickets.length > 1
+              ? `${previewTickets.length}点を追加する`
+              : "追加する"}
+          </button>
+          <button
+            type="button"
+            disabled={draft.length === 0 || saving}
+            onClick={onSaveDraft}
+            className="border border-turf px-5 py-2.5 text-sm font-medium text-turf hover:bg-turf/10 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {draft.length > 0 ? `${draft.length}点を保存する` : "保存する"}
+          </button>
+          <span className="w-full text-xs text-ink/45 sm:w-auto">
+            追加＝下書きへ / 保存＝確定（未保存 {draft.length}点）
+          </span>
+        </div>
+
+        <div className="space-y-3 border-t border-ink/10 pt-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h3 className="text-sm font-semibold text-ink">
+              追加済み（未保存）{draft.length > 0 ? ` · ${draft.length}点` : ""}
+            </h3>
+            {draft.length > 0 ? (
+              <button
+                type="button"
+                onClick={() => setDraft([])}
+                className="text-sm text-ink/50 hover:text-ink"
+              >
+                下書きを空にする
+              </button>
+            ) : null}
+          </div>
+          {draft.length === 0 ? (
+            <p className="text-sm text-ink/45">まだありません。「追加する」で積み上げてください。</p>
+          ) : (
+            <ul className="max-h-56 space-y-2 overflow-y-auto text-sm">
+              {draft.map((item) => {
+                const race = raceOptions.find((r) => r.id === item.raceId);
+                return (
+                  <li
+                    key={item.id}
+                    className="flex flex-wrap items-center gap-x-3 gap-y-1 border border-ink/10 bg-sand px-3 py-2"
+                  >
+                    <span className="text-ink/55">
+                      {item.source === "self" ? "自分" : "予想家"}
+                    </span>
+                    <span>
+                      {race ? `${race.venue}${race.raceNumber}R` : item.raceId}
+                    </span>
+                    <span>{BET_TYPE_LABELS[item.betType]}</span>
+                    <span className="font-[family-name:var(--font-display)] font-medium">
+                      {item.selection}
+                    </span>
+                    <span className="text-ink/55">{item.stakeYen.toLocaleString()}円</span>
+                    <button
+                      type="button"
+                      onClick={() => removeDraftItem(item.id)}
+                      className="ml-auto text-ink/40 hover:text-ink"
+                    >
+                      はずす
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
       </form>
 
       <div className="overflow-x-auto">

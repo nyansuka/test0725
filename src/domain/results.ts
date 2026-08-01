@@ -172,7 +172,9 @@ export function raceHasResult(race: Race): boolean {
 
 function payoutNormKey(betType: BetType, selection: string): string {
   const nums = parseSelectionNumbers(selection);
-  return `${betType}:${nums.join("-")}`;
+  const unordered = new Set<BetType>(["quinella", "wide", "bracket_quinella", "trio"]);
+  const legs = unordered.has(betType) ? [...nums].sort((a, b) => a - b) : nums;
+  return `${betType}:${legs.join("-")}`;
 }
 
 /** 確定払戻テーブルから券種・買い目の払戻円を探す（無ければ null） */

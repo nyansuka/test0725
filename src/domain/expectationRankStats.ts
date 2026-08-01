@@ -75,16 +75,16 @@ function accumulatePick(
   }
   bucket.settled += 1;
   bucket.stakeYen += VIRTUAL_STAKE;
+  const pay = findPayoutYen(race?.result, pick.betType, pick.selection);
+  if (pay != null && pay > 0) {
+    bucket.ticketHits += 1;
+    bucket.payoutYen += pay;
+  } else if (outcome === "win" && pick.betType === "win") {
+    bucket.ticketHits += 1;
+    bucket.payoutYen += Math.round(pick.odds * VIRTUAL_STAKE);
+  }
   if (isInMoney(outcome)) {
     bucket.placeHits += 1;
-    const pay = findPayoutYen(race?.result, pick.betType, pick.selection);
-    if (pay != null && pay > 0) {
-      bucket.ticketHits += 1;
-      bucket.payoutYen += pay;
-    } else if (outcome === "win" && pick.betType === "win") {
-      bucket.ticketHits += 1;
-      bucket.payoutYen += Math.round(pick.odds * VIRTUAL_STAKE);
-    }
   }
 }
 

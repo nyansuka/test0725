@@ -3,9 +3,15 @@ import type { BetType, LongshotLabel } from "./types";
 export type TrendBucket = {
   candidates: number;
   hits: number;
+  /** 券種払戻ヒット件数（無い旧データは 0 扱い） */
+  ticketHits?: number;
   pending: number;
   settled: number;
+  /** 複勝圏（互換・参考） */
   precision: number | null;
+  placePrecision?: number | null;
+  /** 主指標: 券種払戻 */
+  ticketPrecision?: number | null;
 };
 
 export type TrendDaySlice = {
@@ -21,6 +27,7 @@ export type TrendDaySlice = {
 export type TrendIndex = {
   builtAt: string;
   source: string;
+  primaryMetric?: "ticketPrecision" | "placePrecision";
   dayCount: number;
   dates: string[];
   minSamples: number;
@@ -40,10 +47,20 @@ export type TrendIndex = {
 export const EMPTY_TRENDS: TrendIndex = {
   builtAt: "",
   source: "",
+  primaryMetric: "ticketPrecision",
   dayCount: 0,
   dates: [],
   minSamples: 20,
-  overall: { candidates: 0, hits: 0, pending: 0, settled: 0, precision: null },
+  overall: {
+    candidates: 0,
+    hits: 0,
+    ticketHits: 0,
+    pending: 0,
+    settled: 0,
+    precision: null,
+    placePrecision: null,
+    ticketPrecision: null,
+  },
   byBetType: {},
   byVenue: {},
   byTrack: {},
@@ -54,25 +71,33 @@ export const EMPTY_TRENDS: TrendIndex = {
 };
 
 function emptyRaw() {
-  return { candidates: 0, hits: 0, pending: 0 };
+  return { candidates: 0, hits: 0, ticketHits: 0, pending: 0 };
 }
 
 function addBucket(
-  acc: { candidates: number; hits: number; pending: number },
+  acc: { candidates: number; hits: number; ticketHits: number; pending: number },
   b: TrendBucket | undefined,
 ) {
   if (!b) return;
   acc.candidates += b.candidates;
   acc.hits += b.hits;
+  acc.ticketHits += b.ticketHits ?? 0;
   acc.pending += b.pending;
 }
 
-function finalizeBucket(acc: { candidates: number; hits: number; pending: number }): TrendBucket {
+function finalizeBucket(acc: {
+  candidates: number;
+  hits: number;
+  ticketHits: number;
+  pending: number;
+}): TrendBucket {
   const settled = acc.candidates - acc.pending;
   return {
     ...acc,
     settled,
     precision: settled > 0 ? acc.hits / settled : null,
+    placePrecision: settled > 0 ? acc.hits / settled : null,
+    ticketPrecision: settled > 0 ? acc.ticketHits / settled : null,
   };
 }
 

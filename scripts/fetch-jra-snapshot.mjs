@@ -389,6 +389,7 @@ function parseResultHtml(html) {
 
   if (finishes.length === 0) return null;
 
+  // netkeiba 結果ページの tr class（旧 Sanrenpuku/Sanrentan 表記は使われない）
   const PAYOUT_ROW = {
     Tansho: "win",
     Fukusho: "place",
@@ -396,6 +397,9 @@ function parseResultHtml(html) {
     Umaren: "quinella",
     Wide: "wide",
     Umatan: "exacta",
+    Fuku3: "trio",
+    Tan3: "trifecta",
+    // 互換（万一の別名）
     Sanrenpuku: "trio",
     Sanrentan: "trifecta",
   };
@@ -600,8 +604,11 @@ async function loadExistingSnapshot(raceDate) {
   }
 }
 
-/** 終了済みレースの結果だけ差分更新 */
-async function updateResultsOnly(raceDate, { graceMinutes = 8 } = {}) {
+/**
+ * 終了済みレースの結果だけ差分更新。
+ * force=true のとき既存 result も再取得（払戻パース修正のバックフィル用）。
+ */
+async function updateResultsOnly(raceDate, { graceMinutes = 8, force = false } = {}) {
   const existing = await loadExistingSnapshot(raceDate);
   if (!existing?.races?.length) {
     console.log("No existing snapshot; running full fetch...");
@@ -611,11 +618,11 @@ async function updateResultsOnly(raceDate, { graceMinutes = 8 } = {}) {
   const now = jstNowParts();
   let updated = 0;
   for (const race of existing.races) {
-    if (race.result?.finishes?.length) continue;
+    if (!force && race.result?.finishes?.length) continue;
     if (!race.sourceRaceId) continue;
     if (race.raceDate !== now.date && race.raceDate !== raceDate) continue;
     const elapsed = now.date === race.raceDate ? now.minutes - startMinutes(race.startTime) : 999;
-    if (elapsed < graceMinutes) continue;
+    if (!force && elapsed < graceMinutes) continue;
 
     process.stdout.write(`result ${race.venue}${race.raceNumber}R ... `);
     try {
@@ -623,7 +630,10 @@ async function updateResultsOnly(raceDate, { graceMinutes = 8 } = {}) {
       if (result) {
         race.result = result;
         updated += 1;
-        console.log(`OK top=${result.finishes.filter((f) => f.rank === 1)[0]?.name ?? "?"}`);
+        const trio = result.payouts.filter((p) => p.betType === "trio" || p.betType === "trifecta").length;
+        console.log(
+          `OK top=${result.finishes.filter((f) => f.rank === 1)[0]?.name ?? "?"} payouts=${result.payouts.length}(3連系=${trio})`,
+        );
       } else {
         console.log("not ready");
       }
@@ -646,12 +656,13 @@ async function updateResultsOnly(raceDate, { graceMinutes = 8 } = {}) {
 async function main() {
   const args = process.argv.slice(2);
   const resultsOnly = args.includes("--results-only");
+  const refreshResults = args.includes("--refresh-results");
   const dateArg = args.find((a) => /^\d{4}-\d{2}-\d{2}$/.test(a) || /^\d{8}$/.test(a));
   if (dateArg) process.argv[2] = dateArg;
   const raceDate = ymdFromArg();
 
-  if (resultsOnly) {
-    const snap = await updateResultsOnly(raceDate);
+  if (resultsOnly || refreshResults) {
+    const snap = await updateResultsOnly(raceDate, { force: refreshResults });
     if (!snap) {
       // fall through to full fetch
     } else {
@@ -726,6 +737,7 @@ if (isDirectRun) {
 export {
   fetchOneRace,
   fetchRaceResult,
+  parseResultHtml,
   updateResultsOnly,
   writeSnapshot,
   loadExistingSnapshot,

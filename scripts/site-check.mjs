@@ -59,6 +59,18 @@ async function checkHttp() {
     }
   }
 
+  const journal = await get("/journal");
+  if (!journal.body.includes("追加する") || !journal.body.includes("保存する")) {
+    fail("/journal に「追加する」「保存する」ボタン文言が無い（古いUIキャッシュの疑い）");
+  } else {
+    ok("/journal 追加する / 保存する");
+  }
+  if (!journal.body.includes("券種ごとの買い目")) {
+    fail("/journal に「券種ごとの買い目」が無い");
+  } else {
+    ok("/journal 複数券種入力");
+  }
+
   const longshots = await get("/longshots");
   if (!longshots.body.includes("注目馬の的中")) {
     fail("/longshots に「注目馬の的中」サマリー説明が無い");
