@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-01T08:39:17.499Z",
+  "fetchedAt": "2026-08-01T08:58:48.397Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-08-01",
   "raceCount": 36,
@@ -57580,7 +57580,122 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-01 09:49:25",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-01T08:58:48.397Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 3,
+            "bracket": 3,
+            "name": "サムシングスイート",
+            "jockey": "団野",
+            "time": "1:58.5",
+            "popularity": 2,
+            "oddsWin": 4.8
+          },
+          {
+            "rank": 2,
+            "number": 5,
+            "bracket": 5,
+            "name": "ヴィスコンテッサ",
+            "jockey": "吉村",
+            "time": "3/4",
+            "popularity": 6
+          },
+          {
+            "rank": 3,
+            "number": 7,
+            "bracket": 7,
+            "name": "ピカキウイ",
+            "jockey": "西村淳",
+            "time": "クビ",
+            "popularity": 1,
+            "oddsWin": 2.1
+          },
+          {
+            "rank": 4,
+            "number": 1,
+            "bracket": 1,
+            "name": "シルバーリム",
+            "jockey": "幸",
+            "time": "1.1/4",
+            "popularity": 5
+          },
+          {
+            "rank": 5,
+            "number": 6,
+            "bracket": 6,
+            "name": "シェーラ",
+            "jockey": "☆田山",
+            "time": "1",
+            "popularity": 7
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "3",
+            "payoutYen": 480,
+            "popularity": 2
+          },
+          {
+            "betType": "place",
+            "selection": "3",
+            "payoutYen": 150,
+            "popularity": 2
+          },
+          {
+            "betType": "place",
+            "selection": "5",
+            "payoutYen": 270,
+            "popularity": 6
+          },
+          {
+            "betType": "place",
+            "selection": "7",
+            "payoutYen": 110,
+            "popularity": 1
+          },
+          {
+            "betType": "bracket_quinella",
+            "selection": "3-5",
+            "payoutYen": 2930,
+            "popularity": 11
+          },
+          {
+            "betType": "quinella",
+            "selection": "3-5",
+            "payoutYen": 2830,
+            "popularity": 12
+          },
+          {
+            "betType": "wide",
+            "selection": "3-5",
+            "payoutYen": 830,
+            "popularity": 13
+          },
+          {
+            "betType": "wide",
+            "selection": "3-7",
+            "payoutYen": 210,
+            "popularity": 1
+          },
+          {
+            "betType": "wide",
+            "selection": "5-7",
+            "payoutYen": 520,
+            "popularity": 7
+          },
+          {
+            "betType": "exacta",
+            "selection": "3-5",
+            "payoutYen": 4970,
+            "popularity": 20
+          }
+        ]
+      }
     },
     {
       "id": "chukyo-20260801-12",
