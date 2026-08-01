@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-01T05:58:39.409Z",
+  "fetchedAt": "2026-08-01T06:09:09.837Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-08-01",
   "raceCount": 36,
@@ -49488,7 +49488,28 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-01 09:56:00",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-01T06:09:09.837Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 3,
+            "bracket": 2,
+            "name": "スナッピードレッサ",
+            "popularity": 1,
+            "oddsWin": 1.9
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "3",
+            "payoutYen": 190
+          }
+        ]
+      }
     },
     {
       "id": "chukyo-20260801-7",
