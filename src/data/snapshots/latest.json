@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-01T06:18:10.309Z",
+  "fetchedAt": "2026-08-01T06:33:11.032Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-08-01",
   "raceCount": 36,
@@ -17657,7 +17657,28 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-01 09:20:05",
-      "featured": true
+      "featured": true,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-01T06:33:11.032Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 10,
+            "bracket": 5,
+            "name": "ヨヒーン",
+            "popularity": 5,
+            "oddsWin": 8.6
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "10",
+            "payoutYen": 860
+          }
+        ]
+      }
     },
     {
       "id": "sapporo-20260801-12",
