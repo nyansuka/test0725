@@ -1,5 +1,6 @@
 import type {
   BetSlip,
+  BetType,
   JournalSettings,
   JournalSummary,
 } from "./types";
@@ -8,6 +9,20 @@ export const DEFAULT_JOURNAL_SETTINGS: JournalSettings = {
   excludePendingFromReturnRate: true,
   defaultVirtualStakeYen: 100,
 };
+
+export type JournalBetLine = {
+  id: string;
+  betType: BetType;
+  selection: string;
+  stakeYen: number;
+  oddsAtPurchase: string;
+  payoutYen: string;
+};
+
+/** 空行を除き、買い目が埋まっている券種行だけ返す */
+export function filledBetLines(lines: JournalBetLine[]): JournalBetLine[] {
+  return lines.filter((line) => line.selection.trim().length > 0);
+}
 
 export function isHit(slip: BetSlip): boolean {
   return slip.payoutYen != null && slip.payoutYen > 0;

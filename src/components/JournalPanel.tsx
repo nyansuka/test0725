@@ -2,7 +2,12 @@
 
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { ALL_BET_TYPES, BET_TYPE_LABELS } from "@/domain/betTypes";
-import { summarizeJournal, DEFAULT_JOURNAL_SETTINGS } from "@/domain/journal";
+import {
+  summarizeJournal,
+  DEFAULT_JOURNAL_SETTINGS,
+  filledBetLines,
+  type JournalBetLine,
+} from "@/domain/journal";
 import type { BetSlipSource, BetType, Race, TipsterKind } from "@/domain/types";
 import { formatJstDateLabel } from "@/domain/date";
 import {
@@ -13,11 +18,35 @@ import { getTrendIndex } from "@/domain/trendData";
 import { summarizeByExpectationRank } from "@/domain/expectationRankStats";
 import { races as seedRaces } from "@/data/races";
 import { useJournal } from "@/components/JournalProvider";
+import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useSettings } from "@/components/SettingsProvider";
 
 function formatRate(value: number | null | undefined, suffix = "%"): string {
   if (value == null || Number.isNaN(value)) return "—";
   return `${value}${suffix}`;
+}
+
+function newLineId() {
+  return `line-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+}
+
+function createBetLine(
+  betType: BetType = "quinella",
+  selection = "",
+  stakeYen = 1000,
+): JournalBetLine {
+  return {
+    id: newLineId(),
+    betType,
+    selection,
+    stakeYen,
+    oddsAtPurchase: "",
+    payoutYen: "",
+  };
+}
+
+function defaultBetLines(): JournalBetLine[] {
+  return [createBetLine("quinella"), createBetLine("wide")];
 }
 
 export function JournalPanel() {
@@ -33,6 +62,8 @@ export function JournalPanel() {
     error,
   } = useJournal();
   const { settings, hydrated: settingsHydrated } = useSettings();
+  const { races: catalogRaces } = useRaceCatalog();
+  const raceOptions = catalogRaces.length > 0 ? catalogRaces : seedRaces;
   const [sourceFilter, setSourceFilter] = useState<"all" | "self" | "tipster">("all");
   const [corpus, setCorpus] = useState<Race[] | null>(null);
   const [corpusDates, setCorpusDates] = useState<string[]>([]);
@@ -41,15 +72,18 @@ export function JournalPanel() {
 
   const [source, setSource] = useState<BetSlipSource>("self");
   const [raceId, setRaceId] = useState(seedRaces[0]?.id ?? "");
-  const [betType, setBetType] = useState<BetType>("quinella");
-  const [selection, setSelection] = useState("");
-  const [stakeYen, setStakeYen] = useState(1000);
-  const [oddsAtPurchase, setOddsAtPurchase] = useState("");
-  const [payoutYen, setPayoutYen] = useState("");
+  const [betLines, setBetLines] = useState<JournalBetLine[]>(() => defaultBetLines());
   const [tipsterId, setTipsterId] = useState("");
   const [newTipster, setNewTipster] = useState("");
   const [tipsterKind, setTipsterKind] = useState<TipsterKind>("prediction_only");
   const [note, setNote] = useState("");
+
+  useEffect(() => {
+    if (!raceId && raceOptions[0]?.id) setRaceId(raceOptions[0].id);
+    else if (raceId && !raceOptions.some((r) => r.id === raceId) && raceOptions[0]?.id) {
+      setRaceId(raceOptions[0].id);
+    }
+  }, [raceOptions, raceId]);
 
   useEffect(() => {
     let cancelled = false;
@@ -107,9 +141,21 @@ export function JournalPanel() {
     return summarizeByExpectationRank(corpus, settings);
   }, [corpus, settings, settingsHydrated]);
 
+  function updateBetLine(id: string, patch: Partial<JournalBetLine>) {
+    setBetLines((prev) => prev.map((line) => (line.id === id ? { ...line, ...patch } : line)));
+  }
+
   function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!selection.trim()) return;
+    const lines = filledBetLines(betLines);
+    if (lines.length === 0) {
+      window.alert("買い目が入った券種を1行以上入力してください。");
+      return;
+    }
+    if (!raceId) {
+      window.alert("レースを選択してください。");
+      return;
+    }
 
     let resolvedTipsterId = tipsterId || undefined;
     if (source === "tipster") {
@@ -122,26 +168,31 @@ export function JournalPanel() {
       }
     }
 
-    const payoutRaw = payoutYen.trim();
-    const payout = payoutRaw === "" ? null : Number(payoutRaw);
+    const sharedNote = note.trim() || undefined;
+    for (const line of lines) {
+      const payoutRaw = line.payoutYen.trim();
+      const payout = payoutRaw === "" ? null : Number(payoutRaw);
+      addSlip({
+        source,
+        raceId,
+        betType: line.betType,
+        selection: line.selection.trim(),
+        stakeYen:
+          source === "tipster"
+            ? DEFAULT_JOURNAL_SETTINGS.defaultVirtualStakeYen
+            : line.stakeYen,
+        oddsAtPurchase: line.oddsAtPurchase.trim()
+          ? Number(line.oddsAtPurchase)
+          : undefined,
+        payoutYen: Number.isFinite(payout as number) ? payout : null,
+        tipsterId: source === "tipster" ? resolvedTipsterId : undefined,
+        tipsterKind: source === "tipster" ? tipsterKind : undefined,
+        note: sharedNote,
+      });
+    }
 
-    addSlip({
-      source,
-      raceId,
-      betType,
-      selection: selection.trim(),
-      stakeYen: source === "tipster" ? DEFAULT_JOURNAL_SETTINGS.defaultVirtualStakeYen : stakeYen,
-      oddsAtPurchase: oddsAtPurchase ? Number(oddsAtPurchase) : undefined,
-      payoutYen: Number.isFinite(payout as number) ? payout : null,
-      tipsterId: source === "tipster" ? resolvedTipsterId : undefined,
-      tipsterKind: source === "tipster" ? tipsterKind : undefined,
-      note: note.trim() || undefined,
-    });
-
-    setSelection("");
+    setBetLines(defaultBetLines());
     setNote("");
-    setPayoutYen("");
-    setOddsAtPurchase("");
     setNewTipster("");
   }
 
@@ -356,6 +407,9 @@ export function JournalPanel() {
 
       <form onSubmit={onSubmit} className="space-y-4 border border-ink/10 bg-sand-dim/30 p-5 md:p-6">
         <h2 className="text-lg font-semibold">履歴を追加</h2>
+        <p className="text-sm text-ink/55">
+          同一レースに馬連・ワイドなど複数券種を行で追加できます（例: 馬連 1-2,3,4 / ワイド 1-2,3,4）。
+        </p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <label className="block text-sm">
             <span className="text-ink/60">区分</span>
@@ -368,87 +422,33 @@ export function JournalPanel() {
               <option value="tipster">予想家の参考買い目</option>
             </select>
           </label>
-          <label className="block text-sm">
+          <label className="block text-sm sm:col-span-2">
             <span className="text-ink/60">レース</span>
             <select
               value={raceId}
               onChange={(e) => setRaceId(e.target.value)}
               className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
             >
-              {seedRaces.map((r) => (
+              {raceOptions.map((r) => (
                 <option key={r.id} value={r.id}>
                   {r.raceDate} {r.venue} {r.raceNumber}R {r.title}
                 </option>
               ))}
             </select>
           </label>
-          <label className="block text-sm">
-            <span className="text-ink/60">券種</span>
-            <select
-              value={betType}
-              onChange={(e) => setBetType(e.target.value as BetType)}
-              className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
-            >
-              {ALL_BET_TYPES.map((t) => (
-                <option key={t} value={t}>
-                  {BET_TYPE_LABELS[t]}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="block text-sm">
-            <span className="text-ink/60">買い目</span>
-            <input
-              required
-              value={selection}
-              onChange={(e) => setSelection(e.target.value)}
-              placeholder="例: 5-7"
-              className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
-            />
-          </label>
-          {source === "self" ? (
-            <label className="block text-sm">
-              <span className="text-ink/60">投資額（円）</span>
-              <input
-                type="number"
-                min={100}
-                step={100}
-                value={stakeYen}
-                onChange={(e) => setStakeYen(Number(e.target.value) || 0)}
-                className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
-              />
-            </label>
-          ) : (
-            <label className="block text-sm">
-              <span className="text-ink/60">種別</span>
-              <select
-                value={tipsterKind}
-                onChange={(e) => setTipsterKind(e.target.value as TipsterKind)}
-                className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
-              >
-                <option value="prediction_only">予想のみ</option>
-                <option value="purchased">購入と公開</option>
-              </select>
-            </label>
-          )}
-          <label className="block text-sm">
-            <span className="text-ink/60">購入時オッズ（任意）</span>
-            <input
-              value={oddsAtPurchase}
-              onChange={(e) => setOddsAtPurchase(e.target.value)}
-              className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
-            />
-          </label>
-          <label className="block text-sm">
-            <span className="text-ink/60">払戻（空欄=待ち / 0=外れ）</span>
-            <input
-              value={payoutYen}
-              onChange={(e) => setPayoutYen(e.target.value)}
-              className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
-            />
-          </label>
           {source === "tipster" && (
             <>
+              <label className="block text-sm">
+                <span className="text-ink/60">種別</span>
+                <select
+                  value={tipsterKind}
+                  onChange={(e) => setTipsterKind(e.target.value as TipsterKind)}
+                  className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
+                >
+                  <option value="prediction_only">予想のみ</option>
+                  <option value="purchased">購入と公開</option>
+                </select>
+              </label>
               <label className="block text-sm">
                 <span className="text-ink/60">予想家（既存）</span>
                 <select
@@ -475,7 +475,7 @@ export function JournalPanel() {
             </>
           )}
           <label className="block text-sm sm:col-span-2 lg:col-span-3">
-            <span className="text-ink/60">メモ</span>
+            <span className="text-ink/60">メモ（全券種共通・任意）</span>
             <input
               value={note}
               onChange={(e) => setNote(e.target.value)}
@@ -483,11 +483,118 @@ export function JournalPanel() {
             />
           </label>
         </div>
+
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h3 className="text-sm font-semibold text-ink">券種ごとの買い目</h3>
+            <button
+              type="button"
+              onClick={() =>
+                setBetLines((prev) => [
+                  ...prev,
+                  createBetLine(
+                    prev.length % 2 === 0 ? "quinella" : "wide",
+                    "",
+                    prev[0]?.stakeYen ?? 1000,
+                  ),
+                ])
+              }
+              className="border border-ink/15 px-3 py-1.5 text-sm text-ink/70 hover:border-ink/40"
+            >
+              ＋ 券種を追加
+            </button>
+          </div>
+          <ul className="space-y-3">
+            {betLines.map((line, index) => (
+              <li
+                key={line.id}
+                className="grid gap-2 border border-ink/10 bg-sand p-3 sm:grid-cols-2 lg:grid-cols-12 lg:items-end"
+              >
+                <label className="block text-sm lg:col-span-2">
+                  <span className="text-ink/60">券種 {index + 1}</span>
+                  <select
+                    value={line.betType}
+                    onChange={(e) =>
+                      updateBetLine(line.id, { betType: e.target.value as BetType })
+                    }
+                    className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
+                  >
+                    {ALL_BET_TYPES.map((t) => (
+                      <option key={t} value={t}>
+                        {BET_TYPE_LABELS[t]}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="block text-sm sm:col-span-2 lg:col-span-3">
+                  <span className="text-ink/60">買い目</span>
+                  <input
+                    value={line.selection}
+                    onChange={(e) => updateBetLine(line.id, { selection: e.target.value })}
+                    placeholder="例: 1-2,3,4"
+                    className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
+                  />
+                </label>
+                {source === "self" ? (
+                  <label className="block text-sm lg:col-span-2">
+                    <span className="text-ink/60">投資額</span>
+                    <input
+                      type="number"
+                      min={100}
+                      step={100}
+                      value={line.stakeYen}
+                      onChange={(e) =>
+                        updateBetLine(line.id, {
+                          stakeYen: Number(e.target.value) || 0,
+                        })
+                      }
+                      className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
+                    />
+                  </label>
+                ) : null}
+                <label className="block text-sm lg:col-span-2">
+                  <span className="text-ink/60">オッズ（任意）</span>
+                  <input
+                    value={line.oddsAtPurchase}
+                    onChange={(e) =>
+                      updateBetLine(line.id, { oddsAtPurchase: e.target.value })
+                    }
+                    className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
+                  />
+                </label>
+                <label className="block text-sm lg:col-span-2">
+                  <span className="text-ink/60">払戻</span>
+                  <input
+                    value={line.payoutYen}
+                    onChange={(e) => updateBetLine(line.id, { payoutYen: e.target.value })}
+                    placeholder="空=待ち"
+                    className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
+                  />
+                </label>
+                <div className="flex items-end lg:col-span-1">
+                  <button
+                    type="button"
+                    disabled={betLines.length <= 1}
+                    onClick={() =>
+                      setBetLines((prev) => prev.filter((l) => l.id !== line.id))
+                    }
+                    className="w-full border border-ink/15 px-3 py-2 text-sm text-ink/50 hover:text-ink disabled:opacity-30"
+                  >
+                    削除
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <button
           type="submit"
           className="bg-turf px-5 py-2.5 text-sm font-medium text-sand hover:bg-turf-deep"
         >
-          保存する
+          {filledBetLines(betLines).length > 1
+            ? `${filledBetLines(betLines).length}件まとめて保存`
+            : "保存する"}
         </button>
       </form>
 
@@ -512,7 +619,7 @@ export function JournalPanel() {
             </thead>
             <tbody>
               {visible.map((slip) => {
-                const race = seedRaces.find((r) => r.id === slip.raceId);
+                const race = raceOptions.find((r) => r.id === slip.raceId);
                 return (
                   <tr key={slip.id} className="border-b border-ink/10">
                     <td className="py-3 pr-3 text-xs text-ink/50">
