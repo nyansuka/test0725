@@ -9,6 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import type { RaceCatalogPayload } from "@/data/catalogTypes";
 import { races as seedRaces, snapshotMeta as seedMeta } from "@/data/races";
 import type { Race } from "@/domain/types";
 
@@ -25,11 +26,21 @@ const CatalogContext = createContext<CatalogValue | null>(null);
 
 const POLL_MS = 60_000;
 
-export function RaceCatalogProvider({ children }: { children: ReactNode }) {
-  const [races, setRaces] = useState<Race[]>(seedRaces);
-  const [fetchedAt, setFetchedAt] = useState<string | null>(seedMeta.fetchedAt);
-  const [source, setSource] = useState<string | null>(seedMeta.source);
-  const [liveRaceDate, setLiveRaceDate] = useState<string | null>(seedMeta.raceDate);
+type Props = {
+  children: ReactNode;
+  /** サーバがディスクから読んだ初期カタログ（静的 import キャッシュ回避） */
+  initial?: RaceCatalogPayload;
+};
+
+export function RaceCatalogProvider({ children, initial }: Props) {
+  const [races, setRaces] = useState<Race[]>(initial?.races ?? seedRaces);
+  const [fetchedAt, setFetchedAt] = useState<string | null>(
+    initial?.fetchedAt ?? seedMeta.fetchedAt,
+  );
+  const [source, setSource] = useState<string | null>(initial?.source ?? seedMeta.source);
+  const [liveRaceDate, setLiveRaceDate] = useState<string | null>(
+    initial?.raceDate ?? seedMeta.raceDate,
+  );
   const [refreshing, setRefreshing] = useState(false);
 
   const refresh = useCallback(async () => {
@@ -37,12 +48,7 @@ export function RaceCatalogProvider({ children }: { children: ReactNode }) {
     try {
       const res = await fetch("/api/races", { cache: "no-store" });
       if (!res.ok) return;
-      const data = (await res.json()) as {
-        races: Race[];
-        fetchedAt: string | null;
-        source: string | null;
-        raceDate: string | null;
-      };
+      const data = (await res.json()) as RaceCatalogPayload;
       if (Array.isArray(data.races) && data.races.length > 0) {
         setRaces(data.races);
         setFetchedAt(data.fetchedAt);

@@ -38,14 +38,23 @@ export function RaceDayProvider({ children }: { children: ReactNode }) {
   const today = getJstDateString();
   const availableDates = useMemo(() => listRaceDates(races), [races]);
   const live = catalogLive ?? liveRaceDate;
-  const initial = defaultRaceDate(today, availableDates, live);
-  const [selectedDate, setSelectedDateState] = useState(initial);
+  // SSR 安定: 壁時計の today は使わずスナップショット日で初期化（クライアントと一致させる）
+  const [selectedDate, setSelectedDateState] = useState(live);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setSelectedDateState(defaultRaceDate(today, availableDates, live));
+    // 初回マウントのみ（依存に races を入れると API ポーリングで選択が上書きされる）
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    const dates = listRaceDates(races);
+    const fallback = catalogLive ?? liveRaceDate;
+    const next =
+      saved && dates.includes(saved)
+        ? saved
+        : defaultRaceDate(getJstDateString(), dates, fallback);
+    setSelectedDateState(next);
     setHydrated(true);
-  }, [today, availableDates, live]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- hydrate once from SSR initial catalog
+  }, []);
 
   useEffect(() => {
     if (!hydrated) return;

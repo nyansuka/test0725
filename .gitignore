@@ -46,3 +46,6 @@ next-env.d.ts
 /src/data/loop/predictions/
 /src/data/loop/snapshots/
 /src/data/loop/reports/
+
+# 馬成績キャッシュ（再取得可能）
+/src/data/cache/horse-form/

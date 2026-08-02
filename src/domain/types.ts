@@ -19,11 +19,30 @@ export type HorseFactors = {
   gateJockey?: number;
 };
 
+/** 過去走から導出した同条件・近況サマリ（fetcher が付与） */
+export type HorseFormStats = {
+  horseId?: string;
+  pastStarts: number;
+  /** 同場×同芝ダ×同距離 */
+  sameCourseStarts: number;
+  /** 同芝ダ×同距離（会場不問のフォールバック含む） */
+  sameDistanceStarts?: number;
+  /** venue = 同場 / distance = 同距離のみ / none */
+  courseMatch?: "venue" | "distance" | "none";
+  bestTimeSec: number | null;
+  avgSameRank: number | null;
+  lastRank: number | null;
+  lastPopularity: number | null;
+  lastDate: string | null;
+};
+
 export type Horse = {
   number: number;
   bracket?: number;
   name: string;
   jockey: string;
+  /** netkeiba horse id（成績ページ接続用） */
+  horseId?: string;
   oddsWin: number;
   oddsPlace?: { min: number; max: number };
   /** 事前埋め込み可。未設定時は Scorer が算出 */
@@ -31,6 +50,8 @@ export type Horse = {
   factors: HorseFactors;
   comment: string;
   runningStyle?: "逃" | "先" | "差" | "追";
+  /** 同条件タイム等。courseFit / formSignal の根拠 */
+  formStats?: HorseFormStats;
 };
 
 export type OddsEntry = {

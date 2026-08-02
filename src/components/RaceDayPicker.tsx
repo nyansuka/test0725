@@ -29,7 +29,7 @@ export function RaceDayPicker({ variant = "panel", className = "" }: Props) {
           className="min-w-[9.5rem] border border-ink/20 bg-white px-2 py-1 text-ink"
           aria-label="開催日"
         />
-        {!isToday && (
+        {hydrated && !isToday ? (
           <button
             type="button"
             onClick={goToday}
@@ -37,7 +37,7 @@ export function RaceDayPicker({ variant = "panel", className = "" }: Props) {
           >
             今日
           </button>
-        )}
+        ) : null}
       </div>
     );
   }
@@ -62,14 +62,14 @@ export function RaceDayPicker({ variant = "panel", className = "" }: Props) {
         </label>
         <div className="pb-2 text-sm text-ink/80">
           {hydrated ? formatJstDateLabel(selectedDate) : "読み込み中…"}
-          {isToday ? (
+          {hydrated && isToday ? (
             <span className="ml-2 rounded-sm bg-turf px-2 py-0.5 text-xs text-sand">本日</span>
           ) : null}
-          {!hasRaces && (
+          {hydrated && !hasRaces ? (
             <span className="ml-2 text-signal">この日のサンプル開催はありません</span>
-          )}
+          ) : null}
         </div>
-        {!isToday && (
+        {hydrated && !isToday ? (
           <button
             type="button"
             onClick={goToday}
@@ -77,7 +77,7 @@ export function RaceDayPicker({ variant = "panel", className = "" }: Props) {
           >
             本日に戻す
           </button>
-        )}
+        ) : null}
       </div>
       {availableDates.length > 0 && (
         <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-ink/10 pt-3 text-sm">
@@ -93,7 +93,7 @@ export function RaceDayPicker({ variant = "panel", className = "" }: Props) {
                   : "border-ink/20 bg-white text-ink/70 hover:border-turf"
               }`}
             >
-              {d === today ? `本日（${d}）` : d}
+              {hydrated && d === today ? `本日（${d}）` : d}
             </button>
           ))}
         </div>

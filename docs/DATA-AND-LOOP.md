@@ -1,6 +1,6 @@
 # データ選別と改善ループ計画
 
-最終更新: 2026-07-26  
+最終更新: 2026-08-02  
 親計画: [PLAN.md](./PLAN.md)  
 対象: UMANOTE（JRA・高配当候補選別）  
 結果レビュー・改善棚卸し: [IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md)
@@ -82,10 +82,10 @@
 
 | データ | 用途 | 取得見込み | 優先 |
 |--------|------|------------|------|
-| 前走着順・人気・タイム | formSignal | 出馬表／成績ページ拡張 | 高 |
+| 前走着順・人気・タイム | formSignal | **取得済**（`--enrich-form` / `--with-form`） | 高 |
 | 上がり3F・通過順位 | 脚質・展開 | 成績ページ | 高 |
 | 脚質ラベル（逃先差追） | paceFit | 傾向ページ or 前走から推定 | 中 |
-| コース別成績（同場同距離） | courseFit | 成績ページ集計 | 中 |
+| コース別成績（同場同距離） | courseFit | **取得済**（同条件ベストタイム＋平均着順） | 中 |
 | 騎手・枠のコース傾向 | gateJockey | 公開統計 or 簡易集計 | 低〜中 |
 | オッズ時系列（締切直前） | ゲートの再現性 | 複数スナップショット保存 | 中（検証用に重要） |
 | 人気順位 | 乖離・分析 | オッズから導出可 | 高（簡単） |
@@ -144,13 +144,15 @@
 | D1 | 発走前候補の日次保存 | `src/data/loop/predictions/YYYY-MM-DD.json`（＋凍結オッズ） | **実装済** (`loop:freeze`) |
 | D2 | 結果との突合バッチ | `src/data/loop/evaluations/` に hit フラグ | **実装済** (`loop:evaluate`) |
 | D3 | 週次メトリクス表 | Recall / Precision / 件数（`loop:report`） | **実装済（CLI/JSON）** |
-| D4 | 前走・人気の自動取り込み | formSignal / valueGap が合成一辺倒でなくなる | 未着手 |
+| D4 | 前走・同条件タイムの自動取り込み | formSignal / courseFit が合成一辺倒でなくなる | **一部済**（`courseFit`・`formSignal`。`valueGap` は未） |
 | D5 | オッズ複数時刻スナップ | 締切直前ゲートの感度分析ができる | 未着手 |
 
 運用コマンド:
 
 ```bash
 docker compose exec web npm run fetch:jra
+docker compose exec web npm run fetch:jra:enrich-form -- 2026-07-25   # 既存スナップに過去走を反映
+# フル取得時に同時付与する場合: npm run fetch:jra -- --with-form 2026-07-25
 docker compose exec web npm run loop:freeze      # 発走前に一度（オッズが揃ってから）
 docker compose exec web npm run loop:evaluate    # 結果後
 docker compose exec web npm run loop:report -- YYYY-MM-DD

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-02T00:04:17.737Z",
+  "fetchedAt": "2026-08-02T01:08:35.315Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-08-02",
   "raceCount": 36,
@@ -1603,7 +1603,27 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-02 08:55:04",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-02T01:08:35.315Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 5,
+            "bracket": 4,
+            "name": "ローゾフィア",
+            "popularity": 8
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "5",
+            "payoutYen": 3130
+          }
+        ]
+      }
     },
     {
       "id": "sapporo-20260802-2",
@@ -20060,7 +20080,28 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-02 08:45:34",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-02T00:58:04.677Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 7,
+            "bracket": 6,
+            "name": "ノドゥス",
+            "popularity": 3,
+            "oddsWin": 4.9
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "7",
+            "payoutYen": 490
+          }
+        ]
+      }
     },
     {
       "id": "niigata-20260802-2",
@@ -39787,7 +39828,28 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-02 08:35:19",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-02T00:49:04.262Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 8,
+            "bracket": 4,
+            "name": "タイセイアビオン",
+            "popularity": 3,
+            "oddsWin": 8.2
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "8",
+            "payoutYen": 820
+          }
+        ]
+      }
     },
     {
       "id": "chukyo-20260802-2",

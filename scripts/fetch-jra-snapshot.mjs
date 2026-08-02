@@ -8,6 +8,10 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { trackGateBiasScore } from "../src/domain/scoring/trackGateBias.mjs";
+import {
+  enrichRaceWithForm,
+  extractHorseIdFromAnchorHtml,
+} from "./lib/horse-form.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
@@ -180,6 +184,7 @@ function parseHorses(html) {
         /<span class="HorseName">\s*<a[^>]*(?:title="([^"]*)")?[^>]*>([^<]*)/i,
       ) ?? row.match(/db\.netkeiba\.com\/horse\/\d+"[^>]*(?:title="([^"]*)")?[^>]*>([^<]*)/i);
     const name = decodeHtml(horseAnchor?.[1] || horseAnchor?.[2] || `馬${umaban}`);
+    const horseId = extractHorseIdFromAnchorHtml(row);
 
     const jockeyAnchor = row.match(
       /class="Jockey"[\s\S]*?<a[^>]*(?:title="([^"]*)")?[^>]*>\s*([^<]*)/i,
@@ -191,6 +196,7 @@ function parseHorses(html) {
       bracket: waku,
       name,
       jockey,
+      horseId: horseId || undefined,
     });
   }
   return horses;
@@ -473,7 +479,7 @@ async function fetchRaceResult(raceId) {
   return parseResultHtml(html);
 }
 
-async function fetchOneRace(raceId, raceDate, { withResult = true } = {}) {
+async function fetchOneRace(raceId, raceDate, { withResult = true, withForm = false } = {}) {
   const shutubaUrl = `https://race.netkeiba.com/race/shutuba.html?race_id=${raceId}`;
   const html = await fetchText(shutubaUrl);
   await sleep(150);
@@ -493,6 +499,7 @@ async function fetchOneRace(raceId, raceDate, { withResult = true } = {}) {
       bracket: h.bracket,
       name: h.name,
       jockey: h.jockey,
+      horseId: h.horseId,
       oddsWin,
       oddsPlace: place
         ? { min: place.min, max: place.max }
@@ -550,6 +557,10 @@ async function fetchOneRace(raceId, raceDate, { withResult = true } = {}) {
     oddsUpdatedAt: officialDatetime,
   };
 
+  if (withForm) {
+    await enrichRaceWithForm(race, { sleepMs: 150 });
+  }
+
   if (withResult) {
     const result = await fetchRaceResult(raceId);
     if (result) race.result = result;
@@ -584,9 +595,22 @@ async function writeSnapshot(snapshot) {
   const outDir = path.join(root, "src", "data", "snapshots");
   await mkdir(outDir, { recursive: true });
   const outPath = path.join(outDir, `${snapshot.raceDate}.json`);
+  const latestPath = path.join(outDir, "latest.json");
   const json = JSON.stringify(snapshot, null, 2);
   await writeFile(outPath, json, "utf8");
-  await writeFile(path.join(outDir, "latest.json"), json, "utf8");
+  // OneDrive 等で latest.json がロックされることがあるためリトライ
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      await writeFile(latestPath, json, "utf8");
+      break;
+    } catch (err) {
+      if (attempt === 3) {
+        console.warn(`warn: could not update latest.json (${err.message})`);
+      } else {
+        await sleep(200 * (attempt + 1));
+      }
+    }
+  }
   return outPath;
 }
 
@@ -653,13 +677,75 @@ async function updateResultsOnly(raceDate, { graceMinutes = 8, force = false } =
   return existing;
 }
 
+/**
+ * 既存スナップに horseId が無い場合は出馬表を再取得して付与し、
+ * 過去走で courseFit / formSignal を上書きする。
+ */
+async function enrichSnapshotWithForm(raceDate, { force = false, limit = 0 } = {}) {
+  const existing = await loadExistingSnapshot(raceDate);
+  if (!existing?.races?.length) {
+    console.error(`No snapshot for ${raceDate}`);
+    process.exit(1);
+  }
+
+  let races = existing.races;
+  if (limit > 0) races = races.slice(0, limit);
+
+  let formOk = 0;
+  for (const [i, race] of races.entries()) {
+    process.stdout.write(`[${i + 1}/${races.length}] ${race.venue}${race.raceNumber}R ... `);
+    try {
+      const missingIds = (race.horses ?? []).some((h) => !h.horseId);
+      if (missingIds && race.sourceRaceId) {
+        const shutubaUrl = `https://race.netkeiba.com/race/shutuba.html?race_id=${race.sourceRaceId}`;
+        const html = await fetchText(shutubaUrl);
+        await sleep(120);
+        const parsed = parseHorses(html);
+        const byNum = new Map(parsed.map((h) => [h.number, h]));
+        for (const h of race.horses) {
+          const p = byNum.get(h.number);
+          if (p?.horseId) h.horseId = p.horseId;
+        }
+      }
+
+      const { fetched, total } = await enrichRaceWithForm(race, {
+        force,
+        sleepMs: 150,
+      });
+      const withVenue = (race.horses ?? []).filter((h) => (h.formStats?.sameCourseStarts ?? 0) > 0).length;
+      const withDist = (race.horses ?? []).filter((h) => (h.formStats?.sameDistanceStarts ?? 0) > 0).length;
+      formOk += 1;
+      console.log(`form ${fetched}/${total} sameVenue=${withVenue} sameDist=${withDist}`);
+    } catch (err) {
+      console.log(`FAIL ${err.message}`);
+    }
+  }
+
+  existing.fetchedAt = new Date().toISOString();
+  existing.source = "netkeiba (public pages / odds API + results + horse form)";
+  existing.formEnrichedAt = new Date().toISOString();
+  const out = await writeSnapshot(existing);
+  console.log(`Form-enriched ${formOk}/${races.length} races → ${out}`);
+  return existing;
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const resultsOnly = args.includes("--results-only");
   const refreshResults = args.includes("--refresh-results");
+  const withForm = args.includes("--with-form");
+  const enrichForm = args.includes("--enrich-form");
+  const forceForm = args.includes("--force-form");
+  const limitArg = args.find((a) => a.startsWith("--limit="));
+  const limit = limitArg ? Number(limitArg.split("=")[1]) || 0 : 0;
   const dateArg = args.find((a) => /^\d{4}-\d{2}-\d{2}$/.test(a) || /^\d{8}$/.test(a));
   if (dateArg) process.argv[2] = dateArg;
   const raceDate = ymdFromArg();
+
+  if (enrichForm) {
+    await enrichSnapshotWithForm(raceDate, { force: forceForm, limit });
+    return;
+  }
 
   if (resultsOnly || refreshResults) {
     const snap = await updateResultsOnly(raceDate, { force: refreshResults });
@@ -671,7 +757,7 @@ async function main() {
   }
 
   const kaisai = compactDate(raceDate);
-  console.log(`Fetching JRA races for ${raceDate} ...`);
+  console.log(`Fetching JRA races for ${raceDate}${withForm ? " (with form)" : ""} ...`);
 
   const raceIds = await fetchRaceIds(kaisai);
   if (raceIds.length === 0) {
@@ -689,13 +775,16 @@ async function main() {
   for (const [i, id] of raceIds.entries()) {
     process.stdout.write(`[${i + 1}/${raceIds.length}] ${id} ... `);
     try {
-      const race = await fetchOneRace(id, raceDate, { withResult: true });
+      const race = await fetchOneRace(id, raceDate, { withResult: true, withForm });
       const prev = prevBySource.get(id);
       if (!race.result && prev?.result) race.result = prev.result;
       races.push(race);
       const flag = race.result ? " result" : "";
+      const formFlag = withForm
+        ? ` formSame=${(race.horses ?? []).filter((h) => (h.formStats?.sameCourseStarts ?? 0) > 0).length}`
+        : "";
       console.log(
-        `${race.venue}${race.raceNumber}R ${race.title} horses=${race.horses.length} odds=${race.oddsBoard.length}${flag}`,
+        `${race.venue}${race.raceNumber}R ${race.title} horses=${race.horses.length} odds=${race.oddsBoard.length}${flag}${formFlag}`,
       );
     } catch (err) {
       console.log(`FAIL ${err.message}`);
@@ -714,12 +803,15 @@ async function main() {
 
   const snapshot = {
     fetchedAt: new Date().toISOString(),
-    source: "netkeiba (public pages / odds API + results)",
+    source: withForm
+      ? "netkeiba (public pages / odds API + results + horse form)"
+      : "netkeiba (public pages / odds API + results)",
     raceDate,
     raceCount: races.length,
     venues: [...new Set(races.map((r) => r.venue))],
     races,
   };
+  if (withForm) snapshot.formEnrichedAt = snapshot.fetchedAt;
 
   const outPath = await writeSnapshot(snapshot);
   console.log(`Wrote ${outPath} (${races.length} races, results=${races.filter((r) => r.result).length})`);
@@ -738,7 +830,9 @@ export {
   fetchOneRace,
   fetchRaceResult,
   parseResultHtml,
+  parseHorses,
   updateResultsOnly,
+  enrichSnapshotWithForm,
   writeSnapshot,
   loadExistingSnapshot,
   ymdFromArg,

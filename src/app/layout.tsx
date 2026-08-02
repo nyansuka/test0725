@@ -4,7 +4,10 @@ import { JournalProvider } from "@/components/JournalProvider";
 import { RaceCatalogProvider } from "@/components/RaceCatalogProvider";
 import { RaceDayProvider } from "@/components/RaceDayProvider";
 import { SettingsProvider } from "@/components/SettingsProvider";
+import { loadRaceCatalog } from "@/data/loadCatalog";
 import "./globals.css";
+
+export const dynamic = "force-dynamic";
 
 const display = Bricolage_Grotesque({
   variable: "--font-display",
@@ -40,11 +43,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const initialCatalog = await loadRaceCatalog();
+
   return (
     <html
       lang="ja"
@@ -52,7 +57,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-[family-name:var(--font-jp)]">
         <SettingsProvider>
-          <RaceCatalogProvider>
+          <RaceCatalogProvider initial={initialCatalog}>
             <RaceDayProvider>
               <JournalProvider>{children}</JournalProvider>
             </RaceDayProvider>
