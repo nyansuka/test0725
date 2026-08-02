@@ -4,7 +4,7 @@
  *
  * 利用はデモ用途。オッズ等は主催者発表と照合すること。
  */
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { trackGateBiasScore } from "../src/domain/scoring/trackGateBias.mjs";
@@ -591,6 +591,20 @@ function startMinutes(hhmm) {
   return h * 60 + m;
 }
 
+/**
+ * latest.json は「サイトが指す当日スナップ」。過去日の enrich/結果更新で上書きしない。
+ * 同日またはより新しい raceDate のときだけ更新する。
+ */
+async function shouldUpdateLatest(snapshot, latestPath) {
+  try {
+    const existing = JSON.parse(await readFile(latestPath, "utf8"));
+    if (!existing?.raceDate) return true;
+    return String(snapshot.raceDate) >= String(existing.raceDate);
+  } catch {
+    return true;
+  }
+}
+
 async function writeSnapshot(snapshot) {
   const outDir = path.join(root, "src", "data", "snapshots");
   await mkdir(outDir, { recursive: true });
@@ -598,6 +612,14 @@ async function writeSnapshot(snapshot) {
   const latestPath = path.join(outDir, "latest.json");
   const json = JSON.stringify(snapshot, null, 2);
   await writeFile(outPath, json, "utf8");
+
+  if (!(await shouldUpdateLatest(snapshot, latestPath))) {
+    console.warn(
+      `note: kept latest.json (not overwriting with older raceDate=${snapshot.raceDate})`,
+    );
+    return outPath;
+  }
+
   // OneDrive 等で latest.json がロックされることがあるためリトライ
   for (let attempt = 0; attempt < 4; attempt++) {
     try {
@@ -615,7 +637,6 @@ async function writeSnapshot(snapshot) {
 }
 
 async function loadExistingSnapshot(raceDate) {
-  const { readFile } = await import("node:fs/promises");
   const p = path.join(root, "src", "data", "snapshots", `${raceDate}.json`);
   try {
     return JSON.parse(await readFile(p, "utf8"));
