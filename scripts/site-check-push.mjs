@@ -1,5 +1,6 @@
 /**
  * site-check が PASS のときだけ、変更があれば commit & push。
+ * push 後は https://test0725.vercel.app が latest スナップと一致するか確認する。
  *
  *   node scripts/site-check-push.mjs
  *   npm run site:check:push
@@ -7,6 +8,7 @@
  * 環境変数:
  *   SKIP_PUSH=1  … コミットのみ
  *   SITE_CHECK_DRY=1 … チェックのみ（コミットしない）
+ *   SKIP_VERCEL_VERIFY=1 … push 後の本番確認をスキップ
  */
 import { spawnSync } from "node:child_process";
 import path from "node:path";
@@ -86,6 +88,18 @@ function main() {
     process.exit(push.status || 1);
   }
   console.log("RESULT COMMITTED_AND_PUSHED");
+
+  if (process.env.SKIP_VERCEL_VERIFY === "1") {
+    console.log("SKIP_VERCEL_VERIFY=1 — 本番確認をスキップ");
+    process.exit(0);
+  }
+
+  console.log("== verify Vercel prod ==");
+  const verify = run("node", ["scripts/verify-vercel-prod.mjs"], { stdio: "inherit" });
+  if (verify.status !== 0) {
+    console.error("push は成功したが本番反映確認に失敗（Deployments を確認）");
+    process.exit(verify.status || 1);
+  }
 }
 
 main();

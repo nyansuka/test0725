@@ -20,6 +20,7 @@
     "loop:trends": "node scripts/loop-build-trends.mjs",
     "site:check": "node scripts/site-check.mjs",
     "site:check:push": "node scripts/site-check-push.mjs",
+    "site:verify-vercel": "node scripts/verify-vercel-prod.mjs",
     "journal:migrate": "node scripts/journal-migrate.mjs",
     "test:journal-expand": "node scripts/test-journal-expand.mjs"
   },

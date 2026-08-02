@@ -1,0 +1,24 @@
+---
+description: After git push to main, verify test0725.vercel.app reflects latest snapshot
+alwaysApply: true
+---
+
+# Vercel 本番反映チェック
+
+`origin/main` へ push したら、完了扱いにする前に本番反映を確認する。
+
+## 必須手順
+
+1. push 成功後、次を実行する:
+   - `npm run site:verify-vercel`
+   - または `docker compose exec -T web npm run site:verify-vercel`
+2. `RESULT VERCEL_OK` かつ本番 `raceDate` / `fetchedAt` がローカル `src/data/snapshots/latest.json` と一致（または同日でそれ以降）であることを確認する
+3. 失敗時は「push 済み・本番未反映」と報告し、Vercel Deployments を疑う。勝手に force push しない
+
+## 使い分け
+
+- `npm run site:check:push` は push 後に上記検証を自動実行する
+- 手動で `git commit` / `git push` した場合も、同じ検証を忘れずに行う
+- スナップショットを載せないドキュメントのみの変更でも、検証スクリプトは latest 一致を見る（デプロイ完了の煙テストとして有効）
+
+本番 URL: https://test0725.vercel.app/

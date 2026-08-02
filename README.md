@@ -73,7 +73,8 @@ HTTP・API・短評（評価／傾向）・説明文の矛盾をまとめて検�
 
 ```bash
 docker compose exec web npm run site:check
-docker compose exec web npm run site:check:push   # PASS かつ変更あり → commit & push
+docker compose exec web npm run site:check:push   # PASS かつ変更あり → commit & push → Vercel 反映確認
+docker compose exec web npm run site:verify-vercel  # 手動 push 後の本番確認のみ
 ```
 
 定期実行（エージェント／ターミナルで 30 分間隔など）も同じコマンドを使います。
@@ -101,4 +102,4 @@ docker compose exec web npm run journal:migrate
 
 接続文字列は Neon の **pooled** 接続（ホスト名に `-pooler`）を推奨。チャットやリポジトリにパスワードを載せないこと。漏洩したら Neon でロールのパスワードを再発行する。
 
-Vercel は `main` への push で再デプロイされる想定です。`DATABASE_URL` 未設定のとき成績日記はブラウザ localStorage にフォールバックします。
+Vercel は `main` への push で再デプロイされる想定です。push 後は `site:verify-vercel`（または `site:check:push`）で https://test0725.vercel.app の `raceDate` / `fetchedAt` が `latest.json` と一致することを確認します。`DATABASE_URL` 未設定のとき成績日記はブラウザ localStorage にフォールバックします。

@@ -27,7 +27,15 @@ docker compose exec -T web npm run loop:report -- 2026-07-26
 
 # 整合チェック
 docker compose exec -T web npm run site:check
+
+# commit/push（PASS 時）＋ Vercel 本番反映確認
+docker compose exec -T web npm run site:check:push
+# 手動 push 後だけ確認する場合:
+docker compose exec -T web npm run site:verify-vercel
 ```
+
+本番 URL: https://test0725.vercel.app/  
+`site:verify-vercel` はローカル `latest.json` の `raceDate` / `fetchedAt` と本番 `/api/races` が一致するまで最大約3分待つ。
 
 ## エージェント用プロンプト（30分 tick）
 
@@ -36,8 +44,8 @@ docker compose exec -T web npm run site:check
 > 2. `docker compose exec -T web npm run loop:evaluate`（当日。freeze 済み前提）
 > 3. `docker compose exec -T web npm run loop:trends`
 > 4. `docker compose exec -T web npm run site:check`
-> 5. PASS かつ未コミット変更あり → 前回作者（`GIT_AUTHOR_*`）で commit & push。FAIL なら修正せず要約のみ（push しない）
-> 6. 2〜3行で: 結果レース数 / Precision・Recall（出せれば）/ site-check / commit有無
+> 5. PASS かつ未コミット変更あり → 前回作者（`GIT_AUTHOR_*`）で commit & push。続けて `npm run site:verify-vercel`（または `site:check:push`）。FAIL なら修正せず要約のみ（push しない）
+> 6. 2〜3行で: 結果レース数 / Precision・Recall（出せれば）/ site-check / commit有無 / Vercel反映
 >
 > 注意: `loop:freeze --force` はしない（発走前固定を壊さない）。単勝が軒並み 99.9 のときだけ報告。
 
