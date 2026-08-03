@@ -24,6 +24,8 @@ export const BET_TYPE_LABELS: Record<BetType, string> = {
 
 export const DEFAULT_SETTINGS = {
   oddsThreshold: 25,
+  /** B3: 上限80（感度スイープ推奨。null で上限なし） */
+  oddsMax: 80 as number | null,
   scoreMin: 75,
   enabledBetTypes: [...ALL_BET_TYPES] as BetType[],
 };

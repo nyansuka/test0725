@@ -131,6 +131,8 @@ export type LongshotPick = {
 
 export type UserSelectionSettings = {
   oddsThreshold: number;
+  /** 上限（この値を超えるオッズは候補外）。null/未設定は無制限 */
+  oddsMax: number | null;
   scoreMin: number;
   enabledBetTypes: BetType[];
 };

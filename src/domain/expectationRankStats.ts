@@ -26,7 +26,7 @@ export type ExpectationRankBucket = {
 };
 
 export type ExpectationRankStats = {
-  settings: Pick<UserSelectionSettings, "oddsThreshold" | "scoreMin">;
+  settings: Pick<UserSelectionSettings, "oddsThreshold" | "oddsMax" | "scoreMin">;
   raceCount: number;
   candidateCount: number;
   dates: string[];
@@ -144,6 +144,7 @@ export function summarizeByExpectationRank(
   return {
     settings: {
       oddsThreshold: settings.oddsThreshold,
+      oddsMax: settings.oddsMax ?? null,
       scoreMin: settings.scoreMin,
     },
     raceCount: races.filter((r) => r.authority === "JRA").length,

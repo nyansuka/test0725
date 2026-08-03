@@ -271,7 +271,9 @@ export function JournalPanel() {
         <div>
           <h2 className="text-lg font-semibold text-ink">レース期待度ランク別</h2>
           <p className="mt-1 text-sm text-ink/55">
-            現在の設定（オッズ閾値 {settings.oddsThreshold} / 最低スコア {settings.scoreMin}
+            現在の設定（オッズ閾値 {settings.oddsThreshold}
+            {settings.oddsMax != null ? `〜${settings.oddsMax}` : "〜上限なし"} / 最低スコア{" "}
+            {settings.scoreMin}
             ）で候補を再選別し、期待度 S〜D ごとの複勝圏的中率と仮想回収率を集計します。設定変更ですぐ反映されます。
           </p>
         </div>

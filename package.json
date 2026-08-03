@@ -18,6 +18,8 @@
     "loop:evaluate": "node scripts/loop-accumulate.mjs evaluate",
     "loop:report": "node scripts/loop-accumulate.mjs report",
     "loop:trends": "node scripts/loop-build-trends.mjs",
+    "loop:sweep": "node scripts/loop-threshold-sweep.mjs",
+    "loop:sweep:odds-cap": "node scripts/loop-odds-cap-sweep.mjs",
     "site:check": "node scripts/site-check.mjs",
     "site:check:push": "node scripts/site-check-push.mjs",
     "site:verify-vercel": "node scripts/verify-vercel-prod.mjs",

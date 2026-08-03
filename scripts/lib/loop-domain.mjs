@@ -16,6 +16,8 @@ export const ALL_BET_TYPES = [
 
 export const DEFAULT_SETTINGS = {
   oddsThreshold: 25,
+  /** B3: 上限80（感度スイープ推奨。null で上限なし） */
+  oddsMax: 80,
   scoreMin: 75,
   enabledBetTypes: [...ALL_BET_TYPES],
 };
@@ -93,6 +95,9 @@ export function classifyOddsEntry(race, entry, settings) {
   }
   if (entry.odds < settings.oddsThreshold) {
     return { status: "below_threshold", relatedHorseNumbers: [], relatedPlacePotential: 0 };
+  }
+  if (settings.oddsMax != null && entry.odds > settings.oddsMax) {
+    return { status: "above_max", relatedHorseNumbers: [], relatedPlacePotential: 0 };
   }
   const related = resolveRelatedHorses(race, entry.selection, entry.betType);
   if (related.length === 0) {

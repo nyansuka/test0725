@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Noto_Sans_JP, Source_Serif_4 } from "next/font/google";
+import { Noto_Sans_JP } from "next/font/google";
 import { JournalProvider } from "@/components/JournalProvider";
 import { RaceCatalogProvider } from "@/components/RaceCatalogProvider";
 import { RaceDayProvider } from "@/components/RaceDayProvider";
@@ -9,22 +9,11 @@ import "./globals.css";
 
 export const dynamic = "force-dynamic";
 
-const display = Bricolage_Grotesque({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-});
-
-const body = Source_Serif_4({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "600"],
-});
-
+/** 源ノ角ゴシック（Source Han Sans JP）相当。Google Fonts では Noto Sans JP */
 const jp = Noto_Sans_JP({
   variable: "--font-jp",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -51,11 +40,8 @@ export default async function RootLayout({
   const initialCatalog = await loadRaceCatalog();
 
   return (
-    <html
-      lang="ja"
-      className={`${display.variable} ${body.variable} ${jp.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col font-[family-name:var(--font-jp)]">
+    <html lang="ja" className={`${jp.variable} h-full antialiased`}>
+      <body className="flex min-h-full flex-col font-sans">
         <SettingsProvider>
           <RaceCatalogProvider initial={initialCatalog}>
             <RaceDayProvider>

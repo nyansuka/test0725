@@ -22,7 +22,7 @@ type Props = {
 export function LongshotsBoard({ races: racesProp }: Props) {
   const { races: catalogRaces } = useRaceCatalog();
   const races = racesProp ?? catalogRaces;
-  const { settings, setOddsThreshold, hydrated } = useSettings();
+  const { settings, setOddsThreshold, setOddsMax, hydrated } = useSettings();
   const { selectedDate } = useRaceDay();
   const dayRaces = useMemo(
     () => filterRacesByDate(races, selectedDate),
@@ -69,7 +69,7 @@ export function LongshotsBoard({ races: racesProp }: Props) {
         </p>
       </div>
       <div className="flex flex-col gap-6 border border-ink/10 bg-sand-dim/40 p-5 md:p-6">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <label className="block text-sm">
             <span className="text-ink/60">オッズ閾値（以上）</span>
             <input
@@ -78,6 +78,26 @@ export function LongshotsBoard({ races: racesProp }: Props) {
               step={1}
               value={settings.oddsThreshold}
               onChange={(e) => setOddsThreshold(Number(e.target.value) || 1)}
+              className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
+            />
+          </label>
+          <label className="block text-sm">
+            <span className="text-ink/60">オッズ上限（以下）</span>
+            <input
+              type="number"
+              min={1}
+              step={1}
+              value={settings.oddsMax ?? ""}
+              placeholder="なし"
+              onChange={(e) => {
+                const raw = e.target.value.trim();
+                if (raw === "") {
+                  setOddsMax(null);
+                  return;
+                }
+                const n = Number(raw);
+                setOddsMax(Number.isFinite(n) && n > 0 ? n : null);
+              }}
               className="mt-1 w-full border border-ink/15 bg-sand px-3 py-2"
             />
           </label>

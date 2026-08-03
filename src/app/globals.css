@@ -4,12 +4,13 @@
   --turf: #1f5c45;
   --turf-deep: #0f2f24;
   --ink: #141210;
-  --sand: #f3ebe0;
-  --sand-dim: #e6d9c8;
+  /* ページ基調は白。sand / sand-dim はパネル・入力の淡色として維持 */
+  --sand: #ffffff;
+  --sand-dim: #f0f0f0;
   --signal: #d97706;
   --signal-soft: #f59e0b;
-  --mist: rgba(243, 235, 224, 0.12);
-  --background: var(--sand);
+  --mist: rgba(255, 255, 255, 0.12);
+  --background: #ffffff;
   --foreground: var(--ink);
 }
 
@@ -23,9 +24,9 @@
   --color-sand-dim: var(--sand-dim);
   --color-signal: var(--signal);
   --color-signal-soft: var(--signal-soft);
-  --font-sans: var(--font-body);
-  --font-display: var(--font-display);
-  --font-jp: var(--font-jp);
+  /* display / body も源ノ角ゴシック（--font-jp = Noto Sans JP）に寄せる */
+  --font-sans: var(--font-jp);
+  --font-display: var(--font-jp);
 }
 
 * {
@@ -39,7 +40,8 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body), var(--font-jp), sans-serif;
+  font-family: var(--font-jp), "Source Han Sans JP", "Noto Sans JP", "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, sans-serif;
 }
 
 ::selection {

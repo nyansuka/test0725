@@ -11,6 +11,7 @@ export type OddsBoardStatus =
   | "candidate" // ゲート＋スコア通過 → 注目穴ボード掲載
   | "pass" // オッズゲート通過だがスコア不足 → 見送り
   | "below_threshold" // オッズが閾値未満
+  | "above_max" // オッズが上限超過
   | "disabled_bet" // 券種OFF
   | "no_related"; // 関係馬が解決できない
 
@@ -84,6 +85,14 @@ export function classifyOddsEntry(
     return {
       entry,
       status: "below_threshold",
+      relatedHorseNumbers: [],
+      relatedPlacePotential: 0,
+    };
+  }
+  if (settings.oddsMax != null && entry.odds > settings.oddsMax) {
+    return {
+      entry,
+      status: "above_max",
       relatedHorseNumbers: [],
       relatedPlacePotential: 0,
     };

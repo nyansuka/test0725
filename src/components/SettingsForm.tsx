@@ -1,12 +1,13 @@
 "use client";
 
-import { ALL_BET_TYPES, BET_TYPE_LABELS } from "@/domain/betTypes";
+import { ALL_BET_TYPES, BET_TYPE_LABELS, DEFAULT_SETTINGS } from "@/domain/betTypes";
 import { useSettings } from "@/components/SettingsProvider";
 
 export function SettingsForm() {
   const {
     settings,
     setOddsThreshold,
+    setOddsMax,
     setScoreMin,
     toggleBetType,
     setEnabledBetTypes,
@@ -16,7 +17,7 @@ export function SettingsForm() {
 
   return (
     <div className="space-y-10">
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <label className="block">
           <span className="text-sm text-ink/60">オッズ閾値（以上で候補）</span>
           <input
@@ -27,7 +28,32 @@ export function SettingsForm() {
             onChange={(e) => setOddsThreshold(Number(e.target.value) || 1)}
             className="mt-2 w-full border border-ink/15 bg-sand px-3 py-3"
           />
-          <p className="mt-2 text-xs text-ink/50">初期値 20。ボード・設定で同期されます。</p>
+          <p className="mt-2 text-xs text-ink/50">
+            初期値 {DEFAULT_SETTINGS.oddsThreshold}。ボード・設定で同期されます。
+          </p>
+        </label>
+        <label className="block">
+          <span className="text-sm text-ink/60">オッズ上限（以下で候補）</span>
+          <input
+            type="number"
+            min={1}
+            step={1}
+            value={settings.oddsMax ?? ""}
+            placeholder="なし"
+            onChange={(e) => {
+              const raw = e.target.value.trim();
+              if (raw === "") {
+                setOddsMax(null);
+                return;
+              }
+              const n = Number(raw);
+              setOddsMax(Number.isFinite(n) && n > 0 ? n : null);
+            }}
+            className="mt-2 w-full border border-ink/15 bg-sand px-3 py-3"
+          />
+          <p className="mt-2 text-xs text-ink/50">
+            初期値 {DEFAULT_SETTINGS.oddsMax ?? "なし"}。空欄で上限なし。この値を超えるオッズは除外。
+          </p>
         </label>
         <label className="block">
           <span className="text-sm text-ink/60">最低スコア（relatedPlacePotential）</span>
@@ -40,7 +66,9 @@ export function SettingsForm() {
             onChange={(e) => setScoreMin(Number(e.target.value) || 0)}
             className="mt-2 w-full border border-ink/15 bg-sand px-3 py-3"
           />
-          <p className="mt-2 text-xs text-ink/50">初期値 80。ボード・日記のランク集計と同期されます。</p>
+          <p className="mt-2 text-xs text-ink/50">
+            初期値 {DEFAULT_SETTINGS.scoreMin}。ボード・日記のランク集計と同期されます。
+          </p>
         </label>
       </div>
 

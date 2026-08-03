@@ -34,6 +34,15 @@ docker compose exec web npm run loop:report -- 2026-07-25
 
 ```bash
 docker compose exec web sh -c "ODDS_THRESHOLD=30 SCORE_MIN=55 npm run loop:freeze"
+# オッズ上限キャップ（B3）: ODDS_MAX=80 / 解除は ODDS_MAX=none
+docker compose exec web sh -c "ODDS_MAX=80 npm run loop:freeze -- 2026-08-02"
+```
+
+感度スイープ（予測ファイルは書き換えない）:
+
+```bash
+docker compose exec web npm run loop:sweep
+docker compose exec web npm run loop:sweep:odds-cap
 ```
 
 ## 注意

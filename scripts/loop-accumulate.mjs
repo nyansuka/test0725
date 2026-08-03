@@ -90,6 +90,11 @@ function settingsFromEnvOrDefault() {
   const settings = { ...DEFAULT_SETTINGS, enabledBetTypes: [...DEFAULT_SETTINGS.enabledBetTypes] };
   if (process.env.ODDS_THRESHOLD) settings.oddsThreshold = Number(process.env.ODDS_THRESHOLD);
   if (process.env.SCORE_MIN) settings.scoreMin = Number(process.env.SCORE_MIN);
+  if (process.env.ODDS_MAX === "none" || process.env.ODDS_MAX === "") {
+    settings.oddsMax = null;
+  } else if (process.env.ODDS_MAX) {
+    settings.oddsMax = Number(process.env.ODDS_MAX);
+  }
   return settings;
 }
 

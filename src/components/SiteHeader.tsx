@@ -25,7 +25,7 @@ export function SiteHeader({ variant = "solid", showRaceDayBar = true }: Props) 
         className={
           overlay
             ? "absolute inset-x-0 top-0 z-20"
-            : "border-b border-ink/10 bg-sand/95 backdrop-blur"
+            : "border-b border-ink/10 bg-white/95 backdrop-blur"
         }
       >
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-5 md:px-8">
