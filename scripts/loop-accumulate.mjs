@@ -20,6 +20,8 @@ import {
   evaluatePick,
   findPayoutYen,
   pickKey,
+  selectAxisHorses,
+  evaluateAxisHorse,
 } from "./lib/loop-domain.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -146,6 +148,10 @@ async function cmdFreeze(raceDate, { force = false } = {}) {
   }
 
   const picks = selectLongshots(frozen.races ?? [], settings);
+  const axisPicks = [];
+  for (const race of frozen.races ?? []) {
+    axisPicks.push(...selectAxisHorses(race, picks.filter((p) => p.raceId === race.id)));
+  }
   const prediction = {
     savedAt: new Date().toISOString(),
     raceDate,
@@ -154,10 +160,15 @@ async function cmdFreeze(raceDate, { force = false } = {}) {
     sourceFrozenSnapshot: path.relative(root, frozenPath).replace(/\\/g, "/"),
     raceCount: frozen.races?.length ?? 0,
     pickCount: picks.length,
+    axisCount: axisPicks.length,
+    superWatchCount: axisPicks.filter((a) => a.isSuperWatch).length,
     picks,
+    axisPicks,
   };
   await writeJson(predPath, prediction);
-  console.log(`Predictions → ${path.relative(root, predPath)} (${picks.length} picks)`);
+  console.log(
+    `Predictions → ${path.relative(root, predPath)} (${picks.length} picks, ${axisPicks.length} axis, ${prediction.superWatchCount} super)`,
+  );
   return prediction;
 }
 
@@ -306,6 +317,53 @@ async function cmdEvaluate(raceDate) {
 
   const missPasses = gateHits.filter((g) => g.wasPass).length;
 
+  // 軸馬 Top3・超注目の1着率
+  let axisPicks = prediction.axisPicks;
+  if (!axisPicks?.length) {
+    axisPicks = [];
+    for (const race of frozen.races ?? []) {
+      axisPicks.push(
+        ...selectAxisHorses(
+          race,
+          (prediction.picks ?? []).filter((p) => p.raceId === race.id),
+        ),
+      );
+    }
+  }
+  const axisRows = [];
+  let axisSettled = 0;
+  let axisWins = 0;
+  let axisPending = 0;
+  let superSettled = 0;
+  let superWins = 0;
+  let superPlace = 0;
+  for (const ax of axisPicks) {
+    const result = resultByRace.get(ax.raceId);
+    const outcome = evaluateAxisHorse(ax, result);
+    if (outcome === "pending") axisPending += 1;
+    else {
+      axisSettled += 1;
+      if (outcome === "win") axisWins += 1;
+    }
+    if (ax.isSuperWatch) {
+      if (outcome !== "pending") {
+        superSettled += 1;
+        if (outcome === "win") superWins += 1;
+        if (outcome === "win" || outcome === "place") superPlace += 1;
+      }
+    }
+    axisRows.push({
+      raceId: ax.raceId,
+      horseNumber: ax.horseNumber,
+      winPotential: ax.winPotential,
+      rankInRace: ax.rankInRace,
+      isSuperWatch: ax.isSuperWatch,
+      outcome,
+    });
+  }
+  const axisWinRate = axisSettled > 0 ? axisWins / axisSettled : null;
+  const superWinRate = superSettled > 0 ? superWins / superSettled : null;
+
   const evaluation = {
     evaluatedAt: new Date().toISOString(),
     raceDate,
@@ -336,11 +394,22 @@ async function cmdEvaluate(raceDate) {
       virtualReturnRatePercent: virtualReturnRate,
       primaryMetric: "ticketPrecision",
       note: "主指標は ticketPrecision（券種払戻）。placePrecision は関係馬≤3着の参考。factors が合成の場合は製品挙動評価",
+      axisCount: axisPicks.length,
+      axisSettled,
+      axisWins,
+      axisPending,
+      axisWinRate,
+      superWatchCount: axisPicks.filter((a) => a.isSuperWatch).length,
+      superSettled,
+      superWins,
+      superPlace,
+      superWinRate,
     },
     byBetType: byBet,
     byLabel,
     rows,
     gateHits,
+    axisRows,
   };
 
   await writeJson(evalPath, evaluation);
@@ -358,6 +427,9 @@ async function cmdEvaluate(raceDate) {
   );
   console.log(
     `  ticketP=${ticketPrecision == null ? "—" : ticketPrecision.toFixed(4)} placeP=${placePrecision == null ? "—" : placePrecision.toFixed(3)} recall=${recall == null ? "—" : recall.toFixed(3)} density=${density == null ? "—" : density.toFixed(2)} virtualRR=${virtualReturnRate ?? "—"}%`,
+  );
+  console.log(
+    `  axisWinRate=${axisWinRate == null ? "—" : axisWinRate.toFixed(3)} (${axisWins}/${axisSettled}) superWinRate=${superWinRate == null ? "—" : superWinRate.toFixed(3)} (${superWins}/${superSettled})`,
   );
   return evaluation;
 }

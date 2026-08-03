@@ -4,7 +4,7 @@ import { BET_TYPE_LABELS, parseSelectionNumbers } from "@/domain/betTypes";
 import { groupLongshotPicks, type LongshotPickGroup } from "@/domain/longshots";
 import type { LongshotPick, Race } from "@/domain/types";
 import Link from "next/link";
-import { LongshotMark } from "@/components/LongshotMark";
+import { LongshotMark, AxisMark, SuperWatchMark } from "@/components/LongshotMark";
 import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import {
   formatPopularityParen,
@@ -18,6 +18,7 @@ import {
   outcomeLabel,
 } from "@/domain/results";
 import { useMemo, type ReactNode } from "react";
+import { selectAxisHorses } from "@/domain/axis";
 
 function outcomeClass(outcome: ReturnType<typeof evaluateHorse>): string {
   if (outcome === "win") return "font-medium text-signal";
@@ -138,11 +139,15 @@ function HorseHeadline({
 }) {
   const pop = race ? popularityByNumber(race.horses) : new Map<number, number>();
   const byNum = new Map((race?.horses ?? []).map((h) => [h.number, h]));
+  const axisByNum = race
+    ? new Map(selectAxisHorses(race).map((a) => [a.horseNumber, a]))
+    : new Map<number, ReturnType<typeof selectAxisHorses>[number]>();
 
   if (group.sameHorseAsSelection) {
     const n = group.relatedHorseNumbers[0];
     const horse = byNum.get(n);
     const rank = pop.get(n);
+    const axis = axisByNum.get(n);
     return (
       <div className="min-w-0">
         <p className="text-xs tracking-wider text-ink/45">注目馬 ＝ 推奨買い目</p>
@@ -161,6 +166,16 @@ function HorseHeadline({
               <LongshotMark />
             </span>
           )}
+          {axis ? (
+            <span className="ml-1 align-middle">
+              <AxisMark rank={axis.rankInRace} />
+            </span>
+          ) : null}
+          {group.hasSuperWatch ? (
+            <span className="ml-1 align-middle">
+              <SuperWatchMark />
+            </span>
+          ) : null}
           <HorseOutcomeBadge horseNumber={n} race={race} show={Boolean(race?.result)} />
         </p>
       </div>
@@ -170,7 +185,7 @@ function HorseHeadline({
   const horses = group.relatedHorseNumbers.map((n) => {
     const horse = byNum.get(n);
     const rank = pop.get(n);
-    return { n, name: horse?.name, rank };
+    return { n, name: horse?.name, rank, axis: axisByNum.get(n) };
   });
 
   return (
@@ -187,6 +202,11 @@ function HorseHeadline({
                 {formatPopularityParen(h.rank)}
               </span>
             )}
+            {h.axis ? (
+              <span className="ml-1 align-middle">
+                <AxisMark rank={h.axis.rankInRace} />
+              </span>
+            ) : null}
             <HorseOutcomeBadge horseNumber={h.n} race={race} show={Boolean(race?.result)} />
           </span>
         ))}
@@ -195,6 +215,11 @@ function HorseHeadline({
             <LongshotMark />
           </span>
         )}
+        {group.hasSuperWatch ? (
+          <span className="ml-1 align-middle">
+            <SuperWatchMark />
+          </span>
+        ) : null}
       </p>
     </div>
   );
@@ -307,6 +332,11 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
                   >
                     {group.label}
                   </span>
+                  {group.hasSuperWatch ? (
+                    <span className="align-middle">
+                      <SuperWatchMark />
+                    </span>
+                  ) : null}
                 </div>
                 <div className="mt-3">
                   <HorseHeadline group={group} race={race} />

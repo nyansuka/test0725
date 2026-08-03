@@ -14,7 +14,7 @@ import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
 import { RaceDayPicker } from "@/components/RaceDayPicker";
 import { filterRacesByDate, groupRacesByVenue } from "@/data/races";
-import { LongshotMark, longshotHorseNumbers } from "@/components/LongshotMark";
+import { LongshotMark, AxisMark, SuperWatchMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import { formatJstDateLabel } from "@/domain/date";
 import { formatFinishLine, raceHasResult } from "@/domain/results";
 import {
@@ -24,6 +24,7 @@ import {
   placeOddsLabel,
   popularityByNumber,
 } from "@/domain/odds";
+import { axisIndexByNumber, selectAxisHorses } from "@/domain/axis";
 
 type Props = {
   races?: Race[];
@@ -56,12 +57,15 @@ export function RaceList({ races: racesProp }: Props) {
       venue,
       races: venueRaces.map((race) => {
         const picks = allPicks.filter((p) => p.raceId === race.id);
+        const axis = selectAxisHorses(race, picks);
         return {
           race,
           picks,
           pickCount: picks.length,
           rank: raceExpectationRank(picks),
           markedHorses: longshotHorseNumbers(picks, race.id),
+          axisByNum: axisIndexByNumber(axis),
+          superWatchCount: axis.filter((a) => a.isSuperWatch).length,
         };
       }),
     }));
@@ -163,7 +167,7 @@ export function RaceList({ races: racesProp }: Props) {
             </div>
 
             <ul className="divide-y divide-ink/10 border-y border-ink/10">
-              {activeGroup.races.map(({ race, picks, pickCount, rank, markedHorses }) => {
+              {activeGroup.races.map(({ race, picks, pickCount, rank, markedHorses, axisByNum, superWatchCount }) => {
                 const open = expandedId === race.id;
                 const horses = open ? enrichHorseScores(race) : [];
                 return (
@@ -187,6 +191,9 @@ export function RaceList({ races: racesProp }: Props) {
                             {markedHorses.size > 0 && (
                               <LongshotMark className="ml-2 text-base" />
                             )}
+                            {superWatchCount > 0 && (
+                              <SuperWatchMark className="ml-2 align-middle" />
+                            )}
                             {raceHasResult(race) && (
                               <span className="ml-2 text-xs font-medium tracking-wide text-turf">
                                 結果済
@@ -196,6 +203,7 @@ export function RaceList({ races: racesProp }: Props) {
                           <p className="mt-1 text-sm text-ink/60">
                             {race.distance} · {race.weather}/{race.condition} · 候補 {pickCount}件
                             · 注目穴馬 {markedHorses.size}頭
+                            {superWatchCount > 0 ? ` · 超注目 ${superWatchCount}` : ""}
                             {raceHasResult(race) && race.result
                               ? ` · ${formatFinishLine(race.result)}`
                               : ""}
@@ -239,7 +247,8 @@ export function RaceList({ races: racesProp }: Props) {
                                 <th className="py-2 pr-2 font-medium">人気</th>
                                 <th className="py-2 pr-2 font-medium">単勝</th>
                                 <th className="py-2 pr-2 font-medium">複勝</th>
-                                <th className="py-2 font-medium">スコア</th>
+                                <th className="py-2 pr-2 font-medium">穴</th>
+                                <th className="py-2 font-medium">軸</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -249,13 +258,24 @@ export function RaceList({ races: racesProp }: Props) {
                                   .sort((a, b) => a.number - b.number)
                                   .map((horse) => {
                                     const marked = markedHorses.has(horse.number);
+                                    const axis = axisByNum.get(horse.number);
                                     return (
                                       <tr
                                         key={horse.number}
-                                        className={`border-b border-ink/10 ${marked ? "bg-signal/5" : ""}`}
+                                        className={`border-b border-ink/10 ${
+                                          axis?.isSuperWatch
+                                            ? "bg-signal/8"
+                                            : marked || axis
+                                              ? "bg-signal/5"
+                                              : ""
+                                        }`}
                                       >
-                                        <td className="w-8 py-2 pr-2">
-                                          {marked ? <LongshotMark /> : null}
+                                        <td className="py-2 pr-2">
+                                          <span className="flex flex-wrap items-center gap-1">
+                                            {marked ? <LongshotMark /> : null}
+                                            {axis ? <AxisMark rank={axis.rankInRace} /> : null}
+                                            {axis?.isSuperWatch ? <SuperWatchMark /> : null}
+                                          </span>
                                         </td>
                                         <td className="py-2 pr-2 font-[family-name:var(--font-display)] font-semibold">
                                           {horse.number}
@@ -271,8 +291,11 @@ export function RaceList({ races: racesProp }: Props) {
                                         <td className="py-2 pr-2 text-ink/70">
                                           {placeOddsLabel(horse, race)}
                                         </td>
-                                        <td className="py-2 font-[family-name:var(--font-display)] text-turf">
+                                        <td className="py-2 pr-2 font-[family-name:var(--font-display)] text-turf">
                                           {horse.placePotential}
+                                        </td>
+                                        <td className="py-2 font-[family-name:var(--font-display)] text-ink/70">
+                                          {horse.winPotential ?? "—"}
                                         </td>
                                       </tr>
                                     );
@@ -296,6 +319,9 @@ export function RaceList({ races: racesProp }: Props) {
                                   <li key={`${pick.betType}-${pick.selection}`}>
                                     {pick.label === "注目穴" && (
                                       <LongshotMark className="mr-1" />
+                                    )}
+                                    {pick.hasSuperWatch && (
+                                      <SuperWatchMark className="mr-1 align-middle" />
                                     )}
                                     {pick.label} · {pick.selection}
                                     {popLabel ? ` ${popLabel}` : ""} · {formatWinOdds(pick.odds)} ·

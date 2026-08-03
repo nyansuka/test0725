@@ -4,8 +4,12 @@ const steps = [
     body: "各券種でオッズが設定閾値未満、または上限を超える買い目は除外。初期は下限25・上限80。複勝を含む全券種が対象です。",
   },
   {
-    title: "複勝圏スコア",
+    title: "複勝圏スコア（穴）",
     body: "コース適性・展開・馬場・近況・人気乖離などから placePotential を算出。関係馬は下限合成。差し替え可能なルール実装です。",
+  },
+  {
+    title: "軸馬・超注目",
+    body: "別スコア winPotential で1着見込みを出し、レース内 Top3 を軸馬候補とします（単勝オッズ上限なし）。注目穴かつ軸の馬は超注目。買い目の自動コンボは作りません。",
   },
   {
     title: "短評（評価＋傾向）",
@@ -26,11 +30,10 @@ export function Method() {
         </p>
         <h2 className="mt-2 text-3xl font-bold md:text-4xl">予想の見方</h2>
         <p className="mt-3 max-w-2xl text-sand/75">
-          本命探しではなく高配当候補の選別が主機能です。JRAのみ・全券種対応。レース期待度は
-          S（高スコア候補が複数）〜 D（候補なし／薄い）。的中保証はありません。
+          本命探しではなく高配当候補の選別が主機能です。穴（複勝圏）と軸（1着）を分け、交差を超注目として示します。JRAのみ・全券種対応。的中保証はありません。
         </p>
 
-        <ol className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {steps.map((step, index) => (
             <li key={step.title}>
               <p className="font-[family-name:var(--font-display)] text-4xl font-bold text-signal-soft/80">

@@ -23,14 +23,24 @@ export const DEFAULT_SETTINGS = {
 };
 
 export const LABEL_SCORE_THRESHOLD = 70;
+export const AXIS_TOP_N = 3;
 
-const WEIGHTS = {
+const PLACE_WEIGHTS = {
   courseFit: 0.25,
   paceFit: 0.2,
   conditionFit: 0.15,
   formSignal: 0.2,
   valueGap: 0.1,
   gateJockey: 0.1,
+};
+
+const WIN_WEIGHTS = {
+  courseFit: 0.28,
+  paceFit: 0.25,
+  conditionFit: 0.12,
+  formSignal: 0.28,
+  valueGap: 0.02,
+  gateJockey: 0.05,
 };
 
 export function parseSelectionNumbers(selection) {
@@ -44,7 +54,7 @@ function clamp(n, min = 0, max = 100) {
   return Math.min(max, Math.max(min, Math.round(n)));
 }
 
-function scoreHorse(horse, race) {
+function prepareFactors(horse, race) {
   const factors = { ...horse.factors };
   if (factors.gateJockey == null) {
     factors.gateJockey = horse.bracket != null && horse.bracket <= 3 ? 62 : 52;
@@ -55,14 +65,38 @@ function scoreHorse(horse, race) {
   if (horse.oddsWin >= 12) {
     factors.valueGap = clamp(factors.valueGap + 3);
   }
-  return clamp(
-    factors.courseFit * WEIGHTS.courseFit +
-      factors.paceFit * WEIGHTS.paceFit +
-      factors.conditionFit * WEIGHTS.conditionFit +
-      factors.formSignal * WEIGHTS.formSignal +
-      factors.valueGap * WEIGHTS.valueGap +
-      (factors.gateJockey ?? 50) * WEIGHTS.gateJockey,
+  return factors;
+}
+
+function weighted(factors, weights) {
+  return (
+    factors.courseFit * weights.courseFit +
+    factors.paceFit * weights.paceFit +
+    factors.conditionFit * weights.conditionFit +
+    factors.formSignal * weights.formSignal +
+    factors.valueGap * weights.valueGap +
+    (factors.gateJockey ?? 50) * weights.gateJockey
   );
+}
+
+function winFormBoost(horse) {
+  const fs = horse.formStats;
+  if (!fs) return 0;
+  let boost = 0;
+  if (fs.lastRank === 1) boost += 8;
+  else if (fs.lastRank === 2) boost += 3;
+  else if (fs.lastRank != null && fs.lastRank >= 8) boost -= 4;
+  if (fs.avgSameRank != null && fs.avgSameRank > 0 && fs.avgSameRank <= 2.5) boost += 5;
+  else if (fs.avgSameRank != null && fs.avgSameRank >= 6) boost -= 3;
+  return boost;
+}
+
+function scoreHorse(horse, race) {
+  return clamp(weighted(prepareFactors(horse, race), PLACE_WEIGHTS));
+}
+
+function scoreWinPotential(horse, race) {
+  return clamp(weighted(prepareFactors(horse, race), WIN_WEIGHTS) + winFormBoost(horse));
 }
 
 function resolveRelatedHorses(race, selection, betType) {
@@ -121,13 +155,45 @@ export function classifyOddsEntry(race, entry, settings) {
   };
 }
 
+/** レース内 winPotential Top3（単勝オッズ上限なし） */
+export function selectAxisHorses(race, longshotPicks) {
+  if (race.authority !== "JRA" || !(race.horses?.length > 0)) return [];
+  const scored = race.horses.map((horse) => ({
+    horse,
+    winPotential: scoreWinPotential(horse, race),
+  }));
+  scored.sort((a, b) => {
+    if (b.winPotential !== a.winPotential) return b.winPotential - a.winPotential;
+    return a.horse.oddsWin - b.horse.oddsWin;
+  });
+  const watch = new Set();
+  if (longshotPicks?.length) {
+    for (const pick of longshotPicks) {
+      if (pick.label !== "注目穴") continue;
+      if (pick.raceId && pick.raceId !== race.id) continue;
+      for (const n of pick.relatedHorseNumbers ?? []) watch.add(n);
+    }
+  }
+  const n = Math.min(AXIS_TOP_N, scored.length);
+  return scored.slice(0, n).map((item, index) => ({
+    raceId: race.id,
+    horseNumber: item.horse.number,
+    winPotential: item.winPotential,
+    rankInRace: index + 1,
+    isSuperWatch: watch.has(item.horse.number),
+  }));
+}
+
 export function selectLongshots(races, settings) {
   const picks = [];
   for (const race of races) {
     if (race.authority !== "JRA") continue;
+    const axisNums = new Set(selectAxisHorses(race).map((a) => a.horseNumber));
     for (const entry of race.oddsBoard ?? []) {
       const row = classifyOddsEntry(race, entry, settings);
       if (row.status !== "candidate" || !row.label) continue;
+      const hasSuperWatch =
+        row.label === "注目穴" && row.relatedHorseNumbers.some((n) => axisNums.has(n));
       picks.push({
         raceId: race.id,
         venue: race.venue,
@@ -142,10 +208,16 @@ export function selectLongshots(races, settings) {
         relatedPlacePotential: row.relatedPlacePotential,
         label: row.label,
         comment: row.comment ?? "",
+        hasSuperWatch,
       });
     }
   }
-  return picks.sort((a, b) => b.relatedPlacePotential - a.relatedPlacePotential);
+  return picks.sort((a, b) => {
+    if (Boolean(b.hasSuperWatch) !== Boolean(a.hasSuperWatch)) {
+      return a.hasSuperWatch ? -1 : 1;
+    }
+    return b.relatedPlacePotential - a.relatedPlacePotential;
+  });
 }
 
 function relatedNumbers(pick) {
@@ -215,4 +287,14 @@ export function findPayoutYen(result, betType, selection) {
 
 export function pickKey(pick) {
   return `${pick.raceId}|${pick.betType}|${parseSelectionNumbers(pick.selection).join("-")}`;
+}
+
+/** 軸馬が実際に1着か */
+export function evaluateAxisHorse(axisPick, result) {
+  if (!result?.finishes?.length) return "pending";
+  const finish = result.finishes.find((f) => f.number === axisPick.horseNumber);
+  if (finish?.rank == null || finish.rank < 1) return "miss";
+  if (finish.rank === 1) return "win";
+  if (finish.rank <= 3) return "place";
+  return "miss";
 }

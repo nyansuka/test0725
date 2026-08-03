@@ -3,6 +3,7 @@ import { parseSelectionNumbers } from "./betTypes";
 import { getScorer } from "./scoring";
 import { buildPickComment } from "./comment";
 import { getTrendIndex } from "./trendData";
+import { selectAxisHorses } from "./axis";
 
 /** 注目穴 / 抑え候補の境界（scoreMin とは独立） */
 export const LABEL_SCORE_THRESHOLD = 70;
@@ -136,12 +137,21 @@ export function selectLongshots(
   settings: UserSelectionSettings,
 ): LongshotPick[] {
   const picks: LongshotPick[] = [];
+  const axisNumsByRace = new Map<string, Set<number>>();
 
   for (const race of races) {
     if (race.authority !== "JRA") continue;
+    axisNumsByRace.set(
+      race.id,
+      new Set(selectAxisHorses(race).map((a) => a.horseNumber)),
+    );
     for (const entry of race.oddsBoard) {
       const row = classifyOddsEntry(race, entry, settings);
       if (row.status !== "candidate" || !row.label) continue;
+      const axisNums = axisNumsByRace.get(race.id) ?? new Set();
+      const hasSuperWatch =
+        row.label === "注目穴" &&
+        row.relatedHorseNumbers.some((n) => axisNums.has(n));
       picks.push({
         raceId: race.id,
         venue: race.venue,
@@ -156,11 +166,17 @@ export function selectLongshots(
         relatedPlacePotential: row.relatedPlacePotential,
         label: row.label,
         comment: row.comment ?? "",
+        hasSuperWatch,
       });
     }
   }
 
-  return picks.sort((a, b) => b.relatedPlacePotential - a.relatedPlacePotential);
+  return picks.sort((a, b) => {
+    if (Boolean(b.hasSuperWatch) !== Boolean(a.hasSuperWatch)) {
+      return a.hasSuperWatch ? -1 : 1;
+    }
+    return b.relatedPlacePotential - a.relatedPlacePotential;
+  });
 }
 
 /** 関係馬集合が同じ候補を1枠にまとめるキー（並びは呼び出し側の順を維持） */
@@ -188,6 +204,8 @@ export type LongshotPickGroup = {
    * 注目馬と推奨買い目が同じ馬なので、馬情報と買い目を1枠にまとめて重複表示しない。
    */
   sameHorseAsSelection: boolean;
+  /** 枠内に超注目を含む買い目がある */
+  hasSuperWatch: boolean;
 };
 
 /** 並び順を保ったまま、関係馬が同じ候補をグループ化 */
@@ -219,6 +237,7 @@ export function groupLongshotPicks(picks: LongshotPick[]): LongshotPickGroup[] {
     const relatedPlacePotential = Math.max(
       ...groupPicks.map((p) => p.relatedPlacePotential),
     );
+    const hasSuperWatch = groupPicks.some((p) => p.hasSuperWatch);
 
     return {
       key,
@@ -233,6 +252,7 @@ export function groupLongshotPicks(picks: LongshotPick[]): LongshotPickGroup[] {
       label,
       picks: groupPicks,
       sameHorseAsSelection,
+      hasSuperWatch,
     };
   });
 }
@@ -266,6 +286,7 @@ export function enrichHorseScores(race: Race) {
     return {
       ...horse,
       placePotential: result.placePotential,
+      winPotential: result.winPotential,
       factors: result.factors,
       rationale: result.rationale,
     };

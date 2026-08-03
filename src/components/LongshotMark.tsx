@@ -34,3 +34,36 @@ export function LongshotMark({ className = "" }: { className?: string }) {
     </span>
   );
 }
+
+/** 軸馬候補（winPotential Top3） */
+export function AxisMark({
+  rank,
+  className = "",
+}: {
+  rank?: 1 | 2 | 3;
+  className?: string;
+}) {
+  const title = rank != null ? `軸馬候補（${rank}位）` : "軸馬候補";
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center justify-center rounded-sm bg-turf/15 px-1 py-0.5 font-[family-name:var(--font-display)] text-[10px] font-bold leading-none tracking-wide text-turf ${className}`}
+      title={title}
+      aria-label={title}
+    >
+      軸{rank != null ? rank : ""}
+    </span>
+  );
+}
+
+/** 超注目馬（注目穴 ∩ 軸 Top3） */
+export function SuperWatchMark({ className = "" }: { className?: string }) {
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center justify-center rounded-sm bg-signal/20 px-1 py-0.5 font-[family-name:var(--font-display)] text-[10px] font-bold leading-none tracking-wide text-signal ${className}`}
+      title="超注目馬（穴かつ軸）"
+      aria-label="超注目馬"
+    >
+      超注目
+    </span>
+  );
+}

@@ -47,6 +47,8 @@ export type Horse = {
   oddsPlace?: { min: number; max: number };
   /** 事前埋め込み可。未設定時は Scorer が算出 */
   placePotential?: number;
+  /** 1着特化。未設定時は Scorer が算出 */
+  winPotential?: number;
   factors: HorseFactors;
   comment: string;
   runningStyle?: "逃" | "先" | "差" | "追";
@@ -127,6 +129,17 @@ export type LongshotPick = {
   relatedPlacePotential: number;
   label: LongshotLabel;
   comment: string;
+  /** 関係馬に超注目（注目穴 ∩ 軸 Top3）が含まれるか */
+  hasSuperWatch?: boolean;
+};
+
+/** レース単位の軸馬（馬ラベル。買い目ではない） */
+export type AxisHorsePick = {
+  raceId: string;
+  horseNumber: number;
+  winPotential: number;
+  rankInRace: 1 | 2 | 3;
+  isSuperWatch: boolean;
 };
 
 export type UserSelectionSettings = {

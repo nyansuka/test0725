@@ -13,7 +13,7 @@ import { BET_TYPE_LABELS } from "@/domain/betTypes";
 import type { Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
 import { LongshotTable } from "@/components/LongshotTable";
-import { LongshotMark, longshotHorseNumbers } from "@/components/LongshotMark";
+import { LongshotMark, AxisMark, SuperWatchMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import Link from "next/link";
 import { RaceResultPanel } from "@/components/RaceResultPanel";
 import {
@@ -23,6 +23,7 @@ import {
   popularityByNumber,
 } from "@/domain/odds";
 import { evaluatePick, outcomeLabel } from "@/domain/results";
+import { axisIndexByNumber, selectAxisHorses } from "@/domain/axis";
 
 const factorLabels = [
   ["courseFit", "コース"],
@@ -66,6 +67,8 @@ export function RaceDetail({ race }: Props) {
   const passCount = boardRows.filter((r) => r.status === "pass").length;
   const rank = raceExpectationRank(picks);
   const markedHorses = useMemo(() => longshotHorseNumbers(picks, race.id), [picks, race.id]);
+  const axisPicks = useMemo(() => selectAxisHorses(race, picks), [race, picks]);
+  const axisByNum = useMemo(() => axisIndexByNumber(axisPicks), [axisPicks]);
   const popularity = useMemo(() => popularityByNumber(race.horses), [race.horses]);
   const [openId, setOpenId] = useState<number | null>(horses[0]?.number ?? null);
 
@@ -97,6 +100,38 @@ export function RaceDetail({ race }: Props) {
       </div>
 
       <RaceResultPanel race={race} />
+
+      <section>
+        <h2 className="text-xl font-semibold text-ink">軸馬候補（Top3）</h2>
+        <p className="mt-1 text-sm text-ink/55">
+          1着見込み（winPotential）。単勝オッズ上限なし。穴かつ軸は超注目。
+        </p>
+        <ul className="mt-4 divide-y divide-ink/10 border-y border-ink/10">
+          {axisPicks.map((ax) => {
+            const horse = horses.find((h) => h.number === ax.horseNumber);
+            return (
+              <li
+                key={ax.horseNumber}
+                className={`flex flex-wrap items-center gap-3 py-3 ${ax.isSuperWatch ? "bg-signal/5" : ""}`}
+              >
+                <AxisMark rank={ax.rankInRace} />
+                {ax.isSuperWatch ? <SuperWatchMark /> : null}
+                <span className="font-[family-name:var(--font-display)] text-lg font-semibold tabular-nums">
+                  {ax.horseNumber}
+                </span>
+                <span className="font-medium">{horse?.name ?? "—"}</span>
+                <span className="text-sm text-ink/55">{horse?.jockey}</span>
+                <span className="text-sm font-medium text-signal">
+                  単勝 {horse ? formatWinOdds(horse.oddsWin) : "—"}
+                </span>
+                <span className="ml-auto font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
+                  {ax.winPotential}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
 
       <section>
         <h2 className="text-xl font-semibold text-ink">このレースの注目穴</h2>
@@ -132,7 +167,7 @@ export function RaceDetail({ race }: Props) {
         <h2 className="text-xl font-semibold text-ink">
           出走表とカテゴリ内訳
           <span className="ml-3 text-sm font-normal text-ink/50">
-            注目穴馬 <LongshotMark />
+            注目穴 <LongshotMark /> · <AxisMark /> · <SuperWatchMark />
           </span>
         </h2>
         <div className="mt-6 space-y-3">
@@ -141,18 +176,28 @@ export function RaceDetail({ race }: Props) {
             .map((horse) => {
               const open = openId === horse.number;
               const marked = markedHorses.has(horse.number);
+              const axis = axisByNum.get(horse.number);
+              const highlight = marked || Boolean(axis);
               return (
                 <div
                   key={horse.number}
-                  className={`border border-ink/10 ${marked ? "bg-signal/5" : "bg-sand-dim/30"}`}
+                  className={`border border-ink/10 ${
+                    axis?.isSuperWatch
+                      ? "bg-signal/8"
+                      : highlight
+                        ? "bg-signal/5"
+                        : "bg-sand-dim/30"
+                  }`}
                 >
                   <button
                     type="button"
                     onClick={() => setOpenId(open ? null : horse.number)}
-                    className="flex w-full flex-wrap items-center gap-4 px-4 py-4 text-left"
+                    className="flex w-full flex-wrap items-center gap-3 px-4 py-4 text-left md:gap-4"
                   >
-                    <span className="w-6 text-lg text-signal" aria-hidden>
+                    <span className="flex min-w-[4.5rem] flex-wrap items-center gap-1" aria-hidden>
                       {marked ? <LongshotMark /> : null}
+                      {axis ? <AxisMark rank={axis.rankInRace} /> : null}
+                      {axis?.isSuperWatch ? <SuperWatchMark /> : null}
                     </span>
                     <span className="w-8 font-[family-name:var(--font-display)] text-xl font-semibold">
                       {horse.number}
@@ -168,8 +213,13 @@ export function RaceDetail({ race }: Props) {
                     <span className="text-sm text-ink/65">
                       複勝 {placeOddsLabel(horse, race)}
                     </span>
-                    <span className="ml-auto font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
-                      {horse.placePotential}
+                    <span className="ml-auto flex flex-col items-end gap-0.5">
+                      <span className="font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
+                        穴 {horse.placePotential}
+                      </span>
+                      <span className="text-xs text-ink/50">
+                        軸 {horse.winPotential ?? "—"}
+                      </span>
                     </span>
                   </button>
                   {open && (

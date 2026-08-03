@@ -3,6 +3,7 @@ import { trackGateBiasScore } from "./trackGateBias.mjs";
 
 export type ScoreResult = {
   placePotential: number;
+  winPotential: number;
   factors: HorseFactors;
   rationale: string;
 };
@@ -11,7 +12,8 @@ export type Scorer = {
   score(horse: Horse, race: Race): ScoreResult;
 };
 
-const WEIGHTS = {
+/** 複勝圏（1〜3着）向け */
+const PLACE_WEIGHTS = {
   courseFit: 0.25,
   paceFit: 0.2,
   conditionFit: 0.15,
@@ -20,8 +22,42 @@ const WEIGHTS = {
   gateJockey: 0.1,
 } as const;
 
+/** 1着特化（軸用）。勝ち切れ・展開主導を厚く、人気乖離は薄く */
+const WIN_WEIGHTS = {
+  courseFit: 0.28,
+  paceFit: 0.25,
+  conditionFit: 0.12,
+  formSignal: 0.28,
+  valueGap: 0.02,
+  gateJockey: 0.05,
+} as const;
+
 function clamp(n: number, min = 0, max = 100) {
   return Math.min(max, Math.max(min, Math.round(n)));
+}
+
+function weighted(factors: HorseFactors, weights: typeof PLACE_WEIGHTS | typeof WIN_WEIGHTS) {
+  return (
+    factors.courseFit * weights.courseFit +
+    factors.paceFit * weights.paceFit +
+    factors.conditionFit * weights.conditionFit +
+    factors.formSignal * weights.formSignal +
+    factors.valueGap * weights.valueGap +
+    (factors.gateJockey ?? 50) * weights.gateJockey
+  );
+}
+
+/** 前走・同条件から1着向きの軽い補正（データが無いときは 0） */
+function winFormBoost(horse: Horse): number {
+  const fs = horse.formStats;
+  if (!fs) return 0;
+  let boost = 0;
+  if (fs.lastRank === 1) boost += 8;
+  else if (fs.lastRank === 2) boost += 3;
+  else if (fs.lastRank != null && fs.lastRank >= 8) boost -= 4;
+  if (fs.avgSameRank != null && fs.avgSameRank > 0 && fs.avgSameRank <= 2.5) boost += 5;
+  else if (fs.avgSameRank != null && fs.avgSameRank >= 6) boost -= 3;
+  return boost;
 }
 
 function topFactors(factors: HorseFactors, limit = 2): string[] {
@@ -53,18 +89,12 @@ export const ruleBasedScorer: Scorer = {
       factors.valueGap = clamp(factors.valueGap + 3);
     }
 
-    const placePotential = clamp(
-      factors.courseFit * WEIGHTS.courseFit +
-        factors.paceFit * WEIGHTS.paceFit +
-        factors.conditionFit * WEIGHTS.conditionFit +
-        factors.formSignal * WEIGHTS.formSignal +
-        factors.valueGap * WEIGHTS.valueGap +
-        (factors.gateJockey ?? 50) * WEIGHTS.gateJockey,
-    );
+    const placePotential = clamp(weighted(factors, PLACE_WEIGHTS));
+    const winPotential = clamp(weighted(factors, WIN_WEIGHTS) + winFormBoost(horse));
 
     const highlights = topFactors(factors);
-    const rationale = `${horse.name}は複勝圏ポテンシャル${placePotential}。${highlights.join("・")}が牽引。単勝${horse.oddsWin.toFixed(1)}倍。`;
+    const rationale = `${horse.name}は複勝圏${placePotential}／1着見込み${winPotential}。${highlights.join("・")}が牽引。単勝${horse.oddsWin.toFixed(1)}倍。`;
 
-    return { placePotential, factors, rationale };
+    return { placePotential, winPotential, factors, rationale };
   },
 };
