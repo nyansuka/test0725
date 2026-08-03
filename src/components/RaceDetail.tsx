@@ -37,6 +37,7 @@ const statusLabel: Record<OddsBoardStatus, string> = {
   candidate: "候補",
   pass: "見送り",
   below_threshold: "閾値未満",
+  above_max: "上限超過",
   disabled_bet: "券種OFF",
   no_related: "関係馬なし",
 };
@@ -45,6 +46,7 @@ const statusClass: Record<OddsBoardStatus, string> = {
   candidate: "text-signal font-medium",
   pass: "text-ink/55",
   below_threshold: "text-ink/35",
+  above_max: "text-ink/35",
   disabled_bet: "text-ink/30",
   no_related: "text-ink/40",
 };
