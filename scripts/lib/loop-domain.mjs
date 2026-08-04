@@ -45,6 +45,8 @@ const WIN_WEIGHTS = {
 
 /** TFJV 202601–202608 に基づく人気事前（src/domain/scoring/popularityPrior.ts と同期） */
 const WIN_POP_BLEND = 0.62;
+const MID_COMPOSITE_MIN = 65;
+const MID_REPLACE_GAP = 15;
 
 function popularityWinScore(popularity) {
   if (popularity == null || popularity < 1) return 40;
@@ -59,6 +61,20 @@ function popularityWinScore(popularity) {
   if (popularity === 9) return 22;
   if (popularity === 10) return 16;
   return 8;
+}
+
+function midLongshotComposite(horse) {
+  const f = horse.factors ?? {};
+  return (f.formSignal ?? 50) * 0.5 + (f.courseFit ?? 50) * 0.35 + (f.paceFit ?? 50) * 0.15;
+}
+
+function qualifiesMidLongshot(horse, popularity) {
+  if (popularity < 6 || popularity > 10) return false;
+  const fs = horse.formStats;
+  const comp = midLongshotComposite(horse);
+  if (fs?.lastRank === 1) return true;
+  if (fs?.lastRank != null && fs.lastRank <= 3 && comp >= 58) return true;
+  return comp >= MID_COMPOSITE_MIN;
 }
 
 function popularityByNumber(horses) {
@@ -186,17 +202,38 @@ export function classifyOddsEntry(race, entry, settings) {
   };
 }
 
-/** レース内 winPotential Top3（単勝オッズ上限なし） */
+/** レース内 winPotential Top3。中穴は条件付きで 3枠目差し替え */
 export function selectAxisHorses(race, longshotPicks) {
   if (race.authority !== "JRA" || !(race.horses?.length > 0)) return [];
+  const pops = popularityByNumber(race.horses);
   const scored = race.horses.map((horse) => ({
     horse,
     winPotential: scoreWinPotential(horse, race),
+    popularity: pops.get(horse.number) ?? 99,
+    midComposite: midLongshotComposite(horse),
+    promoted: false,
   }));
   scored.sort((a, b) => {
     if (b.winPotential !== a.winPotential) return b.winPotential - a.winPotential;
     return a.horse.oddsWin - b.horse.oddsWin;
   });
+  const axis = scored.slice(0, Math.min(AXIS_TOP_N, scored.length));
+  const hasMid = axis.some((a) => a.popularity >= 6 && a.popularity <= 10);
+  if (!hasMid && axis.length === AXIS_TOP_N) {
+    const candidates = scored
+      .filter((a) => qualifiesMidLongshot(a.horse, a.popularity))
+      .sort((a, b) => b.midComposite - a.midComposite || b.winPotential - a.winPotential);
+    const cand = candidates[0];
+    const third = axis[2];
+    if (
+      cand &&
+      third &&
+      cand.winPotential + MID_REPLACE_GAP >= third.winPotential &&
+      !axis.some((a) => a.horse.number === cand.horse.number)
+    ) {
+      axis[2] = { ...cand, promoted: true };
+    }
+  }
   const watch = new Set();
   if (longshotPicks?.length) {
     for (const pick of longshotPicks) {
@@ -205,13 +242,13 @@ export function selectAxisHorses(race, longshotPicks) {
       for (const n of pick.relatedHorseNumbers ?? []) watch.add(n);
     }
   }
-  const n = Math.min(AXIS_TOP_N, scored.length);
-  return scored.slice(0, n).map((item, index) => ({
+  return axis.map((item, index) => ({
     raceId: race.id,
     horseNumber: item.horse.number,
     winPotential: item.winPotential,
     rankInRace: index + 1,
     isSuperWatch: watch.has(item.horse.number),
+    midPromoted: Boolean(item.promoted),
   }));
 }
 

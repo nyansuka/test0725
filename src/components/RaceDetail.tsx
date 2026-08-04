@@ -13,7 +13,7 @@ import { BET_TYPE_LABELS } from "@/domain/betTypes";
 import type { Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
 import { LongshotTable } from "@/components/LongshotTable";
-import { LongshotMark, AxisMark, SuperWatchMark, longshotHorseNumbers } from "@/components/LongshotMark";
+import { LongshotMark, AxisMark, SuperWatchMark, MidPromotedMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import Link from "next/link";
 import { RaceResultPanel } from "@/components/RaceResultPanel";
 import {
@@ -104,7 +104,7 @@ export function RaceDetail({ race }: Props) {
       <section>
         <h2 className="text-xl font-semibold text-ink">軸馬候補（Top3）</h2>
         <p className="mt-1 text-sm text-ink/55">
-          1着見込み（winPotential）。人気を強く反映（単勝オッズ上限なし）。穴かつ軸は超注目。
+          1着見込み（winPotential）。人気中心＋中穴（6〜10）は条件付き昇格。穴かつ軸は超注目。
         </p>
         <ul className="mt-4 divide-y divide-ink/10 border-y border-ink/10">
           {axisPicks.map((ax) => {
@@ -115,6 +115,7 @@ export function RaceDetail({ race }: Props) {
                 className={`flex flex-wrap items-center gap-3 py-3 ${ax.isSuperWatch ? "bg-signal/5" : ""}`}
               >
                 <AxisMark rank={ax.rankInRace} />
+                {ax.midPromoted ? <MidPromotedMark /> : null}
                 {ax.isSuperWatch ? <SuperWatchMark /> : null}
                 <span className="font-[family-name:var(--font-display)] text-lg font-semibold tabular-nums">
                   {ax.horseNumber}
@@ -167,7 +168,7 @@ export function RaceDetail({ race }: Props) {
         <h2 className="text-xl font-semibold text-ink">
           出走表とカテゴリ内訳
           <span className="ml-3 text-sm font-normal text-ink/50">
-            注目穴 <LongshotMark /> · <AxisMark /> · <SuperWatchMark />
+            注目穴 <LongshotMark /> · <AxisMark /> · <MidPromotedMark /> · <SuperWatchMark />
           </span>
         </h2>
         <div className="mt-6 space-y-3">
@@ -198,6 +199,7 @@ export function RaceDetail({ race }: Props) {
                       {marked ? <LongshotMark /> : null}
                       {axis ? <AxisMark rank={axis.rankInRace} /> : null}
                       {axis?.isSuperWatch ? <SuperWatchMark /> : null}
+                      {axis?.midPromoted ? <MidPromotedMark /> : null}
                     </span>
                     <span className="w-8 font-[family-name:var(--font-display)] text-xl font-semibold">
                       {horse.number}

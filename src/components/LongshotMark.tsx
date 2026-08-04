@@ -55,6 +55,19 @@ export function AxisMark({
   );
 }
 
+/** 中穴の条件付き昇格 */
+export function MidPromotedMark({ className = "" }: { className?: string }) {
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center justify-center rounded-sm bg-ink/10 px-1 py-0.5 font-[family-name:var(--font-display)] text-[10px] font-bold leading-none tracking-wide text-ink/70 ${className}`}
+      title="中穴の条件付き昇格（6〜10人気）"
+      aria-label="中穴昇格"
+    >
+      中穴
+    </span>
+  );
+}
+
 /** 超注目馬（注目穴 ∩ 軸 Top3） */
 export function SuperWatchMark({ className = "" }: { className?: string }) {
   return (

@@ -140,6 +140,8 @@ export type AxisHorsePick = {
   winPotential: number;
   rankInRace: 1 | 2 | 3;
   isSuperWatch: boolean;
+  /** 中穴（6〜10人気）の条件付き昇格で 3枠目に入った */
+  midPromoted?: boolean;
 };
 
 export type UserSelectionSettings = {

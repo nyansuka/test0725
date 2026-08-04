@@ -9,9 +9,12 @@ import { selectAxisHorses } from "./lib/loop-domain.mjs";
 const snapDir = "src/data/snapshots";
 const files = readdirSync(snapDir).filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f));
 
+let midPromotedSlots = 0;
 let races = 0;
 let axisHit = 0;
 let fav3Hit = 0;
+let midWins = 0;
+let midWinsCaught = 0;
 let popOfAxis = { p1to3: 0, p4to5: 0, p6to10: 0, p11: 0, slots: 0 };
 
 for (const f of files) {
@@ -28,10 +31,17 @@ for (const f of files) {
     const fav3 = new Set(sorted.slice(0, 3).map((h) => h.number));
     if (fav3.has(win.number)) fav3Hit += 1;
 
+    const wPop = popOf(win.number);
     const axis = selectAxisHorses(r);
-    if (axis.some((a) => a.horseNumber === win.number)) axisHit += 1;
+    const caught = axis.some((a) => a.horseNumber === win.number);
+    if (caught) axisHit += 1;
+    if (wPop >= 6 && wPop <= 10) {
+      midWins += 1;
+      if (caught) midWinsCaught += 1;
+    }
     for (const a of axis) {
       popOfAxis.slots += 1;
+      if (a.midPromoted) midPromotedSlots += 1;
       const p = popOf(a.horseNumber);
       if (p <= 3) popOfAxis.p1to3 += 1;
       else if (p <= 5) popOfAxis.p4to5 += 1;
@@ -53,13 +63,18 @@ const report = {
   favTop3HitPct: pct(fav3Hit),
   axisHit,
   fav3Hit,
+  midWins,
+  midWinsCaught,
+  midWinCatchPct: midWins ? Number(((100 * midWinsCaught) / midWins).toFixed(1)) : null,
+  midPromotedSlots,
+  midPromoteRatePct: races ? Number(((100 * midPromotedSlots) / races).toFixed(1)) : null,
   axisSlotPopSharePct: {
     p1to3: share(popOfAxis.p1to3),
     p4to5: share(popOfAxis.p4to5),
     p6to10: share(popOfAxis.p6to10),
     p11plus: share(popOfAxis.p11),
   },
-  note: "winPotential に人気ブレンド(WIN_POP_BLEND=0.62)後の計測",
+  note: "人気ブレンド + 中穴3枠目差し替え(MID_COMPOSITE_MIN=65, GAP=15)",
 };
 
 mkdirSync("src/data/loop/reports", { recursive: true });
