@@ -1,5 +1,7 @@
 import type { Horse, HorseFactors, Race } from "../types";
+import { popularityByNumber } from "../odds";
 import { trackGateBiasScore } from "./trackGateBias.mjs";
+import { popularityWinScore, WIN_POP_BLEND } from "./popularityPrior";
 
 export type ScoreResult = {
   placePotential: number;
@@ -22,7 +24,7 @@ const PLACE_WEIGHTS = {
   gateJockey: 0.1,
 } as const;
 
-/** 1着特化（軸用）。勝ち切れ・展開主導を厚く、人気乖離は薄く */
+/** 1着特化の因子側（人気事前とブレンド） */
 const WIN_WEIGHTS = {
   courseFit: 0.28,
   paceFit: 0.25,
@@ -90,10 +92,17 @@ export const ruleBasedScorer: Scorer = {
     }
 
     const placePotential = clamp(weighted(factors, PLACE_WEIGHTS));
-    const winPotential = clamp(weighted(factors, WIN_WEIGHTS) + winFormBoost(horse));
+
+    const pop = popularityByNumber(race.horses).get(horse.number) ?? null;
+    const factorWin = weighted(factors, WIN_WEIGHTS);
+    const popWin = popularityWinScore(pop);
+    const winPotential = clamp(
+      factorWin * (1 - WIN_POP_BLEND) + popWin * WIN_POP_BLEND + winFormBoost(horse),
+    );
 
     const highlights = topFactors(factors);
-    const rationale = `${horse.name}は複勝圏${placePotential}／1着見込み${winPotential}。${highlights.join("・")}が牽引。単勝${horse.oddsWin.toFixed(1)}倍。`;
+    const popNote = pop != null ? `${pop}番人気` : "人気不明";
+    const rationale = `${horse.name}は複勝圏${placePotential}／1着見込み${winPotential}（${popNote}）。${highlights.join("・")}が牽引。単勝${horse.oddsWin.toFixed(1)}倍。`;
 
     return { placePotential, winPotential, factors, rationale };
   },

@@ -43,6 +43,33 @@ const WIN_WEIGHTS = {
   gateJockey: 0.05,
 };
 
+/** TFJV 202601–202608 に基づく人気事前（src/domain/scoring/popularityPrior.ts と同期） */
+const WIN_POP_BLEND = 0.62;
+
+function popularityWinScore(popularity) {
+  if (popularity == null || popularity < 1) return 40;
+  if (popularity === 1) return 92;
+  if (popularity === 2) return 78;
+  if (popularity === 3) return 68;
+  if (popularity === 4) return 58;
+  if (popularity === 5) return 50;
+  if (popularity === 6) return 42;
+  if (popularity === 7) return 34;
+  if (popularity === 8) return 28;
+  if (popularity === 9) return 22;
+  if (popularity === 10) return 16;
+  return 8;
+}
+
+function popularityByNumber(horses) {
+  const sorted = [...horses].sort(
+    (a, b) => a.oddsWin - b.oddsWin || a.number - b.number,
+  );
+  const map = new Map();
+  sorted.forEach((h, i) => map.set(h.number, i + 1));
+  return map;
+}
+
 export function parseSelectionNumbers(selection) {
   return String(selection)
     .split(/[-–—/]/)
@@ -96,7 +123,11 @@ function scoreHorse(horse, race) {
 }
 
 function scoreWinPotential(horse, race) {
-  return clamp(weighted(prepareFactors(horse, race), WIN_WEIGHTS) + winFormBoost(horse));
+  const factors = prepareFactors(horse, race);
+  const factorWin = weighted(factors, WIN_WEIGHTS);
+  const pop = popularityByNumber(race.horses ?? []).get(horse.number) ?? null;
+  const popWin = popularityWinScore(pop);
+  return clamp(factorWin * (1 - WIN_POP_BLEND) + popWin * WIN_POP_BLEND + winFormBoost(horse));
 }
 
 function resolveRelatedHorses(race, selection, betType) {

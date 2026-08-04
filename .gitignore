@@ -49,3 +49,6 @@ next-env.d.ts
 
 # 馬成績キャッシュ（再取得可能）
 /src/data/cache/horse-form/
+
+# TARGET frontier JV など外部エクスポート（大容量・再配置可）
+/src/data/external/

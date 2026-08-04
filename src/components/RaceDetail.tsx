@@ -104,7 +104,7 @@ export function RaceDetail({ race }: Props) {
       <section>
         <h2 className="text-xl font-semibold text-ink">軸馬候補（Top3）</h2>
         <p className="mt-1 text-sm text-ink/55">
-          1着見込み（winPotential）。単勝オッズ上限なし。穴かつ軸は超注目。
+          1着見込み（winPotential）。人気を強く反映（単勝オッズ上限なし）。穴かつ軸は超注目。
         </p>
         <ul className="mt-4 divide-y divide-ink/10 border-y border-ink/10">
           {axisPicks.map((ax) => {

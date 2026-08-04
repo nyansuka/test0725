@@ -3,6 +3,7 @@ import { ruleBasedScorer } from "./ruleBased";
 
 export type { ScoreResult, Scorer } from "./ruleBased";
 export { trackGateBiasScore } from "./trackGateBias.mjs";
+export { popularityWinScore, WIN_POP_BLEND } from "./popularityPrior";
 
 let currentScorer: Scorer = ruleBasedScorer;
 
