@@ -43,10 +43,30 @@ const WIN_WEIGHTS = {
   gateJockey: 0.05,
 };
 
-/** TFJV 202601–202608 に基づく人気事前（src/domain/scoring/popularityPrior.ts と同期） */
+/** TFJV Race Results2000（〜2026-07）に基づく人気事前（src/domain/scoring/popularityPrior.ts と同期） */
 const WIN_POP_BLEND = 0.62;
 const MID_COMPOSITE_MIN = 65;
-const MID_REPLACE_GAP = 15;
+let MID_REPLACE_GAP = 18;
+const MID_TIME_TOP_PCT = 0.2;
+
+export function getMidReplaceGap() {
+  return MID_REPLACE_GAP;
+}
+
+export function setMidReplaceGap(gap) {
+  MID_REPLACE_GAP = gap;
+}
+
+function isRaceTopTime(horse, horses, topPct = MID_TIME_TOP_PCT) {
+  const timed = (horses ?? [])
+    .map((h) => ({ number: h.number, t: h.formStats?.bestTimeSec ?? null }))
+    .filter((x) => x.t != null && Number.isFinite(x.t));
+  if (timed.length < 2) return false;
+  timed.sort((a, b) => a.t - b.t || a.number - b.number);
+  const cutoff = Math.max(1, Math.ceil(timed.length * topPct));
+  const idx = timed.findIndex((x) => x.number === horse.number);
+  return idx >= 0 && idx < cutoff;
+}
 
 function popularityWinScore(popularity) {
   if (popularity == null || popularity < 1) return 40;
@@ -68,12 +88,13 @@ function midLongshotComposite(horse) {
   return (f.formSignal ?? 50) * 0.5 + (f.courseFit ?? 50) * 0.35 + (f.paceFit ?? 50) * 0.15;
 }
 
-function qualifiesMidLongshot(horse, popularity) {
+function qualifiesMidLongshot(horse, popularity, field) {
   if (popularity < 6 || popularity > 10) return false;
   const fs = horse.formStats;
   const comp = midLongshotComposite(horse);
   if (fs?.lastRank === 1) return true;
   if (fs?.lastRank != null && fs.lastRank <= 3 && comp >= 58) return true;
+  if (isRaceTopTime(horse, field)) return true;
   return comp >= MID_COMPOSITE_MIN;
 }
 
@@ -221,7 +242,7 @@ export function selectAxisHorses(race, longshotPicks) {
   const hasMid = axis.some((a) => a.popularity >= 6 && a.popularity <= 10);
   if (!hasMid && axis.length === AXIS_TOP_N) {
     const candidates = scored
-      .filter((a) => qualifiesMidLongshot(a.horse, a.popularity))
+      .filter((a) => qualifiesMidLongshot(a.horse, a.popularity, race.horses))
       .sort((a, b) => b.midComposite - a.midComposite || b.winPotential - a.winPotential);
     const cand = candidates[0];
     const third = axis[2];

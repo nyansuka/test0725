@@ -74,7 +74,7 @@ const report = {
     p6to10: share(popOfAxis.p6to10),
     p11plus: share(popOfAxis.p11),
   },
-  note: "人気ブレンド + 中穴3枠目差し替え(MID_COMPOSITE_MIN=65, GAP=15)",
+  note: "人気ブレンド + 中穴3枠目差し替え(MID_COMPOSITE_MIN=65, GAP=18, TIME_TOP=20%)",
 };
 
 mkdirSync("src/data/loop/reports", { recursive: true });

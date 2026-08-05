@@ -5,6 +5,7 @@ import {
   midLongshotComposite,
   MID_COMPOSITE_MIN,
   MID_REPLACE_GAP,
+  isRaceTopTime,
 } from "./scoring/popularityPrior";
 
 /** レースあたりの軸馬上限（PLAN §5.5） */
@@ -28,7 +29,11 @@ export function longshotWatchNumbers(
   return set;
 }
 
-function qualifiesMidLongshot(horse: Horse, popularity: number): boolean {
+function qualifiesMidLongshot(
+  horse: Horse,
+  popularity: number,
+  field: Horse[],
+): boolean {
   if (popularity < 6 || popularity > 10) return false;
   const fs = horse.formStats;
   const comp = midLongshotComposite(horse);
@@ -36,6 +41,8 @@ function qualifiesMidLongshot(horse: Horse, popularity: number): boolean {
   if (fs?.lastRank === 1) return true;
   // 前走複勝圏＋最低限の適性
   if (fs?.lastRank != null && fs.lastRank <= 3 && comp >= 58) return true;
+  // 同条件ベストタイムがレース内上位20%（好タイム）
+  if (isRaceTopTime(horse, field)) return true;
   // formStats が薄いときは適性合成のみ（下限）
   return comp >= MID_COMPOSITE_MIN;
 }
@@ -77,7 +84,7 @@ export function selectAxisHorses(
 
   if (!hasMid && axis.length === AXIS_TOP_N) {
     const candidates = scored
-      .filter((a) => qualifiesMidLongshot(a.horse, a.popularity))
+      .filter((a) => qualifiesMidLongshot(a.horse, a.popularity, race.horses))
       .sort((a, b) => {
         if (b.midComposite !== a.midComposite) return b.midComposite - a.midComposite;
         return b.winPotential - a.winPotential;

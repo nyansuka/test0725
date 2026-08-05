@@ -1,0 +1,100 @@
+/**
+ * 中穴3枠目差し替えの MID_REPLACE_GAP スウィープ。
+ *   node scripts/sweep-mid-gap.mjs
+ */
+import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
+import { join } from "node:path";
+import { selectAxisHorses, setMidReplaceGap } from "./lib/loop-domain.mjs";
+
+const GAPS = [15, 18, 20];
+const snapDir = "src/data/snapshots";
+const files = readdirSync(snapDir).filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f));
+
+function evalGap(gap) {
+  setMidReplaceGap(gap);
+  let midPromotedSlots = 0;
+  let races = 0;
+  let axisHit = 0;
+  let fav3Hit = 0;
+  let midWins = 0;
+  let midWinsCaught = 0;
+  let popOfAxis = { p1to3: 0, p4to5: 0, p6to10: 0, p11: 0, slots: 0 };
+
+  for (const f of files) {
+    const snap = JSON.parse(readFileSync(join(snapDir, f), "utf8"));
+    for (const r of snap.races || []) {
+      const win = r.result?.finishes?.find((x) => x.rank === 1);
+      if (!win) continue;
+      races += 1;
+      const sorted = [...(r.horses || [])].sort((a, b) => a.oddsWin - b.oddsWin);
+      const popOf = (n) => {
+        const i = sorted.findIndex((h) => h.number === n);
+        return i >= 0 ? i + 1 : 99;
+      };
+      const fav3 = new Set(sorted.slice(0, 3).map((h) => h.number));
+      if (fav3.has(win.number)) fav3Hit += 1;
+      const wPop = popOf(win.number);
+      const axis = selectAxisHorses(r);
+      if (axis.some((a) => a.horseNumber === win.number)) axisHit += 1;
+      if (wPop >= 6 && wPop <= 10) {
+        midWins += 1;
+        if (axis.some((a) => a.horseNumber === win.number)) midWinsCaught += 1;
+      }
+      for (const a of axis) {
+        popOfAxis.slots += 1;
+        if (a.midPromoted) midPromotedSlots += 1;
+        const p = popOf(a.horseNumber);
+        if (p <= 3) popOfAxis.p1to3 += 1;
+        else if (p <= 5) popOfAxis.p4to5 += 1;
+        else if (p <= 10) popOfAxis.p6to10 += 1;
+        else popOfAxis.p11 += 1;
+      }
+    }
+  }
+
+  const pct = (x, d = races) => (d ? Number(((100 * x) / d).toFixed(1)) : null);
+  const share = (x) => (popOfAxis.slots ? Number(((100 * x) / popOfAxis.slots).toFixed(1)) : null);
+  return {
+    gap,
+    races,
+    axisTop3HitPct: pct(axisHit),
+    favTop3HitPct: pct(fav3Hit),
+    axisHit,
+    midWins,
+    midWinsCaught,
+    midWinCatchPct: midWins ? Number(((100 * midWinsCaught) / midWins).toFixed(1)) : null,
+    midPromotedSlots,
+    midPromoteRatePct: races ? Number(((100 * midPromotedSlots) / races).toFixed(1)) : null,
+    axisSlotPopSharePct: {
+      p1to3: share(popOfAxis.p1to3),
+      p4to5: share(popOfAxis.p4to5),
+      p6to10: share(popOfAxis.p6to10),
+      p11plus: share(popOfAxis.p11),
+    },
+  };
+}
+
+const rows = GAPS.map(evalGap);
+setMidReplaceGap(18);
+const baseline = rows.find((r) => r.gap === 15);
+const report = {
+  analyzedAt: new Date().toISOString(),
+  files,
+  rows: rows.map((r) => ({
+    ...r,
+    deltaVs15: baseline
+      ? {
+          axisTop3HitPct: Number((r.axisTop3HitPct - baseline.axisTop3HitPct).toFixed(1)),
+          midWinCatchPct: Number((r.midWinCatchPct - baseline.midWinCatchPct).toFixed(1)),
+          midPromotedSlots: r.midPromotedSlots - baseline.midPromotedSlots,
+          midPromoteRatePct: Number((r.midPromoteRatePct - baseline.midPromoteRatePct).toFixed(1)),
+        }
+      : null,
+  })),
+};
+
+mkdirSync("src/data/loop/reports", { recursive: true });
+const out = "src/data/loop/reports/mid-gap-sweep.json";
+writeFileSync(out, JSON.stringify(report, null, 2));
+console.log(JSON.stringify(report, null, 2));
+console.log("→", out);
