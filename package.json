@@ -24,11 +24,14 @@
     "site:check:push": "node scripts/site-check-push.mjs",
     "site:verify-vercel": "node scripts/verify-vercel-prod.mjs",
     "journal:migrate": "node scripts/journal-migrate.mjs",
+    "tfjv:migrate": "node scripts/tfjv-migrate.mjs",
+    "tfjv:load": "node scripts/tfjv-load.mjs",
     "test:journal-expand": "node scripts/test-journal-expand.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
     "next": "16.2.11",
+    "pg": "^8.22.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },

@@ -100,6 +100,29 @@ docker compose exec web npm run journal:migrate
 | ローカル | `.env.local` に `DATABASE_URL=...`（Git 管理外） |
 | Vercel | Settings → Environment Variables → `DATABASE_URL`（Production / Preview） |
 
+### TFJV（Race Results）を Neon へ
+
+週次で手動更新する過去走データ用。スキーマは journal と同じ Neon プロジェクトに同居。
+
+```powershell
+# スキーマ適用
+docker compose exec -T web npm run tfjv:migrate
+
+# 初回フルロード（空にしてから全件）※時間がかかります
+docker compose exec -T web npm run tfjv:load -- --truncate
+
+# ホストの CSV をマウントする場合
+docker compose run --rm --no-deps -v "C:/TFJV/TXT:/tfjv:ro" -e TFJV_CSV="/tfjv/Race Results2000.utf8.csv" web npm run tfjv:load -- --truncate
+
+# 動作確認（先頭5000行だけ）
+docker compose run --rm --no-deps -v "C:/TFJV/TXT:/tfjv:ro" -e TFJV_CSV="/tfjv/Race Results2000.utf8.csv" web npm run tfjv:load -- --limit=5000
+
+# 週次更新（truncate なし・upsert）
+docker compose run --rm --no-deps -v "C:/TFJV/TXT:/tfjv:ro" -e TFJV_CSV="/tfjv/Race Results2000.utf8.csv" web npm run tfjv:load
+```
+
+UTF-8 変換済み CSV（`Race Results2000.utf8.csv`）を推奨。Free プランは 0.5GB 制限のため、容量超過時は Launch へ。
+
 接続文字列は Neon の **pooled** 接続（ホスト名に `-pooler`）を推奨。チャットやリポジトリにパスワードを載せないこと。漏洩したら Neon でロールのパスワードを再発行する。
 
 Vercel は `main` への push で再デプロイされる想定です。push 後は `site:verify-vercel`（または `site:check:push`）で https://test0725.vercel.app の `raceDate` / `fetchedAt` が `latest.json` と一致することを確認します。`DATABASE_URL` 未設定のとき成績日記はブラウザ localStorage にフォールバックします。

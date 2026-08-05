@@ -479,6 +479,72 @@ async function fetchRaceResult(raceId) {
   return parseResultHtml(html);
 }
 
+/**
+ * 過去開催の結果ページだけから表示用データを作る。
+ * 発売オッズ API を券種ごとに巡回しないため、結果バックフィルを軽量に行える。
+ */
+async function fetchHistoricalResultRace(raceId, raceDate) {
+  const url = `https://race.netkeiba.com/race/result.html?race_id=${raceId}`;
+  const html = await fetchText(url);
+  await sleep(120);
+  const result = parseResultHtml(html);
+  if (!result) throw new Error("official result not found");
+
+  const meta = parseRaceMeta(html, raceId);
+  const fieldSize = result.finishes.length;
+  const horses = result.finishes.map((finish) => {
+    const oddsWin = finish.oddsWin ?? 99.9;
+    return {
+      number: finish.number,
+      bracket: finish.bracket,
+      name: finish.name,
+      jockey: finish.jockey ?? "—",
+      oddsWin,
+      oddsPlace: {
+        min: Math.max(1.1, Number((oddsWin * 0.28).toFixed(1))),
+        max: Math.max(1.3, Number((oddsWin * 0.55).toFixed(1))),
+      },
+      factors: synthesizeFactors(finish, oddsWin, fieldSize, meta.track),
+      comment: buildComment(oddsWin),
+    };
+  });
+  const slugVenue = {
+    札幌: "sapporo",
+    函館: "hakodate",
+    福島: "fukushima",
+    新潟: "niigata",
+    東京: "tokyo",
+    中山: "nakayama",
+    中京: "chukyo",
+    京都: "kyoto",
+    阪神: "hanshin",
+    小倉: "kokura",
+  }[meta.venue] ?? meta.venue;
+
+  return {
+    id: `${slugVenue}-${compactDate(raceDate)}-${meta.raceNumber}`,
+    sourceRaceId: raceId,
+    authority: "JRA",
+    raceDate,
+    venue: meta.venue,
+    raceNumber: meta.raceNumber,
+    title: meta.title,
+    distance: meta.distance,
+    track: meta.track,
+    startTime: meta.startTime,
+    weather: meta.weather,
+    condition: meta.condition,
+    fieldSize,
+    horses,
+    oddsBoard: horses.map((horse) => ({
+      betType: "win",
+      selection: String(horse.number),
+      odds: horse.oddsWin,
+    })),
+    result,
+  };
+}
+
 async function fetchOneRace(raceId, raceDate, { withResult = true, withForm = false } = {}) {
   const shutubaUrl = `https://race.netkeiba.com/race/shutuba.html?race_id=${raceId}`;
   const html = await fetchText(shutubaUrl);
@@ -754,6 +820,7 @@ async function main() {
   const args = process.argv.slice(2);
   const resultsOnly = args.includes("--results-only");
   const refreshResults = args.includes("--refresh-results");
+  const resultHistory = args.includes("--result-history");
   const withForm = args.includes("--with-form");
   const enrichForm = args.includes("--enrich-form");
   const forceForm = args.includes("--force-form");
@@ -796,7 +863,9 @@ async function main() {
   for (const [i, id] of raceIds.entries()) {
     process.stdout.write(`[${i + 1}/${raceIds.length}] ${id} ... `);
     try {
-      const race = await fetchOneRace(id, raceDate, { withResult: true, withForm });
+      const race = resultHistory
+        ? await fetchHistoricalResultRace(id, raceDate)
+        : await fetchOneRace(id, raceDate, { withResult: true, withForm });
       const prev = prevBySource.get(id);
       if (!race.result && prev?.result) race.result = prev.result;
       races.push(race);
@@ -824,7 +893,9 @@ async function main() {
 
   const snapshot = {
     fetchedAt: new Date().toISOString(),
-    source: withForm
+    source: resultHistory
+      ? "netkeiba (public result pages)"
+      : withForm
       ? "netkeiba (public pages / odds API + results + horse form)"
       : "netkeiba (public pages / odds API + results)",
     raceDate,

@@ -66,7 +66,7 @@ export function RaceDayPicker({ variant = "panel", className = "" }: Props) {
             <span className="ml-2 rounded-sm bg-turf px-2 py-0.5 text-xs text-sand">本日</span>
           ) : null}
           {hydrated && !hasRaces ? (
-            <span className="ml-2 text-signal">この日のサンプル開催はありません</span>
+            <span className="ml-2 text-signal">この日の開催データはありません</span>
           ) : null}
         </div>
         {hydrated && !isToday ? (
@@ -79,25 +79,6 @@ export function RaceDayPicker({ variant = "panel", className = "" }: Props) {
           </button>
         ) : null}
       </div>
-      {availableDates.length > 0 && (
-        <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-ink/10 pt-3 text-sm">
-          <span className="text-ink/50">サンプル開催日:</span>
-          {availableDates.map((d) => (
-            <button
-              key={d}
-              type="button"
-              onClick={() => setSelectedDate(d)}
-              className={`border px-3 py-1.5 ${
-                d === selectedDate
-                  ? "border-turf bg-turf text-sand"
-                  : "border-ink/20 bg-white text-ink/70 hover:border-turf"
-              }`}
-            >
-              {hydrated && d === today ? `本日（${d}）` : d}
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
