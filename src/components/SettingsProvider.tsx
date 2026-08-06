@@ -50,14 +50,10 @@ function loadSettings(): UserSelectionSettings {
   }
   try {
     let raw = window.localStorage.getItem(STORAGE_KEY);
-    let fromLegacyV4 = false;
     if (!raw) {
       for (const key of LEGACY_STORAGE_KEYS) {
         raw = window.localStorage.getItem(key);
-        if (raw) {
-          fromLegacyV4 = key.endsWith("-v4") || key.endsWith("-v3");
-          break;
-        }
+        if (raw) break;
       }
     }
     if (!raw) return { ...DEFAULT_SETTINGS, enabledBetTypes: [...ALL_BET_TYPES] };
