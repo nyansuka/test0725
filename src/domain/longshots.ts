@@ -5,8 +5,24 @@ import { buildPickComment } from "./comment";
 import { getTrendIndex } from "./trendData";
 import { selectAxisHorses } from "./axis";
 
-/** 注目穴 / 抑え候補の境界（scoreMin とは独立） */
-export const LABEL_SCORE_THRESHOLD = 70;
+/** 注目穴スコア帯（C3: ticket 最適。下限含む・上限含まず） */
+export const HOT_SCORE_MIN = 65;
+export const HOT_SCORE_MAX = 70;
+
+/**
+ * @deprecated 互換用。注目穴判定は {@link labelForScore} / HOT_SCORE_* を使う。
+ * 期待度の highCount も HOT 帯を数える。
+ */
+export const LABEL_SCORE_THRESHOLD = HOT_SCORE_MIN;
+
+export function labelForScore(score: number): LongshotLabel {
+  if (score >= HOT_SCORE_MIN && score < HOT_SCORE_MAX) return "注目穴";
+  return "抑え候補";
+}
+
+function isHotScore(score: number): boolean {
+  return score >= HOT_SCORE_MIN && score < HOT_SCORE_MAX;
+}
 
 export type OddsBoardStatus =
   | "candidate" // ゲート＋スコア通過 → 注目穴ボード掲載
@@ -65,7 +81,7 @@ function pickComment(
 }
 
 function labelFor(score: number): LongshotLabel {
-  return score >= LABEL_SCORE_THRESHOLD ? "注目穴" : "抑え候補";
+  return labelForScore(score);
 }
 
 export function classifyOddsEntry(
@@ -258,25 +274,80 @@ export function groupLongshotPicks(picks: LongshotPick[]): LongshotPickGroup[] {
 }
 
 /**
- * レース期待度（Sが最上）。
- * edge = topスコア*0.7 + 高スコア候補数*8 + 候補件数*3（上限100）
- * S: edge≥85 かつ スコア≥70 の候補が2件以上
- * A: ≥70 / B: ≥55 / C: ≥40 / D: それ未満 or 候補なし
+ * レース期待度（Sが最上）。2026-08-06 再キャリブ。
+ *
+ * edge（件数ペナルティ）:
+ *   top*0.75 + min(highCount,3)*10 - max(0, pickCount-3)*4
+ * 開催日内で候補ありレースを edge 降順にし、相対で S〜C を割当（D=候補なし）。
+ * 単レース呼び出し時は同じ edge の絶対閾値フォールバック。
  */
-export function raceExpectationRank(picksForRace: LongshotPick[]) {
-  if (picksForRace.length === 0) return "D" as const;
+export function expectationEdge(picksForRace: LongshotPick[]): {
+  top: number;
+  highCount: number;
+  pickCount: number;
+  edge: number;
+} {
+  if (picksForRace.length === 0) {
+    return { top: 0, highCount: 0, pickCount: 0, edge: 0 };
+  }
   const top = Math.max(...picksForRace.map((p) => p.relatedPlacePotential));
-  const highCount = picksForRace.filter((p) => p.relatedPlacePotential >= LABEL_SCORE_THRESHOLD).length;
-  const edge = Math.min(
-    100,
-    top * 0.7 + Math.min(highCount, 4) * 8 + Math.min(picksForRace.length, 6) * 3,
+  const highCount = picksForRace.filter((p) => isHotScore(p.relatedPlacePotential)).length;
+  const pickCount = picksForRace.length;
+  const edge = Math.max(
+    0,
+    top * 0.75 + Math.min(highCount, 3) * 10 - Math.max(0, pickCount - 3) * 4,
   );
+  return { top, highCount, pickCount, edge };
+}
 
-  if (edge >= 85 && highCount >= 2) return "S" as const;
+/** 単レース用絶対閾値（日内ピアが無いとき） */
+function rankFromEdgeAbsolute(meta: ReturnType<typeof expectationEdge>) {
+  if (meta.pickCount === 0) return "D" as const;
+  const { edge, highCount, pickCount, top } = meta;
+  if (edge >= 84 && highCount >= 2 && pickCount <= 6 && top >= 78) return "S" as const;
   if (edge >= 70) return "A" as const;
   if (edge >= 55) return "B" as const;
   if (edge >= 40) return "C" as const;
   return "D" as const;
+}
+
+/**
+ * 開催日単位で期待度を割当。候補ありを edge 降順:
+ * 上位≈12%→S / 累積≈32%→A / 累積≈57%→B / 残り候補あり→C / なし→D
+ */
+export function assignDayExpectationRanks(
+  races: { raceId: string; picks: LongshotPick[] }[],
+): Map<string, "S" | "A" | "B" | "C" | "D"> {
+  const metas = races.map((r) => ({
+    raceId: r.raceId,
+    picks: r.picks,
+    ...expectationEdge(r.picks),
+  }));
+  const ranks = new Map<string, "S" | "A" | "B" | "C" | "D">();
+  for (const m of metas) ranks.set(m.raceId, "D");
+
+  const withPicks = metas
+    .filter((m) => m.pickCount > 0)
+    .sort((a, b) => b.edge - a.edge || b.top - a.top || a.raceId.localeCompare(b.raceId));
+  const m = withPicks.length;
+  if (m === 0) return ranks;
+
+  const sCut = Math.max(1, Math.ceil(m * 0.12));
+  const aCut = Math.max(sCut + 1, Math.ceil(m * 0.32));
+  const bCut = Math.max(aCut + 1, Math.ceil(m * 0.57));
+
+  withPicks.forEach((row, i) => {
+    let rank: "S" | "A" | "B" | "C" | "D" = "C";
+    if (i < sCut && row.highCount >= 1) rank = "S";
+    else if (i < aCut) rank = "A";
+    else if (i < bCut) rank = "B";
+    ranks.set(row.raceId, rank);
+  });
+  return ranks;
+}
+
+export function raceExpectationRank(picksForRace: LongshotPick[]) {
+  return rankFromEdgeAbsolute(expectationEdge(picksForRace));
 }
 
 export function enrichHorseScores(race: Race) {
@@ -294,4 +365,4 @@ export function enrichHorseScores(race: Race) {
 }
 
 export const EXPECTATION_RANK_HELP =
-  "候補の質と量から算出。S: 高スコア候補が複数 / A〜C: 期待の強さ / D: 候補なしまたは薄い";
+  "開催日内の候補ありレースを相対評価。S: 上位約12%（高スコア候補あり）/ A〜C: 続く帯 / D: 候補なし。件数が多いだけで上がらない";

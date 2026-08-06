@@ -12,9 +12,12 @@ import {
 import { ALL_BET_TYPES, DEFAULT_SETTINGS } from "@/domain/betTypes";
 import type { BetType, UserSelectionSettings } from "@/domain/types";
 
-/** v4: 既定 oddsMax null→80（B3）。v3 は読み取り移行のみ */
-const STORAGE_KEY = "umanote-selection-settings-v4";
-const LEGACY_STORAGE_KEY = "umanote-selection-settings-v3";
+/** v5: C1/C2 後 scoreMin 既定 75→60。v4 は oddsMax 既定80 */
+const STORAGE_KEY = "umanote-selection-settings-v5";
+const LEGACY_STORAGE_KEYS = [
+  "umanote-selection-settings-v4",
+  "umanote-selection-settings-v3",
+];
 
 type SettingsContextValue = {
   settings: UserSelectionSettings;
@@ -46,14 +49,26 @@ function loadSettings(): UserSelectionSettings {
     return { ...DEFAULT_SETTINGS, enabledBetTypes: [...ALL_BET_TYPES] };
   }
   try {
-    const raw =
-      window.localStorage.getItem(STORAGE_KEY) ??
-      window.localStorage.getItem(LEGACY_STORAGE_KEY);
+    let raw = window.localStorage.getItem(STORAGE_KEY);
+    let fromLegacyV4 = false;
+    if (!raw) {
+      for (const key of LEGACY_STORAGE_KEYS) {
+        raw = window.localStorage.getItem(key);
+        if (raw) {
+          fromLegacyV4 = key.endsWith("-v4") || key.endsWith("-v3");
+          break;
+        }
+      }
+    }
     if (!raw) return { ...DEFAULT_SETTINGS, enabledBetTypes: [...ALL_BET_TYPES] };
     const parsed = JSON.parse(raw) as Partial<UserSelectionSettings>;
     // v3 には oddsMax が無い → 新既定 80 を入れる
     if (parsed.oddsMax === undefined) {
       parsed.oddsMax = DEFAULT_SETTINGS.oddsMax;
+    }
+    // v4 既定 scoreMin=75 は C1/C2 後に候補が消える → 60 へ移行
+    if (fromLegacyV4 && parsed.scoreMin === 75) {
+      parsed.scoreMin = DEFAULT_SETTINGS.scoreMin;
     }
     return normalizeSettings(parsed);
   } catch {

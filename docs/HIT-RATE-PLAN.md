@@ -1,8 +1,8 @@
 # 的中率改善プラン
 
-最終更新: 2026-08-03  
-根拠: [IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md) / `loop/trends/latest.json` / `loop/reports/threshold-sweep-2026-07-25_2026-07-26.json` / `loop/reports/analyze-2026-08-02.json` / `loop/reports/odds-cap-sweep-*.json`  
-対象期間: 2026-07-25〜26（72レース・凍結オッズ固定スイープ済）＋ 2026-08-01〜02 運用検証 · B3 既定反映 2026-08-03
+最終更新: 2026-08-06  
+根拠: [IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md) / `loop/trends/latest.json` / `loop/reports/threshold-sweep-2026-07-25_2026-07-26.json` / `loop/reports/analyze-2026-08-02.json` / `loop/reports/odds-cap-sweep-*.json` / `loop/reports/longshot-in-money-snapshots.json` / `loop/reports/c1-c2-after.json`  
+対象期間: 2026-07-25〜26（72レース・凍結オッズ固定スイープ済）＋ 2026-08-01〜02 運用検証 · B3 既定反映 2026-08-03 · ゲート内機会ベースライン / 期待度再キャリブ / **C1/C2** 2026-08-06
 
 運用ルール: **週次で変更は1つだけ**（[DATA-AND-LOOP.md](./DATA-AND-LOOP.md) §5.4）。
 
@@ -99,9 +99,9 @@ B1 はスイープで裏付けあり。B2 は別週。同時変更禁止。
 
 | 順 | ID | 変更（1つ） | 完了条件 |
 |----|-----|-------------|----------|
-| C1 | P1-1 / D4 | 人気順位をオッズから導出 → `valueGap` を再定義 | 合成乱数成分を削除 |
-| C2 | D4 | `formSignal` を前走着順・人気で置換 | 高スコア帯の place/ticket が逆転しないこと |
-| C3 | P1-2 | 注目穴境界の再キャリブレーション | C1–C2 後のデータで決定 |
+| C1 | P1-1 / D4 | 人気順位をオッズから導出 → `valueGap` を再定義 | **済**（`valueGapFromPopularity`） |
+| C2 | D4 | `formSignal` を前走着順・人気で置換 | **済**（`formSignalFromFormStats`。カバレッジ低） |
+| C3 | P1-2 | 注目穴境界の再キャリブレーション | **済**（帯 [65,70)。ticket +1.2pp） |
 | C4 | P1-4 | related 合成（下限 vs 平均 vs k-of-n）感度 | 同じ凍結オッズで再 evaluate |
 
 **ここが的中率の本丸。** 合成のまま閾値だけ上げても、残り候補の質は上がらない。
@@ -169,8 +169,8 @@ B1 はスイープで裏付けあり。B2 は別週。同時変更禁止。
 | # | やること | 理由 | 状態 |
 |---|----------|------|------|
 | 1 | **B3: オッズ上限**（例: 表示・選別 `<80`） | 100+ がノイズ支配。中オッズだけで ticket が立つ | **済（既定 oddsMax=80）** |
-| 2 | **期待度 S〜D の再キャリブ** | Sが全日の2/3。件数ペナルティ or 日内相対順位 | 待機 |
-| 3 | **C1/C2: 人気・前走接続** | スコアの嘘を消さない限り天井 | 待機 |
+| 2 | **期待度 S〜D の再キャリブ** | Sが全日の2/3。件数ペナルティ or 日内相対順位。ゲート内 Miss も score 落ちが主因 | **済（日内相対・2026-08-06）** |
+| 3 | **C1/C2: 人気・前走接続** | スコアの嘘を消さない限り天井。gatedOppRecall 20.8% の本丸 | **済（2026-08-06・scoreMin 60 再キャリブ）** |
 
 #### B3 感度結果（2026-08-02 実行）
 
@@ -214,6 +214,81 @@ docker compose exec -T web npm run loop:report -- 2026-07-25
 
 運用: `fetch:jra` → **発走前に** `loop:freeze` → 結果後 `evaluate` → trends。
 
+### 4.3 ゲート内機会 Recall（2026-08-06 ベースライン）
+
+穴馬馬券内検証をボード改善に接続する副指標。**主指標は ticketPrecision のまま。**
+
+| 用語 | 定義 |
+|------|------|
+| **ゲート内機会** | 人気≥6 ∧ ≤3着 ∧（単勝オッズがゲート内 **または** 関係買い目オッズがゲート内） |
+| **gatedOppRecall** | その馬を `selectLongshots` 関係馬で拾えたレース数 / ゲート内機会レース数 |
+| **広義キャッチ** | オッズ閾値外の穴馬券内も含む参考値（ボード分母に使わない） |
+
+設定: `odds=25` / `oddsMax=80` / `scoreMin=75` · スナップ 960R（2026-05-02〜08-02）  
+成果物: `src/data/loop/reports/longshot-in-money-snapshots.json`  
+再実行: `npm run loop:verify-longshot-in-money`
+
+| 指標 | 値 | 読み |
+|------|-----|------|
+| 広義・穴が馬券内 | 61.1% of races | 機会は多い（分母にしない） |
+| ゲート内機会レース | **77**（8.0%） | 製品ゲートと揃えた分母 |
+| **gatedOppRecall** | **20.8%**（16/77） | ベースライン |
+| 広義キャッチ（参考） | 2.7%（16/587） | ゲート外を含むので過小 |
+
+Miss 分解（61件・主因）:
+
+| 主因 | 件数 | 含意 |
+|------|------|------|
+| **score_insufficient** | **61（100%）** | オッズゲートは通過しているが scoreMin で落ちている |
+| ticket 帯外 / 板なし 等 | 0 | 次の閾値いじりは優先度低 |
+
+→ **次の1変更は閾値ではなくスコア側**（期待度再キャリブ **済** → 次は C1/C2）。合成 factors のまま WEIGHTS だけ触らない（既知）。
+
+#### 期待度再キャリブ結果（2026-08-06）
+
+固定: `25/80/75` · スナップ 960R · `scripts/sweep-expectation-rank.mjs`  
+採用: **日内相対**（edge は件数ペナルティ式。候補ありの上位≈12%を S）
+
+| 方式 | 候補あり内 S 率 | S ticketP | vs 全体 |
+|------|-----------------|-----------|---------|
+| 旧・件数ボーナス | 37% | 2.04% | +0.3pp |
+| **新・日内相対** | **14%** | **4.88%** | **+3.1pp** |
+
+実装: `assignDayExpectationRanks`（一覧・詳細・日記集計）。単レース絶対閾値はフォールバックのみ。
+
+#### C1/C2 結果（2026-08-06）
+
+| 項目 | 内容 |
+|------|------|
+| C1 | `valueGap` = 人気順位テーブル（6〜10人気を厚く。オッズ連動の合成を廃止） |
+| C2 | `formSignal` = `formStats`（前走着順・人気・同条件平均）。無しは中立50 |
+| 既定 | **25 / 80上限 / scoreMin 60**（旧75は合成インフレ前提で候補≈0件） |
+| 実装 | `deriveFactors.mjs` → `ruleBased` / `loop-domain` / `horse-form` |
+
+スナップ 960R（`scripts/eval-c1-c2.mjs` → `c1-c2-after.json`）:
+
+| 指標 | C1/C2 前（参考） | 後（25/80/60） |
+|------|------------------|----------------|
+| gatedOppRecall | 20.8% | **81.6%** |
+| ticketPrecision | ≈0.6〜2%（日差） | **1.43%** |
+| 密度 | — | 2.9/レース |
+| 注目穴 place | 逆指標 | まだ抑えより低い（28% vs 44%） |
+
+残課題（C1/C2時点）: place 逆指標。→ **C3 で注目穴を [65,70) に限定**（下記）。残合成因子と enrich-form は継続課題。WEIGHTS は触らない。
+
+#### C3 結果（2026-08-06）
+
+固定: 25/80/60 · `scripts/sweep-label-threshold.mjs` + 帯域評価  
+採用: **注目穴 = スコア [65, 70)**（上限で ≥70 の逆指標帯を除外）
+
+| ラベル | n | placeP | ticketP |
+|--------|---|--------|---------|
+| 注目穴 [65,70) | 743 | 38.6% | **2.29%** |
+| 抑え（他） | 2062 | 44.3% | 1.12% |
+| 旧 ≥70 注目穴 | 161 | 28% | 1.26% |
+
+読み: place はまだ抑えがやや良い（残合成因子）が、**主指標 ticket は注目穴が +1.2pp**。旧「≥70」より place/ticket とも改善。実装: `HOT_SCORE_MIN/MAX`・`labelForScore`。
+
 ---
 
 ## 5. 意思決定メモ
@@ -221,12 +296,14 @@ docker compose exec -T web npm run loop:report -- 2026-07-25
 | 論点 | 仮決定 |
 |------|--------|
 | 追う的中率 | ticketPrecision（券種払戻）。place は補助 |
+| 副指標 | **gatedOppRecall**（ゲート内穴馬券内のカバー）。広義61%/2.7%は使わない |
 | 密度目標 | 5〜15 件/レース（厳選ボード前提なら 3〜8 も可） |
-| 閾値の当面案 | **25 / 80上限 / 75**（B3 反映済）。代替上限 100/150 |
+| 閾値の当面案 | **25 / 80上限 / 60**（C1/C2 後。旧75は廃止） |
+| 注目穴ラベル | **スコア [65, 70)**（C3）。主指標 ticket 優先 |
 | 券種 | 当面は中オッズ単勝の ticket を観察。3連は後回し。馬連・ワイドは払戻突合を再確認 |
-| 期待度ランク | 現行式は件数膨張で失敗。再定義まで「Sだけ見る」運用はしない |
-| 合成 factors | 解消までラベル・WEIGHTS は触らない |
-| 成功の見方 | 「候補を減らしながら ticket が上がる」こと。Recall 低下は許容（製品は全網羅ではない） |
+| 期待度ランク | **日内相対（件数ペナルティ edge）**。S は候補ありの上位約12%。「Sだけ見る」運用可 |
+| 合成 factors | **valueGap / formSignal は導出済**。courseFit（一部）/ paceFit / conditionFit は残合成 |
+| 成功の見方 | 「候補を減らしながら ticket が上がる」＋ gatedOppRecall。place 逆指標は残因子解消まで監視 |
 
 ---
 
@@ -239,4 +316,9 @@ docker compose exec -T web npm run loop:report -- 2026-07-25
 | `src/data/loop/reports/threshold-sweep-*.json` | 閾値感度の根拠 |
 | `src/data/loop/reports/odds-cap-sweep-*.json` | オッズ上限（B3）感度 |
 | `src/data/loop/reports/analyze-2026-08-02.json` | 当日の期待度・帯別切り口 |
+| `src/data/loop/reports/longshot-in-money-snapshots.json` | ゲート内機会・Miss 分解ベースライン |
+| `scripts/verify-longshot-in-money.mjs` | 上記の再集計 |
+| `src/data/loop/reports/expectation-rank-sweep.json` | 期待度再キャリブ感度 |
+| `src/data/loop/reports/c1-c2-after.json` | C1/C2 後の帯別・gatedOppRecall |
+| `src/data/loop/reports/label-threshold-sweep.json` | C3 ラベル境界感度 |
 | `src/data/loop/trends/latest.json` | 日次・券種・ラベル別 place 傾向 |

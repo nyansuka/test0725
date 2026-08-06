@@ -2,6 +2,11 @@ import type { Horse, HorseFactors, Race } from "../types";
 import { popularityByNumber } from "../odds";
 import { trackGateBiasScore } from "./trackGateBias.mjs";
 import { popularityWinScore, WIN_POP_BLEND } from "./popularityPrior";
+import {
+  FORM_SIGNAL_NEUTRAL,
+  formSignalFromFormStats,
+  valueGapFromPopularity,
+} from "./deriveFactors.mjs";
 
 export type ScoreResult = {
   placePotential: number;
@@ -77,20 +82,26 @@ function topFactors(factors: HorseFactors, limit = 2): string[] {
     .map(([label, score]) => `${label}${score}`);
 }
 
+/** C1/C2: 埋め込み合成を捨て、人気・前走から因子を確定 */
+export function applyDerivedFactors(horse: Horse, race: Race): HorseFactors {
+  const factors: HorseFactors = { ...horse.factors };
+  factors.gateJockey = trackGateBiasScore(race.track, horse.bracket);
+
+  const pop = popularityByNumber(race.horses).get(horse.number) ?? null;
+  factors.valueGap = valueGapFromPopularity(pop);
+
+  const derivedForm = formSignalFromFormStats(horse.formStats);
+  factors.formSignal = derivedForm ?? FORM_SIGNAL_NEUTRAL;
+
+  if (race.condition.includes("稍") || race.condition.includes("重")) {
+    factors.conditionFit = clamp(factors.conditionFit + (factors.conditionFit >= 65 ? 4 : -2));
+  }
+  return factors;
+}
+
 export const ruleBasedScorer: Scorer = {
   score(horse, race) {
-    const factors: HorseFactors = { ...horse.factors };
-    // track 依存の枠バイアスは常に上書き（スナップショットの仮値に依存しない）
-    factors.gateJockey = trackGateBiasScore(race.track, horse.bracket);
-
-    // 当日条件との軽い補正（サンプル用）
-    if (race.condition.includes("稍") || race.condition.includes("重")) {
-      factors.conditionFit = clamp(factors.conditionFit + (factors.conditionFit >= 65 ? 4 : -2));
-    }
-    if (horse.oddsWin >= 12) {
-      factors.valueGap = clamp(factors.valueGap + 3);
-    }
-
+    const factors = applyDerivedFactors(horse, race);
     const placePotential = clamp(weighted(factors, PLACE_WEIGHTS));
 
     const pop = popularityByNumber(race.horses).get(horse.number) ?? null;
@@ -102,7 +113,11 @@ export const ruleBasedScorer: Scorer = {
 
     const highlights = topFactors(factors);
     const popNote = pop != null ? `${pop}番人気` : "人気不明";
-    const rationale = `${horse.name}は複勝圏${placePotential}／1着見込み${winPotential}（${popNote}）。${highlights.join("・")}が牽引。単勝${horse.oddsWin.toFixed(1)}倍。`;
+    const formNote =
+      horse.formStats?.lastRank != null
+        ? `前走${horse.formStats.lastRank}着`
+        : "前走データなし";
+    const rationale = `${horse.name}は複勝圏${placePotential}／1着見込み${winPotential}（${popNote}・${formNote}）。${highlights.join("・")}が牽引。単勝${horse.oddsWin.toFixed(1)}倍。`;
 
     return { placePotential, winPotential, factors, rationale };
   },

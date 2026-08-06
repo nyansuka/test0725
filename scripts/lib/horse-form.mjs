@@ -5,6 +5,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { formSignalFromFormStats } from "../../src/domain/scoring/deriveFactors.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "../..");
@@ -227,16 +228,6 @@ export function sameDistanceRuns(runs, track, distance) {
   return runs.filter((r) => r.track === t && r.distanceM === distanceM);
 }
 
-function formSignalFromLast(last) {
-  if (!last || last.rank == null) return null;
-  let score = 72 - (last.rank - 1) * 4;
-  if (last.popularity != null) {
-    const delta = last.popularity - last.rank; // 人気より好走なら正
-    score += Math.max(-8, Math.min(10, delta * 2));
-  }
-  return clamp(score, 35, 92);
-}
-
 function placeScoreFromSame(same) {
   const placed = same.filter((r) => r.rank != null);
   if (!placed.length) return null;
@@ -286,7 +277,7 @@ export function applyFormToRace(race, runsByHorseId) {
     prepared.set(horse.number, {
       summary,
       placeScore,
-      form: formSignalFromLast(last),
+      form: formSignalFromFormStats(summary),
       exactMatch,
     });
     if (bestTime != null) timed.push({ number: horse.number, bestTime, exactMatch });

@@ -4,6 +4,12 @@ import { ruleBasedScorer } from "./ruleBased";
 export type { ScoreResult, Scorer } from "./ruleBased";
 export { trackGateBiasScore } from "./trackGateBias.mjs";
 export {
+  valueGapFromPopularity,
+  formSignalFromFormStats,
+  FORM_SIGNAL_NEUTRAL,
+} from "./deriveFactors.mjs";
+export { applyDerivedFactors } from "./ruleBased";
+export {
   popularityWinScore,
   WIN_POP_BLEND,
   midLongshotComposite,

@@ -278,14 +278,15 @@ function flattenOdds(payload, typeNum) {
 }
 
 function synthesizeFactors(horse, oddsWin, fieldSize, track) {
-  const popularityBias = Math.min(95, 35 + oddsWin * 1.8);
+  // valueGap / formSignal は Scorer が人気・前走から上書き（C1/C2）。
+  // paceFit / conditionFit は当面プレースホルダ。courseFit は --enrich-form で上書き可。
   const base = 52 + ((horse.number * 7 + fieldSize) % 28);
   return {
     courseFit: Math.min(92, base + (horse.number % 5) * 3),
     paceFit: Math.min(90, base - 2 + (horse.number % 4) * 4),
     conditionFit: Math.min(90, base + 4),
-    formSignal: Math.min(90, base + 2),
-    valueGap: Math.min(95, Math.round(popularityBias)),
+    formSignal: 50,
+    valueGap: 50,
     gateJockey: trackGateBiasScore(track, horse.bracket),
   };
 }

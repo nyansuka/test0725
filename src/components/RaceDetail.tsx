@@ -5,13 +5,15 @@ import {
   classifyOddsEntry,
   enrichHorseScores,
   EXPECTATION_RANK_HELP,
-  raceExpectationRank,
+  assignDayExpectationRanks,
   selectLongshots,
   type OddsBoardStatus,
 } from "@/domain/longshots";
 import { BET_TYPE_LABELS } from "@/domain/betTypes";
 import type { Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
+import { useRaceCatalog } from "@/components/RaceCatalogProvider";
+import { useRaceDay } from "@/components/RaceDayProvider";
 import { LongshotTable } from "@/components/LongshotTable";
 import { LongshotMark, AxisMark, SuperWatchMark, MidPromotedMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import Link from "next/link";
@@ -24,6 +26,7 @@ import {
 } from "@/domain/odds";
 import { evaluatePick, outcomeLabel } from "@/domain/results";
 import { axisIndexByNumber, selectAxisHorses } from "@/domain/axis";
+import { filterRacesByDate } from "@/data/races";
 
 const factorLabels = [
   ["courseFit", "コース"],
@@ -58,14 +61,37 @@ type Props = {
 
 export function RaceDetail({ race }: Props) {
   const { settings } = useSettings();
+  const { races: catalogRaces } = useRaceCatalog();
+  const { selectedDate } = useRaceDay();
   const horses = useMemo(() => enrichHorseScores(race), [race]);
-  const picks = useMemo(() => selectLongshots([race], settings), [race, settings]);
+  const dayRaces = useMemo(() => {
+    const date = race.raceDate || selectedDate;
+    const fromCatalog = filterRacesByDate(catalogRaces, date);
+    if (fromCatalog.some((r) => r.id === race.id)) return fromCatalog;
+    return [race];
+  }, [catalogRaces, race, selectedDate]);
+  const dayPicks = useMemo(
+    () => selectLongshots(dayRaces, settings),
+    [dayRaces, settings],
+  );
+  const picks = useMemo(
+    () => dayPicks.filter((p) => p.raceId === race.id),
+    [dayPicks, race.id],
+  );
+  const rank = useMemo(() => {
+    const map = assignDayExpectationRanks(
+      dayRaces.map((r) => ({
+        raceId: r.id,
+        picks: dayPicks.filter((p) => p.raceId === r.id),
+      })),
+    );
+    return map.get(race.id) ?? "D";
+  }, [dayRaces, dayPicks, race.id]);
   const boardRows = useMemo(
     () => race.oddsBoard.map((entry) => classifyOddsEntry(race, entry, settings)),
     [race, settings],
   );
   const passCount = boardRows.filter((r) => r.status === "pass").length;
-  const rank = raceExpectationRank(picks);
   const markedHorses = useMemo(() => longshotHorseNumbers(picks, race.id), [picks, race.id]);
   const axisPicks = useMemo(() => selectAxisHorses(race, picks), [race, picks]);
   const axisByNum = useMemo(() => axisIndexByNumber(axisPicks), [axisPicks]);

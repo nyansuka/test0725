@@ -45,6 +45,15 @@ docker compose exec web npm run loop:sweep
 docker compose exec web npm run loop:sweep:odds-cap
 ```
 
+ゲート内機会（穴馬券内 × 製品オッズゲート）のベースライン:
+
+```bash
+npm run loop:verify-longshot-in-money
+# → reports/longshot-in-money-snapshots.json（gatedOppRecall / Miss 分解）
+```
+
+定義・読み方は [HIT-RATE-PLAN.md](../../../docs/HIT-RATE-PLAN.md) §4.3。
+
 ## 注意
 
 - **freeze は結果が出る前に一度実行する。** 既存の `loop/snapshots` は原則上書きしない（`--force` のみ差し替え可）。

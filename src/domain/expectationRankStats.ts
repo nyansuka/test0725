@@ -4,7 +4,7 @@ import type {
   RaceExpectationRank,
   UserSelectionSettings,
 } from "./types";
-import { selectLongshots, raceExpectationRank } from "./longshots";
+import { selectLongshots, assignDayExpectationRanks } from "./longshots";
 import { evaluatePick, findPayoutYen, isInMoney } from "./results";
 
 export const EXPECTATION_RANKS: RaceExpectationRank[] = ["S", "A", "B", "C", "D"];
@@ -114,8 +114,27 @@ export function summarizeByExpectationRank(
     EXPECTATION_RANKS.map((r) => [r, emptyBucket(r)]),
   ) as Record<RaceExpectationRank, ExpectationRankBucket>;
 
+  // 日付ごとに日内相対で割当（ボード表示と同じ）
+  const byDate = new Map<string, string[]>();
+  for (const [raceId] of picksByRace) {
+    const race = raceById.get(raceId);
+    const date = race?.raceDate ?? "_";
+    if (!byDate.has(date)) byDate.set(date, []);
+    byDate.get(date)!.push(raceId);
+  }
+  const rankByRaceId = new Map<string, RaceExpectationRank>();
+  for (const [, ids] of byDate) {
+    const dayRanks = assignDayExpectationRanks(
+      ids.map((raceId) => ({
+        raceId,
+        picks: picksByRace.get(raceId) ?? [],
+      })),
+    );
+    for (const [id, rank] of dayRanks) rankByRaceId.set(id, rank);
+  }
+
   for (const [raceId, racePicks] of picksByRace) {
-    const rank = raceExpectationRank(racePicks);
+    const rank = rankByRaceId.get(raceId) ?? "D";
     const bucket = buckets[rank];
     bucket.raceCount += 1;
     const race = raceById.get(raceId);

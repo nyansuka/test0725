@@ -144,7 +144,7 @@
 | D1 | 発走前候補の日次保存 | `src/data/loop/predictions/YYYY-MM-DD.json`（＋凍結オッズ） | **実装済** (`loop:freeze`) |
 | D2 | 結果との突合バッチ | `src/data/loop/evaluations/` に hit フラグ | **実装済** (`loop:evaluate`) |
 | D3 | 週次メトリクス表 | Recall / Precision / 件数（`loop:report`） | **実装済（CLI/JSON）** |
-| D4 | 前走・同条件タイムの自動取り込み | formSignal / courseFit が合成一辺倒でなくなる | **一部済**（`courseFit`・`formSignal`。`valueGap` は未） |
+| D4 | 前走・同条件タイムの自動取り込み | formSignal / courseFit が合成一辺倒でなくなる | **一部済**（`formSignal`・`valueGap` 導出。`courseFit` は enrich-form。pace/condition は未） |
 | D5 | オッズ複数時刻スナップ | 締切直前ゲートの感度分析ができる | 未着手 |
 
 運用コマンド:
@@ -272,7 +272,7 @@ PLAN 5.4 を具体化する。**候補の成否は券種の厳密払戻ではな
 | 4 | `/method` 追記 | **一部済**（短評＝評価＋ループ傾向） |
 | 5 | （任意）検証用簡易ページ | 未着手。まず JSON＋表で十分 |
 
-短評の傾向: `loop/trends/latest.json` を参照。他日があれば表示日を除外し、他日が無いときだけ当日検証を注記付きで表示。成功定義は関係馬3着以内（馬券内以上）。馬の前走は D4（未接続）。
+短評の傾向: `loop/trends/latest.json` を参照。他日があれば表示日を除外し、他日が無いときだけ当日検証を注記付きで表示。成功定義は関係馬3着以内（馬券内以上）。馬の前走は Scorer が `formStats` から `formSignal` を導出（無ければ中立50。enrich-form でカバレッジ拡大）。
 
 ---
 

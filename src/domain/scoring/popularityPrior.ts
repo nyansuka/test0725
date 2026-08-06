@@ -4,6 +4,11 @@
  * 1着の約65%が人気Top3、6〜10人気が約15.6%、11人気以下は約2.8%。
  * 短窓 202601–202608（1866R）も同水準（Top3 64.4% / 6-10 16.1% / 11+ 2.5%）。
  */
+import {
+  FORM_SIGNAL_NEUTRAL,
+  formSignalFromFormStats,
+} from "./deriveFactors.mjs";
+
 export function popularityWinScore(popularity: number | null | undefined): number {
   if (popularity == null || popularity < 1) return 40;
   if (popularity === 1) return 92;
@@ -22,16 +27,19 @@ export function popularityWinScore(popularity: number | null | undefined): numbe
 /** 因子ベースと人気事前の合成比率（人気側を厚く） */
 export const WIN_POP_BLEND = 0.62;
 
-/** 中穴（6〜10）の適性合成（昇格判定用） */
+/** 中穴（6〜10）の適性合成（昇格判定用）。formSignal は前走導出を優先 */
 export function midLongshotComposite(horse: {
   factors?: { formSignal?: number; courseFit?: number; paceFit?: number };
+  formStats?: {
+    lastRank?: number | null;
+    lastPopularity?: number | null;
+    avgSameRank?: number | null;
+  };
 }): number {
   const f = horse.factors ?? {};
-  return (
-    (f.formSignal ?? 50) * 0.5 +
-    (f.courseFit ?? 50) * 0.35 +
-    (f.paceFit ?? 50) * 0.15
-  );
+  const form =
+    formSignalFromFormStats(horse.formStats) ?? f.formSignal ?? FORM_SIGNAL_NEUTRAL;
+  return form * 0.5 + (f.courseFit ?? 50) * 0.35 + (f.paceFit ?? 50) * 0.15;
 }
 
 /** 中穴昇格の適性下限 */

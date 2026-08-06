@@ -26,7 +26,11 @@ export const DEFAULT_SETTINGS = {
   oddsThreshold: 25,
   /** B3: 上限80（感度スイープ推奨。null で上限なし） */
   oddsMax: 80 as number | null,
-  scoreMin: 75,
+  /**
+   * C1/C2 後: 合成インフレ解消に合わせ 75→60。
+   * （旧75は候補がほぼ消える）
+   */
+  scoreMin: 60,
   enabledBetTypes: [...ALL_BET_TYPES] as BetType[],
 };
 

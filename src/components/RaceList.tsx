@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   EXPECTATION_RANK_HELP,
   enrichHorseScores,
-  raceExpectationRank,
+  assignDayExpectationRanks,
   selectLongshots,
 } from "@/domain/longshots";
 import type { Race } from "@/domain/types";
@@ -53,6 +53,12 @@ export function RaceList({ races: racesProp }: Props) {
   );
 
   const groups = useMemo(() => {
+    const dayRankById = assignDayExpectationRanks(
+      dayRaces.map((race) => ({
+        raceId: race.id,
+        picks: allPicks.filter((p) => p.raceId === race.id),
+      })),
+    );
     return groupRacesByVenue(dayRaces).map(({ venue, races: venueRaces }) => ({
       venue,
       races: venueRaces.map((race) => {
@@ -62,7 +68,7 @@ export function RaceList({ races: racesProp }: Props) {
           race,
           picks,
           pickCount: picks.length,
-          rank: raceExpectationRank(picks),
+          rank: dayRankById.get(race.id) ?? "D",
           markedHorses: longshotHorseNumbers(picks, race.id),
           axisByNum: axisIndexByNumber(axis),
           superWatchCount: axis.filter((a) => a.isSuperWatch).length,

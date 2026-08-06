@@ -3,6 +3,13 @@
  * src/domain の TypeScript と挙動を揃えること。
  */
 
+import { trackGateBiasScore } from "../../src/domain/scoring/trackGateBias.mjs";
+import {
+  FORM_SIGNAL_NEUTRAL,
+  formSignalFromFormStats,
+  valueGapFromPopularity,
+} from "../../src/domain/scoring/deriveFactors.mjs";
+
 export const ALL_BET_TYPES = [
   "win",
   "place",
@@ -18,11 +25,27 @@ export const DEFAULT_SETTINGS = {
   oddsThreshold: 25,
   /** B3: 上限80（感度スイープ推奨。null で上限なし） */
   oddsMax: 80,
-  scoreMin: 75,
+  /**
+   * C1/C2 後の再キャリブ（旧75は合成インフレ前提で候補がほぼ消える）。
+   * 25/80/60 ≈ dens 2.9 · ticket≈1.4%（スナップ960R）
+   */
+  scoreMin: 60,
   enabledBetTypes: [...ALL_BET_TYPES],
 };
 
-export const LABEL_SCORE_THRESHOLD = 70;
+export const LABEL_SCORE_THRESHOLD = 65;
+/** 注目穴スコア帯（C3）。下限含む・上限含まず */
+export const HOT_SCORE_MIN = 65;
+export const HOT_SCORE_MAX = 70;
+
+export function labelFor(score) {
+  if (score >= HOT_SCORE_MIN && score < HOT_SCORE_MAX) return "注目穴";
+  return "抑え候補";
+}
+
+function isHotScore(score) {
+  return score >= HOT_SCORE_MIN && score < HOT_SCORE_MAX;
+}
 export const AXIS_TOP_N = 3;
 
 const PLACE_WEIGHTS = {
@@ -85,7 +108,9 @@ function popularityWinScore(popularity) {
 
 function midLongshotComposite(horse) {
   const f = horse.factors ?? {};
-  return (f.formSignal ?? 50) * 0.5 + (f.courseFit ?? 50) * 0.35 + (f.paceFit ?? 50) * 0.15;
+  const form =
+    formSignalFromFormStats(horse.formStats) ?? f.formSignal ?? FORM_SIGNAL_NEUTRAL;
+  return form * 0.5 + (f.courseFit ?? 50) * 0.35 + (f.paceFit ?? 50) * 0.15;
 }
 
 function qualifiesMidLongshot(horse, popularity, field) {
@@ -120,14 +145,13 @@ function clamp(n, min = 0, max = 100) {
 
 function prepareFactors(horse, race) {
   const factors = { ...horse.factors };
-  if (factors.gateJockey == null) {
-    factors.gateJockey = horse.bracket != null && horse.bracket <= 3 ? 62 : 52;
-  }
+  factors.gateJockey = trackGateBiasScore(race.track, horse.bracket);
+  const pop = popularityByNumber(race.horses ?? []).get(horse.number) ?? null;
+  factors.valueGap = valueGapFromPopularity(pop);
+  const derivedForm = formSignalFromFormStats(horse.formStats);
+  factors.formSignal = derivedForm ?? FORM_SIGNAL_NEUTRAL;
   if (String(race.condition).includes("稍") || String(race.condition).includes("重")) {
     factors.conditionFit = clamp(factors.conditionFit + (factors.conditionFit >= 65 ? 4 : -2));
-  }
-  if (horse.oddsWin >= 12) {
-    factors.valueGap = clamp(factors.valueGap + 3);
   }
   return factors;
 }
@@ -184,10 +208,6 @@ function pickComment(race, related) {
   if (related.length === 0) return "関係馬の評価が不足しています。";
   const best = [...related].sort((a, b) => scoreHorse(b, race) - scoreHorse(a, race))[0];
   return best.comment ?? "";
-}
-
-function labelFor(score) {
-  return score >= LABEL_SCORE_THRESHOLD ? "注目穴" : "抑え候補";
 }
 
 export function classifyOddsEntry(race, entry, settings) {
