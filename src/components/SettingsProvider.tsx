@@ -66,8 +66,8 @@ function loadSettings(): UserSelectionSettings {
     if (parsed.oddsMax === undefined) {
       parsed.oddsMax = DEFAULT_SETTINGS.oddsMax;
     }
-    // v4 既定 scoreMin=75 は C1/C2 後に候補が消える → 60 へ移行
-    if (fromLegacyV4 && parsed.scoreMin === 75) {
+    // 旧既定 75 が v5 に残っていても C1/C2 後の既定 60 へ寄せる（80 など明示変更は維持）
+    if (parsed.scoreMin === 75) {
       parsed.scoreMin = DEFAULT_SETTINGS.scoreMin;
     }
     return normalizeSettings(parsed);

@@ -67,7 +67,8 @@ export function SettingsForm() {
             className="mt-2 w-full border border-ink/15 bg-sand px-3 py-3"
           />
           <p className="mt-2 text-xs text-ink/50">
-            初期値 {DEFAULT_SETTINGS.scoreMin}。ボード・日記のランク集計と同期されます。
+            既定の初期値は {DEFAULT_SETTINGS.scoreMin}
+            （入力中の値はブラウザ保存。古い75/80のままなら「初期化」で既定に戻せます）。ボード・日記のランク集計と同期されます。
           </p>
         </label>
       </div>
