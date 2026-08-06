@@ -26,10 +26,12 @@ export function TodayLongshots({ races: racesProp, limit = 5 }: Props) {
     () => filterRacesByDate(races, selectedDate),
     [races, selectedDate],
   );
-  const picks = useMemo(
-    () => selectLongshots(dayRaces, settings).slice(0, limit),
-    [dayRaces, settings, limit],
-  );
+  const picks = useMemo(() => {
+    // 見出しは「注目穴」。抑え候補はボード側で見る
+    return selectLongshots(dayRaces, settings)
+      .filter((p) => p.label === "注目穴")
+      .slice(0, limit);
+  }, [dayRaces, settings, limit]);
   const isToday = selectedDate === today;
 
   return (

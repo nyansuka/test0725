@@ -14,7 +14,7 @@ export default function MethodPage() {
             </p>
             <h1 className="mt-2 text-3xl font-bold text-ink md:text-5xl">予想の見方</h1>
             <p className="mt-3 max-w-2xl text-ink/70">
-              スコア実装は差し替え可能です。現状は説明可能なルール＋仮スコアです。
+              スコア実装は差し替え可能です。人気乖離・近況は導出済み。コース／展開／馬場などは当面ルール＋仮値です。
             </p>
           </div>
         </div>
