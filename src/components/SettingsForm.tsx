@@ -1,6 +1,7 @@
 "use client";
 
 import { ALL_BET_TYPES, BET_TYPE_LABELS, DEFAULT_SETTINGS } from "@/domain/betTypes";
+import { NumberStepper } from "@/components/NumberStepper";
 import { useSettings } from "@/components/SettingsProvider";
 
 export function SettingsForm() {
@@ -18,59 +19,52 @@ export function SettingsForm() {
   return (
     <div className="space-y-10">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <label className="block">
+        <div>
           <span className="text-sm text-ink/60">オッズ閾値（以上で候補）</span>
-          <input
-            type="number"
-            min={1}
-            step={1}
+          <NumberStepper
+            aria-label="オッズ閾値"
             value={settings.oddsThreshold}
-            onChange={(e) => setOddsThreshold(Number(e.target.value) || 1)}
-            className="mt-2 w-full border border-ink/15 bg-sand px-3 py-3"
+            onChange={(n) => setOddsThreshold(n ?? 1)}
+            min={1}
+            max={999}
+            step={1}
           />
           <p className="mt-2 text-xs text-ink/50">
             初期値 {DEFAULT_SETTINGS.oddsThreshold}。ボード・設定で同期されます。
           </p>
-        </label>
-        <label className="block">
+        </div>
+        <div>
           <span className="text-sm text-ink/60">オッズ上限（以下で候補）</span>
-          <input
-            type="number"
+          <NumberStepper
+            aria-label="オッズ上限"
+            value={settings.oddsMax}
+            onChange={setOddsMax}
             min={1}
+            max={999}
             step={1}
-            value={settings.oddsMax ?? ""}
-            placeholder="なし"
-            onChange={(e) => {
-              const raw = e.target.value.trim();
-              if (raw === "") {
-                setOddsMax(null);
-                return;
-              }
-              const n = Number(raw);
-              setOddsMax(Number.isFinite(n) && n > 0 ? n : null);
-            }}
-            className="mt-2 w-full border border-ink/15 bg-sand px-3 py-3"
+            nullable
+            emptyLabel="なし"
+            nullStepTo={DEFAULT_SETTINGS.oddsMax ?? 80}
           />
           <p className="mt-2 text-xs text-ink/50">
-            初期値 {DEFAULT_SETTINGS.oddsMax ?? "なし"}。空欄で上限なし。この値を超えるオッズは除外。
+            初期値 {DEFAULT_SETTINGS.oddsMax ?? "なし"}。−で下限未満にすると上限なし。この値を超えるオッズは除外。
           </p>
-        </label>
-        <label className="block">
+        </div>
+        <div>
           <span className="text-sm text-ink/60">最低スコア（relatedPlacePotential）</span>
-          <input
-            type="number"
+          <NumberStepper
+            aria-label="最低スコア"
+            value={settings.scoreMin}
+            onChange={(n) => setScoreMin(n ?? 0)}
             min={0}
             max={100}
             step={1}
-            value={settings.scoreMin}
-            onChange={(e) => setScoreMin(Number(e.target.value) || 0)}
-            className="mt-2 w-full border border-ink/15 bg-sand px-3 py-3"
           />
           <p className="mt-2 text-xs text-ink/50">
             既定の初期値は {DEFAULT_SETTINGS.scoreMin}
             （入力中の値はブラウザ保存。古い75/80のままなら「初期化」で既定に戻せます）。ボード・日記のランク集計と同期されます。
           </p>
-        </label>
+        </div>
       </div>
 
       <div>
