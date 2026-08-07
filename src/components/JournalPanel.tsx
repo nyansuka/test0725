@@ -307,41 +307,77 @@ export function JournalPanel() {
                 </div>
               ))}
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[640px] text-left text-sm">
-                <thead>
-                  <tr className="border-b border-ink/20 text-ink/50">
-                    <th className="py-2 pr-3 font-medium">期待度</th>
-                    <th className="py-2 pr-3 font-medium">レース数</th>
-                    <th className="py-2 pr-3 font-medium">候補</th>
-                    <th className="py-2 pr-3 font-medium">的中率</th>
-                    <th className="py-2 pr-3 font-medium">仮想回収率</th>
-                    <th className="py-2 font-medium">的中 / 確定</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rankStats.byRank.map((row) => (
-                    <tr key={row.rank} className="border-b border-ink/10">
-                      <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-semibold">
+            <div>
+              <ul className="space-y-2 md:hidden">
+                {rankStats.byRank.map((row) => (
+                  <li key={row.rank} className="border border-ink/10 bg-sand px-3 py-3">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="font-[family-name:var(--font-display)] text-lg font-semibold">
                         {row.rank}
-                      </td>
-                      <td className="py-2.5 pr-3">{row.raceCount}</td>
-                      <td className="py-2.5 pr-3">{row.candidates.toLocaleString()}</td>
-                      <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-medium">
-                        {formatRate(row.hitRatePercent)}
-                      </td>
-                      <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-medium">
-                        {formatRate(row.returnRatePercent)}
-                      </td>
-                      <td className="py-2.5 text-ink/70">
-                        {row.settled > 0
-                          ? `${row.placeHits.toLocaleString()} / ${row.settled.toLocaleString()}`
-                          : "—"}
-                      </td>
+                      </span>
+                      <span className="text-sm text-ink/55">
+                        {row.raceCount}R · 候補 {row.candidates.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
+                      <div>
+                        <p className="text-xs text-ink/45">的中率</p>
+                        <p className="font-[family-name:var(--font-display)] font-medium">
+                          {formatRate(row.hitRatePercent)}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-ink/45">仮想回収率</p>
+                        <p className="font-[family-name:var(--font-display)] font-medium">
+                          {formatRate(row.returnRatePercent)}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="mt-2 text-xs text-ink/55">
+                      的中 / 確定{" "}
+                      {row.settled > 0
+                        ? `${row.placeHits.toLocaleString()} / ${row.settled.toLocaleString()}`
+                        : "—"}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+              <div className="hidden overflow-x-auto md:block">
+                <table className="w-full min-w-[640px] text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-ink/20 text-ink/50">
+                      <th className="py-2 pr-3 font-medium">期待度</th>
+                      <th className="py-2 pr-3 font-medium">レース数</th>
+                      <th className="py-2 pr-3 font-medium">候補</th>
+                      <th className="py-2 pr-3 font-medium">的中率</th>
+                      <th className="py-2 pr-3 font-medium">仮想回収率</th>
+                      <th className="py-2 font-medium">的中 / 確定</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {rankStats.byRank.map((row) => (
+                      <tr key={row.rank} className="border-b border-ink/10">
+                        <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-semibold">
+                          {row.rank}
+                        </td>
+                        <td className="py-2.5 pr-3">{row.raceCount}</td>
+                        <td className="py-2.5 pr-3">{row.candidates.toLocaleString()}</td>
+                        <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-medium">
+                          {formatRate(row.hitRatePercent)}
+                        </td>
+                        <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-medium">
+                          {formatRate(row.returnRatePercent)}
+                        </td>
+                        <td className="py-2.5 text-ink/70">
+                          {row.settled > 0
+                            ? `${row.placeHits.toLocaleString()} / ${row.settled.toLocaleString()}`
+                            : "—"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
             <p className="text-xs text-ink/45">
               対象日: {corpusDates.map(formatJstDateLabel).join(" · ") || "—"}
@@ -388,29 +424,49 @@ export function JournalPanel() {
           </div>
         </div>
         {longshotStats.days.length > 0 && (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[420px] text-left text-sm">
-              <thead>
-                <tr className="border-b border-ink/20 text-ink/50">
-                  <th className="py-2 pr-3 font-medium">開催日</th>
-                  <th className="py-2 pr-3 font-medium">注目穴 的中率</th>
-                  <th className="py-2 font-medium">的中 / 件数</th>
-                </tr>
-              </thead>
-              <tbody>
-                {longshotStats.days.map((day) => (
-                  <tr key={day.date} className="border-b border-ink/10">
-                    <td className="py-2.5 pr-3">{formatJstDateLabel(day.date)}</td>
-                    <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-medium">
-                      {formatPrecisionPercent(day.precision)}
-                    </td>
-                    <td className="py-2.5 text-ink/70">
+          <div>
+            <ul className="space-y-2 md:hidden">
+              {longshotStats.days.map((day) => (
+                <li
+                  key={day.date}
+                  className="flex items-center justify-between gap-3 border border-ink/10 bg-sand px-3 py-3"
+                >
+                  <div>
+                    <p className="font-medium">{formatJstDateLabel(day.date)}</p>
+                    <p className="mt-0.5 text-xs text-ink/55">
                       {day.hits.toLocaleString()} / {day.settled.toLocaleString()}
-                    </td>
+                    </p>
+                  </div>
+                  <p className="font-[family-name:var(--font-display)] text-lg font-medium">
+                    {formatPrecisionPercent(day.precision)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <div className="hidden overflow-x-auto md:block">
+              <table className="w-full min-w-[420px] text-left text-sm">
+                <thead>
+                  <tr className="border-b border-ink/20 text-ink/50">
+                    <th className="py-2 pr-3 font-medium">開催日</th>
+                    <th className="py-2 pr-3 font-medium">注目穴 的中率</th>
+                    <th className="py-2 font-medium">的中 / 件数</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {longshotStats.days.map((day) => (
+                    <tr key={day.date} className="border-b border-ink/10">
+                      <td className="py-2.5 pr-3">{formatJstDateLabel(day.date)}</td>
+                      <td className="py-2.5 pr-3 font-[family-name:var(--font-display)] font-medium">
+                        {formatPrecisionPercent(day.precision)}
+                      </td>
+                      <td className="py-2.5 text-ink/70">
+                        {day.hits.toLocaleString()} / {day.settled.toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </section>
@@ -747,45 +803,47 @@ export function JournalPanel() {
         </div>
       </form>
 
-      <div className="overflow-x-auto">
+      <div>
         {!hydrated ? (
           <p className="text-ink/50">読み込み中…</p>
         ) : visible.length === 0 ? (
           <p className="py-8 text-center text-ink/50">まだ履歴がありません。</p>
         ) : (
-          <table className="w-full min-w-[720px] text-left text-sm">
-            <thead>
-              <tr className="border-b border-ink/20 text-ink/50">
-                <th className="py-2 pr-3 font-medium">日時</th>
-                <th className="py-2 pr-3 font-medium">区分</th>
-                <th className="py-2 pr-3 font-medium">レース</th>
-                <th className="py-2 pr-3 font-medium">券種</th>
-                <th className="py-2 pr-3 font-medium">買い目</th>
-                <th className="py-2 pr-3 font-medium">投資</th>
-                <th className="py-2 pr-3 font-medium">払戻</th>
-                <th className="py-2 font-medium"></th>
-              </tr>
-            </thead>
-            <tbody>
+          <>
+            <ul className="space-y-2 md:hidden">
               {visible.map((slip) => {
                 const race = raceOptions.find((r) => r.id === slip.raceId);
                 return (
-                  <tr key={slip.id} className="border-b border-ink/10">
-                    <td className="py-3 pr-3 text-xs text-ink/50">
-                      {new Date(slip.createdAt).toLocaleString("ja-JP")}
-                    </td>
-                    <td className="py-3 pr-3">
-                      {slip.source === "self" ? "自分" : "予想家"}
-                    </td>
-                    <td className="py-3 pr-3">
-                      {race ? `${race.venue}${race.raceNumber}R` : slip.raceId}
-                    </td>
-                    <td className="py-3 pr-3">{BET_TYPE_LABELS[slip.betType]}</td>
-                    <td className="py-3 pr-3 font-[family-name:var(--font-display)]">
-                      {slip.selection}
-                    </td>
-                    <td className="py-3 pr-3">{slip.stakeYen.toLocaleString()}</td>
-                    <td className="py-3 pr-3">
+                  <li key={slip.id} className="border border-ink/10 bg-sand px-3 py-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="text-xs text-ink/50">
+                          {new Date(slip.createdAt).toLocaleString("ja-JP")}
+                        </p>
+                        <p className="mt-1 text-sm">
+                          <span className="text-ink/55">
+                            {slip.source === "self" ? "自分" : "予想家"}
+                          </span>
+                          {" · "}
+                          {race ? `${race.venue}${race.raceNumber}R` : slip.raceId}
+                        </p>
+                        <p className="mt-1">
+                          <span className="text-ink/60">{BET_TYPE_LABELS[slip.betType]}</span>{" "}
+                          <span className="font-[family-name:var(--font-display)] font-medium">
+                            {slip.selection}
+                          </span>
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeSlip(slip.id)}
+                        className="shrink-0 px-1 py-1 text-sm text-ink/40 hover:text-ink"
+                      >
+                        削除
+                      </button>
+                    </div>
+                    <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+                      <span>投資 {slip.stakeYen.toLocaleString()}円</span>
                       {slip.payoutYen === null ? (
                         <button
                           type="button"
@@ -796,28 +854,86 @@ export function JournalPanel() {
                             updateSlip(slip.id, { payoutYen: Number(raw) || 0 });
                           }}
                         >
-                          未確定
+                          払戻 未確定
                         </button>
                       ) : (
                         <span className={slip.payoutYen > 0 ? "font-medium text-signal" : ""}>
-                          {slip.payoutYen.toLocaleString()}
+                          払戻 {slip.payoutYen.toLocaleString()}円
                         </span>
                       )}
-                    </td>
-                    <td className="py-3">
-                      <button
-                        type="button"
-                        onClick={() => removeSlip(slip.id)}
-                        className="text-ink/40 hover:text-ink"
-                      >
-                        削除
-                      </button>
-                    </td>
-                  </tr>
+                    </div>
+                  </li>
                 );
               })}
-            </tbody>
-          </table>
+            </ul>
+            <div className="hidden overflow-x-auto md:block">
+              <table className="w-full min-w-[720px] text-left text-sm">
+                <thead>
+                  <tr className="border-b border-ink/20 text-ink/50">
+                    <th className="py-2 pr-3 font-medium">日時</th>
+                    <th className="py-2 pr-3 font-medium">区分</th>
+                    <th className="py-2 pr-3 font-medium">レース</th>
+                    <th className="py-2 pr-3 font-medium">券種</th>
+                    <th className="py-2 pr-3 font-medium">買い目</th>
+                    <th className="py-2 pr-3 font-medium">投資</th>
+                    <th className="py-2 pr-3 font-medium">払戻</th>
+                    <th className="py-2 font-medium"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {visible.map((slip) => {
+                    const race = raceOptions.find((r) => r.id === slip.raceId);
+                    return (
+                      <tr key={slip.id} className="border-b border-ink/10">
+                        <td className="py-3 pr-3 text-xs text-ink/50">
+                          {new Date(slip.createdAt).toLocaleString("ja-JP")}
+                        </td>
+                        <td className="py-3 pr-3">
+                          {slip.source === "self" ? "自分" : "予想家"}
+                        </td>
+                        <td className="py-3 pr-3">
+                          {race ? `${race.venue}${race.raceNumber}R` : slip.raceId}
+                        </td>
+                        <td className="py-3 pr-3">{BET_TYPE_LABELS[slip.betType]}</td>
+                        <td className="py-3 pr-3 font-[family-name:var(--font-display)]">
+                          {slip.selection}
+                        </td>
+                        <td className="py-3 pr-3">{slip.stakeYen.toLocaleString()}</td>
+                        <td className="py-3 pr-3">
+                          {slip.payoutYen === null ? (
+                            <button
+                              type="button"
+                              className="text-turf underline"
+                              onClick={() => {
+                                const raw = window.prompt("払戻額（外れは 0）", "0");
+                                if (raw == null) return;
+                                updateSlip(slip.id, { payoutYen: Number(raw) || 0 });
+                              }}
+                            >
+                              未確定
+                            </button>
+                          ) : (
+                            <span className={slip.payoutYen > 0 ? "font-medium text-signal" : ""}>
+                              {slip.payoutYen.toLocaleString()}
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-3">
+                          <button
+                            type="button"
+                            onClick={() => removeSlip(slip.id)}
+                            className="text-ink/40 hover:text-ink"
+                          >
+                            削除
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
     </div>

@@ -35,14 +35,14 @@ export function TodayLongshots({ races: racesProp, limit = 5 }: Props) {
   const isToday = selectedDate === today;
 
   return (
-    <section id="featured" className="bg-sand px-6 py-20 md:px-8 md:py-24">
+    <section id="featured" className="bg-sand px-4 py-16 sm:px-6 md:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="font-[family-name:var(--font-display)] text-sm tracking-[0.2em] text-turf">
               TODAY&apos;S LONGSHOTS
             </p>
-            <h2 className="mt-2 text-3xl font-bold text-ink md:text-4xl">
+            <h2 className="mt-2 text-2xl font-bold text-ink sm:text-3xl md:text-4xl">
               {isToday ? "今日の注目穴" : "選択日の注目穴"}
             </h2>
             <p className="mt-3 max-w-xl text-ink/70">

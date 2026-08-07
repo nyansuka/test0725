@@ -27,7 +27,35 @@ export function RaceResultPanel({ race }: Props) {
         <p className="mt-2 text-sm text-ink/60">{formatFinishLine(result)}</p>
       </div>
 
-      <div className="overflow-x-auto">
+      <ul className="space-y-2 md:hidden">
+        {finishes.map((f) => (
+          <li
+            key={f.number}
+            className={`flex items-start gap-3 border border-ink/10 px-3 py-3 ${
+              f.rank != null && f.rank <= 3 ? "bg-turf/5" : "bg-sand-dim/30"
+            }`}
+          >
+            <span className="w-8 shrink-0 font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
+              {f.rank ?? "—"}
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="font-medium">
+                <span className="mr-2 font-semibold">{f.number}</span>
+                {f.name}
+              </p>
+              <p className="mt-1 text-xs text-ink/60">
+                {f.jockey ?? "—"}
+                {" · "}
+                {f.time ?? "—"}
+                {" · "}
+                {f.popularity != null ? `${f.popularity}人` : "—"}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div className="hidden overflow-x-auto md:block">
         <table className="w-full min-w-[520px] text-left text-sm">
           <thead>
             <tr className="border-b border-ink/20 text-ink/50">

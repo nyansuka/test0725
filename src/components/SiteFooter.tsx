@@ -18,7 +18,7 @@ export function SiteFooter() {
     : "—";
 
   return (
-    <footer className="bg-ink px-6 py-10 text-sand/70 md:px-8">
+    <footer className="bg-ink px-4 py-10 text-sand/70 sm:px-6 md:px-8">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <p className="inline-flex items-center gap-2 font-[family-name:var(--font-display)] text-lg font-bold tracking-[0.16em] text-sand">
           <Image

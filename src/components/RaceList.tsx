@@ -110,12 +110,12 @@ export function RaceList({ races: racesProp }: Props) {
   const activeGroup = groups.find((g) => g.venue === activeVenue) ?? groups[0];
 
   return (
-    <section id="races" className="bg-sand px-6 py-20 md:px-8 md:py-24">
+    <section id="races" className="bg-sand px-4 py-16 sm:px-6 md:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
         <p className="font-[family-name:var(--font-display)] text-sm tracking-[0.2em] text-turf">
           JRA RACES
         </p>
-        <h2 className="mt-2 text-3xl font-bold text-ink md:text-4xl">レース一覧</h2>
+        <h2 className="mt-2 text-2xl font-bold text-ink sm:text-3xl md:text-4xl">レース一覧</h2>
         <p className="mt-3 max-w-2xl text-ink/70">
           開催日を選び、会場タブで全レース（1〜12R）を確認できます。注目穴馬には
           <LongshotMark className="mx-0.5" /> が付きます。{EXPECTATION_RANK_HELP}
@@ -178,21 +178,21 @@ export function RaceList({ races: racesProp }: Props) {
                 const horses = open ? enrichHorseScores(race) : [];
                 return (
                   <li key={race.id} id={race.id}>
-                    <div className="flex flex-wrap items-stretch gap-2 py-3 md:gap-4">
+                    <div className="flex items-stretch gap-1 py-3 sm:gap-2 md:gap-4">
                       <button
                         type="button"
                         onClick={() => setExpandedId(open ? null : race.id)}
-                        className="group flex min-w-0 flex-1 flex-wrap items-center gap-4 py-2 text-left transition hover:bg-sand-dim/40 md:gap-8"
+                        className="group flex min-w-0 flex-1 items-start gap-3 py-2 text-left transition hover:bg-sand-dim/40 sm:items-center sm:gap-4 md:gap-8"
                         aria-expanded={open}
                       >
-                        <div className="w-24 shrink-0">
-                          <p className="font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
+                        <div className="w-14 shrink-0 sm:w-24">
+                          <p className="font-[family-name:var(--font-display)] text-base font-semibold text-ink sm:text-lg">
                             {race.raceNumber}R
                           </p>
-                          <p className="mt-0.5 text-sm text-ink/60">{race.startTime}</p>
+                          <p className="mt-0.5 text-xs text-ink/60 sm:text-sm">{race.startTime}</p>
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-lg font-semibold text-ink group-hover:text-turf">
+                          <p className="text-base font-semibold text-ink group-hover:text-turf sm:text-lg">
                             {race.title}
                             {markedHorses.size > 0 && (
                               <LongshotMark className="ml-2 text-base" />
@@ -206,7 +206,7 @@ export function RaceList({ races: racesProp }: Props) {
                               </span>
                             )}
                           </p>
-                          <p className="mt-1 text-sm text-ink/60">
+                          <p className="mt-1 text-xs leading-relaxed text-ink/60 sm:text-sm">
                             {race.distance} · {race.weather}/{race.condition} · 候補 {pickCount}件
                             · 注目穴馬 {markedHorses.size}頭
                             {superWatchCount > 0 ? ` · 超注目 ${superWatchCount}` : ""}
@@ -216,18 +216,18 @@ export function RaceList({ races: racesProp }: Props) {
                           </p>
                         </div>
                         <span
-                          className={`inline-flex h-9 w-9 items-center justify-center font-[family-name:var(--font-display)] text-sm font-bold ${rankColor[rank]}`}
+                          className={`mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center font-[family-name:var(--font-display)] text-sm font-bold sm:mt-0 sm:h-9 sm:w-9 ${rankColor[rank]}`}
                           title={`レース期待度 ${rank}`}
                         >
                           {rank}
                         </span>
-                        <span className="w-6 text-center text-ink/40" aria-hidden>
+                        <span className="mt-1 w-5 shrink-0 text-center text-ink/40 sm:mt-0 sm:w-6" aria-hidden>
                           {open ? "−" : "+"}
                         </span>
                       </button>
                       <Link
                         href={`/races/${race.id}`}
-                        className="shrink-0 self-center px-3 py-2 text-sm text-turf hover:underline"
+                        className="shrink-0 self-center px-2 py-3 text-sm text-turf hover:underline sm:px-3"
                       >
                         詳細
                       </Link>
@@ -242,74 +242,127 @@ export function RaceList({ races: racesProp }: Props) {
                           <span>期待度 {rank}</span>
                         </div>
 
-                        <div className="mt-4 overflow-x-auto">
-                          <table className="w-full min-w-[640px] text-left text-sm">
-                            <thead>
-                              <tr className="border-b border-ink/15 text-ink/45">
-                                <th className="py-2 pr-2 font-medium">印</th>
-                                <th className="py-2 pr-2 font-medium">馬番</th>
-                                <th className="py-2 pr-2 font-medium">馬名</th>
-                                <th className="py-2 pr-2 font-medium">騎手</th>
-                                <th className="py-2 pr-2 font-medium">人気</th>
-                                <th className="py-2 pr-2 font-medium">単勝</th>
-                                <th className="py-2 pr-2 font-medium">複勝</th>
-                                <th className="py-2 pr-2 font-medium">穴</th>
-                                <th className="py-2 font-medium">軸</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {(() => {
-                                const pop = popularityByNumber(horses);
-                                return [...horses]
-                                  .sort((a, b) => a.number - b.number)
-                                  .map((horse) => {
-                                    const marked = markedHorses.has(horse.number);
-                                    const axis = axisByNum.get(horse.number);
-                                    return (
-                                      <tr
-                                        key={horse.number}
-                                        className={`border-b border-ink/10 ${
-                                          axis?.isSuperWatch
-                                            ? "bg-signal/8"
-                                            : marked || axis
-                                              ? "bg-signal/5"
-                                              : ""
-                                        }`}
-                                      >
-                                        <td className="py-2 pr-2">
-                                          <span className="flex flex-wrap items-center gap-1">
-                                            {marked ? <LongshotMark /> : null}
-                                            {axis ? <AxisMark rank={axis.rankInRace} /> : null}
-                                            {axis?.isSuperWatch ? <SuperWatchMark /> : null}
-                                          </span>
-                                        </td>
-                                        <td className="py-2 pr-2 font-[family-name:var(--font-display)] font-semibold">
-                                          {horse.number}
-                                        </td>
-                                        <td className="py-2 pr-2 font-medium">{horse.name}</td>
-                                        <td className="py-2 pr-2 text-ink/60">{horse.jockey}</td>
-                                        <td className="py-2 pr-2 font-medium text-ink">
-                                          {formatPopularity(pop.get(horse.number))}
-                                        </td>
-                                        <td className="py-2 pr-2 font-medium text-signal">
-                                          {formatWinOdds(horse.oddsWin)}
-                                        </td>
-                                        <td className="py-2 pr-2 text-ink/70">
-                                          {placeOddsLabel(horse, race)}
-                                        </td>
-                                        <td className="py-2 pr-2 font-[family-name:var(--font-display)] text-turf">
-                                          {horse.placePotential}
-                                        </td>
-                                        <td className="py-2 font-[family-name:var(--font-display)] text-ink/70">
-                                          {horse.winPotential ?? "—"}
-                                        </td>
-                                      </tr>
-                                    );
-                                  });
-                              })()}
-                            </tbody>
-                          </table>
-                        </div>
+                        {(() => {
+                          const pop = popularityByNumber(horses);
+                          const rows = [...horses].sort((a, b) => a.number - b.number);
+                          return (
+                            <>
+                              <ul className="mt-4 space-y-2 md:hidden">
+                                {rows.map((horse) => {
+                                  const marked = markedHorses.has(horse.number);
+                                  const axis = axisByNum.get(horse.number);
+                                  return (
+                                    <li
+                                      key={horse.number}
+                                      className={`border border-ink/10 px-3 py-3 ${
+                                        axis?.isSuperWatch
+                                          ? "bg-signal/8"
+                                          : marked || axis
+                                            ? "bg-signal/5"
+                                            : "bg-sand"
+                                      }`}
+                                    >
+                                      <div className="flex items-start gap-2">
+                                        <span className="flex min-w-[2.5rem] flex-wrap items-center gap-1">
+                                          {marked ? <LongshotMark /> : null}
+                                          {axis ? <AxisMark rank={axis.rankInRace} /> : null}
+                                          {axis?.isSuperWatch ? <SuperWatchMark /> : null}
+                                        </span>
+                                        <div className="min-w-0 flex-1">
+                                          <p className="font-medium text-ink">
+                                            <span className="mr-2 font-[family-name:var(--font-display)] font-semibold">
+                                              {horse.number}
+                                            </span>
+                                            {horse.name}
+                                          </p>
+                                          <p className="mt-0.5 text-xs text-ink/55">{horse.jockey}</p>
+                                          <p className="mt-2 text-xs text-ink/70">
+                                            {formatPopularity(pop.get(horse.number))}
+                                            {" · "}
+                                            <span className="font-medium text-signal">
+                                              単勝 {formatWinOdds(horse.oddsWin)}
+                                            </span>
+                                            {" · "}
+                                            複勝 {placeOddsLabel(horse, race)}
+                                          </p>
+                                        </div>
+                                        <div className="shrink-0 text-right text-xs">
+                                          <p className="font-[family-name:var(--font-display)] text-sm text-turf">
+                                            穴 {horse.placePotential}
+                                          </p>
+                                          <p className="text-ink/55">軸 {horse.winPotential ?? "—"}</p>
+                                        </div>
+                                      </div>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                              <div className="mt-4 hidden overflow-x-auto md:block">
+                                <table className="w-full min-w-[640px] text-left text-sm">
+                                  <thead>
+                                    <tr className="border-b border-ink/15 text-ink/45">
+                                      <th className="py-2 pr-2 font-medium">印</th>
+                                      <th className="py-2 pr-2 font-medium">馬番</th>
+                                      <th className="py-2 pr-2 font-medium">馬名</th>
+                                      <th className="py-2 pr-2 font-medium">騎手</th>
+                                      <th className="py-2 pr-2 font-medium">人気</th>
+                                      <th className="py-2 pr-2 font-medium">単勝</th>
+                                      <th className="py-2 pr-2 font-medium">複勝</th>
+                                      <th className="py-2 pr-2 font-medium">穴</th>
+                                      <th className="py-2 font-medium">軸</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {rows.map((horse) => {
+                                      const marked = markedHorses.has(horse.number);
+                                      const axis = axisByNum.get(horse.number);
+                                      return (
+                                        <tr
+                                          key={horse.number}
+                                          className={`border-b border-ink/10 ${
+                                            axis?.isSuperWatch
+                                              ? "bg-signal/8"
+                                              : marked || axis
+                                                ? "bg-signal/5"
+                                                : ""
+                                          }`}
+                                        >
+                                          <td className="py-2 pr-2">
+                                            <span className="flex flex-wrap items-center gap-1">
+                                              {marked ? <LongshotMark /> : null}
+                                              {axis ? <AxisMark rank={axis.rankInRace} /> : null}
+                                              {axis?.isSuperWatch ? <SuperWatchMark /> : null}
+                                            </span>
+                                          </td>
+                                          <td className="py-2 pr-2 font-[family-name:var(--font-display)] font-semibold">
+                                            {horse.number}
+                                          </td>
+                                          <td className="py-2 pr-2 font-medium">{horse.name}</td>
+                                          <td className="py-2 pr-2 text-ink/60">{horse.jockey}</td>
+                                          <td className="py-2 pr-2 font-medium text-ink">
+                                            {formatPopularity(pop.get(horse.number))}
+                                          </td>
+                                          <td className="py-2 pr-2 font-medium text-signal">
+                                            {formatWinOdds(horse.oddsWin)}
+                                          </td>
+                                          <td className="py-2 pr-2 text-ink/70">
+                                            {placeOddsLabel(horse, race)}
+                                          </td>
+                                          <td className="py-2 pr-2 font-[family-name:var(--font-display)] text-turf">
+                                            {horse.placePotential}
+                                          </td>
+                                          <td className="py-2 font-[family-name:var(--font-display)] text-ink/70">
+                                            {horse.winPotential ?? "—"}
+                                          </td>
+                                        </tr>
+                                      );
+                                    })}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </>
+                          );
+                        })()}
 
                         {picks.length > 0 && (
                           <div className="mt-4">

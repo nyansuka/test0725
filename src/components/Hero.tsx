@@ -21,7 +21,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1d2b4a]/90 via-[#1d2b4a]/35 to-[#1d2b4a]/20"
       />
 
-      <div className="hero-copy relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-end px-6 pb-10 pt-24 md:px-8 md:pb-14">
+      <div className="hero-copy relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-10 pt-24 sm:px-6 md:px-8 md:pb-14">
         <div className="animate-rise flex max-w-full items-center gap-3 sm:gap-4">
           <Image
             src="/brand/mark.png"

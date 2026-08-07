@@ -23,7 +23,7 @@ const steps = [
 
 export function Method() {
   return (
-    <section id="method" className="bg-turf-deep px-6 py-20 text-sand md:px-8 md:py-28">
+    <section id="method" className="bg-turf-deep px-4 py-16 text-sand sm:px-6 md:px-8 md:py-28">
       <div className="mx-auto max-w-6xl">
         <p className="font-[family-name:var(--font-display)] text-sm tracking-[0.2em] text-signal-soft">
           HOW IT WORKS

@@ -105,7 +105,7 @@ export function RaceDetail({ race }: Props) {
           <p className="font-[family-name:var(--font-display)] text-sm tracking-[0.2em] text-turf">
             {race.raceDate} · {race.venue} {race.raceNumber}R · {race.startTime} · JRA
           </p>
-          <h1 className="mt-2 text-3xl font-bold text-ink md:text-5xl">{race.title}</h1>
+          <h1 className="mt-2 text-2xl font-bold text-ink sm:text-3xl md:text-5xl">{race.title}</h1>
           <p className="mt-3 text-ink/70">
             {race.distance} · {race.weather} / {race.condition}
           </p>
@@ -219,36 +219,47 @@ export function RaceDetail({ race }: Props) {
                   <button
                     type="button"
                     onClick={() => setOpenId(open ? null : horse.number)}
-                    className="flex w-full flex-wrap items-center gap-3 px-4 py-4 text-left md:gap-4"
+                    className="flex w-full flex-col gap-2 px-3 py-3.5 text-left sm:px-4 sm:py-4 md:flex-row md:flex-wrap md:items-center md:gap-4"
                   >
-                    <span className="flex min-w-[4.5rem] flex-wrap items-center gap-1" aria-hidden>
-                      {marked ? <LongshotMark /> : null}
-                      {axis ? <AxisMark rank={axis.rankInRace} /> : null}
-                      {axis?.isSuperWatch ? <SuperWatchMark /> : null}
-                      {axis?.midPromoted ? <MidPromotedMark /> : null}
-                    </span>
-                    <span className="w-8 font-[family-name:var(--font-display)] text-xl font-semibold">
-                      {horse.number}
-                    </span>
-                    <span className="min-w-[8rem] font-medium">{horse.name}</span>
-                    <span className="text-sm text-ink/60">{horse.jockey}</span>
-                    <span className="min-w-[4.5rem] text-sm font-medium">
-                      {formatPopularity(popularity.get(horse.number))}
-                    </span>
-                    <span className="text-sm font-medium text-signal">
-                      単勝 {formatWinOdds(horse.oddsWin)}
-                    </span>
-                    <span className="text-sm text-ink/65">
-                      複勝 {placeOddsLabel(horse, race)}
-                    </span>
-                    <span className="ml-auto flex flex-col items-end gap-0.5">
-                      <span className="font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
-                        穴 {horse.placePotential}
+                    <div className="flex min-w-0 flex-1 items-start gap-2 md:items-center md:gap-3">
+                      <span className="flex min-w-[2.75rem] flex-wrap items-center gap-1" aria-hidden>
+                        {marked ? <LongshotMark /> : null}
+                        {axis ? <AxisMark rank={axis.rankInRace} /> : null}
+                        {axis?.isSuperWatch ? <SuperWatchMark /> : null}
+                        {axis?.midPromoted ? <MidPromotedMark /> : null}
                       </span>
-                      <span className="text-xs text-ink/50">
-                        軸 {horse.winPotential ?? "—"}
+                      <span className="w-7 shrink-0 font-[family-name:var(--font-display)] text-xl font-semibold">
+                        {horse.number}
                       </span>
-                    </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium leading-snug">{horse.name}</p>
+                        <p className="mt-0.5 text-sm text-ink/60 md:hidden">{horse.jockey}</p>
+                      </div>
+                      <span className="ml-auto shrink-0 text-right md:hidden">
+                        <span className="block font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
+                          穴 {horse.placePotential}
+                        </span>
+                        <span className="text-xs text-ink/50">軸 {horse.winPotential ?? "—"}</span>
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pl-10 text-sm text-ink/65 md:contents">
+                      <span className="hidden text-sm text-ink/60 md:inline">{horse.jockey}</span>
+                      <span className="min-w-[4.5rem] font-medium text-ink">
+                        {formatPopularity(popularity.get(horse.number))}
+                      </span>
+                      <span className="font-medium text-signal">
+                        単勝 {formatWinOdds(horse.oddsWin)}
+                      </span>
+                      <span>複勝 {placeOddsLabel(horse, race)}</span>
+                      <span className="ml-auto hidden flex-col items-end gap-0.5 md:flex">
+                        <span className="font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
+                          穴 {horse.placePotential}
+                        </span>
+                        <span className="text-xs text-ink/50">
+                          軸 {horse.winPotential ?? "—"}
+                        </span>
+                      </span>
+                    </div>
                   </button>
                   {open && (
                     <div className="border-t border-ink/10 px-4 py-4">
@@ -288,39 +299,70 @@ export function RaceDetail({ race }: Props) {
             見送り {passCount} 件 · 候補はゲート通過かつ最低スコア以上
           </p>
         </div>
-        <div className="mt-4 overflow-x-auto">
-          <table className="w-full min-w-[560px] text-left text-sm">
-            <thead>
-              <tr className="border-b border-ink/20 text-ink/50">
-                <th className="py-2 pr-3 font-medium">券種</th>
-                <th className="py-2 pr-3 font-medium">買い目</th>
-                <th className="py-2 pr-3 font-medium">オッズ</th>
-                <th className="py-2 pr-3 font-medium">スコア</th>
-                <th className="py-2 font-medium">判定</th>
-              </tr>
-            </thead>
-            <tbody>
-              {boardRows.map((row) => (
-                <tr
-                  key={`${row.entry.betType}-${row.entry.selection}`}
-                  className="border-b border-ink/10"
-                >
-                  <td className="py-2 pr-3">{BET_TYPE_LABELS[row.entry.betType]}</td>
-                  <td className="py-2 pr-3 font-[family-name:var(--font-display)]">
-                    {row.entry.selection}
-                  </td>
-                  <td className="py-2 pr-3">{row.entry.odds.toFixed(1)}</td>
-                  <td className="py-2 pr-3 text-ink/60">
-                    {row.relatedPlacePotential > 0 ? row.relatedPlacePotential : "—"}
-                  </td>
-                  <td className={`py-2 ${statusClass[row.status]}`}>
+        <div className="mt-4">
+          <ul className="space-y-2 md:hidden">
+            {boardRows.map((row) => (
+              <li
+                key={`${row.entry.betType}-${row.entry.selection}`}
+                className="border border-ink/10 bg-sand-dim/30 px-3 py-3"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-sm text-ink/55">{BET_TYPE_LABELS[row.entry.betType]}</p>
+                    <p className="mt-0.5 font-[family-name:var(--font-display)] font-medium">
+                      {row.entry.selection}
+                    </p>
+                  </div>
+                  <p className="shrink-0 font-[family-name:var(--font-display)] text-base font-semibold">
+                    {row.entry.odds.toFixed(1)}
+                  </p>
+                </div>
+                <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+                  <span className="text-ink/55">
+                    スコア {row.relatedPlacePotential > 0 ? row.relatedPlacePotential : "—"}
+                  </span>
+                  <span className={statusClass[row.status]}>
                     {statusLabel[row.status]}
                     {row.label ? `（${row.label}）` : ""}
-                  </td>
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="hidden overflow-x-auto md:block">
+            <table className="w-full min-w-[560px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-ink/20 text-ink/50">
+                  <th className="py-2 pr-3 font-medium">券種</th>
+                  <th className="py-2 pr-3 font-medium">買い目</th>
+                  <th className="py-2 pr-3 font-medium">オッズ</th>
+                  <th className="py-2 pr-3 font-medium">スコア</th>
+                  <th className="py-2 font-medium">判定</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {boardRows.map((row) => (
+                  <tr
+                    key={`${row.entry.betType}-${row.entry.selection}`}
+                    className="border-b border-ink/10"
+                  >
+                    <td className="py-2 pr-3">{BET_TYPE_LABELS[row.entry.betType]}</td>
+                    <td className="py-2 pr-3 font-[family-name:var(--font-display)]">
+                      {row.entry.selection}
+                    </td>
+                    <td className="py-2 pr-3">{row.entry.odds.toFixed(1)}</td>
+                    <td className="py-2 pr-3 text-ink/60">
+                      {row.relatedPlacePotential > 0 ? row.relatedPlacePotential : "—"}
+                    </td>
+                    <td className={`py-2 ${statusClass[row.status]}`}>
+                      {statusLabel[row.status]}
+                      {row.label ? `（${row.label}）` : ""}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
     </div>

@@ -21,7 +21,7 @@ export default function RacePage({ params }: Props) {
   return (
     <>
       <SiteHeader />
-      <main className="flex-1 bg-sand px-6 py-14 md:px-8 md:py-20">
+      <main className="flex-1 bg-sand px-4 py-12 sm:px-6 md:px-8 md:py-20">
         <div className="mx-auto max-w-4xl">
           <RaceDetail race={race} />
         </div>
