@@ -83,13 +83,13 @@ export function NumberStepper({
   const display = focused ? draft : value == null ? emptyLabel : String(value);
 
   return (
-    <div className="mt-2 flex items-stretch border border-ink/15 bg-sand">
+    <div className="mt-2 flex w-full max-w-full min-w-0 items-stretch overflow-hidden border border-ink/15 bg-sand">
       <button
         type="button"
         aria-label={`${ariaLabel}を減らす`}
         disabled={nullable ? value == null : atMin}
         onClick={() => stepBy(-step)}
-        className="inline-flex h-12 w-12 shrink-0 items-center justify-center border-r border-ink/15 text-xl font-medium text-ink transition enabled:hover:bg-sand-dim disabled:text-ink/25"
+        className="inline-flex h-11 w-11 shrink-0 items-center justify-center border-r border-ink/15 text-lg font-medium text-ink transition enabled:hover:bg-sand-dim disabled:text-ink/25 sm:h-12 sm:w-12 sm:text-xl"
       >
         −
       </button>
@@ -98,6 +98,7 @@ export function NumberStepper({
         type="text"
         inputMode="numeric"
         pattern="[0-9]*"
+        size={1}
         aria-label={ariaLabel}
         value={focused ? draft : display}
         placeholder={nullable ? emptyLabel : undefined}
@@ -123,14 +124,14 @@ export function NumberStepper({
             stepBy(-step);
           }
         }}
-        className="min-w-0 flex-1 bg-transparent px-3 text-center text-base font-[family-name:var(--font-display)] font-semibold tabular-nums text-ink outline-none"
+        className="w-0 min-w-0 flex-1 bg-transparent px-2 text-center text-base font-[family-name:var(--font-display)] font-semibold tabular-nums text-ink outline-none sm:px-3"
       />
       <button
         type="button"
         aria-label={`${ariaLabel}を増やす`}
         disabled={atMax}
         onClick={() => stepBy(step)}
-        className="inline-flex h-12 w-12 shrink-0 items-center justify-center border-l border-ink/15 text-xl font-medium text-ink transition enabled:hover:bg-sand-dim disabled:text-ink/25"
+        className="inline-flex h-11 w-11 shrink-0 items-center justify-center border-l border-ink/15 text-lg font-medium text-ink transition enabled:hover:bg-sand-dim disabled:text-ink/25 sm:h-12 sm:w-12 sm:text-xl"
       >
         ＋
       </button>

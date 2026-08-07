@@ -7,7 +7,7 @@ export default function SettingsPage() {
     <>
       <SiteHeader />
       <main className="flex-1 bg-sand px-4 py-12 sm:px-6 md:px-8 md:py-20">
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto w-full min-w-0 max-w-3xl">
           <p className="font-[family-name:var(--font-display)] text-sm tracking-[0.2em] text-turf">
             SETTINGS
           </p>

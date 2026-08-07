@@ -17,9 +17,9 @@ export function SettingsForm() {
   } = useSettings();
 
   return (
-    <div className="space-y-10">
+    <div className="min-w-0 space-y-10">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <div>
+        <div className="min-w-0">
           <span className="text-sm text-ink/60">オッズ閾値（以上で候補）</span>
           <NumberStepper
             aria-label="オッズ閾値"
@@ -33,7 +33,7 @@ export function SettingsForm() {
             初期値 {DEFAULT_SETTINGS.oddsThreshold}。ボード・設定で同期されます。
           </p>
         </div>
-        <div>
+        <div className="min-w-0">
           <span className="text-sm text-ink/60">オッズ上限（以下で候補）</span>
           <NumberStepper
             aria-label="オッズ上限"
@@ -50,7 +50,7 @@ export function SettingsForm() {
             初期値 {DEFAULT_SETTINGS.oddsMax ?? "なし"}。−で下限未満にすると上限なし。この値を超えるオッズは除外。
           </p>
         </div>
-        <div>
+        <div className="min-w-0">
           <span className="text-sm text-ink/60">最低スコア（relatedPlacePotential）</span>
           <NumberStepper
             aria-label="最低スコア"
