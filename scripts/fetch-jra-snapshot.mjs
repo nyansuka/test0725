@@ -167,17 +167,25 @@ function parseRaceMeta(html, raceId) {
 
 function parseHorses(html) {
   const horses = [];
-  const rows = [...html.matchAll(/<tr class="HorseList"[^>]*>([\s\S]*?)<\/tr>/gi)];
+  // 馬番確定前は <td class="Umaban"> が空で、id="tr_N" / オッズキーだけが付く
+  const rows = [...html.matchAll(/<tr class="HorseList"([^>]*)>([\s\S]*?)<\/tr>/gi)];
   for (const rowMatch of rows) {
-    const row = rowMatch[1];
+    const attrs = rowMatch[1];
+    const row = rowMatch[2];
     if (/取消|除外/.test(row) && /Cancel_/.test(row)) continue;
 
-    const umaban = Number(row.match(/<td class="Umaban\d+[^"]*"[^>]*>\s*(\d+)\s*</)?.[1]);
-    if (!umaban) continue;
-    const waku = Number(
-      row.match(/<td class="Waku\d+[^"]*"[^>]*>\s*(?:<[^>]+>)?\s*(\d+)/)?.[1] ??
-        Math.ceil(umaban / 2),
+    const umabanFromTd = Number(
+      row.match(/<td class="Umaban\d+[^"]*"[^>]*>\s*(\d+)\s*</)?.[1] ??
+        row.match(/<td class="Umaban[^"]*"[^>]*>\s*(\d+)\s*</)?.[1],
     );
+    const umabanFromTr = Number(attrs.match(/\bid="tr_(\d+)"/i)?.[1]);
+    const umaban = umabanFromTd || umabanFromTr;
+    if (!umaban) continue;
+    const wakuFromTd = Number(
+      row.match(/<td class="Waku\d+[^"]*"[^>]*>\s*(?:<[^>]+>)?\s*(\d+)/)?.[1] ??
+        row.match(/<td class="Waku[^"]*"[^>]*>\s*(?:<span>)?\s*(\d+)/)?.[1],
+    );
+    const waku = wakuFromTd || Math.ceil(umaban / 2);
 
     const horseAnchor =
       row.match(
