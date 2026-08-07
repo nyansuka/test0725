@@ -17,7 +17,7 @@ services:
     stdin_open: true
     tty: true
 
-  # 発走後に結果を自動取得（デフォルト90秒間隔）
+  # 未発走オッズ＋発走後結果を自動取得（デフォルト90秒間隔）
   fetcher:
     build: .
     command: ["node", "scripts/watch-jra-snapshot.mjs"]
@@ -27,6 +27,7 @@ services:
     environment:
       - INTERVAL_SEC=90
       - GRACE_MIN=8
+      - ODDS_REFRESH=1
     restart: unless-stopped
 
 volumes:

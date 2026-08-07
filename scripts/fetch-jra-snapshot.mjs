@@ -667,14 +667,21 @@ function startMinutes(hhmm) {
 }
 
 /**
- * latest.json は「サイトが指す当日スナップ」。過去日の enrich/結果更新で上書きしない。
- * 同日またはより新しい raceDate のときだけ更新する。
+ * latest.json は「サイトが指す当日スナップ」。
+ * - JST 暦日のスナップは、未来日の先取り latest より優先する
+ * - 暦日 latest があるときは、別日（過去・未来）の書き込みで上書きしない
+ * - それ以外は raceDate が同日またはより新しいときだけ更新する
  */
 async function shouldUpdateLatest(snapshot, latestPath) {
+  const today = jstNowParts().date;
   try {
     const existing = JSON.parse(await readFile(latestPath, "utf8"));
     if (!existing?.raceDate) return true;
-    return String(snapshot.raceDate) >= String(existing.raceDate);
+    const snap = String(snapshot.raceDate);
+    const cur = String(existing.raceDate);
+    if (snap === today && cur !== today) return true;
+    if (cur === today && snap !== today) return false;
+    return snap >= cur;
   } catch {
     return true;
   }
@@ -722,6 +729,85 @@ async function loadExistingSnapshot(raceDate) {
       return null;
     }
   }
+}
+
+/** 既存レースにオッズ束を上書き（出馬表・form・結果は維持）。 */
+function applyOddsBundleToRace(race, { entries, placeRanges, officialDatetime }) {
+  const winOdds = new Map(
+    entries.filter((e) => e.betType === "win").map((e) => [Number(e.selection), e.odds]),
+  );
+  const fieldSize = race.horses?.length ?? 0;
+  for (const h of race.horses ?? []) {
+    const oddsWin = winOdds.get(h.number) ?? h.oddsWin ?? 99.9;
+    const place = placeRanges.get(h.number);
+    h.oddsWin = oddsWin;
+    h.oddsPlace = place
+      ? { min: place.min, max: place.max }
+      : {
+          min: Math.max(1.1, Number((oddsWin * 0.28).toFixed(1))),
+          max: Math.max(1.3, Number((oddsWin * 0.55).toFixed(1))),
+        };
+    h.factors = synthesizeFactors(h, oddsWin, fieldSize, race.track);
+    h.comment = buildComment(oddsWin);
+  }
+
+  const board = [...entries];
+  for (const h of race.horses ?? []) {
+    if (!board.some((e) => e.betType === "win" && e.selection === String(h.number))) {
+      board.push({ betType: "win", selection: String(h.number), odds: h.oddsWin });
+    }
+    if (!board.some((e) => e.betType === "place" && e.selection === String(h.number))) {
+      const mid = Number(((h.oddsPlace.min + h.oddsPlace.max) / 2).toFixed(1));
+      board.push({ betType: "place", selection: String(h.number), odds: mid });
+    }
+  }
+  race.oddsBoard = board;
+  race.oddsUpdatedAt = officialDatetime;
+}
+
+/**
+ * 未発走レースのオッズだけ差分更新（結果付きはスキップ）。
+ */
+async function updateOddsOnly(raceDate) {
+  const existing = await loadExistingSnapshot(raceDate);
+  if (!existing?.races?.length) {
+    console.log("No existing snapshot for odds refresh");
+    return null;
+  }
+
+  const now = jstNowParts();
+  let updated = 0;
+  for (const race of existing.races) {
+    if (race.result?.finishes?.length) continue;
+    if (!race.sourceRaceId) continue;
+    if (race.raceDate !== raceDate) continue;
+    if (now.date === race.raceDate && now.minutes >= startMinutes(race.startTime)) continue;
+
+    process.stdout.write(`odds ${race.venue}${race.raceNumber}R ... `);
+    try {
+      const bundle = await fetchOddsBundle(race.sourceRaceId);
+      const winCount = bundle.entries.filter((e) => e.betType === "win").length;
+      if (winCount === 0) {
+        console.log("empty");
+        continue;
+      }
+      applyOddsBundleToRace(race, bundle);
+      updated += 1;
+      console.log(`OK win=${winCount} board=${race.oddsBoard.length} at=${race.oddsUpdatedAt ?? "?"}`);
+    } catch (err) {
+      console.log(`FAIL ${err.message}`);
+    }
+  }
+
+  if (updated > 0) {
+    existing.fetchedAt = new Date().toISOString();
+    existing.source = "netkeiba (public pages / odds API + results)";
+    const out = await writeSnapshot(existing);
+    console.log(`Updated odds on ${updated} races → ${out}`);
+  } else {
+    console.log("No odds updates");
+  }
+  return existing;
 }
 
 /**
@@ -828,6 +914,7 @@ async function enrichSnapshotWithForm(raceDate, { force = false, limit = 0 } = {
 async function main() {
   const args = process.argv.slice(2);
   const resultsOnly = args.includes("--results-only");
+  const oddsOnly = args.includes("--odds-only");
   const refreshResults = args.includes("--refresh-results");
   const resultHistory = args.includes("--result-history");
   const withForm = args.includes("--with-form");
@@ -842,6 +929,15 @@ async function main() {
   if (enrichForm) {
     await enrichSnapshotWithForm(raceDate, { force: forceForm, limit });
     return;
+  }
+
+  if (oddsOnly) {
+    const snap = await updateOddsOnly(raceDate);
+    if (!snap) {
+      // fall through to full fetch
+    } else {
+      return;
+    }
   }
 
   if (resultsOnly || refreshResults) {
@@ -932,6 +1028,7 @@ export {
   fetchRaceResult,
   parseResultHtml,
   parseHorses,
+  updateOddsOnly,
   updateResultsOnly,
   enrichSnapshotWithForm,
   writeSnapshot,

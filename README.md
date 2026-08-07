@@ -38,10 +38,13 @@ docker compose down
 # 全レースの出馬表＋オッズ＋結果（あるもの）
 docker compose exec web npm run fetch:jra
 
+# 未発走レースのオッズだけ差分更新
+docker compose exec web npm run fetch:jra:odds
+
 # 終了済みレースの結果だけ差分更新
 docker compose exec web npm run fetch:jra:results
 
-# 自動監視（発走 + 8分後から結果を取りにいく）
+# 自動監視（未発走オッズ更新 + 発走8分後から結果）
 docker compose up fetcher
 ```
 
@@ -58,10 +61,10 @@ docker compose exec web npm run loop:evaluate
 docker compose exec web npm run loop:report -- 2026-07-25
 ```
 
-`docker compose up` すると `web` と一緒に `fetcher` も起動します（90秒間隔）。
+`docker compose up` すると `web` と一緒に `fetcher` も起動します（90秒間隔でオッズ＋結果）。
 
 - 取得元: netkeiba 公開の出馬表 / オッズ API / 結果ページ（デモ用途）
-- 反映先: `src/data/snapshots/latest.json`
+- 反映先: `src/data/snapshots/latest.json`（JST 当日スナップを優先。未来日の先取りでは上書きしない）
 - ループ蓄積: `src/data/loop/{snapshots,predictions,evaluations}/`
 - 画面は `/api/races` 経由で約1分ごとに再読込
 - スコア用 factors / comment はルール付与（公開データではない）

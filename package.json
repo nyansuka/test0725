@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "fetch:jra": "node scripts/fetch-jra-snapshot.mjs",
+    "fetch:jra:odds": "node scripts/fetch-jra-snapshot.mjs --odds-only",
     "fetch:jra:results": "node scripts/fetch-jra-snapshot.mjs --results-only",
     "fetch:jra:refresh-results": "node scripts/fetch-jra-snapshot.mjs --refresh-results",
     "fetch:jra:enrich-form": "node scripts/fetch-jra-snapshot.mjs --enrich-form",

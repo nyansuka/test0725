@@ -33,9 +33,10 @@ export async function loadRaceCatalog(): Promise<RaceCatalogPayload> {
   try {
     const latest = JSON.parse(await readFile(path.join(dir, "latest.json"), "utf8")) as SnapshotFile;
     const cutoff = threeMonthsBefore(latest.raceDate);
+    // 未来日の先取りスナップも残す（latest の raceDate 上限で切らない）
     const files = (await readdir(dir))
       .filter((name) => SNAPSHOT_FILE.test(name))
-      .filter((name) => name.slice(0, 10) >= cutoff && name.slice(0, 10) <= latest.raceDate);
+      .filter((name) => name.slice(0, 10) >= cutoff);
     const snapshots = await Promise.all(
       files.map(async (name) => JSON.parse(await readFile(path.join(dir, name), "utf8")) as SnapshotFile),
     );
