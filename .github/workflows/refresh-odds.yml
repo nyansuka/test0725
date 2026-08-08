@@ -27,8 +27,10 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Refresh today's odds
-        run: npm run fetch:jra:odds
+      - name: Refresh today's odds and results
+        run: |
+          npm run fetch:jra:odds
+          npm run fetch:jra:results
 
       - name: Commit and push if changed
         run: |

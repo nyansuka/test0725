@@ -17,7 +17,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 
 const UA =
-  "Mozilla/5.0 (compatible; UMANOTE-demo/0.1; +https://github.com/nyansuka/test0725)";
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
+const UA_SP =
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1";
 
 const VENUE = {
   "01": "札幌",
@@ -55,16 +57,24 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-async function fetchText(url) {
+async function fetchText(url, { userAgent = UA } = {}) {
   const res = await fetch(url, {
     headers: {
-      "User-Agent": UA,
+      "User-Agent": userAgent,
       Accept: "text/html,application/json,*/*",
       "Accept-Language": "ja,en;q=0.8",
     },
   });
   if (!res.ok) throw new Error(`${res.status} ${url}`);
   return res.text();
+}
+
+async function fetchTextOrNull(url, opts = {}) {
+  try {
+    return await fetchText(url, opts);
+  } catch {
+    return null;
+  }
 }
 
 async function fetchJson(url) {
@@ -366,30 +376,54 @@ function parseResultHtml(html) {
   }
 
   const finishes = [];
-  const rows = [...html.matchAll(/<tr[^>]*HorseList[^>]*>([\s\S]*?)<\/tr>/gi)];
+  // PC: HorseList rows / SP: Result_Num + Rank rows
+  const rows = [
+    ...html.matchAll(/<tr[^>]*HorseList[^>]*>([\s\S]*?)<\/tr>/gi),
+    ...html.matchAll(/<tr[^>]*>([\s\S]*?Result_Num[\s\S]*?)<\/tr>/gi),
+  ];
+  const seenNumbers = new Set();
   for (const rowMatch of rows) {
     const row = rowMatch[1];
     const rankRaw = row.match(/class="Rank"[^>]*>\s*([^<]+)/)?.[1]?.trim();
     const rankNum = Number(rankRaw);
     const rank = Number.isFinite(rankNum) ? rankNum : null;
+    const numCells = [...row.matchAll(/<td class="Num[^"]*"[^>]*>\s*<div>\s*(\d+)/g)].map((m) =>
+      Number(m[1]),
+    );
     const number = Number(
       row.match(/<td class="Num Txt_C"[^>]*>\s*<div>\s*(\d+)/)?.[1] ??
-        row.match(/Txt_C">\s*<div>\s*(\d+)\s*<\/div>/)?.[1],
+        row.match(/Txt_C">\s*<div>\s*(\d+)\s*<\/div>/)?.[1] ??
+        (numCells.length >= 2 ? numCells[1] : numCells[0]),
     );
-    if (!number) continue;
-    const bracket = Number(row.match(/Waku(\d+)/)?.[1]);
+    if (!number || seenNumbers.has(number)) continue;
+    seenNumbers.add(number);
+    const bracket = Number(
+      row.match(/Waku(\d+)/)?.[1] ?? (numCells.length >= 2 ? numCells[0] : undefined),
+    );
     const name = decodeHtml(
       row.match(/title="([^"]+)"/)?.[1] ??
         row.match(/HorseNameSpan[^>]*>\s*([^<]+)/)?.[1] ??
+        row.match(/Horse_Name"[^>]*>\s*<a[^>]*>\s*([^<]+)/)?.[1] ??
         `馬${number}`,
     );
     const jockey = decodeHtml(
       row.match(/JockeyNameSpan[^>]*>\s*([\s\S]*?)<\/span>/)?.[1]?.replace(/<[^>]+>/g, "") ??
+        row.match(/Detail_Right">\s*([^<]+)/)?.[1] ??
         "",
-    ).trim();
-    const time = row.match(/class="RaceTime"[^>]*>\s*([^<]+)/)?.[1]?.trim();
-    const popularity = Number(row.match(/OddsPeople[^>]*>\s*(\d+)/)?.[1]);
-    const oddsWin = Number(row.match(/Odds_Ninki[^>]*>\s*([\d.]+)/)?.[1]);
+    )
+      .replace(/\s+\d+(?:\.\d+)?\s*$/, "")
+      .trim();
+    const time =
+      row.match(/class="RaceTime"[^>]*>\s*([^<]+)/)?.[1]?.trim() ??
+      row.match(/class="Time"[^>]*>[\s\S]*?<span>\s*([^<]+)/)?.[1]?.trim();
+    const popularity = Number(
+      row.match(/OddsPeople[^>]*>\s*(\d+)/)?.[1] ?? row.match(/(\d+)\s*人気/)?.[1],
+    );
+    const oddsWin = Number(
+      row.match(/Odds_Ninki[^>]*>\s*([\d.]+)/)?.[1] ??
+        row.match(/Odds_Ninki[^>]*>\s*([\d.]+)\s*倍/)?.[1] ??
+        row.match(/>([\d.]+)\s*倍</)?.[1],
+    );
     finishes.push({
       rank,
       number,
@@ -482,10 +516,24 @@ function parseResultHtml(html) {
 }
 
 async function fetchRaceResult(raceId) {
-  const url = `https://race.netkeiba.com/race/result.html?race_id=${raceId}`;
-  const html = await fetchText(url);
-  await sleep(120);
-  return parseResultHtml(html);
+  const candidates = [
+    {
+      url: `https://race.netkeiba.com/race/result.html?race_id=${raceId}`,
+      userAgent: UA,
+    },
+    {
+      url: `https://race.sp.netkeiba.com/?pid=race_result&race_id=${raceId}`,
+      userAgent: UA_SP,
+    },
+  ];
+  for (const { url, userAgent } of candidates) {
+    const html = await fetchTextOrNull(url, { userAgent });
+    await sleep(120);
+    if (!html) continue;
+    const result = parseResultHtml(html);
+    if (result) return result;
+  }
+  return null;
 }
 
 /**
@@ -493,12 +541,16 @@ async function fetchRaceResult(raceId) {
  * 発売オッズ API を券種ごとに巡回しないため、結果バックフィルを軽量に行える。
  */
 async function fetchHistoricalResultRace(raceId, raceDate) {
-  const url = `https://race.netkeiba.com/race/result.html?race_id=${raceId}`;
-  const html = await fetchText(url);
-  await sleep(120);
-  const result = parseResultHtml(html);
+  const result = await fetchRaceResult(raceId);
   if (!result) throw new Error("official result not found");
 
+  // SP/PC 結果 HTML からメタを再取得（PC 失敗時は SP）
+  const html =
+    (await fetchTextOrNull(`https://race.netkeiba.com/race/result.html?race_id=${raceId}`)) ??
+    (await fetchTextOrNull(`https://race.sp.netkeiba.com/?pid=race_result&race_id=${raceId}`, {
+      userAgent: UA_SP,
+    }));
+  if (!html) throw new Error("result html unavailable");
   const meta = parseRaceMeta(html, raceId);
   const fieldSize = result.finishes.length;
   const horses = result.finishes.map((finish) => {
