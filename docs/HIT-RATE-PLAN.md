@@ -1,8 +1,8 @@
 # 的中率改善プラン
 
-最終更新: 2026-08-06  
-根拠: [IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md) / `loop/trends/latest.json` / `loop/reports/threshold-sweep-2026-07-25_2026-07-26.json` / `loop/reports/analyze-2026-08-02.json` / `loop/reports/odds-cap-sweep-*.json` / `loop/reports/longshot-in-money-snapshots.json` / `loop/reports/c1-c2-after.json`  
-対象期間: 2026-07-25〜26（72レース・凍結オッズ固定スイープ済）＋ 2026-08-01〜02 運用検証 · B3 既定反映 2026-08-03 · ゲート内機会ベースライン / 期待度再キャリブ / **C1/C2** 2026-08-06
+最終更新: 2026-08-08  
+根拠: [IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md) / `loop/trends/latest.json` / `loop/reports/threshold-sweep-2026-07-25_2026-07-26.json` / `loop/reports/analyze-2026-08-02.json` / `loop/reports/odds-cap-sweep-*.json` / `loop/reports/longshot-in-money-snapshots.json` / `loop/reports/c1-c2-after.json` / [VERIFY-2026-08-08.md](./VERIFY-2026-08-08.md)  
+対象期間: 2026-07-25〜26（72レース・凍結オッズ固定スイープ済）＋ 2026-08-01〜02 運用検証 · B3 既定反映 2026-08-03 · ゲート内機会ベースライン / 期待度再キャリブ / **C1/C2** 2026-08-06 · **25/60/oddsMax80 の全日突合 2026-08-08**
 
 運用ルール: **週次で変更は1つだけ**（[DATA-AND-LOOP.md](./DATA-AND-LOOP.md) §5.4）。
 
@@ -316,6 +316,8 @@ Miss 分解（61件・主因）:
 | `src/data/loop/reports/threshold-sweep-*.json` | 閾値感度の根拠 |
 | `src/data/loop/reports/odds-cap-sweep-*.json` | オッズ上限（B3）感度 |
 | `src/data/loop/reports/analyze-2026-08-02.json` | 当日の期待度・帯別切り口 |
+| [VERIFY-2026-08-08.md](./VERIFY-2026-08-08.md) / [verify/analyze-2026-08-08.json](./verify/analyze-2026-08-08.json) | 25/60/oddsMax80 の全日検証・8/9 再検証プロトコル |
+| `npm run loop:compare -- <base> <next>` | 開催日メトリクス突合 |
 | `src/data/loop/reports/longshot-in-money-snapshots.json` | ゲート内機会・Miss 分解ベースライン |
 | `scripts/verify-longshot-in-money.mjs` | 上記の再集計 |
 | `src/data/loop/reports/expectation-rank-sweep.json` | 期待度再キャリブ感度 |
