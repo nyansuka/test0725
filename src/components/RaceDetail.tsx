@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   classifyOddsEntry,
   enrichHorseScores,
@@ -19,6 +19,11 @@ import { LongshotMark, AxisMark, SuperWatchMark, MidPromotedMark, longshotHorseN
 import Link from "next/link";
 import { RaceResultPanel } from "@/components/RaceResultPanel";
 import {
+  TipsterMark,
+  TipsterRefPanel,
+  type TipsterRefPayload,
+} from "@/components/TipsterRefPanel";
+import {
   formatPopularity,
   formatWinOdds,
   placeOddsLabel,
@@ -27,6 +32,7 @@ import {
 import { evaluatePick, outcomeLabel } from "@/domain/results";
 import { axisIndexByNumber, selectAxisHorses } from "@/domain/axis";
 import { filterRacesByDate } from "@/data/races";
+import type { TipsterHorseRef } from "@/domain/tipsterRef";
 
 const factorLabels = [
   ["courseFit", "コース"],
@@ -57,9 +63,11 @@ const statusClass: Record<OddsBoardStatus, string> = {
 
 type Props = {
   race: Race;
+  /** サーバーで読んだプロ予想。無いレースは null */
+  initialTipster?: TipsterRefPayload | null;
 };
 
-export function RaceDetail({ race }: Props) {
+export function RaceDetail({ race, initialTipster = null }: Props) {
   const { settings } = useSettings();
   const { races: catalogRaces } = useRaceCatalog();
   const { selectedDate } = useRaceDay();
@@ -97,6 +105,18 @@ export function RaceDetail({ race }: Props) {
   const axisByNum = useMemo(() => axisIndexByNumber(axisPicks), [axisPicks]);
   const popularity = useMemo(() => popularityByNumber(race.horses), [race.horses]);
   const [openId, setOpenId] = useState<number | null>(horses[0]?.number ?? null);
+  const [tipster, setTipster] = useState<TipsterRefPayload | null>(initialTipster);
+
+  useEffect(() => {
+    setTipster(initialTipster);
+  }, [race.id, initialTipster]);
+
+  // クライアント再取得はしない（SSR の initialTipster を正とする）
+
+  const tipsterByNum = useMemo(() => {
+    if (!tipster) return new Map<number, TipsterHorseRef>();
+    return new Map(tipster.race.horses.map((h) => [h.number, h]));
+  }, [tipster]);
 
   return (
     <div className="space-y-14">
@@ -119,6 +139,9 @@ export function RaceDetail({ race }: Props) {
           <p className="text-xs tracking-wider text-ink/50">レース期待度</p>
           <p className="font-[family-name:var(--font-display)] text-4xl font-bold text-turf">{rank}</p>
           <p className="mt-1 text-sm text-ink/50">候補 {picks.length} 件</p>
+          {tipster?.race.expectation ? (
+            <p className="mt-1 text-xs text-ink/40">参考期待度 {tipster.race.expectation}</p>
+          ) : null}
           <p className="mt-2 max-w-[14rem] text-left text-xs leading-relaxed text-ink/45 md:text-right">
             {EXPECTATION_RANK_HELP}
           </p>
@@ -190,11 +213,14 @@ export function RaceDetail({ race }: Props) {
         )}
       </section>
 
+      {tipster ? <TipsterRefPanel tipster={tipster} /> : null}
+
       <section>
         <h2 className="text-xl font-semibold text-ink">
           出走表とカテゴリ内訳
           <span className="ml-3 text-sm font-normal text-ink/50">
             注目穴 <LongshotMark /> · <AxisMark /> · <MidPromotedMark /> · <SuperWatchMark />
+            {tipster ? " · 参考印" : ""}
           </span>
         </h2>
         <div className="mt-6 space-y-3">
@@ -204,7 +230,9 @@ export function RaceDetail({ race }: Props) {
               const open = openId === horse.number;
               const marked = markedHorses.has(horse.number);
               const axis = axisByNum.get(horse.number);
-              const highlight = marked || Boolean(axis);
+              const tip = tipsterByNum.get(horse.number);
+              const tipMarked = Boolean(tip?.mark);
+              const highlight = marked || Boolean(axis) || tipMarked;
               return (
                 <div
                   key={horse.number}
@@ -227,6 +255,7 @@ export function RaceDetail({ race }: Props) {
                         {axis ? <AxisMark rank={axis.rankInRace} /> : null}
                         {axis?.isSuperWatch ? <SuperWatchMark /> : null}
                         {axis?.midPromoted ? <MidPromotedMark /> : null}
+                        {tip ? <TipsterMark mark={tip.mark} /> : null}
                       </span>
                       <span className="w-7 shrink-0 font-[family-name:var(--font-display)] text-xl font-semibold">
                         {horse.number}
@@ -236,6 +265,11 @@ export function RaceDetail({ race }: Props) {
                         <p className="mt-0.5 text-sm text-ink/60 md:hidden">{horse.jockey}</p>
                       </div>
                       <span className="ml-auto shrink-0 text-right md:hidden">
+                        {tip?.mark || tip?.score ? (
+                          <span className="mb-0.5 block text-xs text-ink/35">
+                            参 {tip.mark || "·"} {tip.score}
+                          </span>
+                        ) : null}
                         <span className="block font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
                           穴 {horse.placePotential}
                         </span>
@@ -251,6 +285,11 @@ export function RaceDetail({ race }: Props) {
                         単勝 {formatWinOdds(horse.oddsWin)}
                       </span>
                       <span>複勝 {placeOddsLabel(horse, race)}</span>
+                      {tip ? (
+                        <span className="text-xs tabular-nums text-ink/35 md:min-w-[4.5rem]">
+                          参 {tip.score}
+                        </span>
+                      ) : null}
                       <span className="ml-auto hidden flex-col items-end gap-0.5 md:flex">
                         <span className="font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
                           穴 {horse.placePotential}
