@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, Fragment } from "react";
+import { useEffect, useMemo, useState, Fragment, type ReactNode } from "react";
 import {
   classifyOddsEntry,
   enrichHorseScores,
@@ -9,7 +9,7 @@ import {
   type OddsBoardStatus,
 } from "@/domain/longshots";
 import { BET_TYPE_LABELS } from "@/domain/betTypes";
-import type { Race } from "@/domain/types";
+import type { Horse, Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
 import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
@@ -32,6 +32,15 @@ import { evaluatePick, outcomeLabel } from "@/domain/results";
 import { axisIndexByNumber, selectAxisHorses } from "@/domain/axis";
 import { filterRacesByDate } from "@/data/races";
 import type { TipsterHorseRef } from "@/domain/tipsterRef";
+import {
+  DEFAULT_ENTRY_SORT,
+  entrySortPrefEquals,
+  loadEntrySortPref,
+  saveEntrySortPref,
+  type EntrySortDir,
+  type EntrySortKey,
+  type EntrySortPref,
+} from "@/domain/entryTableSort";
 
 const factorLabels = [
   ["courseFit", "コース"],
@@ -59,6 +68,125 @@ const statusClass: Record<OddsBoardStatus, string> = {
   disabled_bet: "text-ink/30",
   no_related: "text-ink/40",
 };
+
+const SORT_LABELS: Record<EntrySortKey, string> = {
+  number: "馬番",
+  name: "馬名",
+  jockey: "騎手",
+  popularity: "人気",
+  oddsWin: "単勝",
+  placeOdds: "複勝",
+  tipScore: "参考",
+  placePotential: "穴",
+  winPotential: "軸",
+};
+
+function placeOddsValue(horse: Horse, race: Race): number {
+  if (horse.oddsPlace) return horse.oddsPlace.min;
+  const entry = race.oddsBoard.find(
+    (e) => e.betType === "place" && e.selection === String(horse.number),
+  );
+  if (entry) return entry.odds;
+  return horse.oddsWin * 0.28;
+}
+
+function sortValue(
+  horse: Horse,
+  key: EntrySortKey,
+  race: Race,
+  popularity: Map<number, number>,
+  tipsterByNum: Map<number, TipsterHorseRef>,
+): number | string {
+  switch (key) {
+    case "number":
+      return horse.number;
+    case "name":
+      return horse.name;
+    case "jockey":
+      return horse.jockey;
+    case "popularity":
+      return popularity.get(horse.number) ?? 99;
+    case "oddsWin":
+      return horse.oddsWin;
+    case "placeOdds":
+      return placeOddsValue(horse, race);
+    case "tipScore":
+      return tipsterByNum.get(horse.number)?.score ?? -1;
+    case "placePotential":
+      return horse.placePotential ?? 0;
+    case "winPotential":
+      return horse.winPotential ?? 0;
+  }
+}
+
+function compareHorses(
+  a: Horse,
+  b: Horse,
+  sort: EntrySortPref,
+  race: Race,
+  popularity: Map<number, number>,
+  tipsterByNum: Map<number, TipsterHorseRef>,
+): number {
+  const av = sortValue(a, sort.key, race, popularity, tipsterByNum);
+  const bv = sortValue(b, sort.key, race, popularity, tipsterByNum);
+  let cmp = 0;
+  if (typeof av === "string" && typeof bv === "string") {
+    cmp = av.localeCompare(bv, "ja");
+  } else {
+    cmp = Number(av) - Number(bv);
+  }
+  if (cmp === 0) cmp = a.number - b.number;
+  return sort.dir === "asc" ? cmp : -cmp;
+}
+
+function SortableTh({
+  label,
+  sortKey,
+  sort,
+  onSort,
+  className = "",
+}: {
+  label: string;
+  sortKey: EntrySortKey;
+  sort: EntrySortPref;
+  onSort: (key: EntrySortKey, dir: EntrySortDir) => void;
+  className?: string;
+}) {
+  const active = sort.key === sortKey;
+  return (
+    <th className={`px-1.5 py-1.5 font-medium ${className}`}>
+      <div className="inline-flex items-center gap-0.5">
+        <span className={active ? "text-ink" : ""}>{label}</span>
+        <span className="inline-flex flex-col leading-none" role="group" aria-label={`${label}の並び替え`}>
+          <button
+            type="button"
+            onClick={() => onSort(sortKey, "asc")}
+            className={`px-0.5 text-[9px] leading-none transition ${
+              active && sort.dir === "asc" ? "text-turf" : "text-ink/25 hover:text-ink/55"
+            }`}
+            aria-label={`${label} 昇順`}
+            aria-pressed={active && sort.dir === "asc"}
+            title="昇順"
+          >
+            ▲
+          </button>
+          <button
+            type="button"
+            onClick={() => onSort(sortKey, "desc")}
+            className={`-mt-0.5 px-0.5 text-[9px] leading-none transition ${
+              active && sort.dir === "desc" ? "text-turf" : "text-ink/25 hover:text-ink/55"
+            }`}
+            aria-label={`${label} 降順`}
+            aria-pressed={active && sort.dir === "desc"}
+            title="降順"
+          >
+            ▼
+          </button>
+        </span>
+      </div>
+    </th>
+  );
+}
 
 type Props = {
   race: Race;
@@ -109,10 +237,27 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
   const popularity = useMemo(() => popularityByNumber(race.horses), [race.horses]);
   const [openId, setOpenId] = useState<number | null>(null);
   const [tipster, setTipster] = useState<TipsterRefPayload | null>(initialTipster);
+  const [sort, setSort] = useState<EntrySortPref>(DEFAULT_ENTRY_SORT);
+  const [savedSort, setSavedSort] = useState<EntrySortPref>(DEFAULT_ENTRY_SORT);
+  const [sortHydrated, setSortHydrated] = useState(false);
+  const [pinFlash, setPinFlash] = useState(false);
 
   useEffect(() => {
     setTipster(initialTipster);
   }, [race.id, initialTipster]);
+
+  useEffect(() => {
+    const pref = loadEntrySortPref();
+    setSort(pref);
+    setSavedSort(pref);
+    setSortHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!pinFlash) return;
+    const t = window.setTimeout(() => setPinFlash(false), 1600);
+    return () => window.clearTimeout(t);
+  }, [pinFlash]);
 
   const tipsterByNum = useMemo(() => {
     if (!tipster) return new Map<number, TipsterHorseRef>();
@@ -120,9 +265,33 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
   }, [tipster]);
 
   const horseRows = useMemo(
-    () => [...horses].sort((a, b) => (b.placePotential ?? 0) - (a.placePotential ?? 0)),
-    [horses],
+    () =>
+      [...horses].sort((a, b) =>
+        compareHorses(a, b, sort, race, popularity, tipsterByNum),
+      ),
+    [horses, sort, race, popularity, tipsterByNum],
   );
+
+  const isDefaultPinned = entrySortPrefEquals(sort, savedSort);
+
+  function handleSort(key: EntrySortKey, dir: EntrySortDir) {
+    setSort({ key, dir });
+  }
+
+  function pinCurrentSort() {
+    saveEntrySortPref(sort);
+    setSavedSort(sort);
+    setPinFlash(true);
+  }
+
+  const sortHint: ReactNode = sortHydrated ? (
+    <span className="text-ink/40">
+      {" · "}
+      {SORT_LABELS[sort.key]}
+      {sort.dir === "asc" ? "▲" : "▼"}
+      {isDefaultPinned ? "（既定）" : ""}
+    </span>
+  ) : null;
 
   return (
     <div className="space-y-6">
@@ -220,34 +389,54 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
       {tipster ? <TipsterRefPanel tipster={tipster} /> : null}
 
       <section>
-        <h2 className="text-sm font-semibold text-ink">
-          出走表
-          <span className="ml-2 text-[11px] font-normal text-ink/45">
-            穴
-            <LongshotMark className="mx-0.5" />
-            · 軸
-            <AxisMark className="mx-0.5" />
-            · 超注目
-            <SuperWatchMark className="mx-0.5 align-middle" />
-            {tipster ? " · 参考印" : ""}
-            · 行タップで因子
-          </span>
-        </h2>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="text-sm font-semibold text-ink">
+            出馬表
+            <span className="ml-2 text-[11px] font-normal text-ink/45">
+              穴
+              <LongshotMark className="mx-0.5" />
+              · 軸
+              <AxisMark className="mx-0.5" />
+              · 超注目
+              <SuperWatchMark className="mx-0.5 align-middle" />
+              {tipster ? " · 参考印" : ""}
+              · 行タップで因子
+              {sortHint}
+            </span>
+          </h2>
+          <button
+            type="button"
+            onClick={pinCurrentSort}
+            disabled={isDefaultPinned && !pinFlash}
+            className={`inline-flex items-center gap-1 border px-2 py-1 text-[11px] transition ${
+              pinFlash
+                ? "border-turf bg-turf/10 text-turf"
+                : isDefaultPinned
+                  ? "border-ink/15 text-ink/35"
+                  : "border-turf/40 text-turf hover:bg-turf/5"
+            }`}
+            title="現在の並び順をブラウザに保存し、他レースでも既定にします"
+          >
+            {pinFlash ? "既定を保存しました" : isDefaultPinned ? "既定の並び" : "この並びを既定に固定"}
+          </button>
+        </div>
 
         <div className="mt-2 overflow-x-auto">
           <table className="w-full min-w-[640px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-ink/15 bg-sand-dim/50 text-[11px] text-ink/45">
                 <th className="w-10 px-1.5 py-1.5 font-medium">印</th>
-                <th className="w-10 px-1.5 py-1.5 font-medium">馬番</th>
-                <th className="px-1.5 py-1.5 font-medium">馬名</th>
-                <th className="px-1.5 py-1.5 font-medium">騎手</th>
-                <th className="w-12 px-1.5 py-1.5 font-medium">人気</th>
-                <th className="w-14 px-1.5 py-1.5 font-medium">単勝</th>
-                <th className="w-16 px-1.5 py-1.5 font-medium">複勝</th>
-                {tipster ? <th className="w-12 px-1.5 py-1.5 font-medium">参考</th> : null}
-                <th className="w-12 px-1.5 py-1.5 font-medium">穴</th>
-                <th className="w-12 px-1.5 py-1.5 font-medium">軸</th>
+                <SortableTh label="馬番" sortKey="number" sort={sort} onSort={handleSort} className="w-12" />
+                <SortableTh label="馬名" sortKey="name" sort={sort} onSort={handleSort} />
+                <SortableTh label="騎手" sortKey="jockey" sort={sort} onSort={handleSort} />
+                <SortableTh label="人気" sortKey="popularity" sort={sort} onSort={handleSort} className="w-14" />
+                <SortableTh label="単勝" sortKey="oddsWin" sort={sort} onSort={handleSort} className="w-16" />
+                <SortableTh label="複勝" sortKey="placeOdds" sort={sort} onSort={handleSort} className="w-16" />
+                {tipster ? (
+                  <SortableTh label="参考" sortKey="tipScore" sort={sort} onSort={handleSort} className="w-14" />
+                ) : null}
+                <SortableTh label="穴" sortKey="placePotential" sort={sort} onSort={handleSort} className="w-14" />
+                <SortableTh label="軸" sortKey="winPotential" sort={sort} onSort={handleSort} className="w-14" />
               </tr>
             </thead>
             <tbody>
