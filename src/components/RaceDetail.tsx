@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Fragment } from "react";
 import {
   classifyOddsEntry,
   enrichHorseScores,
-  EXPECTATION_RANK_HELP,
   assignDayExpectationRanks,
   selectLongshots,
   type OddsBoardStatus,
@@ -95,86 +94,87 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
     );
     return map.get(race.id) ?? "D";
   }, [dayRaces, dayPicks, race.id]);
-  const boardRows = useMemo(
-    () => race.oddsBoard.map((entry) => classifyOddsEntry(race, entry, settings)),
-    [race, settings],
-  );
-  const passCount = boardRows.filter((r) => r.status === "pass").length;
+  const boardRows = useMemo(() => {
+    // スコア算出済みのみ（候補・見送り）。閾値未満などは除外
+    return race.oddsBoard
+      .map((entry) => classifyOddsEntry(race, entry, settings))
+      .filter((row) => row.relatedPlacePotential > 0)
+      .sort((a, b) => b.relatedPlacePotential - a.relatedPlacePotential);
+  }, [race, settings]);
+  const scoredCandidateCount = boardRows.filter((r) => r.status === "candidate").length;
+  const scoredPassCount = boardRows.filter((r) => r.status === "pass").length;
   const markedHorses = useMemo(() => longshotHorseNumbers(picks, race.id), [picks, race.id]);
   const axisPicks = useMemo(() => selectAxisHorses(race, picks), [race, picks]);
   const axisByNum = useMemo(() => axisIndexByNumber(axisPicks), [axisPicks]);
   const popularity = useMemo(() => popularityByNumber(race.horses), [race.horses]);
-  const [openId, setOpenId] = useState<number | null>(horses[0]?.number ?? null);
+  const [openId, setOpenId] = useState<number | null>(null);
   const [tipster, setTipster] = useState<TipsterRefPayload | null>(initialTipster);
 
   useEffect(() => {
     setTipster(initialTipster);
   }, [race.id, initialTipster]);
 
-  // クライアント再取得はしない（SSR の initialTipster を正とする）
-
   const tipsterByNum = useMemo(() => {
     if (!tipster) return new Map<number, TipsterHorseRef>();
     return new Map(tipster.race.horses.map((h) => [h.number, h]));
   }, [tipster]);
 
+  const horseRows = useMemo(
+    () => [...horses].sort((a, b) => (b.placePotential ?? 0) - (a.placePotential ?? 0)),
+    [horses],
+  );
+
   return (
-    <div className="space-y-14">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <p className="font-[family-name:var(--font-display)] text-sm tracking-[0.2em] text-turf">
-            {race.raceDate} · {race.venue} {race.raceNumber}R · {race.startTime} · JRA
-          </p>
-          <h1 className="mt-2 text-2xl font-bold text-ink sm:text-3xl md:text-5xl">{race.title}</h1>
-          <p className="mt-3 text-ink/70">
-            {race.distance} · {race.weather} / {race.condition}
-          </p>
-          <p className="mt-2 text-sm">
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-ink/10 pb-4">
+        <div className="min-w-0">
+          <p className="text-xs text-ink/50">
             <Link href={`/races#venue-${race.venue}`} className="text-turf hover:underline">
-              ← {race.venue}の全レース（タブ）
+              ← {race.venue}
             </Link>
+            {" · "}
+            {race.raceDate} · {race.raceNumber}R · {race.startTime}
+          </p>
+          <h1 className="mt-1 text-xl font-bold text-ink sm:text-2xl">{race.title}</h1>
+          <p className="mt-1 text-sm text-ink/60">
+            {race.distance} · {race.weather}/{race.condition} · 候補 {picks.length}
           </p>
         </div>
-        <div className="text-right">
-          <p className="text-xs tracking-wider text-ink/50">レース期待度</p>
-          <p className="font-[family-name:var(--font-display)] text-4xl font-bold text-turf">{rank}</p>
-          <p className="mt-1 text-sm text-ink/50">候補 {picks.length} 件</p>
-          {tipster?.race.expectation ? (
-            <p className="mt-1 text-xs text-ink/40">参考期待度 {tipster.race.expectation}</p>
-          ) : null}
-          <p className="mt-2 max-w-[14rem] text-left text-xs leading-relaxed text-ink/45 md:text-right">
-            {EXPECTATION_RANK_HELP}
+        <div className="shrink-0 text-right">
+          <p className="text-[10px] tracking-wider text-ink/45">期待度</p>
+          <p className="font-[family-name:var(--font-display)] text-2xl font-bold leading-none text-turf">
+            {rank}
           </p>
+          {tipster?.race.expectation ? (
+            <p className="mt-1 text-[11px] text-ink/40">参考 {tipster.race.expectation}</p>
+          ) : null}
         </div>
       </div>
 
-      <RaceResultPanel race={race} />
+      <RaceResultPanel race={race} compact />
 
       <section>
-        <h2 className="text-xl font-semibold text-ink">軸馬候補（Top3）</h2>
-        <p className="mt-1 text-sm text-ink/55">
-          1着見込み（winPotential）。人気中心＋中穴（6〜10）は条件付き昇格。穴かつ軸は超注目。
-        </p>
-        <ul className="mt-4 divide-y divide-ink/10 border-y border-ink/10">
+        <h2 className="text-sm font-semibold text-ink">軸馬候補（Top3）</h2>
+        <ul className="mt-2 divide-y divide-ink/10 border-y border-ink/10">
           {axisPicks.map((ax) => {
             const horse = horses.find((h) => h.number === ax.horseNumber);
             return (
               <li
                 key={ax.horseNumber}
-                className={`flex flex-wrap items-center gap-3 py-3 ${ax.isSuperWatch ? "bg-signal/5" : ""}`}
+                className={`flex flex-wrap items-center gap-2 py-1.5 text-sm ${ax.isSuperWatch ? "bg-signal/5" : ""}`}
               >
                 <AxisMark rank={ax.rankInRace} />
                 {ax.midPromoted ? <MidPromotedMark /> : null}
                 {ax.isSuperWatch ? <SuperWatchMark /> : null}
-                <span className="font-[family-name:var(--font-display)] text-lg font-semibold tabular-nums">
+                <span className="font-[family-name:var(--font-display)] font-semibold tabular-nums">
                   {ax.horseNumber}
                 </span>
                 <span className="font-medium">{horse?.name ?? "—"}</span>
-                <span className="text-sm text-ink/55">{horse?.jockey}</span>
-                <span className="text-sm font-medium text-signal">
-                  単勝 {horse ? formatWinOdds(horse.oddsWin) : "—"}
+                <span className="text-xs text-ink/50">{horse?.jockey}</span>
+                <span className="text-xs font-medium text-signal">
+                  {horse ? formatWinOdds(horse.oddsWin) : "—"}
                 </span>
-                <span className="ml-auto font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
+                <span className="ml-auto font-[family-name:var(--font-display)] font-semibold text-turf">
                   {ax.winPotential}
                 </span>
               </li>
@@ -184,12 +184,16 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-ink">このレースの注目穴</h2>
-        <div className="mt-4">
-          <LongshotTable picks={picks} emptyMessage="このレースに現在の設定で残る候補はありません。" />
+        <h2 className="text-sm font-semibold text-ink">このレースの注目穴</h2>
+        <div className="mt-2">
+          <LongshotTable
+            compact
+            picks={picks}
+            emptyMessage="このレースに現在の設定で残る候補はありません。"
+          />
         </div>
         {race.result && picks.length > 0 && (
-          <ul className="mt-4 space-y-1 text-sm text-ink/65">
+          <ul className="mt-2 space-y-0.5 text-xs text-ink/65">
             {picks.slice(0, 8).map((pick) => {
               const outcome = evaluatePick(pick, race.result);
               const label = outcomeLabel(outcome);
@@ -216,193 +220,223 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
       {tipster ? <TipsterRefPanel tipster={tipster} /> : null}
 
       <section>
-        <h2 className="text-xl font-semibold text-ink">
-          出走表とカテゴリ内訳
-          <span className="ml-3 text-sm font-normal text-ink/50">
-            注目穴 <LongshotMark /> · <AxisMark /> · <MidPromotedMark /> · <SuperWatchMark />
+        <h2 className="text-sm font-semibold text-ink">
+          出走表
+          <span className="ml-2 text-[11px] font-normal text-ink/45">
+            穴
+            <LongshotMark className="mx-0.5" />
+            · 軸
+            <AxisMark className="mx-0.5" />
+            · 超注目
+            <SuperWatchMark className="mx-0.5 align-middle" />
             {tipster ? " · 参考印" : ""}
+            · 行タップで因子
           </span>
         </h2>
-        <div className="mt-6 space-y-3">
-          {[...horses]
-            .sort((a, b) => (b.placePotential ?? 0) - (a.placePotential ?? 0))
-            .map((horse) => {
-              const open = openId === horse.number;
-              const marked = markedHorses.has(horse.number);
-              const axis = axisByNum.get(horse.number);
-              const tip = tipsterByNum.get(horse.number);
-              const tipMarked = Boolean(tip?.mark);
-              const highlight = marked || Boolean(axis) || tipMarked;
-              return (
-                <div
-                  key={horse.number}
-                  className={`border border-ink/10 ${
-                    axis?.isSuperWatch
-                      ? "bg-signal/8"
-                      : highlight
-                        ? "bg-signal/5"
-                        : "bg-sand-dim/30"
-                  }`}
-                >
-                  <button
-                    type="button"
-                    onClick={() => setOpenId(open ? null : horse.number)}
-                    className="flex w-full flex-col gap-2 px-3 py-3.5 text-left sm:px-4 sm:py-4 md:flex-row md:flex-wrap md:items-center md:gap-4"
-                  >
-                    <div className="flex min-w-0 flex-1 items-start gap-2 md:items-center md:gap-3">
-                      <span className="flex min-w-[2.75rem] flex-wrap items-center gap-1" aria-hidden>
-                        {marked ? <LongshotMark /> : null}
-                        {axis ? <AxisMark rank={axis.rankInRace} /> : null}
-                        {axis?.isSuperWatch ? <SuperWatchMark /> : null}
-                        {axis?.midPromoted ? <MidPromotedMark /> : null}
-                        {tip ? <TipsterMark mark={tip.mark} /> : null}
-                      </span>
-                      <span className="w-7 shrink-0 font-[family-name:var(--font-display)] text-xl font-semibold">
-                        {horse.number}
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium leading-snug">{horse.name}</p>
-                        <p className="mt-0.5 text-sm text-ink/60 md:hidden">{horse.jockey}</p>
-                      </div>
-                      <span className="ml-auto shrink-0 text-right md:hidden">
-                        {tip?.mark || tip?.score ? (
-                          <span className="mb-0.5 block text-xs text-ink/35">
-                            参 {tip.mark || "·"} {tip.score}
-                          </span>
-                        ) : null}
-                        <span className="block font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
-                          穴 {horse.placePotential}
-                        </span>
-                        <span className="text-xs text-ink/50">軸 {horse.winPotential ?? "—"}</span>
-                      </span>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pl-10 text-sm text-ink/65 md:contents">
-                      <span className="hidden text-sm text-ink/60 md:inline">{horse.jockey}</span>
-                      <span className="min-w-[4.5rem] font-medium text-ink">
-                        {formatPopularity(popularity.get(horse.number))}
-                      </span>
-                      <span className="font-medium text-signal">
-                        単勝 {formatWinOdds(horse.oddsWin)}
-                      </span>
-                      <span>複勝 {placeOddsLabel(horse, race)}</span>
-                      {tip ? (
-                        <span className="text-xs tabular-nums text-ink/35 md:min-w-[4.5rem]">
-                          参 {tip.score}
-                        </span>
+
+        <div className="mt-2 overflow-x-auto">
+          <table className="w-full min-w-[640px] border-collapse text-left text-sm">
+            <thead>
+              <tr className="border-b border-ink/15 bg-sand-dim/50 text-[11px] text-ink/45">
+                <th className="w-10 px-1.5 py-1.5 font-medium">印</th>
+                <th className="w-10 px-1.5 py-1.5 font-medium">馬番</th>
+                <th className="px-1.5 py-1.5 font-medium">馬名</th>
+                <th className="px-1.5 py-1.5 font-medium">騎手</th>
+                <th className="w-12 px-1.5 py-1.5 font-medium">人気</th>
+                <th className="w-14 px-1.5 py-1.5 font-medium">単勝</th>
+                <th className="w-16 px-1.5 py-1.5 font-medium">複勝</th>
+                {tipster ? <th className="w-12 px-1.5 py-1.5 font-medium">参考</th> : null}
+                <th className="w-12 px-1.5 py-1.5 font-medium">穴</th>
+                <th className="w-12 px-1.5 py-1.5 font-medium">軸</th>
+              </tr>
+            </thead>
+            <tbody>
+              {horseRows.map((horse) => {
+                const open = openId === horse.number;
+                const marked = markedHorses.has(horse.number);
+                const axis = axisByNum.get(horse.number);
+                const tip = tipsterByNum.get(horse.number);
+                const tipMarked = Boolean(tip?.mark);
+                const highlight = marked || Boolean(axis) || tipMarked;
+                return (
+                  <Fragment key={horse.number}>
+                    <tr
+                      className={`border-b border-ink/10 ${
+                        axis?.isSuperWatch
+                          ? "bg-signal/8"
+                          : highlight
+                            ? "bg-signal/5"
+                            : open
+                              ? "bg-sand-dim/30"
+                              : ""
+                      }`}
+                    >
+                      <td className="px-1.5 py-1">
+                        <button
+                          type="button"
+                          onClick={() => setOpenId(open ? null : horse.number)}
+                          className="flex flex-wrap items-center gap-0.5"
+                          aria-expanded={open}
+                          aria-label={`${horse.number}番の因子を${open ? "閉じる" : "開く"}`}
+                        >
+                          {marked ? <LongshotMark /> : null}
+                          {axis ? <AxisMark rank={axis.rankInRace} /> : null}
+                          {axis?.isSuperWatch ? <SuperWatchMark /> : null}
+                          {axis?.midPromoted ? <MidPromotedMark /> : null}
+                          {tip ? <TipsterMark mark={tip.mark} /> : null}
+                          {!marked && !axis && !tip ? (
+                            <span className="text-ink/25">{open ? "−" : "+"}</span>
+                          ) : null}
+                        </button>
+                      </td>
+                      <td className="px-1.5 py-1 font-[family-name:var(--font-display)] font-semibold tabular-nums">
+                        <button
+                          type="button"
+                          onClick={() => setOpenId(open ? null : horse.number)}
+                          className="text-left"
+                        >
+                          {horse.number}
+                        </button>
+                      </td>
+                      <td className="px-1.5 py-1 font-medium">
+                        <button
+                          type="button"
+                          onClick={() => setOpenId(open ? null : horse.number)}
+                          className="text-left hover:text-turf"
+                        >
+                          {horse.name}
+                        </button>
+                      </td>
+                      <td className="px-1.5 py-1 text-ink/60">{horse.jockey}</td>
+                      <td className="px-1.5 py-1">{formatPopularity(popularity.get(horse.number))}</td>
+                      <td className="px-1.5 py-1 font-medium text-signal">
+                        {formatWinOdds(horse.oddsWin)}
+                      </td>
+                      <td className="px-1.5 py-1 text-ink/70">{placeOddsLabel(horse, race)}</td>
+                      {tipster ? (
+                        <td className="px-1.5 py-1 text-xs tabular-nums text-ink/40">
+                          {tip?.score ?? "—"}
+                        </td>
                       ) : null}
-                      <span className="ml-auto hidden flex-col items-end gap-0.5 md:flex">
-                        <span className="font-[family-name:var(--font-display)] text-lg font-semibold text-turf">
-                          穴 {horse.placePotential}
-                        </span>
-                        <span className="text-xs text-ink/50">
-                          軸 {horse.winPotential ?? "—"}
-                        </span>
-                      </span>
-                    </div>
-                  </button>
-                  {open && (
-                    <div className="border-t border-ink/10 px-4 py-4">
-                      <p className="text-sm leading-relaxed text-ink/70">{horse.rationale}</p>
-                      <div className="mt-4 grid gap-2 sm:grid-cols-2 md:grid-cols-3">
-                        {factorLabels.map(([key, label]) => {
-                          const value =
-                            key === "gateJockey"
-                              ? (horse.factors.gateJockey ?? 50)
-                              : horse.factors[key];
-                          return (
-                            <div key={key}>
-                              <div className="flex justify-between text-xs text-ink/50">
-                                <span>{label}</span>
-                                <span>{value}</span>
-                              </div>
-                              <div className="mt-1 h-1.5 bg-sand-dim">
-                                <div className="h-full bg-turf" style={{ width: `${value}%` }} />
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <p className="mt-4 text-sm text-ink/60">{horse.comment}</p>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                      <td className="px-1.5 py-1 font-[family-name:var(--font-display)] text-turf">
+                        {horse.placePotential}
+                      </td>
+                      <td className="px-1.5 py-1 font-[family-name:var(--font-display)] text-ink/70">
+                        {horse.winPotential ?? "—"}
+                      </td>
+                    </tr>
+                    {open ? (
+                      <tr className="border-b border-ink/10 bg-sand-dim/25">
+                        <td colSpan={tipster ? 10 : 9} className="px-3 py-2.5">
+                          <p className="text-xs leading-relaxed text-ink/70">{horse.rationale}</p>
+                          <div className="mt-2 grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6">
+                            {factorLabels.map(([key, label]) => {
+                              const value =
+                                key === "gateJockey"
+                                  ? (horse.factors.gateJockey ?? 50)
+                                  : horse.factors[key];
+                              return (
+                                <div key={key}>
+                                  <div className="flex justify-between text-[10px] text-ink/45">
+                                    <span>{label}</span>
+                                    <span>{value}</span>
+                                  </div>
+                                  <div className="mt-0.5 h-1 bg-sand-dim">
+                                    <div className="h-full bg-turf" style={{ width: `${value}%` }} />
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                          <p className="mt-2 text-xs text-ink/55">{horse.comment}</p>
+                        </td>
+                      </tr>
+                    ) : null}
+                  </Fragment>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </section>
 
       <section>
         <div className="flex flex-wrap items-end justify-between gap-2">
-          <h2 className="text-xl font-semibold text-ink">オッズ板（サンプル）</h2>
-          <p className="text-xs text-ink/50">
-            見送り {passCount} 件 · 候補はゲート通過かつ最低スコア以上
+          <h2 className="text-sm font-semibold text-ink">オッズ板（スコア付き）</h2>
+          <p className="text-[11px] text-ink/45">
+            候補 {scoredCandidateCount} · 見送り {scoredPassCount}
+            {" · "}スコア算出済みのみ表示
           </p>
         </div>
-        <div className="mt-4">
-          <ul className="space-y-2 md:hidden">
-            {boardRows.map((row) => (
-              <li
-                key={`${row.entry.betType}-${row.entry.selection}`}
-                className="border border-ink/10 bg-sand-dim/30 px-3 py-3"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="text-sm text-ink/55">{BET_TYPE_LABELS[row.entry.betType]}</p>
-                    <p className="mt-0.5 font-[family-name:var(--font-display)] font-medium">
-                      {row.entry.selection}
+        {boardRows.length === 0 ? (
+          <p className="mt-2 py-4 text-center text-sm text-ink/55">
+            スコア付きの買い目がありません。
+          </p>
+        ) : (
+          <div className="mt-2">
+            <ul className="space-y-1.5 md:hidden">
+              {boardRows.map((row) => (
+                <li
+                  key={`${row.entry.betType}-${row.entry.selection}`}
+                  className="border border-ink/10 bg-sand-dim/20 px-2.5 py-2"
+                >
+                  <div className="flex items-start justify-between gap-2 text-sm">
+                    <div className="min-w-0">
+                      <p className="text-[11px] text-ink/50">{BET_TYPE_LABELS[row.entry.betType]}</p>
+                      <p className="font-[family-name:var(--font-display)] font-medium">
+                        {row.entry.selection}
+                      </p>
+                    </div>
+                    <p className="shrink-0 font-[family-name:var(--font-display)] font-semibold">
+                      {row.entry.odds.toFixed(1)}
                     </p>
                   </div>
-                  <p className="shrink-0 font-[family-name:var(--font-display)] text-base font-semibold">
-                    {row.entry.odds.toFixed(1)}
-                  </p>
-                </div>
-                <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
-                  <span className="text-ink/55">
-                    スコア {row.relatedPlacePotential > 0 ? row.relatedPlacePotential : "—"}
-                  </span>
-                  <span className={statusClass[row.status]}>
-                    {statusLabel[row.status]}
-                    {row.label ? `（${row.label}）` : ""}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <div className="hidden overflow-x-auto md:block">
-            <table className="w-full min-w-[560px] text-left text-sm">
-              <thead>
-                <tr className="border-b border-ink/20 text-ink/50">
-                  <th className="py-2 pr-3 font-medium">券種</th>
-                  <th className="py-2 pr-3 font-medium">買い目</th>
-                  <th className="py-2 pr-3 font-medium">オッズ</th>
-                  <th className="py-2 pr-3 font-medium">スコア</th>
-                  <th className="py-2 font-medium">判定</th>
-                </tr>
-              </thead>
-              <tbody>
-                {boardRows.map((row) => (
-                  <tr
-                    key={`${row.entry.betType}-${row.entry.selection}`}
-                    className="border-b border-ink/10"
-                  >
-                    <td className="py-2 pr-3">{BET_TYPE_LABELS[row.entry.betType]}</td>
-                    <td className="py-2 pr-3 font-[family-name:var(--font-display)]">
-                      {row.entry.selection}
-                    </td>
-                    <td className="py-2 pr-3">{row.entry.odds.toFixed(1)}</td>
-                    <td className="py-2 pr-3 text-ink/60">
-                      {row.relatedPlacePotential > 0 ? row.relatedPlacePotential : "—"}
-                    </td>
-                    <td className={`py-2 ${statusClass[row.status]}`}>
+                  <div className="mt-1 flex flex-wrap items-center gap-x-3 text-xs">
+                    <span className="text-ink/55">スコア {row.relatedPlacePotential}</span>
+                    <span className={statusClass[row.status]}>
                       {statusLabel[row.status]}
                       {row.label ? `（${row.label}）` : ""}
-                    </td>
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div className="hidden overflow-x-auto md:block">
+              <table className="w-full min-w-[520px] text-left text-xs">
+                <thead>
+                  <tr className="border-b border-ink/15 bg-sand-dim/50 text-ink/45">
+                    <th className="px-2 py-1.5 font-medium">券種</th>
+                    <th className="px-2 py-1.5 font-medium">買い目</th>
+                    <th className="px-2 py-1.5 font-medium">オッズ</th>
+                    <th className="px-2 py-1.5 font-medium">スコア</th>
+                    <th className="px-2 py-1.5 font-medium">判定</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {boardRows.map((row) => (
+                    <tr
+                      key={`${row.entry.betType}-${row.entry.selection}`}
+                      className={`border-b border-ink/10 ${
+                        row.status === "candidate" ? "bg-signal/5" : ""
+                      }`}
+                    >
+                      <td className="px-2 py-1">{BET_TYPE_LABELS[row.entry.betType]}</td>
+                      <td className="px-2 py-1 font-[family-name:var(--font-display)] font-medium">
+                        {row.entry.selection}
+                      </td>
+                      <td className="px-2 py-1 tabular-nums">{row.entry.odds.toFixed(1)}</td>
+                      <td className="px-2 py-1 font-medium text-turf">{row.relatedPlacePotential}</td>
+                      <td className={`px-2 py-1 ${statusClass[row.status]}`}>
+                        {statusLabel[row.status]}
+                        {row.label ? `（${row.label}）` : ""}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        )}
       </section>
     </div>
   );
