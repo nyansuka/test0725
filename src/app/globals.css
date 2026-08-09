@@ -116,8 +116,8 @@ body {
 /* 短い画面ではヒーローを圧縮し、タイトル帯の余白を抑える */
 @media (max-height: 720px) {
   #top {
-    height: min(100svh, 32rem);
-    min-height: 24rem;
+    height: min(100svh, 24rem);
+    min-height: 18rem;
   }
 }
 

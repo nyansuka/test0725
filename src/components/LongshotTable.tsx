@@ -51,6 +51,8 @@ function HorseOutcomeBadge({
 type Props = {
   picks: LongshotPick[];
   emptyMessage?: string;
+  /** ホーム等向けの高密度表示 */
+  compact?: boolean;
 };
 
 function CommentBlock({ text }: { text: string }) {
@@ -133,15 +135,21 @@ function SelectionLabel({ pick, race }: { pick: LongshotPick; race: Race | undef
 function HorseHeadline({
   group,
   race,
+  compact = false,
 }: {
   group: LongshotPickGroup;
   race: Race | undefined;
+  compact?: boolean;
 }) {
   const pop = race ? popularityByNumber(race.horses) : new Map<number, number>();
   const byNum = new Map((race?.horses ?? []).map((h) => [h.number, h]));
   const axisByNum = race
     ? new Map(selectAxisHorses(race).map((a) => [a.horseNumber, a]))
     : new Map<number, ReturnType<typeof selectAxisHorses>[number]>();
+  const titleClass = compact
+    ? "mt-0.5 font-[family-name:var(--font-display)] text-base font-semibold text-ink"
+    : "mt-1 font-[family-name:var(--font-display)] text-xl font-semibold text-ink";
+  const nameClass = compact ? "ml-1.5 text-sm font-medium" : "ml-2 text-lg font-medium";
 
   if (group.sameHorseAsSelection) {
     const n = group.relatedHorseNumbers[0];
@@ -150,19 +158,19 @@ function HorseHeadline({
     const axis = axisByNum.get(n);
     return (
       <div className="min-w-0">
-        <p className="text-xs tracking-wider text-ink/45">注目馬 ＝ 推奨買い目</p>
-        <p className="mt-1 font-[family-name:var(--font-display)] text-xl font-semibold text-ink">
+        {!compact ? (
+          <p className="text-xs tracking-wider text-ink/45">注目馬 ＝ 推奨買い目</p>
+        ) : null}
+        <p className={titleClass}>
           <span className="tabular-nums">{n}</span>
-          {horse ? (
-            <span className="ml-2 text-lg font-medium">{horse.name}</span>
-          ) : null}
+          {horse ? <span className={nameClass}>{horse.name}</span> : null}
           {rank != null && (
-            <span className="ml-2 text-sm font-medium text-ink/60">
+            <span className="ml-1.5 text-xs font-medium text-ink/60 sm:text-sm">
               {formatPopularityParen(rank)}
             </span>
           )}
           {group.label === "注目穴" && (
-            <span className="ml-2 align-middle text-base">
+            <span className="ml-1.5 align-middle text-sm">
               <LongshotMark />
             </span>
           )}
@@ -190,15 +198,25 @@ function HorseHeadline({
 
   return (
     <div className="min-w-0">
-      <p className="text-xs tracking-wider text-ink/45">関係馬</p>
-      <p className="mt-1 font-[family-name:var(--font-display)] text-lg font-semibold text-ink">
+      {!compact ? <p className="text-xs tracking-wider text-ink/45">関係馬</p> : null}
+      <p
+        className={
+          compact
+            ? "mt-0.5 font-[family-name:var(--font-display)] text-sm font-semibold text-ink"
+            : "mt-1 font-[family-name:var(--font-display)] text-lg font-semibold text-ink"
+        }
+      >
         {horses.map((h, i) => (
           <span key={h.n}>
-            {i > 0 ? <span className="mx-1.5 text-ink/30">·</span> : null}
+            {i > 0 ? <span className="mx-1 text-ink/30">·</span> : null}
             <span className="tabular-nums">{h.n}</span>
-            {h.name ? <span className="ml-1.5 text-base font-medium">{h.name}</span> : null}
+            {h.name ? (
+              <span className={compact ? "ml-1 text-sm font-medium" : "ml-1.5 text-base font-medium"}>
+                {h.name}
+              </span>
+            ) : null}
             {h.rank != null && (
-              <span className="ml-1 text-sm font-medium text-ink/60">
+              <span className="ml-1 text-xs font-medium text-ink/60">
                 {formatPopularityParen(h.rank)}
               </span>
             )}
@@ -211,7 +229,7 @@ function HorseHeadline({
           </span>
         ))}
         {group.label === "注目穴" && (
-          <span className="ml-2 align-middle text-base">
+          <span className="ml-1.5 align-middle text-sm">
             <LongshotMark />
           </span>
         )}
@@ -288,19 +306,23 @@ function BetLines({
   );
 }
 
-export function LongshotTable({ picks, emptyMessage = "条件に合う候補がありません。" }: Props) {
+export function LongshotTable({
+  picks,
+  emptyMessage = "条件に合う候補がありません。",
+  compact = false,
+}: Props) {
   const { races } = useRaceCatalog();
   const byId = useMemo(() => new Map(races.map((r) => [r.id, r])), [races]);
   const groups = useMemo(() => groupLongshotPicks(picks), [picks]);
 
   if (picks.length === 0) {
-    return <p className="py-10 text-center text-ink/60">{emptyMessage}</p>;
+    return <p className={`text-center text-ink/60 ${compact ? "py-6 text-sm" : "py-10"}`}>{emptyMessage}</p>;
   }
 
   const showOutcome = picks.some((p) => byId.get(p.raceId)?.result);
 
   return (
-    <div className="space-y-4">
+    <div className={compact ? "space-y-2" : "space-y-4"}>
       {groups.map((group) => {
         const race = byId.get(group.raceId);
         const primaryComment =
@@ -311,14 +333,18 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
         return (
           <article
             key={group.key}
-            className="border border-ink/10 bg-sand-dim/25 px-4 py-4 md:px-5 md:py-5"
+            className={
+              compact
+                ? "border border-ink/10 bg-sand-dim/20 px-3 py-2.5"
+                : "border border-ink/10 bg-sand-dim/25 px-4 py-4 md:px-5 md:py-5"
+            }
           >
-            <div className="flex flex-wrap items-start justify-between gap-3">
+            <div className="flex flex-wrap items-start justify-between gap-2">
               <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
                   <Link
                     href={`/races/${group.raceId}`}
-                    className="font-medium text-turf hover:underline"
+                    className={`font-medium text-turf hover:underline ${compact ? "text-sm" : ""}`}
                   >
                     {group.venue} {group.raceNumber}R
                   </Link>
@@ -326,8 +352,8 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
                   <span
                     className={
                       group.label === "注目穴"
-                        ? "text-sm font-medium text-signal"
-                        : "text-sm text-ink/55"
+                        ? "text-xs font-medium text-signal sm:text-sm"
+                        : "text-xs text-ink/55 sm:text-sm"
                     }
                   >
                     {group.label}
@@ -338,39 +364,52 @@ export function LongshotTable({ picks, emptyMessage = "条件に合う候補が�
                     </span>
                   ) : null}
                 </div>
-                <div className="mt-3">
-                  <HorseHeadline group={group} race={race} />
+                <div className={compact ? "mt-1.5" : "mt-3"}>
+                  <HorseHeadline group={group} race={race} compact={compact} />
                 </div>
               </div>
               <div className="shrink-0 text-right">
-                <p className="text-xs text-ink/45">スコア</p>
-                <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-turf">
+                <p className="text-[10px] text-ink/45 sm:text-xs">スコア</p>
+                <p
+                  className={`font-[family-name:var(--font-display)] font-semibold text-turf ${
+                    compact ? "text-xl" : "text-2xl"
+                  }`}
+                >
                   {group.relatedPlacePotential}
                 </p>
-                <div className="mt-1 h-1.5 w-24 overflow-hidden bg-sand-dim">
-                  <div
-                    className="animate-bar h-full bg-turf"
-                    style={{ width: `${group.relatedPlacePotential}%` }}
-                  />
-                </div>
+                {!compact ? (
+                  <div className="mt-1 h-1.5 w-24 overflow-hidden bg-sand-dim">
+                    <div
+                      className="animate-bar h-full bg-turf"
+                      style={{ width: `${group.relatedPlacePotential}%` }}
+                    />
+                  </div>
+                ) : null}
               </div>
             </div>
 
-            <div className="mt-1">
+            <div className={compact ? "mt-0.5" : "mt-1"}>
               {!group.sameHorseAsSelection && (
-                <p className="text-xs tracking-wider text-ink/45">推奨買い目</p>
+                <p className="text-[11px] tracking-wider text-ink/45">推奨買い目</p>
               )}
               {group.sameHorseAsSelection && group.picks.length > 0 && (
-                <p className="mt-3 text-xs tracking-wider text-ink/45">券種・オッズ</p>
+                <p className={`text-[11px] tracking-wider text-ink/45 ${compact ? "mt-1.5" : "mt-3"}`}>
+                  券種・オッズ
+                </p>
               )}
               <BetLines group={group} race={race} showOutcome={showOutcome} />
             </div>
 
-            {primaryComment && (
+            {primaryComment && !compact ? (
               <div className="mt-4 border-t border-ink/10 pt-3">
                 <CommentBlock text={primaryComment} />
               </div>
-            )}
+            ) : null}
+            {primaryComment && compact ? (
+              <p className="mt-2 line-clamp-2 border-t border-ink/8 pt-2 text-[11px] leading-snug text-ink/60">
+                {primaryComment}
+              </p>
+            ) : null}
           </article>
         );
       })}

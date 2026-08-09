@@ -7,7 +7,6 @@ import type { BetType, Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
 import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
-import { RaceDayPicker } from "@/components/RaceDayPicker";
 import { FeaturedHorseSummaryBar } from "@/components/FeaturedHorseSummaryBar";
 import { LongshotTable } from "@/components/LongshotTable";
 import { filterRacesByDate } from "@/data/races";
@@ -61,11 +60,11 @@ export function LongshotsBoard({ races: racesProp }: Props) {
 
   return (
     <div>
-      <div className="mb-6">
-        <RaceDayPicker />
-        <p className="mt-2 text-sm text-ink/55">
+      <div className="mb-4">
+        <p className="text-sm text-ink/55">
           表示対象: {formatJstDateLabel(selectedDate)}
           {dayRaces.length === 0 ? "（開催なし）" : ` · ${dayRaces.length} レース`}
+          <span className="text-ink/40"> · 開催日は上部バーで変更</span>
         </p>
       </div>
       <div className="flex flex-col gap-6 border border-ink/10 bg-sand-dim/40 p-5 md:p-6">

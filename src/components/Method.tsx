@@ -23,24 +23,21 @@ const steps = [
 
 export function Method() {
   return (
-    <section id="method" className="bg-turf-deep px-4 py-16 text-sand sm:px-6 md:px-8 md:py-28">
+    <section id="method" className="bg-turf-deep px-4 py-10 text-sand sm:px-6 md:px-8 md:py-14">
       <div className="mx-auto max-w-6xl">
-        <p className="font-[family-name:var(--font-display)] text-sm tracking-[0.2em] text-signal-soft">
-          HOW IT WORKS
-        </p>
-        <h2 className="mt-2 text-3xl font-bold md:text-4xl">予想の見方</h2>
-        <p className="mt-3 max-w-2xl text-sand/75">
-          本命探しではなく高配当候補の選別が主機能です。穴（複勝圏）と軸（1着）を分け、交差を超注目として示します。JRAのみ・全券種対応。的中保証はありません。
+        <h2 className="text-lg font-bold sm:text-xl">予想の見方</h2>
+        <p className="mt-1 max-w-2xl text-sm text-sand/70">
+          本命探しではなく高配当候補の選別。穴（複勝圏）と軸（1着）を分け、交差を超注目とします。
         </p>
 
-        <ol className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <ol className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {steps.map((step, index) => (
             <li key={step.title}>
-              <p className="font-[family-name:var(--font-display)] text-4xl font-bold text-signal-soft/80">
+              <p className="font-[family-name:var(--font-display)] text-2xl font-bold text-signal-soft/80">
                 0{index + 1}
               </p>
-              <h3 className="mt-4 text-xl font-semibold">{step.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-sand/75">{step.body}</p>
+              <h3 className="mt-2 text-base font-semibold">{step.title}</h3>
+              <p className="mt-1.5 text-xs leading-relaxed text-sand/70">{step.body}</p>
             </li>
           ))}
         </ol>

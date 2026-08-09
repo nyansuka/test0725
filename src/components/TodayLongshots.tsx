@@ -7,7 +7,6 @@ import type { Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
 import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
-import { RaceDayPicker } from "@/components/RaceDayPicker";
 import { LongshotTable } from "@/components/LongshotTable";
 import { filterRacesByDate } from "@/data/races";
 import { formatJstDateLabel } from "@/domain/date";
@@ -35,34 +34,28 @@ export function TodayLongshots({ races: racesProp, limit = 5 }: Props) {
   const isToday = selectedDate === today;
 
   return (
-    <section id="featured" className="bg-sand px-4 py-16 sm:px-6 md:px-8 md:py-24">
+    <section id="featured" className="bg-sand px-4 py-8 sm:px-6 md:px-8 md:py-10">
       <div className="mx-auto max-w-6xl">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="font-[family-name:var(--font-display)] text-sm tracking-[0.2em] text-turf">
-              TODAY&apos;S LONGSHOTS
-            </p>
-            <h2 className="mt-2 text-2xl font-bold text-ink sm:text-3xl md:text-4xl">
+            <h2 className="text-lg font-bold text-ink sm:text-xl">
               {isToday ? "今日の注目穴" : "選択日の注目穴"}
             </h2>
-            <p className="mt-3 max-w-xl text-ink/70">
+            <p className="mt-1 text-xs text-ink/55 sm:text-sm">
               {formatJstDateLabel(selectedDate)}
-              {isToday ? "（本日）" : ""}{" "}
-              の候補。短評は評価因子とループ蓄積の傾向（他日優先、無い場合は当日検証を注記）を含みます。
+              {isToday ? "（本日）" : ""} · 上位{limit}件
             </p>
           </div>
           <Link
             href="/longshots"
-            className="inline-flex items-center bg-turf px-5 py-2.5 text-sm font-medium text-sand transition hover:bg-turf-deep"
+            className="inline-flex items-center bg-turf px-3.5 py-1.5 text-xs font-medium text-sand transition hover:bg-turf-deep sm:text-sm"
           >
-            注目穴ボードへ
+            ボードへ
           </Link>
         </div>
-        <div className="mt-6">
-          <RaceDayPicker />
-        </div>
-        <div className="mt-10">
+        <div className="mt-4">
           <LongshotTable
+            compact
             picks={picks}
             emptyMessage={
               dayRaces.length === 0

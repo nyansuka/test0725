@@ -6,7 +6,7 @@ import { RaceDayPicker } from "@/components/RaceDayPicker";
 export function RaceDayBar() {
   return (
     <div className="border-b border-ink/10 bg-sand-dim/80">
-      <div className="mx-auto flex max-w-6xl items-center px-4 py-3 sm:px-6 md:px-8">
+      <div className="mx-auto flex max-w-6xl items-center px-4 py-2 sm:px-6 md:px-8">
         <RaceDayPicker variant="compact" className="w-full justify-start sm:w-auto" />
       </div>
     </div>
