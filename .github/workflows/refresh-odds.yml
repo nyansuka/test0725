@@ -7,6 +7,15 @@ on:
     # 毎時0分（JST 開催帯を広くカバー）
     - cron: "0 * * * *"
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "odds = odds/results only; full = re-fetch shutuba+odds+results (fixes stale 馬番)"
+        required: true
+        default: full
+        type: choice
+        options:
+          - full
+          - odds
 
 permissions:
   contents: write
@@ -27,10 +36,18 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Refresh today's odds and results
+      - name: Refresh today's snapshot
+        env:
+          MODE: ${{ github.event.inputs.mode || 'odds' }}
         run: |
-          npm run fetch:jra:odds
-          npm run fetch:jra:results
+          if [ "$MODE" = "full" ]; then
+            echo "Running full fetch:jra (shutuba + odds + results)"
+            npm run fetch:jra
+          else
+            echo "Running odds/results refresh"
+            npm run fetch:jra:odds
+            npm run fetch:jra:results
+          fi
 
       - name: Commit and push if changed
         run: |
@@ -41,5 +58,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add src/data/snapshots
-          git commit -m "chore: refresh JRA odds snapshot ($(date -u +%Y-%m-%dT%H:%MZ))"
+          MODE="${{ github.event.inputs.mode || 'odds' }}"
+          git commit -m "chore: refresh JRA ${MODE} snapshot ($(date -u +%Y-%m-%dT%H:%MZ))"
           git push
