@@ -1,8 +1,8 @@
 # 的中率改善プラン
 
-最終更新: 2026-08-08  
-根拠: [IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md) / `loop/trends/latest.json` / `loop/reports/threshold-sweep-2026-07-25_2026-07-26.json` / `loop/reports/analyze-2026-08-02.json` / `loop/reports/odds-cap-sweep-*.json` / `loop/reports/longshot-in-money-snapshots.json` / `loop/reports/c1-c2-after.json` / [VERIFY-2026-08-08.md](./VERIFY-2026-08-08.md)  
-対象期間: 2026-07-25〜26（72レース・凍結オッズ固定スイープ済）＋ 2026-08-01〜02 運用検証 · B3 既定反映 2026-08-03 · ゲート内機会ベースライン / 期待度再キャリブ / **C1/C2** 2026-08-06 · **25/60/oddsMax80 の全日突合 2026-08-08**
+最終更新: 2026-08-09  
+根拠: [IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md) / `loop/trends/latest.json` / `loop/reports/threshold-sweep-2026-07-25_2026-07-26.json` / `loop/reports/analyze-2026-08-02.json` / `loop/reports/odds-cap-sweep-*.json` / `loop/reports/longshot-in-money-snapshots.json` / `loop/reports/c1-c2-after.json` / [VERIFY-2026-08-08.md](./VERIFY-2026-08-08.md) / [VERIFY-2026-08-09.md](./VERIFY-2026-08-09.md)  
+対象期間: 2026-07-25〜26（72レース・凍結オッズ固定スイープ済）＋ 2026-08-01〜02 運用検証 · B3 既定反映 2026-08-03 · ゲート内機会ベースライン / 期待度再キャリブ / **C1/C2** 2026-08-06 · **25/60/oddsMax80 の全日突合 2026-08-08** · **同設定の再検証 2026-08-09**
 
 運用ルール: **週次で変更は1つだけ**（[DATA-AND-LOOP.md](./DATA-AND-LOOP.md) §5.4）。
 
@@ -298,7 +298,7 @@ Miss 分解（61件・主因）:
 | 追う的中率 | ticketPrecision（券種払戻）。place は補助 |
 | 副指標 | **gatedOppRecall**（ゲート内穴馬券内のカバー）。広義61%/2.7%は使わない |
 | 密度目標 | 5〜15 件/レース（厳選ボード前提なら 3〜8 も可） |
-| 閾値の当面案 | **25 / 80上限 / 60**（C1/C2 後。旧75は廃止） |
+| 閾値の当面案 | **25 / 80上限 / 60**（C1/C2 後。旧75は廃止）。8/9 再検証で密度・ticket 未達 → **次の1変更候補は scoreMin≈70**（[VERIFY-2026-08-09.md](./VERIFY-2026-08-09.md)） |
 | 注目穴ラベル | **スコア [65, 70)**（C3）。主指標 ticket 優先 |
 | 券種 | 当面は中オッズ単勝の ticket を観察。3連は後回し。馬連・ワイドは払戻突合を再確認 |
 | 期待度ランク | **日内相対（件数ペナルティ edge）**。S は候補ありの上位約12%。「Sだけ見る」運用可 |
@@ -317,6 +317,7 @@ Miss 分解（61件・主因）:
 | `src/data/loop/reports/odds-cap-sweep-*.json` | オッズ上限（B3）感度 |
 | `src/data/loop/reports/analyze-2026-08-02.json` | 当日の期待度・帯別切り口 |
 | [VERIFY-2026-08-08.md](./VERIFY-2026-08-08.md) / [verify/analyze-2026-08-08.json](./verify/analyze-2026-08-08.json) | 25/60/oddsMax80 の全日検証・8/9 再検証プロトコル |
+| [VERIFY-2026-08-09.md](./VERIFY-2026-08-09.md) / [verify/analyze-2026-08-09.json](./verify/analyze-2026-08-09.json) | 同設定の再検証（ticket 0.43%・密度19.3・枠連ワイド ticket0） |
 | `npm run loop:compare -- <base> <next>` | 開催日メトリクス突合 |
 | `src/data/loop/reports/longshot-in-money-snapshots.json` | ゲート内機会・Miss 分解ベースライン |
 | `scripts/verify-longshot-in-money.mjs` | 上記の再集計 |
