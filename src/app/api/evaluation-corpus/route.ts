@@ -29,16 +29,19 @@ async function readJson<T>(p: string): Promise<T | null> {
 }
 
 /**
- * 検証用コーパス: loop 凍結オッズ + ライブ結果を日付ごとに突合。
- * 凍結が無い日付は結果付きライブ snapshot をそのまま使う。
+ * 成績日記用コーパス（既定）: ライブ snapshot のオッズ＋結果。
+ * ローカル専用の loop/snapshots 凍結オッズは使わない（本番と揃える）。
+ *
+ * 検証で凍結オッズを使うときだけ `?frozen=1`。
  */
-export async function GET() {
+export async function GET(request: Request) {
+  const preferFrozen = new URL(request.url).searchParams.get("frozen") === "1";
   const root = process.cwd();
   const loopDir = path.join(root, "src", "data", "loop", "snapshots");
   const liveDir = path.join(root, "src", "data", "snapshots");
 
   const dates = new Set<string>();
-  if (await exists(loopDir)) {
+  if (preferFrozen && (await exists(loopDir))) {
     for (const name of await readdir(loopDir)) {
       const m = name.match(/^(\d{4}-\d{2}-\d{2})\.json$/);
       if (m) dates.add(m[1]);
@@ -55,7 +58,9 @@ export async function GET() {
   const usedDates: string[] = [];
 
   for (const date of [...dates].sort()) {
-    const frozen = await readJson<SnapshotFile>(path.join(loopDir, `${date}.json`));
+    const frozen = preferFrozen
+      ? await readJson<SnapshotFile>(path.join(loopDir, `${date}.json`))
+      : null;
     const live = await readJson<SnapshotFile>(path.join(liveDir, `${date}.json`));
     const resultById = new Map(
       (live?.races ?? [])
@@ -63,7 +68,8 @@ export async function GET() {
         .map((r) => [r.id, r.result]),
     );
 
-    const baseRaces = frozen?.races?.length ? frozen.races : (live?.races ?? []);
+    const baseRaces =
+      preferFrozen && frozen?.races?.length ? frozen.races : (live?.races ?? []);
     const merged = baseRaces
       .filter((r) => r.authority === "JRA" || !r.authority)
       .map((r) => {
@@ -86,6 +92,9 @@ export async function GET() {
     dates: usedDates,
     raceCount: races.length,
     races,
-    note: "凍結オッズ優先。結果があるレースのみ。設定変更時はクライアント側で再集計。",
+    oddsSource: preferFrozen ? "frozen" : "live",
+    note: preferFrozen
+      ? "凍結オッズ優先（?frozen=1）。結果があるレースのみ。設定変更時はクライアント側で再集計。"
+      : "ライブ snapshot のオッズ＋結果。結果があるレースのみ。設定変更時はクライアント側で再集計。",
   });
 }

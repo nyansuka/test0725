@@ -90,7 +90,7 @@ function accumulatePick(
 
 /**
  * 現行設定で候補を選別し、レース期待度ランクごとの複勝圏的中率・仮想回収率を集計する。
- * オッズは引数 races の oddsBoard（検証用は凍結オッズ）を使う。
+ * オッズは引数 races の oddsBoard（成績日記はライブ snapshot。検証のみ ?frozen=1）を使う。
  */
 export function summarizeByExpectationRank(
   races: Race[],
