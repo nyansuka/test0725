@@ -39,7 +39,8 @@ async function loadExpected() {
 }
 
 async function fetchProdCatalog() {
-  const res = await fetch(`${PROD}/api/races`, {
+  // CDN s-maxage があるため、検証時はクエリでキャッシュを避ける
+  const res = await fetch(`${PROD}/api/races?verify=${Date.now()}`, {
     headers: { Accept: "application/json", "Cache-Control": "no-cache" },
     cache: "no-store",
   });

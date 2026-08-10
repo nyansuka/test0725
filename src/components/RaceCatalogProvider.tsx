@@ -24,8 +24,6 @@ type CatalogValue = {
 
 const CatalogContext = createContext<CatalogValue | null>(null);
 
-const POLL_MS = 60_000;
-
 type Props = {
   children: ReactNode;
   /** サーバがディスクから読んだ初期カタログ（静的 import キャッシュ回避） */
@@ -42,11 +40,13 @@ export function RaceCatalogProvider({ children, initial }: Props) {
     initial?.raceDate ?? seedMeta.raceDate,
   );
   const [refreshing, setRefreshing] = useState(false);
+  const hasInitial = Boolean(initial?.races?.length);
 
   const refresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      const res = await fetch("/api/races", { cache: "no-store" });
+      // CDN キャッシュを利用（手動 refresh も Origin Transfer を増やしすぎない）
+      const res = await fetch("/api/races");
       if (!res.ok) return;
       const data = (await res.json()) as RaceCatalogPayload;
       if (Array.isArray(data.races) && data.races.length > 0) {
@@ -62,11 +62,11 @@ export function RaceCatalogProvider({ children, initial }: Props) {
     }
   }, []);
 
+  // SSR 初期値があるときは自動取得・ポーリングしない（~10MB/回の Origin Transfer 抑制）
   useEffect(() => {
+    if (hasInitial) return;
     void refresh();
-    const id = window.setInterval(() => void refresh(), POLL_MS);
-    return () => window.clearInterval(id);
-  }, [refresh]);
+  }, [hasInitial, refresh]);
 
   const value = useMemo(
     () => ({ races, fetchedAt, source, liveRaceDate, refreshing, refresh }),

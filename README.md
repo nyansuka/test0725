@@ -66,7 +66,7 @@ docker compose exec web npm run loop:report -- 2026-07-25
 - 取得元: netkeiba 公開の出馬表 / オッズ API / 結果ページ（デモ用途）
 - 反映先: `src/data/snapshots/latest.json`（JST 当日スナップを優先。未来日の先取りでは上書きしない）
 - ループ蓄積: `src/data/loop/{snapshots,predictions,evaluations}/`
-- 画面は `/api/races` 経由で約1分ごとに再読込
+- 画面は SSR の初期カタログを使い、`/api/races` は手動更新時のみ（CDN で約1時間キャッシュ）
 - スコア用 factors / comment はルール付与（公開データではない）
 - オッズ・結果は必ず主催者（JRA）発表と照合してください
 
