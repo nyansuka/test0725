@@ -45,8 +45,8 @@ export function RaceCatalogProvider({ children, initial }: Props) {
   const refresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      // CDN キャッシュを利用（手動 refresh も Origin Transfer を増やしすぎない）
-      const res = await fetch("/api/races");
+      // 静的 /api/races を CDN から取得（Fast Data Transfer。Origin / ISR を増やさない）
+      const res = await fetch("/api/races", { cache: "force-cache" });
       if (!res.ok) return;
       const data = (await res.json()) as RaceCatalogPayload;
       if (Array.isArray(data.races) && data.races.length > 0) {
@@ -62,7 +62,8 @@ export function RaceCatalogProvider({ children, initial }: Props) {
     }
   }, []);
 
-  // SSR 初期値があるときは自動取得・ポーリングしない（~10MB/回の Origin Transfer 抑制）
+  // layout SSR でフルカタログを載せない方針。seed 表示後に CDN カタログへ差し替え。
+  // initial を渡したテスト／特殊経路では自動取得しない。
   useEffect(() => {
     if (hasInitial) return;
     void refresh();

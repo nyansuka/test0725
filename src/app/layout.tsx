@@ -4,10 +4,13 @@ import { JournalProvider } from "@/components/JournalProvider";
 import { RaceCatalogProvider } from "@/components/RaceCatalogProvider";
 import { RaceDayProvider } from "@/components/RaceDayProvider";
 import { SettingsProvider } from "@/components/SettingsProvider";
-import { loadRaceCatalog } from "@/data/loadCatalog";
 import "./globals.css";
 
-export const dynamic = "force-dynamic";
+/**
+ * カタログを layout SSR に載せない（Fast Origin Transfer 抑制）。
+ * 初回表示はバンドル済み seed、完全カタログは CDN の /api/races から取得。
+ */
+export const dynamic = "force-static";
 
 /** 源ノ角ゴシック（Source Han Sans JP）相当。Google Fonts では Noto Sans JP */
 const jp = Noto_Sans_JP({
@@ -39,18 +42,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const initialCatalog = await loadRaceCatalog();
-
   return (
     <html lang="ja" className={`${jp.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
         <SettingsProvider>
-          <RaceCatalogProvider initial={initialCatalog}>
+          <RaceCatalogProvider>
             <RaceDayProvider>
               <JournalProvider>{children}</JournalProvider>
             </RaceDayProvider>

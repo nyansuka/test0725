@@ -27,8 +27,21 @@ function threeMonthsBefore(ymd: string): string {
   return date.toISOString().slice(0, 10);
 }
 
+/** ビルド／静的生成中の重複読みを避ける */
+let catalogPromise: Promise<RaceCatalogPayload> | null = null;
+
 /** ディスク上の最新スナップショットと直近3か月分の開催日を読む。 */
 export async function loadRaceCatalog(): Promise<RaceCatalogPayload> {
+  if (!catalogPromise) {
+    catalogPromise = readRaceCatalogFromDisk().catch((err) => {
+      catalogPromise = null;
+      throw err;
+    });
+  }
+  return catalogPromise;
+}
+
+async function readRaceCatalogFromDisk(): Promise<RaceCatalogPayload> {
   const dir = path.join(process.cwd(), "src", "data", "snapshots");
   try {
     const latest = JSON.parse(await readFile(path.join(dir, "latest.json"), "utf8")) as SnapshotFile;

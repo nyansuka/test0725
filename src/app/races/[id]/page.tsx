@@ -7,6 +7,14 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
+/** レース詳細もビルド時静的化（リクエストごとのフルカタログ SSR を避ける） */
+export const dynamic = "force-static";
+
+export async function generateStaticParams() {
+  const catalog = await loadRaceCatalog();
+  return catalog.races.map((race) => ({ id: race.id }));
+}
+
 export default async function RacePage({ params }: Props) {
   const { id } = await params;
   const [catalog, initialTipster] = await Promise.all([
