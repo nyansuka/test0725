@@ -91,7 +91,7 @@ function SelectionLabel({ pick, race }: { pick: LongshotPick; race: Race | undef
     return <>{pick.selection}</>;
   }
 
-  if (pick.betType === "bracket_quinella") {
+  if (pick.betType === "bracket_quinella" || pick.betType === "bracket_exacta") {
     const ranks = [...new Set(
       pick.relatedHorseNumbers
         .map((n) => pop.get(n))

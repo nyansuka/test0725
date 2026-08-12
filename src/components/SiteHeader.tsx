@@ -8,6 +8,7 @@ import { RaceDayBar } from "@/components/RaceDayBar";
 
 const links = [
   { href: "/longshots", label: "注目穴" },
+  { href: "/lab/sanren", label: "3連研" },
   { href: "/races", label: "レース" },
   { href: "/journal", label: "成績日記" },
   { href: "/method", label: "予想の見方" },

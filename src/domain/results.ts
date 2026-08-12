@@ -157,6 +157,7 @@ export function payoutLabel(betType: BetType): string {
     win: "単勝",
     place: "複勝",
     bracket_quinella: "枠連",
+    bracket_exacta: "枠単",
     quinella: "馬連",
     wide: "ワイド",
     exacta: "馬単",

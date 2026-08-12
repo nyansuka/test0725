@@ -453,6 +453,23 @@ function parseResultHtml(html) {
     Sanrentan: "trifecta",
   };
 
+  /** SP 結果は `<span>10<br></span>` 形式があり、厳密な `(\d+)</span>` だと欠落する */
+  function numbersFromLi(fragment) {
+    return [...fragment.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)]
+      .map((m) => Number(m[1].replace(/<[^>]+>/g, "").trim()))
+      .filter((n) => Number.isFinite(n) && n > 0);
+  }
+  function numbersFromSpans(fragment) {
+    return [...fragment.matchAll(/<span[^>]*>\s*(\d+)/gi)]
+      .map((m) => Number(m[1]))
+      .filter((n) => Number.isFinite(n) && n > 0);
+  }
+  function resultNumbers(rowHtml) {
+    const resultTd = rowHtml.match(/<td class="Result"[^>]*>([\s\S]*?)<\/td>/i)?.[1] ?? rowHtml;
+    const fromLi = numbersFromLi(resultTd);
+    return fromLi.length > 0 ? fromLi : numbersFromSpans(resultTd);
+  }
+
   const payouts = [];
   for (const [cls, betType] of Object.entries(PAYOUT_ROW)) {
     const rowHtml = html.match(new RegExp(`<tr class="${cls}"[\\s\\S]*?<\\/tr>`, "i"))?.[0];
@@ -465,8 +482,8 @@ function parseResultHtml(html) {
 
     if (betType === "place" || betType === "wide") {
       // 複数行: Result 内の数字列と払戻を対応
-      const nums = [...rowHtml.matchAll(/<span>(\d+)<\/span>/g)].map((m) => Number(m[1]));
       if (betType === "place") {
+        const nums = resultNumbers(rowHtml);
         for (let i = 0; i < Math.min(nums.length, payoutYenList.length); i++) {
           payouts.push({
             betType,
@@ -476,9 +493,10 @@ function parseResultHtml(html) {
           });
         }
       } else {
-        const pairs = [...rowHtml.matchAll(/<ul>([\s\S]*?)<\/ul>/g)].map((m) =>
-          [...m[1].matchAll(/<span>(\d+)<\/span>/g)].map((x) => Number(x[1])).filter(Boolean),
-        );
+        const pairs = [...rowHtml.matchAll(/<ul>([\s\S]*?)<\/ul>/g)].map((m) => {
+          const fromLi = numbersFromLi(m[1]);
+          return fromLi.length > 0 ? fromLi : numbersFromSpans(m[1]);
+        });
         for (let i = 0; i < Math.min(pairs.length, payoutYenList.length); i++) {
           const pair = pairs[i];
           if (pair.length < 2) continue;
@@ -493,11 +511,11 @@ function parseResultHtml(html) {
       continue;
     }
 
-    const spans = [...rowHtml.matchAll(/<span>(\d+)<\/span>/g)].map((m) => Number(m[1]));
+    const nums = resultNumbers(rowHtml);
     const selection =
       betType === "win"
-        ? String(spans[0] ?? "")
-        : spans.filter(Boolean).slice(0, expectedSelectionLegs(betType)).join("-");
+        ? String(nums[0] ?? "")
+        : nums.slice(0, expectedSelectionLegs(betType)).join("-");
     if (!selection || !payoutYenList[0]) continue;
     payouts.push({
       betType,
@@ -515,6 +533,20 @@ function parseResultHtml(html) {
   };
 }
 
+function scoreResultPayouts(result) {
+  if (!result?.payouts?.length) return 0;
+  let score = result.payouts.length;
+  for (const p of result.payouts) {
+    const legs = String(p.selection ?? "")
+      .split("-")
+      .filter(Boolean).length;
+    const need = expectedSelectionLegs(p.betType);
+    if (need > 1 && legs >= need) score += 10;
+    if (need > 1 && legs < need) score -= 5;
+  }
+  return score;
+}
+
 async function fetchRaceResult(raceId) {
   const candidates = [
     {
@@ -526,14 +558,21 @@ async function fetchRaceResult(raceId) {
       userAgent: UA_SP,
     },
   ];
+  let best = null;
+  let bestScore = -1;
   for (const { url, userAgent } of candidates) {
     const html = await fetchTextOrNull(url, { userAgent });
     await sleep(120);
     if (!html) continue;
     const result = parseResultHtml(html);
-    if (result) return result;
+    if (!result) continue;
+    const score = scoreResultPayouts(result);
+    if (score > bestScore) {
+      best = result;
+      bestScore = score;
+    }
   }
-  return null;
+  return best;
 }
 
 /**

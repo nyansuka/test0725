@@ -1,9 +1,10 @@
-export type Authority = "JRA";
+export type Authority = "JRA" | "NAR";
 
 export type BetType =
   | "win"
   | "place"
   | "bracket_quinella"
+  | "bracket_exacta"
   | "quinella"
   | "wide"
   | "exacta"
@@ -150,6 +151,64 @@ export type UserSelectionSettings = {
   oddsMax: number | null;
   scoreMin: number;
   enabledBetTypes: BetType[];
+};
+
+/** 3連系研究所の券種 */
+export type SanrenBetType = "trio" | "trifecta";
+
+/** 初期実装は formation のみ有効（box/multi は Domains で生成しない） */
+export type SanrenFormMode = "formation" | "box" | "multi";
+
+export type SanrenLabLabel = "研究所注目" | "抑え";
+
+export type SanrenPickPattern = "fav_fav_hole" | "ordered_axis" | "other";
+
+/** レーン別 settings（trio / trifecta で分離） */
+export type SanrenLaneSettings = {
+  betType: SanrenBetType;
+  oddsThreshold: number;
+  oddsMax: number | null;
+  scoreMin: number;
+  formMode: SanrenFormMode;
+  topNPerRace: number;
+  preferExpectationRanks?: RaceExpectationRank[];
+  // trifecta
+  partnerCap2?: number;
+  partnerCap3?: number;
+  axisTopN?: number;
+  /** 勝ち切れない危険人気を1着軸から除外（仮） */
+  excludeDangerousFavs?: boolean;
+  // trio（S2b）
+  popularRankMax?: number;
+  holeRankMin?: number;
+  partnerCapHole?: number;
+};
+
+export type SanrenLabSettings = {
+  trio: SanrenLaneSettings;
+  trifecta: SanrenLaneSettings;
+};
+
+export type SanrenPick = {
+  raceId: string;
+  venue: string;
+  raceNumber: number;
+  startTime: string;
+  track: "芝" | "ダート";
+  title: string;
+  betType: SanrenBetType;
+  selection: string;
+  odds: number;
+  axisHorseNumber: number;
+  secondHorseNumber?: number;
+  thirdHorseNumber?: number;
+  relatedHorseNumbers: number[];
+  pattern: SanrenPickPattern;
+  relatedScore: number;
+  axisWinPotential?: number;
+  label: SanrenLabLabel;
+  hasSuperWatch?: boolean;
+  comment: string;
 };
 
 export type Tipster = {

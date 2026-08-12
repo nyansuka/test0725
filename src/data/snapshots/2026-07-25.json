@@ -1,6 +1,6 @@
 {
-  "fetchedAt": "2026-08-02T01:10:50.037Z",
-  "source": "netkeiba (public pages / odds API + results + horse form)",
+  "fetchedAt": "2026-08-11T14:27:04.678Z",
+  "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-07-25",
   "raceCount": 36,
   "venues": [
@@ -1179,7 +1179,7 @@
       "oddsUpdatedAt": "2026-07-25 10:05:37",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:35.491Z",
+        "finishedAt": "2026-08-11T14:26:44.346Z",
         "finishes": [
           {
             "rank": 1,
@@ -2493,7 +2493,7 @@
       "oddsUpdatedAt": "2026-07-25 10:35:37",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:35.754Z",
+        "finishedAt": "2026-08-11T14:26:45.076Z",
         "finishes": [
           {
             "rank": 1,
@@ -4210,7 +4210,7 @@
       "oddsUpdatedAt": "2026-07-25 11:07:42",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:36.033Z",
+        "finishedAt": "2026-08-11T14:26:45.567Z",
         "finishes": [
           {
             "rank": 1,
@@ -6167,7 +6167,7 @@
       "oddsUpdatedAt": "2026-07-25 11:36:18",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:36.340Z",
+        "finishedAt": "2026-08-11T14:26:46.131Z",
         "finishes": [
           {
             "rank": 1,
@@ -7158,7 +7158,7 @@
       "oddsUpdatedAt": "2026-07-25 12:26:28",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:36.570Z",
+        "finishedAt": "2026-08-11T14:26:46.545Z",
         "finishes": [
           {
             "rank": 1,
@@ -9067,7 +9067,7 @@
       "oddsUpdatedAt": "2026-07-25 12:57:03",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:36.890Z",
+        "finishedAt": "2026-08-11T14:26:47.169Z",
         "finishes": [
           {
             "rank": 1,
@@ -11109,7 +11109,7 @@
       "oddsUpdatedAt": "2026-07-25 13:26:33",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:37.169Z",
+        "finishedAt": "2026-08-11T14:26:47.613Z",
         "finishes": [
           {
             "rank": 1,
@@ -13020,7 +13020,7 @@
       "oddsUpdatedAt": "2026-07-25 13:57:08",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:37.445Z",
+        "finishedAt": "2026-08-11T14:26:48.071Z",
         "finishes": [
           {
             "rank": 1,
@@ -14782,7 +14782,7 @@
       "oddsUpdatedAt": "2026-07-25 14:26:53",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:37.681Z",
+        "finishedAt": "2026-08-11T14:26:48.602Z",
         "finishes": [
           {
             "rank": 1,
@@ -16590,7 +16590,7 @@
       "oddsUpdatedAt": "2026-07-25 14:57:28",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:37.965Z",
+        "finishedAt": "2026-08-11T14:26:49.383Z",
         "finishes": [
           {
             "rank": 1,
@@ -18460,7 +18460,7 @@
       "oddsUpdatedAt": "2026-07-25 15:33:18",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:38.342Z",
+        "finishedAt": "2026-08-11T14:26:49.834Z",
         "finishes": [
           {
             "rank": 1,
@@ -20281,7 +20281,7 @@
       "oddsUpdatedAt": "2026-07-25 16:08:08",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:38.705Z",
+        "finishedAt": "2026-08-11T14:26:50.307Z",
         "finishes": [
           {
             "rank": 1,
@@ -22000,7 +22000,7 @@
       "oddsUpdatedAt": "2026-07-25 09:59:12",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:39.058Z",
+        "finishedAt": "2026-08-11T14:26:50.949Z",
         "finishes": [
           {
             "rank": 1,
@@ -23951,7 +23951,7 @@
       "oddsUpdatedAt": "2026-07-25 10:27:17",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:39.295Z",
+        "finishedAt": "2026-08-11T14:26:51.425Z",
         "finishes": [
           {
             "rank": 1,
@@ -25331,7 +25331,7 @@
       "oddsUpdatedAt": "2026-07-25 10:57:42",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:39.566Z",
+        "finishedAt": "2026-08-11T14:26:51.969Z",
         "finishes": [
           {
             "rank": 1,
@@ -27291,7 +27291,7 @@
       "oddsUpdatedAt": "2026-07-25 11:27:03",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:39.815Z",
+        "finishedAt": "2026-08-11T14:26:52.426Z",
         "finishes": [
           {
             "rank": 1,
@@ -29145,7 +29145,7 @@
       "oddsUpdatedAt": "2026-07-25 11:57:28",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:40.162Z",
+        "finishedAt": "2026-08-11T14:26:52.874Z",
         "finishes": [
           {
             "rank": 1,
@@ -31159,7 +31159,7 @@
       "oddsUpdatedAt": "2026-07-25 15:17:13",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:40.455Z",
+        "finishedAt": "2026-08-11T14:26:53.324Z",
         "finishes": [
           {
             "rank": 1,
@@ -33294,7 +33294,7 @@
       "oddsUpdatedAt": "2026-07-25 15:54:13",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:40.729Z",
+        "finishedAt": "2026-08-11T14:26:53.898Z",
         "finishes": [
           {
             "rank": 1,
@@ -35272,7 +35272,7 @@
       "oddsUpdatedAt": "2026-07-25 16:28:18",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:41.094Z",
+        "finishedAt": "2026-08-11T14:26:54.469Z",
         "finishes": [
           {
             "rank": 1,
@@ -37034,7 +37034,7 @@
       "oddsUpdatedAt": "2026-07-25 17:04:18",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:41.304Z",
+        "finishedAt": "2026-08-11T14:26:55.215Z",
         "finishes": [
           {
             "rank": 1,
@@ -39043,7 +39043,7 @@
       "oddsUpdatedAt": "2026-07-25 17:43:07",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:41.547Z",
+        "finishedAt": "2026-08-11T14:26:55.809Z",
         "finishes": [
           {
             "rank": 1,
@@ -41218,7 +41218,7 @@
       "oddsUpdatedAt": "2026-07-25 18:08:07",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:41.880Z",
+        "finishedAt": "2026-08-11T14:26:56.259Z",
         "finishes": [
           {
             "rank": 1,
@@ -43385,7 +43385,7 @@
       "oddsUpdatedAt": "2026-07-25 18:37:07",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:42.133Z",
+        "finishedAt": "2026-08-11T14:26:56.925Z",
         "finishes": [
           {
             "rank": 1,
@@ -45045,7 +45045,7 @@
       "oddsUpdatedAt": "2026-07-25 09:46:17",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:42.486Z",
+        "finishedAt": "2026-08-11T14:26:57.578Z",
         "finishes": [
           {
             "rank": 1,
@@ -46940,7 +46940,7 @@
       "oddsUpdatedAt": "2026-07-25 10:16:42",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:42.748Z",
+        "finishedAt": "2026-08-11T14:26:58.226Z",
         "finishes": [
           {
             "rank": 1,
@@ -48824,7 +48824,7 @@
       "oddsUpdatedAt": "2026-07-25 10:47:52",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:43.077Z",
+        "finishedAt": "2026-08-11T14:26:58.668Z",
         "finishes": [
           {
             "rank": 1,
@@ -50885,7 +50885,7 @@
       "oddsUpdatedAt": "2026-07-25 11:18:06",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:43.438Z",
+        "finishedAt": "2026-08-11T14:26:59.108Z",
         "finishes": [
           {
             "rank": 1,
@@ -52988,7 +52988,7 @@
       "oddsUpdatedAt": "2026-07-25 11:47:31",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:43.677Z",
+        "finishedAt": "2026-08-11T14:26:59.701Z",
         "finishes": [
           {
             "rank": 1,
@@ -55085,7 +55085,7 @@
       "oddsUpdatedAt": "2026-07-25 15:07:46",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:43.906Z",
+        "finishedAt": "2026-08-11T14:27:00.257Z",
         "finishes": [
           {
             "rank": 1,
@@ -56947,7 +56947,7 @@
       "oddsUpdatedAt": "2026-07-25 15:42:41",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:44.130Z",
+        "finishedAt": "2026-08-11T14:27:00.948Z",
         "finishes": [
           {
             "rank": 1,
@@ -58309,7 +58309,7 @@
       "oddsUpdatedAt": "2026-07-25 16:18:13",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:44.590Z",
+        "finishedAt": "2026-08-11T14:27:01.596Z",
         "finishes": [
           {
             "rank": 1,
@@ -60328,7 +60328,7 @@
       "oddsUpdatedAt": "2026-07-25 16:52:03",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:44.957Z",
+        "finishedAt": "2026-08-11T14:27:02.146Z",
         "finishes": [
           {
             "rank": 1,
@@ -62239,7 +62239,7 @@
       "oddsUpdatedAt": "2026-07-25 17:27:58",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:45.279Z",
+        "finishedAt": "2026-08-11T14:27:03.108Z",
         "finishes": [
           {
             "rank": 1,
@@ -63609,7 +63609,7 @@
       "oddsUpdatedAt": "2026-07-25 17:56:47",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:45.643Z",
+        "finishedAt": "2026-08-11T14:27:03.716Z",
         "finishes": [
           {
             "rank": 1,
@@ -65637,7 +65637,7 @@
       "oddsUpdatedAt": "2026-07-25 18:27:27",
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-01T05:55:46.019Z",
+        "finishedAt": "2026-08-11T14:27:04.357Z",
         "finishes": [
           {
             "rank": 1,

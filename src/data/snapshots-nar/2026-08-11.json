@@ -1,0 +1,5163 @@
+{
+  "fetchedAt": "2026-08-11T01:00:45.164Z",
+  "source": "keiba.go.jp (official daily CSV)",
+  "authority": "NAR",
+  "raceDate": "2026-08-11",
+  "raceDates": [
+    "2026-08-11"
+  ],
+  "raceCount": 12,
+  "venues": [
+    "浦和"
+  ],
+  "races": [
+    {
+      "id": "urawa-20260811-1",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 1,
+      "title": "ランチタイムＣ３選抜馬イ",
+      "distance": "ダ800m",
+      "track": "ダート",
+      "startTime": "13:30",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "サンボールダー",
+          "jockey": "及川烈",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "ワンダーダイカネン",
+          "jockey": "岡田大",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "ゴールドボード",
+          "jockey": "秋元耕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "ミラクルライズ",
+          "jockey": "吉留孝",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "ブルーグリッター",
+          "jockey": "櫻井光",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 5,
+          "name": "リュウノアーダーン",
+          "jockey": "中島良",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 6,
+          "name": "スイートウィル",
+          "jockey": "室陽一",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 8,
+          "bracket": 6,
+          "name": "サンドバンブー",
+          "jockey": "保園翔",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 9,
+          "bracket": 7,
+          "name": "ニシノミモザ",
+          "jockey": "國分祐",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 10,
+          "bracket": 7,
+          "name": "プリンセスパリー",
+          "jockey": "高橋哲",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 11,
+          "bracket": 8,
+          "name": "アマゴ",
+          "jockey": "見越彬",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 12,
+          "bracket": 8,
+          "name": "スーパーサイクル",
+          "jockey": "山中悠",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "8",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "9",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "10",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "11",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "12",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "8",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "9",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "10",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "11",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "12",
+          "odds": 41.5
+        }
+      ],
+      "fieldSize": 12,
+      "source": "keiba.go.jp official csv"
+    },
+    {
+      "id": "urawa-20260811-2",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 2,
+      "title": "３歳三",
+      "distance": "ダ1400m",
+      "track": "ダート",
+      "startTime": "14:00",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "エムティライカ",
+          "jockey": "及川烈",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "ハリッサ",
+          "jockey": "中山遥",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "オソレイユ",
+          "jockey": "新原周",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "メルシークーリア",
+          "jockey": "秋元耕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "クラオウリュウ",
+          "jockey": "西啓太",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 6,
+          "name": "エムブイピーコール",
+          "jockey": "保園翔",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 7,
+          "name": "ウキヨノメシア",
+          "jockey": "室陽一",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 8,
+          "bracket": 8,
+          "name": "エターナルフィズ",
+          "jockey": "山口達",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 9,
+          "bracket": 8,
+          "name": "スターハル",
+          "jockey": "木間龍",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "8",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "9",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "8",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "9",
+          "odds": 41.5
+        }
+      ],
+      "fieldSize": 9,
+      "source": "keiba.go.jp official csv"
+    },
+    {
+      "id": "urawa-20260811-3",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 3,
+      "title": "３歳二",
+      "distance": "ダ1500m",
+      "track": "ダート",
+      "startTime": "14:30",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "ゴールデンコマンチ",
+          "jockey": "中山遥",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "バルカロール",
+          "jockey": "佐野遥",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "リトルエース",
+          "jockey": "杉山海",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "ダイバマーヤチャン",
+          "jockey": "藤江渉",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "バルカニクス",
+          "jockey": "和田譲",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 6,
+          "name": "エドノジェット",
+          "jockey": "張田昂",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 6,
+          "name": "タカイチショーヘイ",
+          "jockey": "吉留孝",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 8,
+          "bracket": 7,
+          "name": "サヨノビックアルマ",
+          "jockey": "安藤洋",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 9,
+          "bracket": 7,
+          "name": "グリンネル",
+          "jockey": "藤原幹",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 10,
+          "bracket": 8,
+          "name": "オーデンサフィー",
+          "jockey": "岡田大",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 11,
+          "bracket": 8,
+          "name": "シュウスイマカロン",
+          "jockey": "室陽一",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "8",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "9",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "10",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "11",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "8",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "9",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "10",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "11",
+          "odds": 41.5
+        }
+      ],
+      "fieldSize": 11,
+      "source": "keiba.go.jp official csv"
+    },
+    {
+      "id": "urawa-20260811-4",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 4,
+      "title": "特選Ｃ２ウＣ３ア選抜馬",
+      "distance": "ダ800m",
+      "track": "ダート",
+      "startTime": "15:00",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "モーイーワヒネ",
+          "jockey": "半澤慶",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "トーアローダンテ",
+          "jockey": "中島良",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "アースメロディ",
+          "jockey": "秋元耕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "リバーフロント",
+          "jockey": "櫻井光",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "ヒシルリアン",
+          "jockey": "岡田大",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 6,
+          "name": "マカンコーサッポー",
+          "jockey": "西啓太",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 6,
+          "name": "ダイエービルベリー",
+          "jockey": "中山遥",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 8,
+          "bracket": 7,
+          "name": "コトリノウタウウタ",
+          "jockey": "七夕裕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 9,
+          "bracket": 7,
+          "name": "ポアゾンシーザー",
+          "jockey": "山中悠",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 10,
+          "bracket": 8,
+          "name": "ブリテン",
+          "jockey": "古岡勇",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 11,
+          "bracket": 8,
+          "name": "モンテジュエル",
+          "jockey": "木間龍",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "8",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "9",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "10",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "11",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "8",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "9",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "10",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "11",
+          "odds": 41.5
+        }
+      ],
+      "fieldSize": 11,
+      "source": "keiba.go.jp official csv"
+    },
+    {
+      "id": "urawa-20260811-5",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 5,
+      "title": "Ｃ２五",
+      "distance": "ダ1500m",
+      "track": "ダート",
+      "startTime": "15:30",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "アストラルフレア",
+          "jockey": "及川烈",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "エムリエール",
+          "jockey": "山本大",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "イーオレイ",
+          "jockey": "仲野光",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "クーリッジテソーロ",
+          "jockey": "野畑凌",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "コットンフラワー",
+          "jockey": "増田充",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 6,
+          "name": "プリンセスサクラ",
+          "jockey": "秋元耕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 7,
+          "name": "ニシノリピート",
+          "jockey": "吉留孝",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 8,
+          "bracket": 8,
+          "name": "ロワゾブルーチヌ",
+          "jockey": "本橋孝",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 9,
+          "bracket": 8,
+          "name": "ニシノウール",
+          "jockey": "國分祐",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "8",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "9",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "8",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "9",
+          "odds": 41.5
+        }
+      ],
+      "fieldSize": 9,
+      "source": "keiba.go.jp official csv"
+    },
+    {
+      "id": "urawa-20260811-6",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 6,
+      "title": "若竹（わかたけ）特別２歳一",
+      "distance": "ダ1500m",
+      "track": "ダート",
+      "startTime": "16:00",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "ライスノユメ",
+          "jockey": "秋元耕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "ユウユウヒレシュ",
+          "jockey": "赤津和",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "ユウユウセルベッサ",
+          "jockey": "高橋哲",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "フライトドクター",
+          "jockey": "野畑凌",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "インチャージ",
+          "jockey": "西啓太",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 6,
+          "name": "ユウユウキュラソー",
+          "jockey": "室陽一",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 7,
+          "name": "ユウユウコクトバ",
+          "jockey": "七夕裕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 41.5
+        }
+      ],
+      "fieldSize": 7,
+      "source": "keiba.go.jp official csv"
+    },
+    {
+      "id": "urawa-20260811-7",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 7,
+      "title": "白岡美人で元気１００倍賞Ｃ１四",
+      "distance": "ダ1400m",
+      "track": "ダート",
+      "startTime": "16:35",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "イトイテーション",
+          "jockey": "野畑凌",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "オオタニズスマイル",
+          "jockey": "秋元耕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "アパショナード",
+          "jockey": "吉留孝",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "ピースシャイニー",
+          "jockey": "半澤慶",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "エドノビートイン",
+          "jockey": "張田昂",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 6,
+          "name": "ポピーレッド",
+          "jockey": "和田譲",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 7,
+          "name": "ユイノオールイン",
+          "jockey": "赤津和",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 8,
+          "bracket": 8,
+          "name": "サニーサフラン",
+          "jockey": "藤原幹",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 9,
+          "bracket": 8,
+          "name": "ラブシリカ",
+          "jockey": "山中悠",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "8",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "9",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "8",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "9",
+          "odds": 41.5
+        }
+      ],
+      "fieldSize": 9,
+      "source": "keiba.go.jp official csv"
+    },
+    {
+      "id": "urawa-20260811-8",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 8,
+      "title": "鳳仙花（ほうせんか）特別Ｂ３イＣ１ア選抜馬",
+      "distance": "ダ800m",
+      "track": "ダート",
+      "startTime": "17:10",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "ラタランテラ",
+          "jockey": "木間龍",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "ネイビーシンデレラ",
+          "jockey": "笹川翼",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "クリノウィリアム",
+          "jockey": "櫻井光",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "モーニングタンポポ",
+          "jockey": "見越彬",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "ビナラオカイ",
+          "jockey": "岡村健",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 5,
+          "name": "マジュツシカエル",
+          "jockey": "和田譲",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 6,
+          "name": "ケイアイマゴラ",
+          "jockey": "町田直",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 8,
+          "bracket": 6,
+          "name": "ワイルドゴーア",
+          "jockey": "野畑凌",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 9,
+          "bracket": 7,
+          "name": "キャストライトオン",
+          "jockey": "鷹見陸",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 10,
+          "bracket": 7,
+          "name": "パラソーレ",
+          "jockey": "西啓太",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 11,
+          "bracket": 8,
+          "name": "シェナウエーブ",
+          "jockey": "七夕裕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 12,
+          "bracket": 8,
+          "name": "ニシノニューリーフ",
+          "jockey": "吉留孝",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "8",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "9",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "10",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "11",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "12",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "8",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "9",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "10",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "11",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "12",
+          "odds": 41.5
+        }
+      ],
+      "fieldSize": 12,
+      "source": "keiba.go.jp official csv"
+    },
+    {
+      "id": "urawa-20260811-9",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 9,
+      "title": "納涼（のうりょう）特別Ｂ２二Ｂ３一",
+      "distance": "ダ1500m",
+      "track": "ダート",
+      "startTime": "17:45",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "ハナチルサト",
+          "jockey": "町田直",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "ドリームファイター",
+          "jockey": "佐野遥",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "ハーモニーロワ",
+          "jockey": "木間龍",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "デザートウインド",
+          "jockey": "西啓太",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "カイトキング",
+          "jockey": "秋元耕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 6,
+          "name": "フクチャンキング",
+          "jockey": "室陽一",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 7,
+          "name": "マッスル",
+          "jockey": "笹川翼",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 8,
+          "bracket": 7,
+          "name": "ブレイヴルーラー",
+          "jockey": "中山遥",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 9,
+          "bracket": 8,
+          "name": "イサチルカゼニタツ",
+          "jockey": "鷹見陸",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 10,
+          "bracket": 8,
+          "name": "グルーヴィン",
+          "jockey": "見越彬",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "8",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "9",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "10",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "8",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "9",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "10",
+          "odds": 41.5
+        }
+      ],
+      "fieldSize": 10,
+      "source": "keiba.go.jp official csv"
+    },
+    {
+      "id": "urawa-20260811-10",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 10,
+      "title": "山の日（やまのひ）特別Ａ２Ｂ１一",
+      "distance": "ダ1500m",
+      "track": "ダート",
+      "startTime": "18:20",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "チョメチョメ",
+          "jockey": "仲野光",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "トーセンサンダー",
+          "jockey": "保園翔",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "ケンアトラス",
+          "jockey": "藤本現",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "オーシンスキャット",
+          "jockey": "野畑凌",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "エリンアキレウス",
+          "jockey": "杉山海",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 6,
+          "name": "ジョーエスポワール",
+          "jockey": "西啓太",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 7,
+          "name": "ラブアンドハピネス",
+          "jockey": "半澤慶",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 8,
+          "bracket": 8,
+          "name": "エアポートライナー",
+          "jockey": "笹川翼",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "8",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "8",
+          "odds": 41.5
+        }
+      ],
+      "fieldSize": 8,
+      "source": "keiba.go.jp official csv"
+    },
+    {
+      "id": "urawa-20260811-11",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 11,
+      "title": "第４回 ルーキーズサマーカップ２歳オープン",
+      "distance": "ダ1400m",
+      "track": "ダート",
+      "startTime": "18:55",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "ラモンパンサー",
+          "jockey": "木間龍",
+          "oddsWin": 34.9,
+          "oddsPlace": {
+            "min": 5.2,
+            "max": 11.2
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 35
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "オレンジルシファー",
+          "jockey": "安藤洋",
+          "oddsWin": 62.8,
+          "oddsPlace": {
+            "min": 2,
+            "max": 3.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 63
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "ルースアグレッシブ",
+          "jockey": "笹川翼",
+          "oddsWin": 2.8,
+          "oddsPlace": {
+            "min": 2.6,
+            "max": 5.3
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 3
+          },
+          "comment": "相対的に支持を集める帯。穴候補としては見送り寄り。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "ケンシリウス",
+          "jockey": "藤本現",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "ウノキボンバイエ",
+          "jockey": "室陽一",
+          "oddsWin": 11.2,
+          "oddsPlace": {
+            "min": 1.5,
+            "max": 2.8
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 11
+          },
+          "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 6,
+          "name": "モリケン",
+          "jockey": "山中悠",
+          "oddsWin": 2.2,
+          "oddsPlace": {
+            "min": 2.4,
+            "max": 4.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 2
+          },
+          "comment": "相対的に支持を集める帯。穴候補としては見送り寄り。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 6,
+          "name": "チュラブロッサム",
+          "jockey": "篠谷葵",
+          "oddsWin": 9.6,
+          "oddsPlace": {
+            "min": 1,
+            "max": 1.1
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 10
+          },
+          "comment": "相対的に支持を集める帯。穴候補としては見送り寄り。",
+          "placePotential": 50
+        },
+        {
+          "number": 8,
+          "bracket": 7,
+          "name": "セブンソード",
+          "jockey": "西啓太",
+          "oddsWin": 20.9,
+          "oddsPlace": {
+            "min": 4.4,
+            "max": 9.3
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 21
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 9,
+          "bracket": 7,
+          "name": "ダムブランシュ",
+          "jockey": "増田充",
+          "oddsWin": 78.6,
+          "oddsPlace": {
+            "min": 5.2,
+            "max": 11.2
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 79
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 10,
+          "bracket": 8,
+          "name": "ドゥオーモアモーレ",
+          "jockey": "野畑凌",
+          "oddsWin": 44.9,
+          "oddsPlace": {
+            "min": 4.4,
+            "max": 9.3
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 45
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 11,
+          "bracket": 8,
+          "name": "ラストハニー",
+          "jockey": "本橋孝",
+          "oddsWin": 20.9,
+          "oddsPlace": {
+            "min": 5.2,
+            "max": 11.2
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 21
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 34.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 62.8
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 2.8
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 11.2
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 2.2
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 9.6
+        },
+        {
+          "betType": "win",
+          "selection": "8",
+          "odds": 20.9
+        },
+        {
+          "betType": "win",
+          "selection": "9",
+          "odds": 78.6
+        },
+        {
+          "betType": "win",
+          "selection": "10",
+          "odds": 44.9
+        },
+        {
+          "betType": "win",
+          "selection": "11",
+          "odds": 20.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 5.2
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 2
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 2.6
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 1.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 2.4
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 1
+        },
+        {
+          "betType": "place",
+          "selection": "8",
+          "odds": 4.4
+        },
+        {
+          "betType": "place",
+          "selection": "9",
+          "odds": 5.2
+        },
+        {
+          "betType": "place",
+          "selection": "10",
+          "odds": 4.4
+        },
+        {
+          "betType": "place",
+          "selection": "11",
+          "odds": 5.2
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "7-7",
+          "odds": 621
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "1-2",
+          "odds": 310.5
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "1-8",
+          "odds": 207
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "8-8",
+          "odds": 207
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "1-7",
+          "odds": 155.2
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "1-5",
+          "odds": 124.2
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "2-7",
+          "odds": 77.6
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "2-5",
+          "odds": 69
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "5-7",
+          "odds": 69
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "1-6",
+          "odds": 62.1
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "1-3",
+          "odds": 56.4
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "7-8",
+          "odds": 51.7
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "2-8",
+          "odds": 47.7
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "2-6",
+          "odds": 44.3
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "6-6",
+          "odds": 25.8
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "6-7",
+          "odds": 24.8
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "2-3",
+          "odds": 22.1
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "5-6",
+          "odds": 18.2
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "3-7",
+          "odds": 15.1
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "6-8",
+          "odds": 14.4
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "3-8",
+          "odds": 12.9
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "3-5",
+          "odds": 12.4
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "5-8",
+          "odds": 11.7
+        },
+        {
+          "betType": "quinella",
+          "selection": "1-7",
+          "odds": 1152.7
+        },
+        {
+          "betType": "quinella",
+          "selection": "1-11",
+          "odds": 1152.7
+        },
+        {
+          "betType": "quinella",
+          "selection": "2-9",
+          "odds": 1152.7
+        },
+        {
+          "betType": "quinella",
+          "selection": "7-8",
+          "odds": 1152.7
+        },
+        {
+          "betType": "quinella",
+          "selection": "1-8",
+          "odds": 576.3
+        },
+        {
+          "betType": "quinella",
+          "selection": "1-9",
+          "odds": 576.3
+        },
+        {
+          "betType": "quinella",
+          "selection": "1-10",
+          "odds": 576.3
+        },
+        {
+          "betType": "quinella",
+          "selection": "2-11",
+          "odds": 576.3
+        },
+        {
+          "betType": "quinella",
+          "selection": "9-10",
+          "odds": 576.3
+        },
+        {
+          "betType": "quinella",
+          "selection": "1-2",
+          "odds": 384.2
+        },
+        {
+          "betType": "quinella",
+          "selection": "1-5",
+          "odds": 384.2
+        },
+        {
+          "betType": "quinella",
+          "selection": "5-9",
+          "odds": 384.2
+        },
+        {
+          "betType": "quinella",
+          "selection": "1-6",
+          "odds": 288.1
+        },
+        {
+          "betType": "quinella",
+          "selection": "2-8",
+          "odds": 288.1
+        },
+        {
+          "betType": "quinella",
+          "selection": "5-11",
+          "odds": 288.1
+        },
+        {
+          "betType": "quinella",
+          "selection": "9-11",
+          "odds": 288.1
+        },
+        {
+          "betType": "quinella",
+          "selection": "6-9",
+          "odds": 230.5
+        },
+        {
+          "betType": "quinella",
+          "selection": "8-9",
+          "odds": 230.5
+        },
+        {
+          "betType": "quinella",
+          "selection": "10-11",
+          "odds": 230.5
+        },
+        {
+          "betType": "quinella",
+          "selection": "2-5",
+          "odds": 144
+        },
+        {
+          "betType": "quinella",
+          "selection": "5-8",
+          "odds": 128
+        },
+        {
+          "betType": "quinella",
+          "selection": "2-10",
+          "odds": 115.2
+        },
+        {
+          "betType": "quinella",
+          "selection": "2-7",
+          "odds": 96
+        },
+        {
+          "betType": "quinella",
+          "selection": "7-11",
+          "odds": 96
+        },
+        {
+          "betType": "quinella",
+          "selection": "3-9",
+          "odds": 88.6
+        },
+        {
+          "betType": "quinella",
+          "selection": "8-10",
+          "odds": 82.3
+        },
+        {
+          "betType": "quinella",
+          "selection": "5-7",
+          "odds": 76.8
+        },
+        {
+          "betType": "quinella",
+          "selection": "5-10",
+          "odds": 76.8
+        },
+        {
+          "betType": "quinella",
+          "selection": "6-11",
+          "odds": 76.8
+        },
+        {
+          "betType": "quinella",
+          "selection": "7-10",
+          "odds": 76.8
+        },
+        {
+          "betType": "quinella",
+          "selection": "6-8",
+          "odds": 67.8
+        },
+        {
+          "betType": "quinella",
+          "selection": "2-6",
+          "odds": 64
+        },
+        {
+          "betType": "quinella",
+          "selection": "8-11",
+          "odds": 60.6
+        },
+        {
+          "betType": "quinella",
+          "selection": "6-10",
+          "odds": 57.6
+        },
+        {
+          "betType": "quinella",
+          "selection": "1-3",
+          "odds": 41.1
+        },
+        {
+          "betType": "quinella",
+          "selection": "3-11",
+          "odds": 23
+        },
+        {
+          "betType": "quinella",
+          "selection": "5-6",
+          "odds": 22.6
+        },
+        {
+          "betType": "quinella",
+          "selection": "6-7",
+          "odds": 20.5
+        },
+        {
+          "betType": "quinella",
+          "selection": "3-8",
+          "odds": 18.8
+        },
+        {
+          "betType": "quinella",
+          "selection": "3-10",
+          "odds": 18.5
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "7-8",
+          "odds": 304.5
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "8-7",
+          "odds": 304.5
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "1-6",
+          "odds": 152.2
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "1-8",
+          "odds": 152.2
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "2-5",
+          "odds": 152.2
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "2-6",
+          "odds": 152.2
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "2-8",
+          "odds": 152.2
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "7-6",
+          "odds": 152.2
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "8-1",
+          "odds": 152.2
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "8-2",
+          "odds": 152.2
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "8-8",
+          "odds": 152.2
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "5-7",
+          "odds": 101.5
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "5-8",
+          "odds": 101.5
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "6-1",
+          "odds": 101.5
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "7-7",
+          "odds": 101.5
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "8-5",
+          "odds": 101.5
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "1-3",
+          "odds": 76.1
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "6-5",
+          "odds": 76.1
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "5-6",
+          "odds": 60.9
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "7-3",
+          "odds": 60.9
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "3-1",
+          "odds": 50.7
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "6-2",
+          "odds": 50.7
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "2-3",
+          "odds": 43.5
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "6-7",
+          "odds": 43.5
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "5-2",
+          "odds": 38
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "3-2",
+          "odds": 33.8
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "3-7",
+          "odds": 25.3
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "8-6",
+          "odds": 25.3
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "8-3",
+          "odds": 23.4
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "3-5",
+          "odds": 21.7
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "5-3",
+          "odds": 21.7
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "6-6",
+          "odds": 19
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "6-8",
+          "odds": 13.2
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "6-3",
+          "odds": 12.1
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "3-8",
+          "odds": 10.8
+        },
+        {
+          "betType": "bracket_exacta",
+          "selection": "3-6",
+          "odds": 9.2
+        },
+        {
+          "betType": "exacta",
+          "selection": "1-8",
+          "odds": 1059
+        },
+        {
+          "betType": "exacta",
+          "selection": "2-8",
+          "odds": 1059
+        },
+        {
+          "betType": "exacta",
+          "selection": "5-8",
+          "odds": 1059
+        },
+        {
+          "betType": "exacta",
+          "selection": "5-9",
+          "odds": 1059
+        },
+        {
+          "betType": "exacta",
+          "selection": "10-11",
+          "odds": 1059
+        },
+        {
+          "betType": "exacta",
+          "selection": "11-2",
+          "odds": 1059
+        },
+        {
+          "betType": "exacta",
+          "selection": "11-7",
+          "odds": 1059
+        },
+        {
+          "betType": "exacta",
+          "selection": "11-8",
+          "odds": 1059
+        },
+        {
+          "betType": "exacta",
+          "selection": "11-10",
+          "odds": 1059
+        },
+        {
+          "betType": "exacta",
+          "selection": "1-2",
+          "odds": 529.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "1-10",
+          "odds": 529.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "2-1",
+          "odds": 529.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "2-11",
+          "odds": 529.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "7-8",
+          "odds": 529.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "8-10",
+          "odds": 529.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "8-11",
+          "odds": 529.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "9-1",
+          "odds": 529.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "1-5",
+          "odds": 353
+        },
+        {
+          "betType": "exacta",
+          "selection": "2-5",
+          "odds": 353
+        },
+        {
+          "betType": "exacta",
+          "selection": "8-5",
+          "odds": 353
+        },
+        {
+          "betType": "exacta",
+          "selection": "10-1",
+          "odds": 353
+        },
+        {
+          "betType": "exacta",
+          "selection": "10-8",
+          "odds": 353
+        },
+        {
+          "betType": "exacta",
+          "selection": "1-3",
+          "odds": 264.7
+        },
+        {
+          "betType": "exacta",
+          "selection": "2-10",
+          "odds": 264.7
+        },
+        {
+          "betType": "exacta",
+          "selection": "9-3",
+          "odds": 264.7
+        },
+        {
+          "betType": "exacta",
+          "selection": "9-6",
+          "odds": 264.7
+        },
+        {
+          "betType": "exacta",
+          "selection": "11-3",
+          "odds": 264.7
+        },
+        {
+          "betType": "exacta",
+          "selection": "3-9",
+          "odds": 211.8
+        },
+        {
+          "betType": "exacta",
+          "selection": "5-2",
+          "odds": 211.8
+        },
+        {
+          "betType": "exacta",
+          "selection": "7-10",
+          "odds": 211.8
+        },
+        {
+          "betType": "exacta",
+          "selection": "8-7",
+          "odds": 211.8
+        },
+        {
+          "betType": "exacta",
+          "selection": "11-6",
+          "odds": 211.8
+        },
+        {
+          "betType": "exacta",
+          "selection": "1-6",
+          "odds": 176.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "5-1",
+          "odds": 176.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "6-9",
+          "odds": 176.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "10-5",
+          "odds": 176.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "3-11",
+          "odds": 151.2
+        },
+        {
+          "betType": "exacta",
+          "selection": "10-7",
+          "odds": 151.2
+        },
+        {
+          "betType": "exacta",
+          "selection": "2-6",
+          "odds": 132.3
+        },
+        {
+          "betType": "exacta",
+          "selection": "10-2",
+          "odds": 132.3
+        },
+        {
+          "betType": "wide",
+          "selection": "1-9",
+          "odds": 125.6
+        },
+        {
+          "betType": "wide",
+          "selection": "9-10",
+          "odds": 119.3
+        },
+        {
+          "betType": "wide",
+          "selection": "9-11",
+          "odds": 99.4
+        },
+        {
+          "betType": "wide",
+          "selection": "8-9",
+          "odds": 98.2
+        },
+        {
+          "betType": "wide",
+          "selection": "2-9",
+          "odds": 97
+        },
+        {
+          "betType": "wide",
+          "selection": "1-2",
+          "odds": 80.9
+        },
+        {
+          "betType": "wide",
+          "selection": "5-9",
+          "odds": 76.5
+        },
+        {
+          "betType": "wide",
+          "selection": "1-8",
+          "odds": 70.3
+        },
+        {
+          "betType": "wide",
+          "selection": "1-5",
+          "odds": 65.7
+        },
+        {
+          "betType": "wide",
+          "selection": "6-9",
+          "odds": 64.3
+        },
+        {
+          "betType": "wide",
+          "selection": "1-11",
+          "odds": 55.3
+        },
+        {
+          "betType": "wide",
+          "selection": "7-9",
+          "odds": 47.6
+        },
+        {
+          "betType": "wide",
+          "selection": "5-11",
+          "odds": 45.5
+        },
+        {
+          "betType": "wide",
+          "selection": "1-10",
+          "odds": 43.7
+        },
+        {
+          "betType": "wide",
+          "selection": "10-11",
+          "odds": 43.2
+        },
+        {
+          "betType": "wide",
+          "selection": "1-6",
+          "odds": 37.7
+        },
+        {
+          "betType": "wide",
+          "selection": "1-7",
+          "odds": 34.1
+        },
+        {
+          "betType": "wide",
+          "selection": "2-11",
+          "odds": 30.2
+        },
+        {
+          "betType": "wide",
+          "selection": "2-6",
+          "odds": 29.1
+        },
+        {
+          "betType": "wide",
+          "selection": "1-3",
+          "odds": 28.5
+        },
+        {
+          "betType": "wide",
+          "selection": "3-9",
+          "odds": 28.5
+        },
+        {
+          "betType": "wide",
+          "selection": "2-8",
+          "odds": 26.6
+        },
+        {
+          "betType": "wide",
+          "selection": "6-11",
+          "odds": 26.4
+        },
+        {
+          "betType": "wide",
+          "selection": "7-8",
+          "odds": 26
+        },
+        {
+          "betType": "wide",
+          "selection": "5-8",
+          "odds": 23.9
+        },
+        {
+          "betType": "wide",
+          "selection": "8-10",
+          "odds": 23.6
+        },
+        {
+          "betType": "wide",
+          "selection": "8-11",
+          "odds": 21.5
+        },
+        {
+          "betType": "wide",
+          "selection": "6-8",
+          "odds": 21.2
+        },
+        {
+          "betType": "wide",
+          "selection": "2-7",
+          "odds": 19.3
+        },
+        {
+          "betType": "wide",
+          "selection": "5-7",
+          "odds": 19
+        },
+        {
+          "betType": "wide",
+          "selection": "2-10",
+          "odds": 17.4
+        },
+        {
+          "betType": "wide",
+          "selection": "7-10",
+          "odds": 15.3
+        },
+        {
+          "betType": "wide",
+          "selection": "2-5",
+          "odds": 13.3
+        },
+        {
+          "betType": "wide",
+          "selection": "5-10",
+          "odds": 12.8
+        },
+        {
+          "betType": "wide",
+          "selection": "3-11",
+          "odds": 11.9
+        },
+        {
+          "betType": "wide",
+          "selection": "6-10",
+          "odds": 11.3
+        },
+        {
+          "betType": "wide",
+          "selection": "7-11",
+          "odds": 10.6
+        },
+        {
+          "betType": "wide",
+          "selection": "6-7",
+          "odds": 9
+        },
+        {
+          "betType": "wide",
+          "selection": "5-6",
+          "odds": 8.1
+        },
+        {
+          "betType": "trio",
+          "selection": "1-2-9",
+          "odds": 3770.7
+        },
+        {
+          "betType": "trio",
+          "selection": "1-5-11",
+          "odds": 3770.7
+        },
+        {
+          "betType": "trio",
+          "selection": "1-9-10",
+          "odds": 3770.7
+        },
+        {
+          "betType": "trio",
+          "selection": "1-10-11",
+          "odds": 3770.7
+        },
+        {
+          "betType": "trio",
+          "selection": "5-9-11",
+          "odds": 3770.7
+        },
+        {
+          "betType": "trio",
+          "selection": "8-9-11",
+          "odds": 3770.7
+        },
+        {
+          "betType": "trio",
+          "selection": "1-7-11",
+          "odds": 1885.3
+        },
+        {
+          "betType": "trio",
+          "selection": "2-7-9",
+          "odds": 1885.3
+        },
+        {
+          "betType": "trio",
+          "selection": "2-9-10",
+          "odds": 1885.3
+        },
+        {
+          "betType": "trio",
+          "selection": "2-10-11",
+          "odds": 1885.3
+        },
+        {
+          "betType": "trio",
+          "selection": "5-10-11",
+          "odds": 1885.3
+        },
+        {
+          "betType": "trio",
+          "selection": "7-9-10",
+          "odds": 1885.3
+        },
+        {
+          "betType": "trio",
+          "selection": "7-10-11",
+          "odds": 1885.3
+        },
+        {
+          "betType": "trio",
+          "selection": "8-9-10",
+          "odds": 1885.3
+        },
+        {
+          "betType": "trio",
+          "selection": "9-10-11",
+          "odds": 1885.3
+        },
+        {
+          "betType": "trio",
+          "selection": "1-8-11",
+          "odds": 1256.9
+        },
+        {
+          "betType": "trio",
+          "selection": "2-8-9",
+          "odds": 1256.9
+        },
+        {
+          "betType": "trio",
+          "selection": "5-9-10",
+          "odds": 1256.9
+        },
+        {
+          "betType": "trio",
+          "selection": "6-9-10",
+          "odds": 1256.9
+        },
+        {
+          "betType": "trio",
+          "selection": "7-9-11",
+          "odds": 1256.9
+        },
+        {
+          "betType": "trio",
+          "selection": "1-5-10",
+          "odds": 942.6
+        },
+        {
+          "betType": "trio",
+          "selection": "1-8-9",
+          "odds": 942.6
+        },
+        {
+          "betType": "trio",
+          "selection": "2-7-11",
+          "odds": 942.6
+        },
+        {
+          "betType": "trio",
+          "selection": "5-7-9",
+          "odds": 942.6
+        },
+        {
+          "betType": "trio",
+          "selection": "5-8-9",
+          "odds": 942.6
+        },
+        {
+          "betType": "trio",
+          "selection": "5-8-11",
+          "odds": 942.6
+        },
+        {
+          "betType": "trio",
+          "selection": "6-8-9",
+          "odds": 942.6
+        },
+        {
+          "betType": "trio",
+          "selection": "8-10-11",
+          "odds": 942.6
+        },
+        {
+          "betType": "trio",
+          "selection": "2-6-9",
+          "odds": 754.1
+        },
+        {
+          "betType": "trio",
+          "selection": "6-9-11",
+          "odds": 754.1
+        },
+        {
+          "betType": "trio",
+          "selection": "1-2-7",
+          "odds": 628.4
+        },
+        {
+          "betType": "trio",
+          "selection": "1-2-8",
+          "odds": 628.4
+        },
+        {
+          "betType": "trio",
+          "selection": "1-2-10",
+          "odds": 628.4
+        },
+        {
+          "betType": "trio",
+          "selection": "1-5-7",
+          "odds": 628.4
+        },
+        {
+          "betType": "trio",
+          "selection": "1-5-8",
+          "odds": 628.4
+        },
+        {
+          "betType": "trio",
+          "selection": "1-6-10",
+          "odds": 628.4
+        },
+        {
+          "betType": "trio",
+          "selection": "1-7-8",
+          "odds": 628.4
+        },
+        {
+          "betType": "trio",
+          "selection": "1-8-10",
+          "odds": 628.4
+        },
+        {
+          "betType": "trio",
+          "selection": "2-5-11",
+          "odds": 628.4
+        },
+        {
+          "betType": "trio",
+          "selection": "2-8-11",
+          "odds": 628.4
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-2-8",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-2-11",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-3-10",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-5-2",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-5-3",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-5-11",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-6-5",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-6-8",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-6-10",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-6-11",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-7-8",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-7-11",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-8-2",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-8-3",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-8-5",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-8-6",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-8-7",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-8-9",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-8-11",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-9-8",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-10-6",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-11-2",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-11-6",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "1-11-8",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-1-7",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-1-8",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-1-9",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-3-1",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-5-1",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-5-8",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-7-1",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-7-8",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-7-11",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-8-1",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-8-5",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-8-7",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-8-9",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-9-8",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-9-11",
+          "odds": 7223.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "2-10-7",
+          "odds": 7223.1
+        }
+      ],
+      "fieldSize": 11,
+      "source": "keiba.go.jp official csv"
+    },
+    {
+      "id": "urawa-20260811-12",
+      "authority": "NAR",
+      "raceDate": "2026-08-11",
+      "venue": "浦和",
+      "raceNumber": 12,
+      "title": "夏の星（なつのほし）特別Ｃ２選抜馬イ",
+      "distance": "ダ2000m",
+      "track": "ダート",
+      "startTime": "19:30",
+      "weather": "",
+      "condition": "",
+      "horses": [
+        {
+          "number": 1,
+          "bracket": 1,
+          "name": "ルージュメアート",
+          "jockey": "中山遥",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 2,
+          "bracket": 2,
+          "name": "レベリオン",
+          "jockey": "及川烈",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 3,
+          "bracket": 3,
+          "name": "ユメデアエタラ",
+          "jockey": "岡村健",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 4,
+          "bracket": 4,
+          "name": "ゴールドキッド",
+          "jockey": "古岡勇",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 5,
+          "bracket": 5,
+          "name": "ユイノパチョレック",
+          "jockey": "七夕裕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 6,
+          "bracket": 5,
+          "name": "ベルルート",
+          "jockey": "町田直",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 7,
+          "bracket": 6,
+          "name": "テーオーダムール",
+          "jockey": "達城龍",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 8,
+          "bracket": 6,
+          "name": "メイショウサノサ",
+          "jockey": "半澤慶",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 9,
+          "bracket": 7,
+          "name": "ユウユウプレゼンス",
+          "jockey": "室陽一",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 10,
+          "bracket": 7,
+          "name": "キミトユメヲカケル",
+          "jockey": "見越彬",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 11,
+          "bracket": 8,
+          "name": "ロットゥーラ",
+          "jockey": "野畑凌",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        },
+        {
+          "number": 12,
+          "bracket": 8,
+          "name": "シヴァシン",
+          "jockey": "秋元耕",
+          "oddsWin": 99.9,
+          "oddsPlace": {
+            "min": 28,
+            "max": 54.9
+          },
+          "factors": {
+            "courseFit": 50,
+            "paceFit": 50,
+            "conditionFit": 50,
+            "formSignal": 50,
+            "valueGap": 100
+          },
+          "comment": "公開オッズ上は人気薄。複勝圏の余地をスコアで確認。",
+          "placePotential": 50
+        }
+      ],
+      "oddsBoard": [
+        {
+          "betType": "win",
+          "selection": "1",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "2",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "3",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "4",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "5",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "6",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "7",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "8",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "9",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "10",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "11",
+          "odds": 99.9
+        },
+        {
+          "betType": "win",
+          "selection": "12",
+          "odds": 99.9
+        },
+        {
+          "betType": "place",
+          "selection": "1",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "2",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "3",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "4",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "5",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "6",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "7",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "8",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "9",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "10",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "11",
+          "odds": 41.5
+        },
+        {
+          "betType": "place",
+          "selection": "12",
+          "odds": 41.5
+        }
+      ],
+      "fieldSize": 12,
+      "source": "keiba.go.jp official csv"
+    }
+  ]
+}

@@ -43,7 +43,7 @@ export type OddsBoardRow = {
 
 function resolveRelatedHorses(race: Race, selection: string, betType: BetType) {
   const nums = parseSelectionNumbers(selection);
-  if (betType === "bracket_quinella") {
+  if (betType === "bracket_quinella" || betType === "bracket_exacta") {
     return race.horses.filter((h) => h.bracket != null && nums.includes(h.bracket));
   }
   return race.horses.filter((h) => nums.includes(h.number));

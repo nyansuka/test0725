@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-08T11:48:22.659Z",
+  "fetchedAt": "2026-08-11T14:25:48.775Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-08-08",
   "raceCount": 36,
@@ -1630,7 +1630,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:09.471Z",
+        "finishedAt": "2026-08-11T14:25:30.873Z",
         "finishes": [
           {
             "rank": 1,
@@ -1649,8 +1649,7 @@
             "name": "マーゴットクリュグ",
             "jockey": "松本",
             "time": "1:46.8",
-            "popularity": 5,
-            "oddsWin": 10.6
+            "popularity": 5
           },
           {
             "rank": 3,
@@ -1679,8 +1678,7 @@
             "name": "セラサイト",
             "jockey": "▲小林美",
             "time": "1:47.8",
-            "popularity": 6,
-            "oddsWin": 10.7
+            "popularity": 6
           },
           {
             "rank": 6,
@@ -1689,8 +1687,7 @@
             "name": "サンエンジェルス",
             "jockey": "浜中",
             "time": "1:47.8",
-            "popularity": 8,
-            "oddsWin": 12.2
+            "popularity": 8
           },
           {
             "rank": 7,
@@ -1699,8 +1696,7 @@
             "name": "ルージュエピック",
             "jockey": "★河原田",
             "time": "1:48.0",
-            "popularity": 7,
-            "oddsWin": 11.1
+            "popularity": 7
           },
           {
             "rank": 8,
@@ -1709,8 +1705,7 @@
             "name": "サマースプラッシュ",
             "jockey": "佐々木",
             "time": "1:48.5",
-            "popularity": 12,
-            "oddsWin": 118.7
+            "popularity": 12
           },
           {
             "rank": 9,
@@ -1719,8 +1714,7 @@
             "name": "フィーユレアル",
             "jockey": "斎藤",
             "time": "1:48.5",
-            "popularity": 9,
-            "oddsWin": 21
+            "popularity": 9
           },
           {
             "rank": 10,
@@ -1729,8 +1723,7 @@
             "name": "ルパピヨンブラン",
             "jockey": "川又",
             "time": "1:48.6",
-            "popularity": 10,
-            "oddsWin": 46.3
+            "popularity": 10
           },
           {
             "rank": 11,
@@ -1739,8 +1732,7 @@
             "name": "ハスカップジャム",
             "jockey": "☆長浜",
             "time": "1:49.6",
-            "popularity": 14,
-            "oddsWin": 364
+            "popularity": 14
           },
           {
             "rank": 12,
@@ -1759,8 +1751,7 @@
             "name": "アルデバローズ",
             "jockey": "横山琉",
             "time": "1:52.4",
-            "popularity": 13,
-            "oddsWin": 187.3
+            "popularity": 13
           },
           {
             "rank": 14,
@@ -1769,8 +1760,7 @@
             "name": "ワイルドカグラ",
             "jockey": "小沢",
             "time": "1:58.6",
-            "popularity": 11,
-            "oddsWin": 57.4
+            "popularity": 11
           }
         ],
         "payouts": [
@@ -1836,13 +1826,13 @@
           },
           {
             "betType": "trio",
-            "selection": "3-6",
+            "selection": "3-6-10",
             "payoutYen": 6160,
             "popularity": 19
           },
           {
             "betType": "trifecta",
-            "selection": "6-10",
+            "selection": "6-10-3",
             "payoutYen": 24430,
             "popularity": 59
           }
@@ -3429,7 +3419,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:09.804Z",
+        "finishedAt": "2026-08-11T14:25:31.396Z",
         "finishes": [
           {
             "rank": 1,
@@ -3448,8 +3438,7 @@
             "name": "ジャストワナフライ",
             "jockey": "斎藤",
             "time": "1:30.1",
-            "popularity": 9,
-            "oddsWin": 24.7
+            "popularity": 9
           },
           {
             "rank": 3,
@@ -3458,8 +3447,7 @@
             "name": "ルギッドドランジュ",
             "jockey": "北村友",
             "time": "1:30.2",
-            "popularity": 8,
-            "oddsWin": 17.8
+            "popularity": 8
           },
           {
             "rank": 4,
@@ -3478,8 +3466,7 @@
             "name": "ランダムナンバー",
             "jockey": "浜中",
             "time": "1:30.4",
-            "popularity": 7,
-            "oddsWin": 16.9
+            "popularity": 7
           },
           {
             "rank": 6,
@@ -3488,8 +3475,7 @@
             "name": "リラカリス",
             "jockey": "★河原田",
             "time": "1:30.7",
-            "popularity": 13,
-            "oddsWin": 256.3
+            "popularity": 13
           },
           {
             "rank": 7,
@@ -3508,8 +3494,7 @@
             "name": "サンシルヴァリー",
             "jockey": "川又",
             "time": "1:30.7",
-            "popularity": 11,
-            "oddsWin": 106.6
+            "popularity": 11
           },
           {
             "rank": 9,
@@ -3528,8 +3513,7 @@
             "name": "リアルジャパン",
             "jockey": "吉田隼",
             "time": "1:31.2",
-            "popularity": 6,
-            "oddsWin": 11.2
+            "popularity": 6
           },
           {
             "rank": 11,
@@ -3548,8 +3532,7 @@
             "name": "ゴートゥービッツン",
             "jockey": "▲遠藤",
             "time": "1:31.4",
-            "popularity": 12,
-            "oddsWin": 147.9
+            "popularity": 12
           },
           {
             "rank": 13,
@@ -3558,8 +3541,7 @@
             "name": "アズライトティアラ",
             "jockey": "☆舟山",
             "time": "1:31.5",
-            "popularity": 10,
-            "oddsWin": 65.3
+            "popularity": 10
           }
         ],
         "payouts": [
@@ -3625,13 +3607,13 @@
           },
           {
             "betType": "trio",
-            "selection": "7-10",
+            "selection": "7-10-11",
             "payoutYen": 15680,
             "popularity": 53
           },
           {
             "betType": "trifecta",
-            "selection": "7-10",
+            "selection": "7-10-11",
             "payoutYen": 72110,
             "popularity": 249
           }
@@ -5259,7 +5241,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:10.144Z",
+        "finishedAt": "2026-08-11T14:25:31.884Z",
         "finishes": [
           {
             "rank": 1,
@@ -5288,8 +5270,7 @@
             "name": "ビレッジルイーザ",
             "jockey": "岩田望",
             "time": "1:47.6",
-            "popularity": 6,
-            "oddsWin": 15.3
+            "popularity": 6
           },
           {
             "rank": 4,
@@ -5318,8 +5299,7 @@
             "name": "フロムザムーン",
             "jockey": "▲大久保",
             "time": "1:48.2",
-            "popularity": 10,
-            "oddsWin": 48.5
+            "popularity": 10
           },
           {
             "rank": 7,
@@ -5328,8 +5308,7 @@
             "name": "デルマバンダイサン",
             "jockey": "松本",
             "time": "1:48.7",
-            "popularity": 7,
-            "oddsWin": 16.3
+            "popularity": 7
           },
           {
             "rank": 8,
@@ -5338,8 +5317,7 @@
             "name": "ヘリオポリス",
             "jockey": "▲和田陽",
             "time": "1:49.5",
-            "popularity": 14,
-            "oddsWin": 449.1
+            "popularity": 14
           },
           {
             "rank": 9,
@@ -5348,8 +5326,7 @@
             "name": "ジングアップ",
             "jockey": "池添",
             "time": "1:49.9",
-            "popularity": 9,
-            "oddsWin": 46.8
+            "popularity": 9
           },
           {
             "rank": 10,
@@ -5358,8 +5335,7 @@
             "name": "ロスニーニョス",
             "jockey": "古川吉",
             "time": "1:49.9",
-            "popularity": 13,
-            "oddsWin": 292.8
+            "popularity": 13
           },
           {
             "rank": 11,
@@ -5368,8 +5344,7 @@
             "name": "マルシュボヌール",
             "jockey": "北村友",
             "time": "1:50.0",
-            "popularity": 8,
-            "oddsWin": 23.3
+            "popularity": 8
           },
           {
             "rank": 12,
@@ -5378,8 +5353,7 @@
             "name": "ホウオウチャールズ",
             "jockey": "斎藤",
             "time": "1:50.5",
-            "popularity": 11,
-            "oddsWin": 184.5
+            "popularity": 11
           },
           {
             "rank": 13,
@@ -5398,8 +5372,7 @@
             "name": "ダディーズソード",
             "jockey": "◇古川奈",
             "time": "1:51.5",
-            "popularity": 12,
-            "oddsWin": 283.3
+            "popularity": 12
           }
         ],
         "payouts": [
@@ -5465,13 +5438,13 @@
           },
           {
             "betType": "trio",
-            "selection": "10-11",
+            "selection": "10-11-14",
             "payoutYen": 9480,
             "popularity": 35
           },
           {
             "betType": "trifecta",
-            "selection": "14-10",
+            "selection": "14-10-11",
             "payoutYen": 32520,
             "popularity": 123
           }
@@ -7104,7 +7077,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:10.474Z",
+        "finishedAt": "2026-08-11T14:25:32.441Z",
         "finishes": [
           {
             "rank": 1,
@@ -7143,8 +7116,7 @@
             "name": "ネッタイヤライ",
             "jockey": "◇古川奈",
             "time": "1:28.3",
-            "popularity": 7,
-            "oddsWin": 12.7
+            "popularity": 7
           },
           {
             "rank": 5,
@@ -7173,8 +7145,7 @@
             "name": "サンウリエル",
             "jockey": "川又",
             "time": "1:28.7",
-            "popularity": 9,
-            "oddsWin": 47.5
+            "popularity": 9
           },
           {
             "rank": 8,
@@ -7183,8 +7154,7 @@
             "name": "スタードメイソン",
             "jockey": "▲和田陽",
             "time": "1:28.9",
-            "popularity": 13,
-            "oddsWin": 279.7
+            "popularity": 13
           },
           {
             "rank": 9,
@@ -7193,8 +7163,7 @@
             "name": "ブライトフレア",
             "jockey": "浜中",
             "time": "1:29.0",
-            "popularity": 10,
-            "oddsWin": 63.8
+            "popularity": 10
           },
           {
             "rank": 10,
@@ -7203,8 +7172,7 @@
             "name": "アッシュバーグ",
             "jockey": "☆長浜",
             "time": "1:29.2",
-            "popularity": 12,
-            "oddsWin": 177.7
+            "popularity": 12
           },
           {
             "rank": 11,
@@ -7223,8 +7191,7 @@
             "name": "ペイシャアーサー",
             "jockey": "▲遠藤",
             "time": "1:29.6",
-            "popularity": 14,
-            "oddsWin": 287.7
+            "popularity": 14
           },
           {
             "rank": 13,
@@ -7233,8 +7200,7 @@
             "name": "コスモレッド",
             "jockey": "小沢",
             "time": "1:29.8",
-            "popularity": 11,
-            "oddsWin": 72.9
+            "popularity": 11
           },
           {
             "rank": 14,
@@ -7243,8 +7209,7 @@
             "name": "ルーチェフィオーレ",
             "jockey": "横山和",
             "time": "1:30.8",
-            "popularity": 8,
-            "oddsWin": 14.5
+            "popularity": 8
           }
         ],
         "payouts": [
@@ -7310,13 +7275,13 @@
           },
           {
             "betType": "trio",
-            "selection": "2-4",
+            "selection": "2-4-13",
             "payoutYen": 3540,
             "popularity": 11
           },
           {
             "betType": "trifecta",
-            "selection": "4-13",
+            "selection": "4-13-2",
             "payoutYen": 24550,
             "popularity": 86
           }
@@ -8872,7 +8837,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:10.846Z",
+        "finishedAt": "2026-08-11T14:25:32.995Z",
         "finishes": [
           {
             "rank": 1,
@@ -8901,8 +8866,7 @@
             "name": "ロマノヴェリテ",
             "jockey": "北村友",
             "time": "1:51.7",
-            "popularity": 7,
-            "oddsWin": 15.6
+            "popularity": 7
           },
           {
             "rank": 4,
@@ -8921,8 +8885,7 @@
             "name": "イドム",
             "jockey": "松本",
             "time": "1:51.8",
-            "popularity": 8,
-            "oddsWin": 32
+            "popularity": 8
           },
           {
             "rank": 6,
@@ -8931,8 +8894,7 @@
             "name": "コジアン",
             "jockey": "横山琉",
             "time": "1:52.1",
-            "popularity": 6,
-            "oddsWin": 12
+            "popularity": 6
           },
           {
             "rank": 7,
@@ -8951,8 +8913,7 @@
             "name": "ローレルメビウス",
             "jockey": "◇古川奈",
             "time": "1:52.5",
-            "popularity": 9,
-            "oddsWin": 45.2
+            "popularity": 9
           },
           {
             "rank": 9,
@@ -8961,8 +8922,7 @@
             "name": "レイテスツドリーム",
             "jockey": "▲和田陽",
             "time": "1:52.8",
-            "popularity": 12,
-            "oddsWin": 199.8
+            "popularity": 12
           },
           {
             "rank": 10,
@@ -8971,8 +8931,7 @@
             "name": "マルカローゼ",
             "jockey": "小沢",
             "time": "1:53.3",
-            "popularity": 10,
-            "oddsWin": 82.4
+            "popularity": 10
           },
           {
             "rank": 11,
@@ -8981,8 +8940,7 @@
             "name": "エイシンジュウライ",
             "jockey": "★河原田",
             "time": "1:53.3",
-            "popularity": 11,
-            "oddsWin": 135.4
+            "popularity": 11
           },
           {
             "rank": 12,
@@ -8991,8 +8949,7 @@
             "name": "マーヴィン",
             "jockey": "浜中",
             "time": "1:56.1",
-            "popularity": 5,
-            "oddsWin": 10.7
+            "popularity": 5
           }
         ],
         "payouts": [
@@ -9058,13 +9015,13 @@
           },
           {
             "betType": "trio",
-            "selection": "5-6",
+            "selection": "5-6-9",
             "payoutYen": 8240,
             "popularity": 31
           },
           {
             "betType": "trifecta",
-            "selection": "5-6",
+            "selection": "5-6-9",
             "payoutYen": 28020,
             "popularity": 101
           }
@@ -10764,7 +10721,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:11.299Z",
+        "finishedAt": "2026-08-11T14:25:33.572Z",
         "finishes": [
           {
             "rank": 1,
@@ -10803,8 +10760,7 @@
             "name": "インテンスゲイズ",
             "jockey": "斎藤",
             "time": "2:01.6",
-            "popularity": 12,
-            "oddsWin": 43.7
+            "popularity": 12
           },
           {
             "rank": 5,
@@ -10813,14 +10769,14 @@
             "name": "カリドーラ",
             "jockey": "小沢",
             "time": "2:01.7",
-            "popularity": 10,
-            "oddsWin": 40.5
+            "popularity": 10
           },
           {
             "rank": 6,
             "number": 6,
             "bracket": 3,
             "name": "インフィオラータ",
+            "jockey": "北村友",
             "time": "2:01.7",
             "popularity": 4,
             "oddsWin": 8.4
@@ -10832,8 +10788,7 @@
             "name": "ポリメトリック",
             "jockey": "松本",
             "time": "2:01.7",
-            "popularity": 8,
-            "oddsWin": 24.9
+            "popularity": 8
           },
           {
             "rank": 8,
@@ -10842,8 +10797,7 @@
             "name": "スウィーティーベル",
             "jockey": "浜中",
             "time": "2:02.0",
-            "popularity": 9,
-            "oddsWin": 25.3
+            "popularity": 9
           },
           {
             "rank": 9,
@@ -10852,8 +10806,7 @@
             "name": "マリノリュミエール",
             "jockey": "★河原田",
             "time": "2:02.3",
-            "popularity": 11,
-            "oddsWin": 43.5
+            "popularity": 11
           },
           {
             "rank": 10,
@@ -10862,8 +10815,7 @@
             "name": "ダンツアラーム",
             "jockey": "▲和田陽",
             "time": "2:02.4",
-            "popularity": 13,
-            "oddsWin": 77.9
+            "popularity": 13
           },
           {
             "rank": 11,
@@ -10872,8 +10824,7 @@
             "name": "ジョブックボー",
             "jockey": "☆長浜",
             "time": "2:02.6",
-            "popularity": 5,
-            "oddsWin": 12.1
+            "popularity": 5
           },
           {
             "rank": 12,
@@ -10882,8 +10833,7 @@
             "name": "プリュイドール",
             "jockey": "☆舟山",
             "time": "2:03.0",
-            "popularity": 6,
-            "oddsWin": 18.7
+            "popularity": 6
           },
           {
             "rank": 13,
@@ -10892,8 +10842,7 @@
             "name": "ラングロワブリッジ",
             "jockey": "吉田隼",
             "time": "2:03.3",
-            "popularity": 15,
-            "oddsWin": 159.5
+            "popularity": 15
           },
           {
             "rank": 14,
@@ -10902,8 +10851,7 @@
             "name": "オズマップ",
             "jockey": "池添",
             "time": "2:04.3",
-            "popularity": 7,
-            "oddsWin": 23.5
+            "popularity": 7
           },
           {
             "rank": 15,
@@ -10912,8 +10860,7 @@
             "name": "ウインアベリア",
             "jockey": "原田和",
             "time": "2:05.1",
-            "popularity": 16,
-            "oddsWin": 276.4
+            "popularity": 16
           },
           {
             "rank": null,
@@ -10921,8 +10868,7 @@
             "bracket": 7,
             "name": "グレイスルーラー",
             "jockey": "▲小林美",
-            "popularity": 14,
-            "oddsWin": 109.3
+            "popularity": 14
           }
         ],
         "payouts": [
@@ -10988,13 +10934,13 @@
           },
           {
             "betType": "trio",
-            "selection": "4-11",
+            "selection": "4-11-12",
             "payoutYen": 1210,
             "popularity": 1
           },
           {
             "betType": "trifecta",
-            "selection": "12-11",
+            "selection": "12-11-4",
             "payoutYen": 6930,
             "popularity": 7
           }
@@ -12555,7 +12501,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:11.690Z",
+        "finishedAt": "2026-08-11T14:25:34.093Z",
         "finishes": [
           {
             "rank": 1,
@@ -12574,8 +12520,7 @@
             "name": "ヨドノゴールド",
             "jockey": "岩田康",
             "time": "0:59.7",
-            "popularity": 10,
-            "oddsWin": 32.6
+            "popularity": 10
           },
           {
             "rank": 3,
@@ -12584,8 +12529,7 @@
             "name": "ロードヴァルカン",
             "jockey": "岩田望",
             "time": "0:59.9",
-            "popularity": 5,
-            "oddsWin": 11.2
+            "popularity": 5
           },
           {
             "rank": 4,
@@ -12604,8 +12548,7 @@
             "name": "シェーンルスカ",
             "jockey": "▲遠藤",
             "time": "1:00.7",
-            "popularity": 12,
-            "oddsWin": 316
+            "popularity": 12
           },
           {
             "rank": 6,
@@ -12624,8 +12567,7 @@
             "name": "カップッチョ",
             "jockey": "黛",
             "time": "1:01.1",
-            "popularity": 11,
-            "oddsWin": 141.2
+            "popularity": 11
           },
           {
             "rank": 8,
@@ -12644,8 +12586,7 @@
             "name": "ステラノヴァ",
             "jockey": "☆舟山",
             "time": "1:01.3",
-            "popularity": 7,
-            "oddsWin": 23.7
+            "popularity": 7
           },
           {
             "rank": 10,
@@ -12654,8 +12595,7 @@
             "name": "ランプローグ",
             "jockey": "☆長浜",
             "time": "1:01.6",
-            "popularity": 6,
-            "oddsWin": 17.4
+            "popularity": 6
           },
           {
             "rank": 11,
@@ -12664,8 +12604,7 @@
             "name": "グランセレスト",
             "jockey": "川又",
             "time": "1:02.5",
-            "popularity": 8,
-            "oddsWin": 27
+            "popularity": 8
           },
           {
             "rank": null,
@@ -12673,8 +12612,7 @@
             "bracket": 8,
             "name": "セイルロケット",
             "jockey": "◇古川奈",
-            "popularity": 9,
-            "oddsWin": 31.4
+            "popularity": 9
           }
         ],
         "payouts": [
@@ -12740,13 +12678,13 @@
           },
           {
             "betType": "trio",
-            "selection": "4-5",
+            "selection": "4-5-6",
             "payoutYen": 15970,
             "popularity": 54
           },
           {
             "betType": "trifecta",
-            "selection": "6-5",
+            "selection": "6-5-4",
             "payoutYen": 106860,
             "popularity": 309
           }
@@ -14446,7 +14384,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:12.087Z",
+        "finishedAt": "2026-08-11T14:25:34.761Z",
         "finishes": [
           {
             "rank": 1,
@@ -14455,8 +14393,7 @@
             "name": "ミレニアルピンク",
             "jockey": "斎藤",
             "time": "1:09.5",
-            "popularity": 13,
-            "oddsWin": 40.2
+            "popularity": 13
           },
           {
             "rank": 2,
@@ -14465,8 +14402,7 @@
             "name": "レッドアイスピア",
             "jockey": "★河原田",
             "time": "1:09.6",
-            "popularity": 11,
-            "oddsWin": 34.9
+            "popularity": 11
           },
           {
             "rank": 3,
@@ -14475,8 +14411,7 @@
             "name": "アンジュラフィーユ",
             "jockey": "佐々木",
             "time": "1:09.6",
-            "popularity": 6,
-            "oddsWin": 13.2
+            "popularity": 6
           },
           {
             "rank": 4,
@@ -14485,8 +14420,7 @@
             "name": "メイショウテンジン",
             "jockey": "古川吉",
             "time": "1:09.6",
-            "popularity": 7,
-            "oddsWin": 14.3
+            "popularity": 7
           },
           {
             "rank": 5,
@@ -14495,8 +14429,7 @@
             "name": "リネアベルタ",
             "jockey": "岩田康",
             "time": "1:09.8",
-            "popularity": 9,
-            "oddsWin": 25.7
+            "popularity": 9
           },
           {
             "rank": 6,
@@ -14505,8 +14438,7 @@
             "name": "モノノケ",
             "jockey": "▲和田陽",
             "time": "1:09.9",
-            "popularity": 8,
-            "oddsWin": 17.3
+            "popularity": 8
           },
           {
             "rank": 7,
@@ -14535,8 +14467,7 @@
             "name": "クリオロゴールド",
             "jockey": "横山武",
             "time": "1:10.0",
-            "popularity": 5,
-            "oddsWin": 12.5
+            "popularity": 5
           },
           {
             "rank": 10,
@@ -14555,8 +14486,7 @@
             "name": "クリコイーコ",
             "jockey": "吉田隼",
             "time": "1:10.1",
-            "popularity": 15,
-            "oddsWin": 250.4
+            "popularity": 15
           },
           {
             "rank": 12,
@@ -14565,8 +14495,7 @@
             "name": "ダノンベルビュー",
             "jockey": "松山",
             "time": "1:10.2",
-            "popularity": 4,
-            "oddsWin": 12.2
+            "popularity": 4
           },
           {
             "rank": 13,
@@ -14575,8 +14504,7 @@
             "name": "ジューンレトリバー",
             "jockey": "横山和",
             "time": "1:10.3",
-            "popularity": 12,
-            "oddsWin": 36.2
+            "popularity": 12
           },
           {
             "rank": 14,
@@ -14585,8 +14513,7 @@
             "name": "ソワンドヴィクター",
             "jockey": "☆長浜",
             "time": "1:10.3",
-            "popularity": 10,
-            "oddsWin": 30.3
+            "popularity": 10
           },
           {
             "rank": 15,
@@ -14595,8 +14522,7 @@
             "name": "ウインドオルフェ",
             "jockey": "黛",
             "time": "1:10.5",
-            "popularity": 16,
-            "oddsWin": 332.4
+            "popularity": 16
           },
           {
             "rank": 16,
@@ -14605,8 +14531,7 @@
             "name": "セイカユウヒ",
             "jockey": "池添",
             "time": "1:10.5",
-            "popularity": 14,
-            "oddsWin": 61.9
+            "popularity": 14
           }
         ],
         "payouts": [
@@ -14672,13 +14597,13 @@
           },
           {
             "betType": "trio",
-            "selection": "1-12",
+            "selection": "1-12-16",
             "payoutYen": 131380,
             "popularity": 278
           },
           {
             "betType": "trifecta",
-            "selection": "16-1",
+            "selection": "16-1-12",
             "payoutYen": 980260,
             "popularity": 801
           }
@@ -16301,7 +16226,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:12.440Z",
+        "finishedAt": "2026-08-11T14:25:35.257Z",
         "finishes": [
           {
             "rank": 1,
@@ -16320,8 +16245,7 @@
             "name": "ランスノーブル",
             "jockey": "原田和",
             "time": "1:47.3",
-            "popularity": 8,
-            "oddsWin": 27.6
+            "popularity": 8
           },
           {
             "rank": 3,
@@ -16330,8 +16254,7 @@
             "name": "スリーケイ",
             "jockey": "斎藤",
             "time": "1:47.4",
-            "popularity": 7,
-            "oddsWin": 18.9
+            "popularity": 7
           },
           {
             "rank": 4,
@@ -16340,8 +16263,7 @@
             "name": "ジーティーアリア",
             "jockey": "北村友",
             "time": "1:47.4",
-            "popularity": 4,
-            "oddsWin": 10.8
+            "popularity": 4
           },
           {
             "rank": 5,
@@ -16350,8 +16272,7 @@
             "name": "デルマサクラサク",
             "jockey": "横山武",
             "time": "1:47.6",
-            "popularity": 5,
-            "oddsWin": 10.8
+            "popularity": 5
           },
           {
             "rank": 6,
@@ -16360,8 +16281,7 @@
             "name": "ヴェールミューズ",
             "jockey": "佐々木",
             "time": "1:47.7",
-            "popularity": 6,
-            "oddsWin": 16.7
+            "popularity": 6
           },
           {
             "rank": 7,
@@ -16370,8 +16290,7 @@
             "name": "リュミナーズ",
             "jockey": "☆長浜",
             "time": "1:47.9",
-            "popularity": 10,
-            "oddsWin": 49.7
+            "popularity": 10
           },
           {
             "rank": 8,
@@ -16380,8 +16299,7 @@
             "name": "ブーケドグレイス",
             "jockey": "横山琉",
             "time": "1:48.3",
-            "popularity": 12,
-            "oddsWin": 137.9
+            "popularity": 12
           },
           {
             "rank": 9,
@@ -16390,8 +16308,7 @@
             "name": "マインセーラ",
             "jockey": "的場",
             "time": "1:48.3",
-            "popularity": 13,
-            "oddsWin": 143.6
+            "popularity": 13
           },
           {
             "rank": 10,
@@ -16410,8 +16327,7 @@
             "name": "ミリオンアップ",
             "jockey": "▲遠藤",
             "time": "1:49.5",
-            "popularity": 11,
-            "oddsWin": 54.5
+            "popularity": 11
           },
           {
             "rank": 12,
@@ -16420,8 +16336,7 @@
             "name": "グルーヴィーオン",
             "jockey": "★河原田",
             "time": "1:49.6",
-            "popularity": 9,
-            "oddsWin": 31.4
+            "popularity": 9
           },
           {
             "rank": 13,
@@ -16504,13 +16419,13 @@
           },
           {
             "betType": "trio",
-            "selection": "10-12",
+            "selection": "10-12-14",
             "payoutYen": 20020,
             "popularity": 62
           },
           {
             "betType": "trifecta",
-            "selection": "14-10",
+            "selection": "14-10-12",
             "payoutYen": 96430,
             "popularity": 278
           }
@@ -17607,7 +17522,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:12.770Z",
+        "finishedAt": "2026-08-11T14:25:35.654Z",
         "finishes": [
           {
             "rank": 1,
@@ -17636,8 +17551,7 @@
             "name": "エボルヴィング",
             "jockey": "佐々木",
             "time": "2:01.3",
-            "popularity": 7,
-            "oddsWin": 18.9
+            "popularity": 7
           },
           {
             "rank": 4,
@@ -17666,8 +17580,7 @@
             "name": "ヨシヒロ",
             "jockey": "原田和",
             "time": "2:02.9",
-            "popularity": 8,
-            "oddsWin": 168.5
+            "popularity": 8
           },
           {
             "rank": 7,
@@ -17676,8 +17589,7 @@
             "name": "デルマジュテーム",
             "jockey": "的場",
             "time": "2:03.0",
-            "popularity": 6,
-            "oddsWin": 17.5
+            "popularity": 6
           },
           {
             "rank": 8,
@@ -17747,13 +17659,13 @@
           },
           {
             "betType": "trio",
-            "selection": "3-5",
+            "selection": "3-5-8",
             "payoutYen": 4810,
             "popularity": 21
           },
           {
             "betType": "trifecta",
-            "selection": "8-5",
+            "selection": "8-5-3",
             "payoutYen": 16380,
             "popularity": 68
           }
@@ -19263,7 +19175,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:13.117Z",
+        "finishedAt": "2026-08-11T14:25:36.083Z",
         "finishes": [
           {
             "rank": 1,
@@ -19312,8 +19224,7 @@
             "name": "ヴァルツァーシャル",
             "jockey": "斎藤",
             "time": "1:44.9",
-            "popularity": 7,
-            "oddsWin": 19.5
+            "popularity": 7
           },
           {
             "rank": 6,
@@ -19322,8 +19233,7 @@
             "name": "テーオードレフォン",
             "jockey": "古川吉",
             "time": "1:45.0",
-            "popularity": 11,
-            "oddsWin": 249.2
+            "popularity": 11
           },
           {
             "rank": 7,
@@ -19332,8 +19242,7 @@
             "name": "ヒルノハンブルク",
             "jockey": "池添",
             "time": "1:45.3",
-            "popularity": 10,
-            "oddsWin": 55
+            "popularity": 10
           },
           {
             "rank": 8,
@@ -19352,8 +19261,7 @@
             "name": "オメガギネス",
             "jockey": "岩田康",
             "time": "1:47.1",
-            "popularity": 6,
-            "oddsWin": 10.5
+            "popularity": 6
           },
           {
             "rank": 10,
@@ -19362,8 +19270,7 @@
             "name": "レヴォントゥレット",
             "jockey": "北村友",
             "time": "1:50.9",
-            "popularity": 8,
-            "oddsWin": 21.7
+            "popularity": 8
           },
           {
             "rank": 11,
@@ -19372,8 +19279,7 @@
             "name": "アクションプラン",
             "jockey": "浜中",
             "time": "1:51.0",
-            "popularity": 9,
-            "oddsWin": 47.8
+            "popularity": 9
           }
         ],
         "payouts": [
@@ -19439,13 +19345,13 @@
           },
           {
             "betType": "trio",
-            "selection": "3-5",
+            "selection": "3-5-11",
             "payoutYen": 2950,
             "popularity": 6
           },
           {
             "betType": "trifecta",
-            "selection": "3-11",
+            "selection": "3-11-5",
             "payoutYen": 19010,
             "popularity": 46
           }
@@ -21037,7 +20943,7 @@
       "featured": true,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:13.467Z",
+        "finishedAt": "2026-08-11T14:25:36.761Z",
         "finishes": [
           {
             "rank": 1,
@@ -21096,8 +21002,7 @@
             "name": "アスミル",
             "jockey": "古川吉",
             "time": "1:28.3",
-            "popularity": 8,
-            "oddsWin": 18.7
+            "popularity": 8
           },
           {
             "rank": 7,
@@ -21116,8 +21021,7 @@
             "name": "レイユール",
             "jockey": "長浜",
             "time": "1:28.5",
-            "popularity": 10,
-            "oddsWin": 36
+            "popularity": 10
           },
           {
             "rank": 9,
@@ -21126,8 +21030,7 @@
             "name": "スミレファースト",
             "jockey": "横山琉",
             "time": "1:28.6",
-            "popularity": 13,
-            "oddsWin": 284.5
+            "popularity": 13
           },
           {
             "rank": 10,
@@ -21136,8 +21039,7 @@
             "name": "マーゴットブロー",
             "jockey": "斎藤",
             "time": "1:28.7",
-            "popularity": 7,
-            "oddsWin": 13.2
+            "popularity": 7
           },
           {
             "rank": 11,
@@ -21146,8 +21048,7 @@
             "name": "ウインイザナミ",
             "jockey": "岩田康",
             "time": "1:28.9",
-            "popularity": 9,
-            "oddsWin": 26.8
+            "popularity": 9
           },
           {
             "rank": 12,
@@ -21156,8 +21057,7 @@
             "name": "オーシャントライブ",
             "jockey": "北村友",
             "time": "1:29.7",
-            "popularity": 12,
-            "oddsWin": 139.1
+            "popularity": 12
           },
           {
             "rank": 13,
@@ -21166,8 +21066,7 @@
             "name": "ヴィンブルレー",
             "jockey": "松山",
             "time": "1:36.0",
-            "popularity": 11,
-            "oddsWin": 56.2
+            "popularity": 11
           }
         ],
         "payouts": [
@@ -21233,13 +21132,13 @@
           },
           {
             "betType": "trio",
-            "selection": "9-10",
+            "selection": "9-10-11",
             "payoutYen": 1850,
             "popularity": 1
           },
           {
             "betType": "trifecta",
-            "selection": "10-11",
+            "selection": "10-11-9",
             "payoutYen": 12190,
             "popularity": 17
           }
@@ -22816,7 +22715,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:13.863Z",
+        "finishedAt": "2026-08-11T14:25:37.380Z",
         "finishes": [
           {
             "rank": 1,
@@ -22835,8 +22734,7 @@
             "name": "セイウンイーリス",
             "jockey": "野中",
             "time": "1:22.0",
-            "popularity": 5,
-            "oddsWin": 13
+            "popularity": 5
           },
           {
             "rank": 3,
@@ -22845,8 +22743,7 @@
             "name": "トランサルピナ",
             "jockey": "荻野極",
             "time": "1:22.0",
-            "popularity": 6,
-            "oddsWin": 14.8
+            "popularity": 6
           },
           {
             "rank": 4,
@@ -22865,8 +22762,7 @@
             "name": "クールボビー",
             "jockey": "▲石田",
             "time": "1:22.1",
-            "popularity": 9,
-            "oddsWin": 40.6
+            "popularity": 9
           },
           {
             "rank": 6,
@@ -22875,8 +22771,7 @@
             "name": "コウソクレムリア",
             "jockey": "武藤",
             "time": "1:22.2",
-            "popularity": 7,
-            "oddsWin": 18.5
+            "popularity": 7
           },
           {
             "rank": 7,
@@ -22895,8 +22790,7 @@
             "name": "ヴィンチェローズ",
             "jockey": "原",
             "time": "1:22.7",
-            "popularity": 12,
-            "oddsWin": 75.4
+            "popularity": 12
           },
           {
             "rank": 9,
@@ -22905,8 +22799,7 @@
             "name": "マイネルヴェスペル",
             "jockey": "津村",
             "time": "1:22.9",
-            "popularity": 8,
-            "oddsWin": 32.5
+            "popularity": 8
           },
           {
             "rank": 10,
@@ -22925,8 +22818,7 @@
             "name": "エルシオン",
             "jockey": "▲上里",
             "time": "1:23.0",
-            "popularity": 10,
-            "oddsWin": 45.4
+            "popularity": 10
           },
           {
             "rank": 12,
@@ -22935,8 +22827,7 @@
             "name": "シュアシング",
             "jockey": "▲佐藤",
             "time": "1:23.4",
-            "popularity": 11,
-            "oddsWin": 63.8
+            "popularity": 11
           },
           {
             "rank": 13,
@@ -22945,8 +22836,7 @@
             "name": "アミノショコラ",
             "jockey": "木幡巧",
             "time": "1:23.5",
-            "popularity": 13,
-            "oddsWin": 316
+            "popularity": 13
           }
         ],
         "payouts": [
@@ -23012,13 +22902,13 @@
           },
           {
             "betType": "trio",
-            "selection": "2-8",
+            "selection": "2-8-13",
             "payoutYen": 4520,
             "popularity": 14
           },
           {
             "betType": "trifecta",
-            "selection": "13-8",
+            "selection": "13-8-2",
             "payoutYen": 12520,
             "popularity": 36
           }
@@ -24467,7 +24357,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:14.198Z",
+        "finishedAt": "2026-08-11T14:25:37.825Z",
         "finishes": [
           {
             "rank": 1,
@@ -24496,8 +24386,7 @@
             "name": "サザンヴィターレ",
             "jockey": "野中",
             "time": "1:14.1",
-            "popularity": 7,
-            "oddsWin": 37.1
+            "popularity": 7
           },
           {
             "rank": 4,
@@ -24506,8 +24395,7 @@
             "name": "ビーテリオス",
             "jockey": "石川",
             "time": "1:14.4",
-            "popularity": 8,
-            "oddsWin": 52.1
+            "popularity": 8
           },
           {
             "rank": 5,
@@ -24526,8 +24414,7 @@
             "name": "ナムラアラバイ",
             "jockey": "菊沢",
             "time": "1:15.2",
-            "popularity": 6,
-            "oddsWin": 20.1
+            "popularity": 6
           },
           {
             "rank": 7,
@@ -24536,8 +24423,7 @@
             "name": "ブルドッグドン",
             "jockey": "武藤",
             "time": "1:16.3",
-            "popularity": 5,
-            "oddsWin": 13.7
+            "popularity": 5
           },
           {
             "rank": 8,
@@ -24556,8 +24442,7 @@
             "name": "ベアベルヴォワ",
             "jockey": "△石神道",
             "time": "1:18.1",
-            "popularity": 10,
-            "oddsWin": 173.6
+            "popularity": 10
           },
           {
             "rank": 10,
@@ -24566,8 +24451,7 @@
             "name": "リングスター",
             "jockey": "◇今村",
             "time": "1:18.5",
-            "popularity": 9,
-            "oddsWin": 60.9
+            "popularity": 9
           }
         ],
         "payouts": [
@@ -24633,13 +24517,13 @@
           },
           {
             "betType": "trio",
-            "selection": "3-5",
+            "selection": "3-5-7",
             "payoutYen": 2570,
             "popularity": 9
           },
           {
             "betType": "trifecta",
-            "selection": "3-7",
+            "selection": "3-7-5",
             "payoutYen": 6950,
             "popularity": 20
           }
@@ -26190,7 +26074,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:14.539Z",
+        "finishedAt": "2026-08-11T14:25:38.286Z",
         "finishes": [
           {
             "rank": 1,
@@ -26209,8 +26093,7 @@
             "name": "コスモプルー",
             "jockey": "津村",
             "time": "1:47.6",
-            "popularity": 8,
-            "oddsWin": 51.5
+            "popularity": 8
           },
           {
             "rank": 3,
@@ -26239,8 +26122,7 @@
             "name": "ソヴリンゲート",
             "jockey": "吉田豊",
             "time": "1:48.0",
-            "popularity": 10,
-            "oddsWin": 120.8
+            "popularity": 10
           },
           {
             "rank": 6,
@@ -26259,8 +26141,7 @@
             "name": "ニシノアナベル",
             "jockey": "野中",
             "time": "1:48.6",
-            "popularity": 11,
-            "oddsWin": 235.6
+            "popularity": 11
           },
           {
             "rank": 8,
@@ -26269,8 +26150,7 @@
             "name": "ニシノリリックス",
             "jockey": "石橋脩",
             "time": "1:49.4",
-            "popularity": 12,
-            "oddsWin": 256.3
+            "popularity": 12
           },
           {
             "rank": 9,
@@ -26279,8 +26159,7 @@
             "name": "エートレイン",
             "jockey": "荻野極",
             "time": "1:49.5",
-            "popularity": 5,
-            "oddsWin": 11.8
+            "popularity": 5
           },
           {
             "rank": 10,
@@ -26289,8 +26168,7 @@
             "name": "オペレッタテソーロ",
             "jockey": "木幡巧",
             "time": "1:49.8",
-            "popularity": 9,
-            "oddsWin": 87.3
+            "popularity": 9
           },
           {
             "rank": 11,
@@ -26299,8 +26177,7 @@
             "name": "フォンターナドーロ",
             "jockey": "菊沢",
             "time": "1:49.9",
-            "popularity": 7,
-            "oddsWin": 41.7
+            "popularity": 7
           },
           {
             "rank": 12,
@@ -26309,8 +26186,7 @@
             "name": "スヴェンガーリ",
             "jockey": "三浦",
             "time": "1:50.2",
-            "popularity": 6,
-            "oddsWin": 39.6
+            "popularity": 6
           }
         ],
         "payouts": [
@@ -26376,13 +26252,13 @@
           },
           {
             "betType": "trio",
-            "selection": "6-11",
+            "selection": "6-11-12",
             "payoutYen": 17500,
             "popularity": 41
           },
           {
             "betType": "trifecta",
-            "selection": "6-11",
+            "selection": "6-11-12",
             "payoutYen": 95350,
             "popularity": 207
           }
@@ -28036,7 +27912,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:14.860Z",
+        "finishedAt": "2026-08-11T14:25:38.808Z",
         "finishes": [
           {
             "rank": 1,
@@ -28055,8 +27931,7 @@
             "name": "ユイハホンキダゼ",
             "jockey": "木幡初",
             "time": "1:13.2",
-            "popularity": 5,
-            "oddsWin": 18.5
+            "popularity": 5
           },
           {
             "rank": 3,
@@ -28065,8 +27940,7 @@
             "name": "サリーアン",
             "jockey": "大野",
             "time": "1:13.3",
-            "popularity": 8,
-            "oddsWin": 37.4
+            "popularity": 8
           },
           {
             "rank": 4,
@@ -28075,8 +27949,7 @@
             "name": "ブルーダイヤシチー",
             "jockey": "▲佐藤",
             "time": "1:13.4",
-            "popularity": 11,
-            "oddsWin": 158.5
+            "popularity": 11
           },
           {
             "rank": 5,
@@ -28095,8 +27968,7 @@
             "name": "カラクリスピリッツ",
             "jockey": "菱田",
             "time": "1:13.5",
-            "popularity": 9,
-            "oddsWin": 48.6
+            "popularity": 9
           },
           {
             "rank": 7,
@@ -28105,8 +27977,7 @@
             "name": "ブレイブシュガー",
             "jockey": "吉田豊",
             "time": "1:14.4",
-            "popularity": 4,
-            "oddsWin": 13.7
+            "popularity": 4
           },
           {
             "rank": 8,
@@ -28115,8 +27986,7 @@
             "name": "マイチバイ",
             "jockey": "松岡",
             "time": "1:14.5",
-            "popularity": 14,
-            "oddsWin": 378.3
+            "popularity": 14
           },
           {
             "rank": 9,
@@ -28125,8 +27995,7 @@
             "name": "ホウオウバトラー",
             "jockey": "▲石田",
             "time": "1:14.5",
-            "popularity": 10,
-            "oddsWin": 149.6
+            "popularity": 10
           },
           {
             "rank": 10,
@@ -28135,8 +28004,7 @@
             "name": "アーリマックス",
             "jockey": "△石神道",
             "time": "1:14.7",
-            "popularity": 7,
-            "oddsWin": 31.4
+            "popularity": 7
           },
           {
             "rank": 11,
@@ -28155,8 +28023,7 @@
             "name": "デルマシラカミ",
             "jockey": "▲上里",
             "time": "1:15.3",
-            "popularity": 13,
-            "oddsWin": 307.3
+            "popularity": 13
           },
           {
             "rank": 13,
@@ -28165,8 +28032,7 @@
             "name": "ジャストキュート",
             "jockey": "武藤",
             "time": "1:16.2",
-            "popularity": 6,
-            "oddsWin": 27.9
+            "popularity": 6
           },
           {
             "rank": 14,
@@ -28175,8 +28041,7 @@
             "name": "リオダプラタ",
             "jockey": "江田照",
             "time": "1:16.4",
-            "popularity": 12,
-            "oddsWin": 164.5
+            "popularity": 12
           },
           {
             "rank": null,
@@ -28249,13 +28114,13 @@
           },
           {
             "betType": "trio",
-            "selection": "1-9",
+            "selection": "1-9-13",
             "payoutYen": 33320,
             "popularity": 68
           },
           {
             "betType": "trifecta",
-            "selection": "13-9",
+            "selection": "13-9-1",
             "payoutYen": 121940,
             "popularity": 245
           }
@@ -29909,7 +29774,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:15.284Z",
+        "finishedAt": "2026-08-11T14:25:39.231Z",
         "finishes": [
           {
             "rank": 1,
@@ -29928,8 +29793,7 @@
             "name": "オウケンサクラコ",
             "jockey": "丸田",
             "time": "1:55.4",
-            "popularity": 11,
-            "oddsWin": 101.9
+            "popularity": 11
           },
           {
             "rank": 3,
@@ -29938,8 +29802,7 @@
             "name": "クライングナウ",
             "jockey": "菱田",
             "time": "1:55.5",
-            "popularity": 10,
-            "oddsWin": 33.6
+            "popularity": 10
           },
           {
             "rank": 4,
@@ -29968,8 +29831,7 @@
             "name": "キタイノホシ",
             "jockey": "△石神道",
             "time": "1:56.7",
-            "popularity": 7,
-            "oddsWin": 22.3
+            "popularity": 7
           },
           {
             "rank": 7,
@@ -29978,8 +29840,7 @@
             "name": "ウォーレーションズ",
             "jockey": "菊沢",
             "time": "1:57.1",
-            "popularity": 5,
-            "oddsWin": 13.9
+            "popularity": 5
           },
           {
             "rank": 8,
@@ -29988,8 +29849,7 @@
             "name": "コパノミラノ",
             "jockey": "柴田大",
             "time": "1:57.2",
-            "popularity": 8,
-            "oddsWin": 26.7
+            "popularity": 8
           },
           {
             "rank": 9,
@@ -29998,8 +29858,7 @@
             "name": "パワポケウォーズ",
             "jockey": "▲佐藤",
             "time": "1:57.4",
-            "popularity": 12,
-            "oddsWin": 111
+            "popularity": 12
           },
           {
             "rank": 10,
@@ -30008,8 +29867,7 @@
             "name": "シンショク",
             "jockey": "武藤",
             "time": "1:58.0",
-            "popularity": 6,
-            "oddsWin": 17.1
+            "popularity": 6
           },
           {
             "rank": 11,
@@ -30018,8 +29876,7 @@
             "name": "テキサスバローズ",
             "jockey": "▲石田",
             "time": "1:58.1",
-            "popularity": 13,
-            "oddsWin": 205.3
+            "popularity": 13
           },
           {
             "rank": 12,
@@ -30028,8 +29885,7 @@
             "name": "デルマカイモン",
             "jockey": "▲上里",
             "time": "1:58.4",
-            "popularity": 9,
-            "oddsWin": 28.5
+            "popularity": 9
           },
           {
             "rank": 13,
@@ -30038,8 +29894,7 @@
             "name": "ロイヤルタイム",
             "jockey": "松岡",
             "time": "1:58.7",
-            "popularity": 14,
-            "oddsWin": 278.5
+            "popularity": 14
           },
           {
             "rank": 14,
@@ -30058,8 +29913,7 @@
             "name": "ジーティーホクサイ",
             "jockey": "杉原",
             "time": "2:08.5",
-            "popularity": 15,
-            "oddsWin": 295.8
+            "popularity": 15
           }
         ],
         "payouts": [
@@ -30125,13 +29979,13 @@
           },
           {
             "betType": "trio",
-            "selection": "1-5",
+            "selection": "1-5-11",
             "payoutYen": 65100,
             "popularity": 151
           },
           {
             "betType": "trifecta",
-            "selection": "11-5",
+            "selection": "11-5-1",
             "payoutYen": 178280,
             "popularity": 496
           }
@@ -31595,7 +31449,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:15.611Z",
+        "finishedAt": "2026-08-11T14:25:39.735Z",
         "finishes": [
           {
             "rank": 1,
@@ -31624,8 +31478,7 @@
             "name": "メランジェ",
             "jockey": "原",
             "time": "1:45.7",
-            "popularity": 4,
-            "oddsWin": 29.4
+            "popularity": 4
           },
           {
             "rank": 4,
@@ -31634,8 +31487,7 @@
             "name": "キスアンドクライ",
             "jockey": "坂井",
             "time": "1:45.8",
-            "popularity": 3,
-            "oddsWin": 10.3
+            "popularity": 3
           },
           {
             "rank": 5,
@@ -31644,8 +31496,7 @@
             "name": "ジャンビ",
             "jockey": "菊沢",
             "time": "1:45.9",
-            "popularity": 8,
-            "oddsWin": 87.8
+            "popularity": 8
           },
           {
             "rank": 6,
@@ -31654,8 +31505,7 @@
             "name": "ウインベアトリス",
             "jockey": "松岡",
             "time": "1:45.9",
-            "popularity": 5,
-            "oddsWin": 31.2
+            "popularity": 5
           },
           {
             "rank": 7,
@@ -31664,8 +31514,7 @@
             "name": "カフェアローロ",
             "jockey": "大野",
             "time": "1:46.3",
-            "popularity": 9,
-            "oddsWin": 105.5
+            "popularity": 9
           },
           {
             "rank": 8,
@@ -31674,8 +31523,7 @@
             "name": "ビッグデイメイク",
             "jockey": "柴田大",
             "time": "1:47.2",
-            "popularity": 10,
-            "oddsWin": 351.3
+            "popularity": 10
           },
           {
             "rank": 9,
@@ -31684,8 +31532,7 @@
             "name": "ミラーダカリエンテ",
             "jockey": "石川",
             "time": "1:47.5",
-            "popularity": 7,
-            "oddsWin": 68.6
+            "popularity": 7
           },
           {
             "rank": 10,
@@ -31694,8 +31541,7 @@
             "name": "ドリームクルーズ",
             "jockey": "吉田豊",
             "time": "1:52.7",
-            "popularity": 6,
-            "oddsWin": 63.5
+            "popularity": 6
           }
         ],
         "payouts": [
@@ -31761,13 +31607,13 @@
           },
           {
             "betType": "trio",
-            "selection": "2-8",
+            "selection": "2-8-10",
             "payoutYen": 680,
             "popularity": 2
           },
           {
             "betType": "trifecta",
-            "selection": "8-2",
+            "selection": "8-2-10",
             "payoutYen": 1610,
             "popularity": 5
           }
@@ -33457,7 +33303,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:16.432Z",
+        "finishedAt": "2026-08-11T14:25:40.162Z",
         "finishes": [
           {
             "rank": 1,
@@ -33476,8 +33322,7 @@
             "name": "ゴンバデカーブース",
             "jockey": "三浦",
             "time": "1:45.1",
-            "popularity": 10,
-            "oddsWin": 36.6
+            "popularity": 10
           },
           {
             "rank": 3,
@@ -33486,8 +33331,7 @@
             "name": "ミアネーロ",
             "jockey": "大野",
             "time": "1:45.2",
-            "popularity": 4,
-            "oddsWin": 10.6
+            "popularity": 4
           },
           {
             "rank": 4,
@@ -33506,8 +33350,7 @@
             "name": "ヴォンフレ",
             "jockey": "江田照",
             "time": "1:45.3",
-            "popularity": 8,
-            "oddsWin": 23.5
+            "popularity": 8
           },
           {
             "rank": 5,
@@ -33516,8 +33359,7 @@
             "name": "シンハナーダ",
             "jockey": "菱田",
             "time": "1:45.3",
-            "popularity": 6,
-            "oddsWin": 16.2
+            "popularity": 6
           },
           {
             "rank": 7,
@@ -33526,8 +33368,7 @@
             "name": "ディマイザキッド",
             "jockey": "菊沢",
             "time": "1:45.3",
-            "popularity": 5,
-            "oddsWin": 13.1
+            "popularity": 5
           },
           {
             "rank": 8,
@@ -33536,8 +33377,7 @@
             "name": "ラインベック",
             "jockey": "杉原",
             "time": "1:45.3",
-            "popularity": 12,
-            "oddsWin": 42.3
+            "popularity": 12
           },
           {
             "rank": 9,
@@ -33546,8 +33386,7 @@
             "name": "ジュンブロッサム",
             "jockey": "石川",
             "time": "1:45.4",
-            "popularity": 7,
-            "oddsWin": 17.4
+            "popularity": 7
           },
           {
             "rank": 10,
@@ -33556,8 +33395,7 @@
             "name": "ゴートゥファースト",
             "jockey": "坂井",
             "time": "1:45.4",
-            "popularity": 11,
-            "oddsWin": 39.4
+            "popularity": 11
           },
           {
             "rank": 11,
@@ -33566,8 +33404,7 @@
             "name": "アンリーロード",
             "jockey": "武藤",
             "time": "1:45.5",
-            "popularity": 13,
-            "oddsWin": 44.8
+            "popularity": 13
           },
           {
             "rank": 12,
@@ -33586,8 +33423,7 @@
             "name": "ヤマニンサンパ",
             "jockey": "亀田",
             "time": "1:45.5",
-            "popularity": 9,
-            "oddsWin": 36.5
+            "popularity": 9
           },
           {
             "rank": 14,
@@ -33596,8 +33432,7 @@
             "name": "セントメモリーズ",
             "jockey": "石神道",
             "time": "1:45.6",
-            "popularity": 15,
-            "oddsWin": 138.9
+            "popularity": 15
           },
           {
             "rank": 15,
@@ -33606,8 +33441,7 @@
             "name": "ドラゴンヘッド",
             "jockey": "丸田",
             "time": "1:45.7",
-            "popularity": 14,
-            "oddsWin": 53.3
+            "popularity": 14
           },
           {
             "rank": 16,
@@ -33616,8 +33450,7 @@
             "name": "コスモブッドレア",
             "jockey": "石橋脩",
             "time": "1:46.8",
-            "popularity": 16,
-            "oddsWin": 144.2
+            "popularity": 16
           }
         ],
         "payouts": [
@@ -33683,13 +33516,13 @@
           },
           {
             "betType": "trio",
-            "selection": "4-6",
+            "selection": "4-6-11",
             "payoutYen": 24670,
             "popularity": 71
           },
           {
             "betType": "trifecta",
-            "selection": "4-11",
+            "selection": "4-11-6",
             "payoutYen": 129850,
             "popularity": 388
           }
@@ -35012,7 +34845,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:16.779Z",
+        "finishedAt": "2026-08-11T14:25:40.685Z",
         "finishes": [
           {
             "rank": 1,
@@ -35051,8 +34884,7 @@
             "name": "ラヴィサンエール",
             "jockey": "松岡",
             "time": "1:21.4",
-            "popularity": 6,
-            "oddsWin": 33.4
+            "popularity": 6
           },
           {
             "rank": 5,
@@ -35061,8 +34893,7 @@
             "name": "ニシノイサリビ",
             "jockey": "田辺",
             "time": "1:22.1",
-            "popularity": 4,
-            "oddsWin": 13.3
+            "popularity": 4
           },
           {
             "rank": 6,
@@ -35071,8 +34902,7 @@
             "name": "ラピッドテソーロ",
             "jockey": "木幡巧",
             "time": "1:22.7",
-            "popularity": 5,
-            "oddsWin": 19.2
+            "popularity": 5
           },
           {
             "rank": 7,
@@ -35081,8 +34911,7 @@
             "name": "トシミチ",
             "jockey": "菱田",
             "time": "1:23.0",
-            "popularity": 8,
-            "oddsWin": 161.2
+            "popularity": 8
           },
           {
             "rank": 8,
@@ -35091,8 +34920,7 @@
             "name": "ソニックウェーブ",
             "jockey": "菊沢",
             "time": "1:23.0",
-            "popularity": 7,
-            "oddsWin": 34.5
+            "popularity": 7
           },
           {
             "rank": 9,
@@ -35101,8 +34929,7 @@
             "name": "ウンスイ",
             "jockey": "石神道",
             "time": "1:24.1",
-            "popularity": 9,
-            "oddsWin": 195.7
+            "popularity": 9
           }
         ],
         "payouts": [
@@ -35168,13 +34995,13 @@
           },
           {
             "betType": "trio",
-            "selection": "2-5",
+            "selection": "2-5-7",
             "payoutYen": 240,
             "popularity": 1
           },
           {
             "betType": "trifecta",
-            "selection": "5-7",
+            "selection": "5-7-2",
             "payoutYen": 1010,
             "popularity": 1
           }
@@ -36843,7 +36670,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:17.103Z",
+        "finishedAt": "2026-08-11T14:25:41.364Z",
         "finishes": [
           {
             "rank": 1,
@@ -36872,8 +36699,7 @@
             "name": "キタノエピックアン",
             "jockey": "▲上里",
             "time": "1:53.9",
-            "popularity": 6,
-            "oddsWin": 14.5
+            "popularity": 6
           },
           {
             "rank": 4,
@@ -36892,8 +36718,7 @@
             "name": "イージーブリージー",
             "jockey": "田辺",
             "time": "1:54.4",
-            "popularity": 9,
-            "oddsWin": 28.6
+            "popularity": 9
           },
           {
             "rank": 6,
@@ -36902,8 +36727,7 @@
             "name": "オリオアルセーリオ",
             "jockey": "杉原",
             "time": "1:54.5",
-            "popularity": 12,
-            "oddsWin": 49.3
+            "popularity": 12
           },
           {
             "rank": 7,
@@ -36922,8 +36746,7 @@
             "name": "ガーネットテソーロ",
             "jockey": "▲佐藤",
             "time": "1:54.9",
-            "popularity": 8,
-            "oddsWin": 27.4
+            "popularity": 8
           },
           {
             "rank": 9,
@@ -36932,8 +36755,7 @@
             "name": "カサビセンス",
             "jockey": "木幡巧",
             "time": "1:55.0",
-            "popularity": 14,
-            "oddsWin": 163.7
+            "popularity": 14
           },
           {
             "rank": 10,
@@ -36942,8 +36764,7 @@
             "name": "ルージュカルデア",
             "jockey": "小崎",
             "time": "1:55.0",
-            "popularity": 5,
-            "oddsWin": 12.8
+            "popularity": 5
           },
           {
             "rank": 11,
@@ -36952,8 +36773,7 @@
             "name": "シャオシンユン",
             "jockey": "石川",
             "time": "1:55.2",
-            "popularity": 13,
-            "oddsWin": 147.5
+            "popularity": 13
           },
           {
             "rank": 12,
@@ -36962,17 +36782,16 @@
             "name": "アレーティア",
             "jockey": "▲石田",
             "time": "1:55.4",
-            "popularity": 11,
-            "oddsWin": 39.5
+            "popularity": 11
           },
           {
             "rank": 13,
             "number": 13,
             "bracket": 7,
             "name": "ライヴスプーン",
+            "jockey": "丸田恭",
             "time": "1:56.1",
-            "popularity": 7,
-            "oddsWin": 16.7
+            "popularity": 7
           },
           {
             "rank": 14,
@@ -36981,8 +36800,7 @@
             "name": "ミュークチェルシー",
             "jockey": "武藤",
             "time": "1:56.2",
-            "popularity": 15,
-            "oddsWin": 170.3
+            "popularity": 15
           },
           {
             "rank": 15,
@@ -36991,8 +36809,7 @@
             "name": "テルケンユミクイン",
             "jockey": "菊沢",
             "time": "2:00.2",
-            "popularity": 10,
-            "oddsWin": 29.4
+            "popularity": 10
           }
         ],
         "payouts": [
@@ -37058,13 +36875,13 @@
           },
           {
             "betType": "trio",
-            "selection": "4-5",
+            "selection": "4-5-9",
             "payoutYen": 8400,
             "popularity": 26
           },
           {
             "betType": "trifecta",
-            "selection": "4-9",
+            "selection": "4-9-5",
             "payoutYen": 36250,
             "popularity": 100
           }
@@ -38651,7 +38468,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:17.502Z",
+        "finishedAt": "2026-08-11T14:25:41.805Z",
         "finishes": [
           {
             "rank": 1,
@@ -38690,8 +38507,7 @@
             "name": "ガラク",
             "jockey": "田辺",
             "time": "1:32.7",
-            "popularity": 4,
-            "oddsWin": 11.6
+            "popularity": 4
           },
           {
             "rank": 5,
@@ -38700,8 +38516,7 @@
             "name": "スタニングヴュー",
             "jockey": "伊藤",
             "time": "1:33.0",
-            "popularity": 8,
-            "oddsWin": 68.8
+            "popularity": 8
           },
           {
             "rank": 6,
@@ -38710,18 +38525,16 @@
             "name": "ミッキーコンドル",
             "jockey": "小崎",
             "time": "1:33.3",
-            "popularity": 10,
-            "oddsWin": 138.9
+            "popularity": 10
           },
           {
             "rank": 7,
             "number": 5,
             "bracket": 4,
             "name": "ハナコトバ",
-            "jockey": "△",
+            "jockey": "△石神深",
             "time": "1:33.3",
-            "popularity": 7,
-            "oddsWin": 67.5
+            "popularity": 7
           },
           {
             "rank": 8,
@@ -38730,8 +38543,7 @@
             "name": "スピリットサージ",
             "jockey": "江田照",
             "time": "1:33.4",
-            "popularity": 9,
-            "oddsWin": 80.7
+            "popularity": 9
           },
           {
             "rank": 9,
@@ -38740,8 +38552,7 @@
             "name": "ミズノミヤコ",
             "jockey": "原",
             "time": "1:33.4",
-            "popularity": 12,
-            "oddsWin": 199.1
+            "popularity": 12
           },
           {
             "rank": 10,
@@ -38750,8 +38561,7 @@
             "name": "クリスタルタワー",
             "jockey": "菊沢",
             "time": "1:33.5",
-            "popularity": 11,
-            "oddsWin": 194.6
+            "popularity": 11
           },
           {
             "rank": 11,
@@ -38760,8 +38570,7 @@
             "name": "ヤマカンドリーミン",
             "jockey": "▲石田",
             "time": "1:33.8",
-            "popularity": 13,
-            "oddsWin": 320.2
+            "popularity": 13
           },
           {
             "rank": 12,
@@ -38770,8 +38579,7 @@
             "name": "ルモンテ",
             "jockey": "大野",
             "time": "1:33.9",
-            "popularity": 6,
-            "oddsWin": 31.5
+            "popularity": 6
           },
           {
             "rank": 13,
@@ -38780,8 +38588,7 @@
             "name": "クリールスル",
             "jockey": "坂井",
             "time": "1:34.2",
-            "popularity": 5,
-            "oddsWin": 12.7
+            "popularity": 5
           }
         ],
         "payouts": [
@@ -38847,13 +38654,13 @@
           },
           {
             "betType": "trio",
-            "selection": "1-2",
+            "selection": "1-2-4",
             "payoutYen": 370,
             "popularity": 1
           },
           {
             "betType": "trifecta",
-            "selection": "2-4",
+            "selection": "2-4-1",
             "payoutYen": 2150,
             "popularity": 4
           }
@@ -40615,7 +40422,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:17.826Z",
+        "finishedAt": "2026-08-11T14:25:42.338Z",
         "finishes": [
           {
             "rank": 1,
@@ -40624,8 +40431,7 @@
             "name": "メテオロイド",
             "jockey": "菱田",
             "time": "0:54.8",
-            "popularity": 7,
-            "oddsWin": 23.1
+            "popularity": 7
           },
           {
             "rank": 2,
@@ -40644,8 +40450,7 @@
             "name": "ブライティアブーケ",
             "jockey": "大野",
             "time": "0:55.0",
-            "popularity": 6,
-            "oddsWin": 12.3
+            "popularity": 6
           },
           {
             "rank": 4,
@@ -40654,8 +40459,7 @@
             "name": "ジュエルドレーサー",
             "jockey": "石川",
             "time": "0:55.1",
-            "popularity": 14,
-            "oddsWin": 146.9
+            "popularity": 14
           },
           {
             "rank": 5,
@@ -40664,8 +40468,7 @@
             "name": "サツキレジーナ",
             "jockey": "柴田大",
             "time": "0:55.2",
-            "popularity": 15,
-            "oddsWin": 152.3
+            "popularity": 15
           },
           {
             "rank": 6,
@@ -40674,8 +40477,7 @@
             "name": "パーティーガール",
             "jockey": "菊沢",
             "time": "0:55.3",
-            "popularity": 12,
-            "oddsWin": 73.5
+            "popularity": 12
           },
           {
             "rank": 7,
@@ -40704,8 +40506,7 @@
             "name": "ダイイズキャスト",
             "jockey": "三浦",
             "time": "0:55.7",
-            "popularity": 10,
-            "oddsWin": 50.1
+            "popularity": 10
           },
           {
             "rank": 10,
@@ -40714,8 +40515,7 @@
             "name": "ミルトメロディー",
             "jockey": "原",
             "time": "0:55.7",
-            "popularity": 11,
-            "oddsWin": 59.4
+            "popularity": 11
           },
           {
             "rank": 11,
@@ -40724,8 +40524,7 @@
             "name": "レモンバーム",
             "jockey": "△石神道",
             "time": "0:55.8",
-            "popularity": 8,
-            "oddsWin": 42.8
+            "popularity": 8
           },
           {
             "rank": 12,
@@ -40734,17 +40533,16 @@
             "name": "ベルタソ",
             "jockey": "小崎",
             "time": "0:55.9",
-            "popularity": 5,
-            "oddsWin": 12.2
+            "popularity": 5
           },
           {
             "rank": 13,
             "number": 15,
             "bracket": 7,
             "name": "セイラダンサー",
+            "jockey": "江田照",
             "time": "0:55.9",
-            "popularity": 13,
-            "oddsWin": 107.7
+            "popularity": 13
           },
           {
             "rank": 14,
@@ -40753,8 +40551,7 @@
             "name": "ブラヴィーノ",
             "jockey": "丸田",
             "time": "0:56.0",
-            "popularity": 18,
-            "oddsWin": 445.9
+            "popularity": 18
           },
           {
             "rank": 15,
@@ -40773,8 +40570,7 @@
             "name": "オタルイーグル",
             "jockey": "亀田",
             "time": "0:56.1",
-            "popularity": 9,
-            "oddsWin": 45.4
+            "popularity": 9
           },
           {
             "rank": 17,
@@ -40783,8 +40579,7 @@
             "name": "フェリスチカ",
             "jockey": "▲佐藤",
             "time": "0:56.2",
-            "popularity": 16,
-            "oddsWin": 266.3
+            "popularity": 16
           },
           {
             "rank": 18,
@@ -40793,8 +40588,7 @@
             "name": "ビスケット",
             "jockey": "▲上里",
             "time": "0:56.5",
-            "popularity": 17,
-            "oddsWin": 382.6
+            "popularity": 17
           }
         ],
         "payouts": [
@@ -40860,13 +40654,13 @@
           },
           {
             "betType": "trio",
-            "selection": "13-17",
+            "selection": "13-17-18",
             "payoutYen": 6590,
             "popularity": 19
           },
           {
             "betType": "trifecta",
-            "selection": "17-18",
+            "selection": "17-18-13",
             "payoutYen": 50530,
             "popularity": 144
           }
@@ -42561,7 +42355,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:18.148Z",
+        "finishedAt": "2026-08-11T14:25:42.759Z",
         "finishes": [
           {
             "rank": 1,
@@ -42590,8 +42384,7 @@
             "name": "ディエスルージュ",
             "jockey": "木幡巧",
             "time": "1:59.4",
-            "popularity": 14,
-            "oddsWin": 131.7
+            "popularity": 14
           },
           {
             "rank": 4,
@@ -42600,8 +42393,7 @@
             "name": "ヤマニンリンキング",
             "jockey": "大野",
             "time": "1:59.5",
-            "popularity": 7,
-            "oddsWin": 40.3
+            "popularity": 7
           },
           {
             "rank": 5,
@@ -42610,8 +42402,7 @@
             "name": "デリシューズマン",
             "jockey": "丸田",
             "time": "1:59.5",
-            "popularity": 13,
-            "oddsWin": 125
+            "popularity": 13
           },
           {
             "rank": 6,
@@ -42630,8 +42421,7 @@
             "name": "オーブレーヌ",
             "jockey": "△石神道",
             "time": "1:59.9",
-            "popularity": 5,
-            "oddsWin": 12.3
+            "popularity": 5
           },
           {
             "rank": 8,
@@ -42640,8 +42430,7 @@
             "name": "フォーエバーラブ",
             "jockey": "柴田大",
             "time": "1:59.9",
-            "popularity": 8,
-            "oddsWin": 42.5
+            "popularity": 8
           },
           {
             "rank": 9,
@@ -42650,8 +42439,7 @@
             "name": "エーデルクラフト",
             "jockey": "石川",
             "time": "2:00.1",
-            "popularity": 12,
-            "oddsWin": 110.2
+            "popularity": 12
           },
           {
             "rank": 10,
@@ -42660,8 +42448,7 @@
             "name": "コンフィグシス",
             "jockey": "▲石田",
             "time": "2:01.0",
-            "popularity": 9,
-            "oddsWin": 43.4
+            "popularity": 9
           },
           {
             "rank": 11,
@@ -42670,18 +42457,16 @@
             "name": "ローレルエース",
             "jockey": "原",
             "time": "2:01.3",
-            "popularity": 11,
-            "oddsWin": 58
+            "popularity": 11
           },
           {
             "rank": 12,
             "number": 4,
             "bracket": 2,
             "name": "リベルタアーラ",
-            "jockey": "▲",
+            "jockey": "▲佐藤翔",
             "time": "2:01.4",
-            "popularity": 15,
-            "oddsWin": 133.6
+            "popularity": 15
           },
           {
             "rank": 13,
@@ -42690,8 +42475,7 @@
             "name": "スカーレットジーン",
             "jockey": "武藤",
             "time": "2:01.8",
-            "popularity": 10,
-            "oddsWin": 56
+            "popularity": 10
           },
           {
             "rank": 14,
@@ -42700,8 +42484,7 @@
             "name": "ジェイエルグリーン",
             "jockey": "菱田",
             "time": "2:02.3",
-            "popularity": 6,
-            "oddsWin": 32.3
+            "popularity": 6
           },
           {
             "rank": 15,
@@ -42719,8 +42502,7 @@
             "bracket": 5,
             "name": "ファインブライト",
             "jockey": "杉原",
-            "popularity": 16,
-            "oddsWin": 281.6
+            "popularity": 16
           }
         ],
         "payouts": [
@@ -42786,13 +42568,13 @@
           },
           {
             "betType": "trio",
-            "selection": "3-8",
+            "selection": "3-8-13",
             "payoutYen": 11080,
             "popularity": 33
           },
           {
             "betType": "trifecta",
-            "selection": "3-8",
+            "selection": "3-8-13",
             "payoutYen": 44540,
             "popularity": 119
           }
@@ -44130,7 +43912,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:18.497Z",
+        "finishedAt": "2026-08-11T14:25:43.386Z",
         "finishes": [
           {
             "rank": 1,
@@ -44149,8 +43931,7 @@
             "name": "メイショウジェード",
             "jockey": "太宰",
             "time": "1:34.5",
-            "popularity": 3,
-            "oddsWin": 10
+            "popularity": 3
           },
           {
             "rank": 3,
@@ -44169,8 +43950,7 @@
             "name": "カローナ",
             "jockey": "Ｍデム",
             "time": "1:35.2",
-            "popularity": 7,
-            "oddsWin": 51.8
+            "popularity": 7
           },
           {
             "rank": 5,
@@ -44179,8 +43959,7 @@
             "name": "ロンリーマン",
             "jockey": "☆田山",
             "time": "1:35.2",
-            "popularity": 5,
-            "oddsWin": 38.3
+            "popularity": 5
           },
           {
             "rank": 6,
@@ -44189,8 +43968,7 @@
             "name": "タナコクシテンホウ",
             "jockey": "幸",
             "time": "1:35.3",
-            "popularity": 8,
-            "oddsWin": 107.1
+            "popularity": 8
           },
           {
             "rank": 7,
@@ -44199,8 +43977,7 @@
             "name": "プリメラエストレラ",
             "jockey": "コレッ",
             "time": "1:35.8",
-            "popularity": 4,
-            "oddsWin": 12.6
+            "popularity": 4
           },
           {
             "rank": 8,
@@ -44209,8 +43986,7 @@
             "name": "イザベル",
             "jockey": "松若",
             "time": "1:35.9",
-            "popularity": 6,
-            "oddsWin": 46.2
+            "popularity": 6
           },
           {
             "rank": 9,
@@ -44219,8 +43995,7 @@
             "name": "ララララブソング",
             "jockey": "加藤",
             "time": "1:36.5",
-            "popularity": 9,
-            "oddsWin": 239.2
+            "popularity": 9
           }
         ],
         "payouts": [
@@ -44286,13 +44061,13 @@
           },
           {
             "betType": "trio",
-            "selection": "1-4",
+            "selection": "1-4-9",
             "payoutYen": 410,
             "popularity": 1
           },
           {
             "betType": "trifecta",
-            "selection": "9-1",
+            "selection": "9-1-4",
             "payoutYen": 1240,
             "popularity": 3
           }
@@ -45248,7 +45023,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:18.871Z",
+        "finishedAt": "2026-08-11T14:25:43.787Z",
         "finishes": [
           {
             "rank": 1,
@@ -45267,8 +45042,7 @@
             "name": "スターオブザイヤー",
             "jockey": "松若",
             "time": "1:22.5",
-            "popularity": 5,
-            "oddsWin": 14.4
+            "popularity": 5
           },
           {
             "rank": 3,
@@ -45297,8 +45071,7 @@
             "name": "ベルメサージュ",
             "jockey": "幸",
             "time": "1:23.5",
-            "popularity": 6,
-            "oddsWin": 59.3
+            "popularity": 6
           },
           {
             "rank": 6,
@@ -45317,8 +45090,7 @@
             "name": "ダイメイアゲイン",
             "jockey": "川須",
             "time": "1:23.7",
-            "popularity": 7,
-            "oddsWin": 87.8
+            "popularity": 7
           }
         ],
         "payouts": [
@@ -45372,13 +45144,13 @@
           },
           {
             "betType": "trio",
-            "selection": "2-3",
+            "selection": "2-3-6",
             "payoutYen": 1250,
             "popularity": 7
           },
           {
             "betType": "trifecta",
-            "selection": "3-2",
+            "selection": "3-2-6",
             "payoutYen": 7820,
             "popularity": 37
           }
@@ -47073,7 +46845,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:19.315Z",
+        "finishedAt": "2026-08-11T14:25:44.337Z",
         "finishes": [
           {
             "rank": 1,
@@ -47102,8 +46874,7 @@
             "name": "キャスケード",
             "jockey": "長岡",
             "time": "1:25.6",
-            "popularity": 4,
-            "oddsWin": 12.6
+            "popularity": 4
           },
           {
             "rank": 4,
@@ -47112,8 +46883,7 @@
             "name": "ジュエルサンライズ",
             "jockey": "コレッ",
             "time": "1:25.7",
-            "popularity": 11,
-            "oddsWin": 59.5
+            "popularity": 11
           },
           {
             "rank": 5,
@@ -47122,8 +46892,7 @@
             "name": "アスターエポワス",
             "jockey": "角田和",
             "time": "1:25.7",
-            "popularity": 5,
-            "oddsWin": 15.4
+            "popularity": 5
           },
           {
             "rank": 6,
@@ -47132,8 +46901,7 @@
             "name": "エターナルビジョン",
             "jockey": "◇永島",
             "time": "1:26.0",
-            "popularity": 13,
-            "oddsWin": 126
+            "popularity": 13
           },
           {
             "rank": 7,
@@ -47142,8 +46910,7 @@
             "name": "エルヴィッタ",
             "jockey": "富田",
             "time": "1:26.0",
-            "popularity": 10,
-            "oddsWin": 39.3
+            "popularity": 10
           },
           {
             "rank": 8,
@@ -47152,8 +46919,7 @@
             "name": "ジャミールアイン",
             "jockey": "☆田山",
             "time": "1:26.0",
-            "popularity": 8,
-            "oddsWin": 19.4
+            "popularity": 8
           },
           {
             "rank": 9,
@@ -47162,8 +46928,7 @@
             "name": "ゼフィルス",
             "jockey": "幸",
             "time": "1:26.8",
-            "popularity": 9,
-            "oddsWin": 22.2
+            "popularity": 9
           },
           {
             "rank": 10,
@@ -47172,8 +46937,7 @@
             "name": "サウンドディアナ",
             "jockey": "▲森田",
             "time": "1:26.9",
-            "popularity": 15,
-            "oddsWin": 215.9
+            "popularity": 15
           },
           {
             "rank": 11,
@@ -47182,8 +46946,7 @@
             "name": "オーブフレッシュ",
             "jockey": "西塚",
             "time": "1:27.1",
-            "popularity": 7,
-            "oddsWin": 18.3
+            "popularity": 7
           },
           {
             "rank": 12,
@@ -47192,8 +46955,7 @@
             "name": "スナークオーロラ",
             "jockey": "田口",
             "time": "1:27.8",
-            "popularity": 16,
-            "oddsWin": 247.2
+            "popularity": 16
           },
           {
             "rank": 13,
@@ -47202,8 +46964,7 @@
             "name": "ワイルドチャーム",
             "jockey": "団野",
             "time": "1:27.9",
-            "popularity": 6,
-            "oddsWin": 16.9
+            "popularity": 6
           },
           {
             "rank": 14,
@@ -47222,8 +46983,7 @@
             "name": "タワワ",
             "jockey": "川須",
             "time": "1:29.8",
-            "popularity": 14,
-            "oddsWin": 150.5
+            "popularity": 14
           },
           {
             "rank": 16,
@@ -47232,8 +46992,7 @@
             "name": "エルヴィオラ",
             "jockey": "国分優",
             "time": "1:30.0",
-            "popularity": 12,
-            "oddsWin": 102.2
+            "popularity": 12
           }
         ],
         "payouts": [
@@ -47299,13 +47058,13 @@
           },
           {
             "betType": "trio",
-            "selection": "2-8",
+            "selection": "2-8-10",
             "payoutYen": 1620,
             "popularity": 1
           },
           {
             "betType": "trifecta",
-            "selection": "2-8",
+            "selection": "2-8-10",
             "payoutYen": 9010,
             "popularity": 16
           }
@@ -49005,7 +48764,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:19.665Z",
+        "finishedAt": "2026-08-11T14:25:44.725Z",
         "finishes": [
           {
             "rank": 1,
@@ -49024,8 +48783,7 @@
             "name": "キタノハイテイル",
             "jockey": "城戸",
             "time": "2:02.1",
-            "popularity": 9,
-            "oddsWin": 54
+            "popularity": 9
           },
           {
             "rank": 3,
@@ -49034,8 +48792,7 @@
             "name": "レディトゥフライト",
             "jockey": "▲森田",
             "time": "2:02.2",
-            "popularity": 13,
-            "oddsWin": 82.6
+            "popularity": 13
           },
           {
             "rank": 4,
@@ -49074,8 +48831,7 @@
             "name": "トゥレネヴェリテ",
             "jockey": "△柴田裕",
             "time": "2:03.1",
-            "popularity": 14,
-            "oddsWin": 98.9
+            "popularity": 14
           },
           {
             "rank": 8,
@@ -49084,8 +48840,7 @@
             "name": "ラヴィアンコール",
             "jockey": "☆田山",
             "time": "2:03.9",
-            "popularity": 6,
-            "oddsWin": 19.4
+            "popularity": 6
           },
           {
             "rank": 9,
@@ -49094,8 +48849,7 @@
             "name": "メイショウゴッホ",
             "jockey": "角田和",
             "time": "2:04.1",
-            "popularity": 12,
-            "oddsWin": 71.2
+            "popularity": 12
           },
           {
             "rank": 10,
@@ -49104,8 +48858,7 @@
             "name": "ガラード",
             "jockey": "Ｍデム",
             "time": "2:04.2",
-            "popularity": 8,
-            "oddsWin": 33.8
+            "popularity": 8
           },
           {
             "rank": 11,
@@ -49114,8 +48867,7 @@
             "name": "サンライズナスカ",
             "jockey": "藤懸",
             "time": "2:04.2",
-            "popularity": 10,
-            "oddsWin": 60.5
+            "popularity": 10
           },
           {
             "rank": 12,
@@ -49124,8 +48876,7 @@
             "name": "チュウワヘネシー",
             "jockey": "加藤",
             "time": "2:04.6",
-            "popularity": 15,
-            "oddsWin": 511
+            "popularity": 15
           },
           {
             "rank": 13,
@@ -49134,8 +48885,7 @@
             "name": "ブラストオフ",
             "jockey": "長岡",
             "time": "2:04.9",
-            "popularity": 7,
-            "oddsWin": 22.1
+            "popularity": 7
           },
           {
             "rank": 14,
@@ -49144,8 +48894,7 @@
             "name": "グランドフィナーレ",
             "jockey": "富田",
             "time": "2:05.1",
-            "popularity": 11,
-            "oddsWin": 70.4
+            "popularity": 11
           },
           {
             "rank": 15,
@@ -49154,8 +48903,7 @@
             "name": "イコミキマル",
             "jockey": "中井",
             "time": "2:05.2",
-            "popularity": 16,
-            "oddsWin": 555.4
+            "popularity": 16
           },
           {
             "rank": 16,
@@ -49231,13 +48979,13 @@
           },
           {
             "betType": "trio",
-            "selection": "2-5",
+            "selection": "2-5-8",
             "payoutYen": 61160,
             "popularity": 128
           },
           {
             "betType": "trifecta",
-            "selection": "5-8",
+            "selection": "5-8-2",
             "payoutYen": 191380,
             "popularity": 489
           }
@@ -50344,7 +50092,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:20.070Z",
+        "finishedAt": "2026-08-11T14:25:45.165Z",
         "finishes": [
           {
             "rank": 1,
@@ -50363,8 +50111,7 @@
             "name": "ワンダーデリエール",
             "jockey": "☆田山",
             "time": "2:00.8",
-            "popularity": 4,
-            "oddsWin": 29.2
+            "popularity": 4
           },
           {
             "rank": 3,
@@ -50383,8 +50130,7 @@
             "name": "アステルディーヴァ",
             "jockey": "◇永島",
             "time": "2:00.9",
-            "popularity": 6,
-            "oddsWin": 63.3
+            "popularity": 6
           },
           {
             "rank": 5,
@@ -50403,8 +50149,7 @@
             "name": "ウインヘリオドール",
             "jockey": "国分恭",
             "time": "2:01.1",
-            "popularity": 7,
-            "oddsWin": 64.3
+            "popularity": 7
           },
           {
             "rank": 7,
@@ -50413,8 +50158,7 @@
             "name": "リトルスカーレット",
             "jockey": "▲川端",
             "time": "2:01.4",
-            "popularity": 5,
-            "oddsWin": 61.8
+            "popularity": 5
           },
           {
             "rank": 8,
@@ -50423,8 +50167,7 @@
             "name": "シンゼンイセ",
             "jockey": "▲森田",
             "time": "2:02.4",
-            "popularity": 8,
-            "oddsWin": 193.4
+            "popularity": 8
           }
         ],
         "payouts": [
@@ -50484,13 +50227,13 @@
           },
           {
             "betType": "trio",
-            "selection": "3-4",
+            "selection": "3-4-5",
             "payoutYen": 1300,
             "popularity": 5
           },
           {
             "betType": "trifecta",
-            "selection": "3-4",
+            "selection": "3-4-5",
             "payoutYen": 3870,
             "popularity": 11
           }
@@ -52010,7 +51753,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:20.465Z",
+        "finishedAt": "2026-08-11T14:25:45.618Z",
         "finishes": [
           {
             "rank": 1,
@@ -52039,8 +51782,7 @@
             "name": "クイックバイオ",
             "jockey": "田口",
             "time": "1:32.9",
-            "popularity": 7,
-            "oddsWin": 19.3
+            "popularity": 7
           },
           {
             "rank": 4,
@@ -52049,8 +51791,7 @@
             "name": "スナークピカソ",
             "jockey": "西村淳",
             "time": "1:33.0",
-            "popularity": 5,
-            "oddsWin": 10.8
+            "popularity": 5
           },
           {
             "rank": 5,
@@ -52069,8 +51810,7 @@
             "name": "サクラオーラ",
             "jockey": "酒井",
             "time": "1:33.3",
-            "popularity": 9,
-            "oddsWin": 29.3
+            "popularity": 9
           },
           {
             "rank": 7,
@@ -52089,8 +51829,7 @@
             "name": "バガン",
             "jockey": "丸山",
             "time": "1:33.3",
-            "popularity": 10,
-            "oddsWin": 49
+            "popularity": 10
           },
           {
             "rank": 9,
@@ -52099,8 +51838,7 @@
             "name": "ケイテンアイジン",
             "jockey": "幸",
             "time": "1:33.3",
-            "popularity": 11,
-            "oddsWin": 116.5
+            "popularity": 11
           },
           {
             "rank": 10,
@@ -52109,8 +51847,7 @@
             "name": "オトコギアンパン",
             "jockey": "吉村",
             "time": "1:33.6",
-            "popularity": 6,
-            "oddsWin": 12.4
+            "popularity": 6
           },
           {
             "rank": 11,
@@ -52119,8 +51856,7 @@
             "name": "マイネルフォルツァ",
             "jockey": "コレッ",
             "time": "1:33.6",
-            "popularity": 8,
-            "oddsWin": 25.6
+            "popularity": 8
           }
         ],
         "payouts": [
@@ -52186,13 +51922,13 @@
           },
           {
             "betType": "trio",
-            "selection": "4-8",
+            "selection": "4-8-10",
             "payoutYen": 4880,
             "popularity": 20
           },
           {
             "betType": "trifecta",
-            "selection": "4-8",
+            "selection": "4-8-10",
             "payoutYen": 15800,
             "popularity": 41
           }
@@ -53279,7 +53015,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:20.877Z",
+        "finishedAt": "2026-08-11T14:25:46.054Z",
         "finishes": [
           {
             "rank": 1,
@@ -53298,8 +53034,7 @@
             "name": "ユウトザユウト",
             "jockey": "松若",
             "time": "1:53.1",
-            "popularity": 8,
-            "oddsWin": 55.9
+            "popularity": 8
           },
           {
             "rank": 3,
@@ -53308,8 +53043,7 @@
             "name": "メイショウシナノ",
             "jockey": "田口",
             "time": "1:53.2",
-            "popularity": 5,
-            "oddsWin": 20
+            "popularity": 5
           },
           {
             "rank": 4,
@@ -53318,8 +53052,7 @@
             "name": "インザモーメント",
             "jockey": "田山",
             "time": "1:53.3",
-            "popularity": 6,
-            "oddsWin": 23
+            "popularity": 6
           },
           {
             "rank": 5,
@@ -53328,8 +53061,7 @@
             "name": "メイショウコガシラ",
             "jockey": "太宰",
             "time": "1:53.7",
-            "popularity": 7,
-            "oddsWin": 24
+            "popularity": 7
           },
           {
             "rank": 6,
@@ -53419,13 +53151,13 @@
           },
           {
             "betType": "trio",
-            "selection": "3-5",
+            "selection": "3-5-8",
             "payoutYen": 18500,
             "popularity": 42
           },
           {
             "betType": "trifecta",
-            "selection": "3-5",
+            "selection": "3-5-8",
             "payoutYen": 91740,
             "popularity": 194
           }
@@ -54971,7 +54703,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:21.260Z",
+        "finishedAt": "2026-08-11T14:25:46.475Z",
         "finishes": [
           {
             "rank": 1,
@@ -54990,8 +54722,7 @@
             "name": "サンライズオスカー",
             "jockey": "藤懸",
             "time": "1:53.7",
-            "popularity": 9,
-            "oddsWin": 46.9
+            "popularity": 9
           },
           {
             "rank": 3,
@@ -55020,8 +54751,7 @@
             "name": "エイユーファイヤー",
             "jockey": "中井",
             "time": "1:54.7",
-            "popularity": 6,
-            "oddsWin": 20.4
+            "popularity": 6
           },
           {
             "rank": 6,
@@ -55030,8 +54760,7 @@
             "name": "バケラッタ",
             "jockey": "鮫島良",
             "time": "1:55.0",
-            "popularity": 5,
-            "oddsWin": 10.2
+            "popularity": 5
           },
           {
             "rank": 7,
@@ -55040,8 +54769,7 @@
             "name": "メイショウオグマ",
             "jockey": "国分恭",
             "time": "1:55.2",
-            "popularity": 8,
-            "oddsWin": 39.9
+            "popularity": 8
           },
           {
             "rank": 8,
@@ -55060,8 +54788,7 @@
             "name": "ブルーストレイル",
             "jockey": "城戸",
             "time": "1:55.9",
-            "popularity": 12,
-            "oddsWin": 407.7
+            "popularity": 12
           },
           {
             "rank": 10,
@@ -55070,8 +54797,7 @@
             "name": "レーンアジリティ",
             "jockey": "高倉",
             "time": "1:56.0",
-            "popularity": 7,
-            "oddsWin": 39.4
+            "popularity": 7
           },
           {
             "rank": 11,
@@ -55080,8 +54806,7 @@
             "name": "クレスコドルフィン",
             "jockey": "角田和",
             "time": "1:56.3",
-            "popularity": 10,
-            "oddsWin": 124.3
+            "popularity": 10
           },
           {
             "rank": 12,
@@ -55090,8 +54815,7 @@
             "name": "リアルペガサス",
             "jockey": "田口",
             "time": "1:56.7",
-            "popularity": 11,
-            "oddsWin": 159.1
+            "popularity": 11
           }
         ],
         "payouts": [
@@ -55157,13 +54881,13 @@
           },
           {
             "betType": "trio",
-            "selection": "3-9",
+            "selection": "3-9-10",
             "payoutYen": 5230,
             "popularity": 21
           },
           {
             "betType": "trifecta",
-            "selection": "9-3",
+            "selection": "9-3-10",
             "payoutYen": 26110,
             "popularity": 87
           }
@@ -56617,7 +56341,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:21.656Z",
+        "finishedAt": "2026-08-11T14:25:47.064Z",
         "finishes": [
           {
             "rank": 1,
@@ -56636,8 +56360,7 @@
             "name": "ヒットアンドロール",
             "jockey": "大江圭",
             "time": "3:19.4",
-            "popularity": 8,
-            "oddsWin": 37.1
+            "popularity": 8
           },
           {
             "rank": 3,
@@ -56646,8 +56369,7 @@
             "name": "ベイビーベリッシモ",
             "jockey": "五十嵐",
             "time": "3:19.6",
-            "popularity": 7,
-            "oddsWin": 18.8
+            "popularity": 7
           },
           {
             "rank": 4,
@@ -56656,8 +56378,7 @@
             "name": "ゴールドブリーズ",
             "jockey": "▲水沼",
             "time": "3:20.0",
-            "popularity": 6,
-            "oddsWin": 16.7
+            "popularity": 6
           },
           {
             "rank": 5,
@@ -56666,8 +56387,7 @@
             "name": "トーアマリシテン",
             "jockey": "森一",
             "time": "3:20.3",
-            "popularity": 4,
-            "oddsWin": 13.7
+            "popularity": 4
           },
           {
             "rank": 6,
@@ -56676,8 +56396,7 @@
             "name": "ゲインサポート",
             "jockey": "中村",
             "time": "3:20.8",
-            "popularity": 9,
-            "oddsWin": 37.9
+            "popularity": 9
           },
           {
             "rank": 7,
@@ -56695,8 +56414,7 @@
             "bracket": 5,
             "name": "テクネチウム",
             "jockey": "▲井上",
-            "popularity": 10,
-            "oddsWin": 51.5
+            "popularity": 10
           },
           {
             "rank": null,
@@ -56713,8 +56431,7 @@
             "bracket": 7,
             "name": "ニシノルアノーヴァ",
             "jockey": "伴",
-            "popularity": 5,
-            "oddsWin": 16.6
+            "popularity": 5
           }
         ],
         "payouts": [
@@ -56780,13 +56497,13 @@
           },
           {
             "betType": "trio",
-            "selection": "3-4",
+            "selection": "3-4-10",
             "payoutYen": 29410,
             "popularity": 66
           },
           {
             "betType": "trifecta",
-            "selection": "3-10",
+            "selection": "3-10-4",
             "payoutYen": 143990,
             "popularity": 288
           }
@@ -58476,7 +58193,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:21.990Z",
+        "finishedAt": "2026-08-11T14:25:47.459Z",
         "finishes": [
           {
             "rank": 1,
@@ -58535,8 +58252,7 @@
             "name": "カワキタベレッタ",
             "jockey": "中井",
             "time": "1:13.4",
-            "popularity": 16,
-            "oddsWin": 237.3
+            "popularity": 16
           },
           {
             "rank": 7,
@@ -58545,8 +58261,7 @@
             "name": "フェイトブレイカー",
             "jockey": "秋山稔",
             "time": "1:13.9",
-            "popularity": 9,
-            "oddsWin": 40.9
+            "popularity": 9
           },
           {
             "rank": 8,
@@ -58555,8 +58270,7 @@
             "name": "フルドフォルク",
             "jockey": "加藤",
             "time": "1:14.0",
-            "popularity": 10,
-            "oddsWin": 52.7
+            "popularity": 10
           },
           {
             "rank": 9,
@@ -58565,8 +58279,7 @@
             "name": "シュクルリー",
             "jockey": "藤懸",
             "time": "1:14.1",
-            "popularity": 11,
-            "oddsWin": 53.3
+            "popularity": 11
           },
           {
             "rank": 10,
@@ -58575,8 +58288,7 @@
             "name": "マユナイト",
             "jockey": "幸",
             "time": "1:14.3",
-            "popularity": 6,
-            "oddsWin": 18.6
+            "popularity": 6
           },
           {
             "rank": 11,
@@ -58585,8 +58297,7 @@
             "name": "サンシャインビーチ",
             "jockey": "高倉",
             "time": "1:14.5",
-            "popularity": 8,
-            "oddsWin": 40.6
+            "popularity": 8
           },
           {
             "rank": 12,
@@ -58595,8 +58306,7 @@
             "name": "グロリアスニケ",
             "jockey": "▲森田",
             "time": "1:14.7",
-            "popularity": 14,
-            "oddsWin": 93.1
+            "popularity": 14
           },
           {
             "rank": 13,
@@ -58605,8 +58315,7 @@
             "name": "ヒルノジェノヴァ",
             "jockey": "◇永島",
             "time": "1:14.9",
-            "popularity": 15,
-            "oddsWin": 96.5
+            "popularity": 15
           },
           {
             "rank": 14,
@@ -58615,8 +58324,7 @@
             "name": "ザムーン",
             "jockey": "角田和",
             "time": "1:15.0",
-            "popularity": 7,
-            "oddsWin": 21.3
+            "popularity": 7
           },
           {
             "rank": 15,
@@ -58625,8 +58333,7 @@
             "name": "モチモチチャン",
             "jockey": "田口",
             "time": "1:15.0",
-            "popularity": 13,
-            "oddsWin": 64.7
+            "popularity": 13
           },
           {
             "rank": 16,
@@ -58635,8 +58342,7 @@
             "name": "アリュウ",
             "jockey": "西塚",
             "time": "1:15.7",
-            "popularity": 12,
-            "oddsWin": 53.6
+            "popularity": 12
           }
         ],
         "payouts": [
@@ -58702,13 +58408,13 @@
           },
           {
             "betType": "trio",
-            "selection": "4-15",
+            "selection": "4-15-16",
             "payoutYen": 2060,
             "popularity": 2
           },
           {
             "betType": "trifecta",
-            "selection": "15-4",
+            "selection": "15-4-16",
             "payoutYen": 12740,
             "popularity": 23
           }
@@ -60259,7 +59965,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:22.311Z",
+        "finishedAt": "2026-08-11T14:25:47.974Z",
         "finishes": [
           {
             "rank": 1,
@@ -60278,8 +59984,7 @@
             "name": "シャーリーゴールド",
             "jockey": "幸",
             "time": "1:33.2",
-            "popularity": 8,
-            "oddsWin": 63.1
+            "popularity": 8
           },
           {
             "rank": 3,
@@ -60288,8 +59993,7 @@
             "name": "オーバースタンド",
             "jockey": "松若",
             "time": "1:33.2",
-            "popularity": 3,
-            "oddsWin": 11
+            "popularity": 3
           },
           {
             "rank": 4,
@@ -60298,8 +60002,7 @@
             "name": "グローブアマランス",
             "jockey": "田口",
             "time": "1:33.2",
-            "popularity": 5,
-            "oddsWin": 16.4
+            "popularity": 5
           },
           {
             "rank": 5,
@@ -60308,8 +60011,7 @@
             "name": "レッドリガーレ",
             "jockey": "団野",
             "time": "1:33.5",
-            "popularity": 6,
-            "oddsWin": 16.6
+            "popularity": 6
           },
           {
             "rank": 6,
@@ -60318,8 +60020,7 @@
             "name": "インターポーザー",
             "jockey": "国分優",
             "time": "1:33.7",
-            "popularity": 11,
-            "oddsWin": 227.6
+            "popularity": 11
           },
           {
             "rank": 7,
@@ -60328,8 +60029,7 @@
             "name": "エスティヴァリス",
             "jockey": "酒井",
             "time": "1:33.7",
-            "popularity": 9,
-            "oddsWin": 80.8
+            "popularity": 9
           },
           {
             "rank": 8,
@@ -60348,8 +60048,7 @@
             "name": "ゴージャス",
             "jockey": "コレッ",
             "time": "1:33.9",
-            "popularity": 7,
-            "oddsWin": 39
+            "popularity": 7
           },
           {
             "rank": 10,
@@ -60358,8 +60057,7 @@
             "name": "ホールドミーワンス",
             "jockey": "富田",
             "time": "1:34.3",
-            "popularity": 10,
-            "oddsWin": 97.9
+            "popularity": 10
           },
           {
             "rank": 11,
@@ -60368,8 +60066,7 @@
             "name": "オーライカモン",
             "jockey": "角田和",
             "time": "1:34.5",
-            "popularity": 4,
-            "oddsWin": 13.3
+            "popularity": 4
           },
           {
             "rank": 12,
@@ -60378,8 +60075,7 @@
             "name": "メイショウハボマイ",
             "jockey": "▲森田",
             "time": "1:35.1",
-            "popularity": 12,
-            "oddsWin": 326.1
+            "popularity": 12
           }
         ],
         "payouts": [
@@ -60445,13 +60141,13 @@
           },
           {
             "betType": "trio",
-            "selection": "4-5",
+            "selection": "4-5-9",
             "payoutYen": 5140,
             "popularity": 14
           },
           {
             "betType": "trifecta",
-            "selection": "4-5",
+            "selection": "4-5-9",
             "payoutYen": 17060,
             "popularity": 53
           }
@@ -62218,7 +61914,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-08-08T11:48:22.659Z",
+        "finishedAt": "2026-08-11T14:25:48.497Z",
         "finishes": [
           {
             "rank": 1,
@@ -62247,8 +61943,7 @@
             "name": "バルフルール",
             "jockey": "角田和",
             "time": "1:20.1",
-            "popularity": 12,
-            "oddsWin": 41.2
+            "popularity": 12
           },
           {
             "rank": 4,
@@ -62267,8 +61962,7 @@
             "name": "フェブリノ",
             "jockey": "松若",
             "time": "1:20.4",
-            "popularity": 9,
-            "oddsWin": 26.8
+            "popularity": 9
           },
           {
             "rank": 6,
@@ -62277,8 +61971,7 @@
             "name": "ウイングサンライズ",
             "jockey": "丸山",
             "time": "1:20.4",
-            "popularity": 8,
-            "oddsWin": 26.1
+            "popularity": 8
           },
           {
             "rank": 7,
@@ -62287,8 +61980,7 @@
             "name": "グッデイ",
             "jockey": "秋山稔",
             "time": "1:20.5",
-            "popularity": 13,
-            "oddsWin": 68.5
+            "popularity": 13
           },
           {
             "rank": 8,
@@ -62297,8 +61989,7 @@
             "name": "ミヤジマミコ",
             "jockey": "◇永島",
             "time": "1:20.7",
-            "popularity": 17,
-            "oddsWin": 286.2
+            "popularity": 17
           },
           {
             "rank": 9,
@@ -62307,8 +61998,7 @@
             "name": "ココロザスノ",
             "jockey": "酒井",
             "time": "1:20.7",
-            "popularity": 11,
-            "oddsWin": 38.8
+            "popularity": 11
           },
           {
             "rank": 10,
@@ -62317,8 +62007,7 @@
             "name": "ルージュマデイラ",
             "jockey": "富田",
             "time": "1:20.9",
-            "popularity": 14,
-            "oddsWin": 69.1
+            "popularity": 14
           },
           {
             "rank": 11,
@@ -62327,8 +62016,7 @@
             "name": "ティグリス",
             "jockey": "幸",
             "time": "1:21.0",
-            "popularity": 7,
-            "oddsWin": 14.3
+            "popularity": 7
           },
           {
             "rank": 12,
@@ -62347,8 +62035,7 @@
             "name": "スターアスコット",
             "jockey": "△柴田裕",
             "time": "1:21.1",
-            "popularity": 6,
-            "oddsWin": 13.3
+            "popularity": 6
           },
           {
             "rank": 14,
@@ -62357,8 +62044,7 @@
             "name": "タガノプトゥリ",
             "jockey": "藤懸",
             "time": "1:21.1",
-            "popularity": 16,
-            "oddsWin": 245.3
+            "popularity": 16
           },
           {
             "rank": 15,
@@ -62367,8 +62053,7 @@
             "name": "ハッピーリオン",
             "jockey": "太宰",
             "time": "1:21.2",
-            "popularity": 10,
-            "oddsWin": 31.7
+            "popularity": 10
           },
           {
             "rank": 16,
@@ -62377,8 +62062,7 @@
             "name": "ルージュシャラポワ",
             "jockey": "▲川端",
             "time": "1:21.3",
-            "popularity": 18,
-            "oddsWin": 302
+            "popularity": 18
           },
           {
             "rank": 17,
@@ -62387,8 +62071,7 @@
             "name": "ペスキエーラ",
             "jockey": "団野",
             "time": "1:21.4",
-            "popularity": 15,
-            "oddsWin": 69.5
+            "popularity": 15
           },
           {
             "rank": 18,
@@ -62397,8 +62080,7 @@
             "name": "マスティカーレ",
             "jockey": "田口",
             "time": "1:21.4",
-            "popularity": 5,
-            "oddsWin": 12.4
+            "popularity": 5
           }
         ],
         "payouts": [
@@ -62464,13 +62146,13 @@
           },
           {
             "betType": "trio",
-            "selection": "4-7",
+            "selection": "4-7-15",
             "payoutYen": 19250,
             "popularity": 66
           },
           {
             "betType": "trifecta",
-            "selection": "15-7",
+            "selection": "15-7-4",
             "payoutYen": 83200,
             "popularity": 264
           }

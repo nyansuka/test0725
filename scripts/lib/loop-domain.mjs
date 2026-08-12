@@ -14,6 +14,7 @@ export const ALL_BET_TYPES = [
   "win",
   "place",
   "bracket_quinella",
+  "bracket_exacta",
   "quinella",
   "wide",
   "exacta",
@@ -193,7 +194,7 @@ function scoreWinPotential(horse, race) {
 
 function resolveRelatedHorses(race, selection, betType) {
   const nums = parseSelectionNumbers(selection);
-  if (betType === "bracket_quinella") {
+  if (betType === "bracket_quinella" || betType === "bracket_exacta") {
     return race.horses.filter((h) => h.bracket != null && nums.includes(h.bracket));
   }
   return race.horses.filter((h) => nums.includes(h.number));

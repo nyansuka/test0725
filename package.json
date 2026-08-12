@@ -12,6 +12,8 @@
     "fetch:jra:results": "node scripts/fetch-jra-snapshot.mjs --results-only",
     "fetch:jra:refresh-results": "node scripts/fetch-jra-snapshot.mjs --refresh-results",
     "fetch:jra:enrich-form": "node scripts/fetch-jra-snapshot.mjs --enrich-form",
+    "fetch:nar:official": "node scripts/fetch-nar-official-snapshot.mjs",
+    "fetch:nar:official:all": "node scripts/fetch-nar-official-snapshot.mjs --venues=all",
     "test:payout-parse": "node scripts/test-payout-parse.mjs",
     "test:horse-form": "node scripts/test-horse-form.mjs",
     "watch:jra": "node scripts/watch-jra-snapshot.mjs",
