@@ -124,7 +124,7 @@ function qualifiesMidLongshot(horse, popularity, field) {
   return comp >= MID_COMPOSITE_MIN;
 }
 
-function popularityByNumber(horses) {
+export function popularityByNumber(horses) {
   const sorted = [...horses].sort(
     (a, b) => a.oddsWin - b.oddsWin || a.number - b.number,
   );
@@ -180,11 +180,11 @@ function winFormBoost(horse) {
   return boost;
 }
 
-function scoreHorse(horse, race) {
+export function scoreHorse(horse, race) {
   return clamp(weighted(prepareFactors(horse, race), PLACE_WEIGHTS));
 }
 
-function scoreWinPotential(horse, race) {
+export function scoreWinPotential(horse, race) {
   const factors = prepareFactors(horse, race);
   const factorWin = weighted(factors, WIN_WEIGHTS);
   const pop = popularityByNumber(race.horses ?? []).get(horse.number) ?? null;

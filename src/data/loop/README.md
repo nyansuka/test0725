@@ -64,6 +64,26 @@ npm run loop:verify-longshot-in-money
 
 定義・読み方は [HIT-RATE-PLAN.md](../../../docs/HIT-RATE-PLAN.md) §4.3。
 
+## 3連系研究所（レーン別）
+
+本体ループと **KPI を合算しない**。凍結オッズだけ `loop/snapshots` を共有する。
+
+| パス | 内容 |
+|------|------|
+| `sanren/trio/predictions/` · `evaluations/` | 3連複研究 |
+| `sanren/trifecta/predictions/` · `evaluations/` | 3連単研究 |
+| `sanren/{lane}/trends/latest.json` | レーン別傾向（Git 管理） |
+
+```bash
+docker compose exec web npm run loop:sanren:freeze -- 2026-08-09
+docker compose exec web npm run loop:sanren:evaluate -- 2026-08-09
+docker compose exec web npm run loop:sanren:report -- 2026-08-08 2026-08-09
+docker compose exec web npm run loop:sanren:trends
+# 片レーンのみ: -- --lane=trio
+```
+
+主指標は各レーンの `ticketPrecision`。比較 JSON は並記のみ（合算フィールドなし）。詳細は [TRIFECTA-LAB.md](../../../docs/TRIFECTA-LAB.md) S4。
+
 ## 注意
 
 - **freeze は結果が出る前に一度実行する。** 既存の `loop/snapshots` は原則上書きしない（`--force` のみ差し替え可）。

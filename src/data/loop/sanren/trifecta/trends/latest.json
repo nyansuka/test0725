@@ -1,0 +1,210 @@
+{
+  "builtAt": "2026-08-12T14:49:51.771Z",
+  "lab": "sanren",
+  "lane": "trifecta",
+  "source": "src/data/loop/sanren/trifecta/evaluations",
+  "primaryMetric": "ticketPrecision",
+  "dayCount": 2,
+  "dates": [
+    "2026-08-08",
+    "2026-08-09"
+  ],
+  "minSamples": 20,
+  "overall": {
+    "candidates": 279,
+    "hits": 212,
+    "ticketHits": 0,
+    "pending": 0,
+    "settled": 279,
+    "placePrecision": 0.7598566308243727,
+    "precision": 0.7598566308243727,
+    "ticketPrecision": 0
+  },
+  "byDay": {
+    "2026-08-08": {
+      "candidates": 123,
+      "hits": 97,
+      "ticketHits": 0,
+      "pending": 0,
+      "settled": 123,
+      "placePrecision": 0.7886178861788617,
+      "precision": 0.7886178861788617,
+      "ticketPrecision": 0
+    },
+    "2026-08-09": {
+      "candidates": 156,
+      "hits": 115,
+      "ticketHits": 0,
+      "pending": 0,
+      "settled": 156,
+      "placePrecision": 0.7371794871794872,
+      "precision": 0.7371794871794872,
+      "ticketPrecision": 0
+    }
+  },
+  "byLabel": {
+    "研究所注目": {
+      "candidates": 37,
+      "hits": 27,
+      "ticketHits": 0,
+      "pending": 0,
+      "settled": 37,
+      "placePrecision": 0.7297297297297297,
+      "precision": 0.7297297297297297,
+      "ticketPrecision": 0
+    },
+    "抑え": {
+      "candidates": 242,
+      "hits": 185,
+      "ticketHits": 0,
+      "pending": 0,
+      "settled": 242,
+      "placePrecision": 0.7644628099173554,
+      "precision": 0.7644628099173554,
+      "ticketPrecision": 0
+    }
+  },
+  "byPattern": {
+    "ordered_axis": {
+      "candidates": 279,
+      "hits": 212,
+      "ticketHits": 0,
+      "pending": 0,
+      "settled": 279,
+      "placePrecision": 0.7598566308243727,
+      "precision": 0.7598566308243727,
+      "ticketPrecision": 0
+    }
+  },
+  "byOddsBand": {
+    "500+": {
+      "candidates": 279,
+      "hits": 212,
+      "ticketHits": 0,
+      "pending": 0,
+      "settled": 279,
+      "placePrecision": 0.7598566308243727,
+      "precision": 0.7598566308243727,
+      "ticketPrecision": 0
+    }
+  },
+  "daySlices": {
+    "2026-08-08": {
+      "overall": {
+        "candidates": 123,
+        "hits": 97,
+        "ticketHits": 0,
+        "pending": 0,
+        "settled": 123,
+        "placePrecision": 0.7886178861788617,
+        "precision": 0.7886178861788617,
+        "ticketPrecision": 0
+      },
+      "byLabel": {
+        "研究所注目": {
+          "candidates": 14,
+          "hits": 9,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 14,
+          "placePrecision": 0.6428571428571429,
+          "precision": 0.6428571428571429,
+          "ticketPrecision": 0
+        },
+        "抑え": {
+          "candidates": 109,
+          "hits": 88,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 109,
+          "placePrecision": 0.8073394495412844,
+          "precision": 0.8073394495412844,
+          "ticketPrecision": 0
+        }
+      },
+      "byPattern": {
+        "ordered_axis": {
+          "candidates": 123,
+          "hits": 97,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 123,
+          "placePrecision": 0.7886178861788617,
+          "precision": 0.7886178861788617,
+          "ticketPrecision": 0
+        }
+      },
+      "byOddsBand": {
+        "500+": {
+          "candidates": 123,
+          "hits": 97,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 123,
+          "placePrecision": 0.7886178861788617,
+          "precision": 0.7886178861788617,
+          "ticketPrecision": 0
+        }
+      }
+    },
+    "2026-08-09": {
+      "overall": {
+        "candidates": 156,
+        "hits": 115,
+        "ticketHits": 0,
+        "pending": 0,
+        "settled": 156,
+        "placePrecision": 0.7371794871794872,
+        "precision": 0.7371794871794872,
+        "ticketPrecision": 0
+      },
+      "byLabel": {
+        "抑え": {
+          "candidates": 133,
+          "hits": 97,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 133,
+          "placePrecision": 0.7293233082706767,
+          "precision": 0.7293233082706767,
+          "ticketPrecision": 0
+        },
+        "研究所注目": {
+          "candidates": 23,
+          "hits": 18,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 23,
+          "placePrecision": 0.782608695652174,
+          "precision": 0.782608695652174,
+          "ticketPrecision": 0
+        }
+      },
+      "byPattern": {
+        "ordered_axis": {
+          "candidates": 156,
+          "hits": 115,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 156,
+          "placePrecision": 0.7371794871794872,
+          "precision": 0.7371794871794872,
+          "ticketPrecision": 0
+        }
+      },
+      "byOddsBand": {
+        "500+": {
+          "candidates": 156,
+          "hits": 115,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 156,
+          "placePrecision": 0.7371794871794872,
+          "precision": 0.7371794871794872,
+          "ticketPrecision": 0
+        }
+      }
+    }
+  },
+  "note": "レーン専用 trends。本体 loop/trends および他レーンと合算しない。主指標 ticketPrecision。"
+}

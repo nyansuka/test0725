@@ -1,6 +1,6 @@
 # UMANOTE 3連系研究所 構成計画書
 
-最終更新: 2026-08-12（S3 /lab/sanren UI）  
+最終更新: 2026-08-12（S4 レーン別ループ指標）  
 親計画: [PLAN.md](./PLAN.md)（JRA・全券種の高配当選別）  
 関連: [DATA-AND-LOOP.md](./DATA-AND-LOOP.md)、[HIT-RATE-PLAN.md](./HIT-RATE-PLAN.md)、[IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md)、[NAR-PLAN.md](./NAR-PLAN.md)  
 位置づけ: PLAN §5.5 **X4（軸×穴コンボ生成）** の自然な後継。券種を **3連系（`trio` / `trifecta`）** に特化した別施策。  
@@ -345,7 +345,7 @@ selectSanrenLab(races, settings: SanrenLabSettings): {
 | S2a | ドメイン: `selectTrifectaLab`（§8.2） | **済（2026-08-12）** `src/domain/sanrenLab.ts`。formation＋odds≥200。密度はオッズ板カバレッジ依存（目安レース数件〜十数件） |
 | S2b | ドメイン: `selectTrioLab`（§8.3） | **済（2026-08-12）** `fav_fav_hole`＋odds≥100。買い目は昇順正規化 |
 | S3 | UI: `/lab/sanren`＋複／単分離一覧 | **済（2026-08-12）** ハブ＋`/trio` `/trifecta`。レーン別一覧・ticketHit・当日横断 |
-| S4 | ループ: レーン別 freeze/evaluate 指標 | 週次で **別々の** ticketPrecision |
+| S4 | ループ: レーン別 freeze/evaluate 指標 | **済（2026-08-12）** `loop:sanren:*`。trio/trifecta 別 predictions・evaluations・trends。合算 KPI なし |
 | S5 | **1レーン・1変更**実験 | 密度・ticket・仮想RRの方向が分かる |
 | S6（後続） | 危険人気式の正式化・日記プリフィル | 別途方針後 |
 
@@ -380,8 +380,9 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 2. ~~**S2a:** `selectTrifectaLab`~~ → **完了**
 3. ~~**S2b:** `selectTrioLab`~~ → **完了**（`scripts/test-select-trio-lab.mjs`）
 4. ~~**S3:** `/lab/sanren` UI~~ → **完了**
-5. **S4:** レーン別 freeze/evaluate 指標（合算 KPI 禁止）
-6. 別ルートのみ。**本体デフォルト券種は変えない**
+5. ~~**S4:** レーン別 freeze/evaluate 指標~~ → **完了**
+6. **S5:** 1レーン・1変更実験（同一週に両レーンをいじらない）
+7. 別ルートのみ。**本体デフォルト券種は変えない**
 
 ### S1 メモ（2026-08-11）
 
@@ -411,6 +412,14 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 - UI: `SanrenLabHub` / `SanrenLabBoard` / `SanrenLabTable`。レーン別ローカル閾値（本体 Settings 非侵襲）
 - 主表示: ticketHit（`findPayoutYen`）。ヘッダに「3連研」導線
 - 次: S4（レーン別ループ指標）
+
+### S4 メモ（2026-08-12）
+
+- CLI: `npm run loop:sanren:freeze|evaluate|report|trends`（`--lane=trio|trifecta|both`）
+- パス: `src/data/loop/sanren/{lane}/{predictions,evaluations,trends}/`。凍結オッズは本体 `loop/snapshots` 共有
+- セレクタ: `scripts/lib/sanren-lab-domain.mjs`（`selectTrioLab` / `selectTrifectaLab`）
+- 主指標: レーン別 `ticketPrecision` + 仮想 RR。比較 JSON は並記のみ（合算フィールドなし）
+- 次: S5（1レーン・1変更実験）
 
 ---
 
