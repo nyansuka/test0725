@@ -1,6 +1,6 @@
 # UMANOTE 3連系研究所 構成計画書
 
-最終更新: 2026-08-12（S4 レーン別ループ指標）  
+最終更新: 2026-08-12（S5 trio oddsThreshold スイープ）  
 親計画: [PLAN.md](./PLAN.md)（JRA・全券種の高配当選別）  
 関連: [DATA-AND-LOOP.md](./DATA-AND-LOOP.md)、[HIT-RATE-PLAN.md](./HIT-RATE-PLAN.md)、[IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md)、[NAR-PLAN.md](./NAR-PLAN.md)  
 位置づけ: PLAN §5.5 **X4（軸×穴コンボ生成）** の自然な後継。券種を **3連系（`trio` / `trifecta`）** に特化した別施策。  
@@ -346,7 +346,7 @@ selectSanrenLab(races, settings: SanrenLabSettings): {
 | S2b | ドメイン: `selectTrioLab`（§8.3） | **済（2026-08-12）** `fav_fav_hole`＋odds≥100。買い目は昇順正規化 |
 | S3 | UI: `/lab/sanren`＋複／単分離一覧 | **済（2026-08-12）** ハブ＋`/trio` `/trifecta`。レーン別一覧・ticketHit・当日横断 |
 | S4 | ループ: レーン別 freeze/evaluate 指標 | **済（2026-08-12）** `loop:sanren:*`。trio/trifecta 別 predictions・evaluations・trends。合算 KPI なし |
-| S5 | **1レーン・1変更**実験 | 密度・ticket・仮想RRの方向が分かる |
+| S5 | **1レーン・1変更**実験 | **済（2026-08-12）** trio `oddsThreshold` 80/100/150。密度方向は明瞭・ticket/RR は板制約で横ばい。既定100維持 |
 | S6（後続） | 危険人気式の正式化・日記プリフィル | 別途方針後 |
 
 S2a / S2b は並行可。S5 は同時変更禁止。
@@ -381,8 +381,10 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 3. ~~**S2b:** `selectTrioLab`~~ → **完了**（`scripts/test-select-trio-lab.mjs`）
 4. ~~**S3:** `/lab/sanren` UI~~ → **完了**
 5. ~~**S4:** レーン別 freeze/evaluate 指標~~ → **完了**
-6. **S5:** 1レーン・1変更実験（同一週に両レーンをいじらない）
-7. 別ルートのみ。**本体デフォルト券種は変えない**
+6. ~~**S5:** 1レーン・1変更実験~~ → **完了**（trio 閾値スイープ。既定は据え置き）
+7. **S6（後続）:** 危険人気式の正式化・日記プリフィル
+8. 別ルートのみ。**本体デフォルト券種は変えない**
+9. 次の週次実験は **どちらか一方のレーンだけ**（例: trifecta 閾値、または trio `popularRankMax`）
 
 ### S1 メモ（2026-08-11）
 
@@ -419,7 +421,25 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 - パス: `src/data/loop/sanren/{lane}/{predictions,evaluations,trends}/`。凍結オッズは本体 `loop/snapshots` 共有
 - セレクタ: `scripts/lib/sanren-lab-domain.mjs`（`selectTrioLab` / `selectTrifectaLab`）
 - 主指標: レーン別 `ticketPrecision` + 仮想 RR。比較 JSON は並記のみ（合算フィールドなし）
-- 次: S5（1レーン・1変更実験）
+- 次週次実験は S5 スイープツールを使う
+
+### S5 メモ（2026-08-12）
+
+- ツール: `npm run loop:sanren:sweep -- --lane=trio --param=oddsThreshold --values=80,100,150 …`
+- **今回の1変更:** レーン=`trio` のみ / パラメータ=`oddsThreshold` のみ（trifecta は触らない）
+- 対象日: 2026-07-25 · 08-02 · 08-08 · 08-09（凍結オッズ × ライブ結果）
+- 結果（合算せず trio 切片のみ）:
+
+| oddsThreshold | n | dens | ticketP | ticketHits | RR | placeP（参考） |
+|---------------|---|------|---------|------------|-----|----------------|
+| 80 | 362 | 2.51 | 0% | 0 | 0% | 70.7% |
+| **100（既定）** | **349** | **2.42** | **0%** | **0** | **0%** | **69.6%** |
+| 150 | 331 | 2.30 | 0% | 0 | 0% | 68.9% |
+
+- 方向: `80` → 密度↑ / ticket・RR→　·　`150` → 密度↓ / ticket・RR→
+- 判断: **既定 100 を維持**。ticketHits が全水準で 0 のため閾値では切れない（的中買い目が凍結板に載っていない板カバレッジ制約）。密度の単調性だけ確認できた
+- レポート: `src/data/loop/sanren/reports/sweep-trio-oddsThreshold-*.json`（gitignore）
+- 次の週次: 別レーンか別パラメータを **1つだけ**（例: trifecta `oddsThreshold` 150/200/300、または板を厚くする fetcher 改善）
 
 ---
 
@@ -471,7 +491,7 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 | 穴を軸にしない | 穴×穴×穴非生成 | 仮方針 |
 | 主パターンは人気×人気×穴 | `pattern: fav_fav_hole` | 仮 |
 | 危険な人気を消す | `excludeDangerousFavs` | 候補 |
-| 100倍未満を切る | trio threshold 100 | 仮・要スイープ |
+| 100倍未満を切る | trio threshold 100 | 仮・**S5 スイープ済**（80/100/150で ticket 差なし→100維持） |
 | 3列目は手広く流す | `partnerCapHole` 広め | 仮 |
 | 合成オッズを意識 | 低配当カットで合成を立てる | 計測後続 |
 | 印・個別予想 | 取り込まない | 除外 |

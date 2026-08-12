@@ -80,9 +80,11 @@ docker compose exec web npm run loop:sanren:evaluate -- 2026-08-09
 docker compose exec web npm run loop:sanren:report -- 2026-08-08 2026-08-09
 docker compose exec web npm run loop:sanren:trends
 # 片レーンのみ: -- --lane=trio
+# S5 感度（1レーン・1パラメータ）:
+docker compose exec web npm run loop:sanren:sweep -- --lane=trio --param=oddsThreshold --values=80,100,150 2026-08-08 2026-08-09
 ```
 
-主指標は各レーンの `ticketPrecision`。比較 JSON は並記のみ（合算フィールドなし）。詳細は [TRIFECTA-LAB.md](../../../docs/TRIFECTA-LAB.md) S4。
+主指標は各レーンの `ticketPrecision`。比較 JSON は並記のみ（合算フィールドなし）。詳細は [TRIFECTA-LAB.md](../../../docs/TRIFECTA-LAB.md) S4 / S5。
 
 ## 注意
 

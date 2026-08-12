@@ -25,6 +25,7 @@
     "loop:sanren:evaluate": "node scripts/loop-sanren-accumulate.mjs evaluate",
     "loop:sanren:report": "node scripts/loop-sanren-accumulate.mjs report",
     "loop:sanren:trends": "node scripts/loop-sanren-trends.mjs",
+    "loop:sanren:sweep": "node scripts/loop-sanren-sweep.mjs",
     "loop:sweep": "node scripts/loop-threshold-sweep.mjs",
     "loop:sweep:odds-cap": "node scripts/loop-odds-cap-sweep.mjs",
     "loop:verify-longshot-in-money": "node scripts/verify-longshot-in-money.mjs",
