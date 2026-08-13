@@ -49,7 +49,17 @@ async function exists(p) {
 }
 
 async function checkHttp() {
-  const paths = ["/", "/longshots", "/races", "/settings", "/journal", "/method"];
+  const paths = [
+    "/",
+    "/longshots",
+    "/lab/sanren",
+    "/lab/sanren/trio",
+    "/lab/sanren/trifecta",
+    "/races",
+    "/settings",
+    "/journal",
+    "/method",
+  ];
   for (const p of paths) {
     const { status, body } = await get(p);
     if (status !== 200 || !body.includes("UMANOTE")) {
@@ -57,6 +67,47 @@ async function checkHttp() {
     } else {
       ok(`${p} ${status}`);
     }
+  }
+
+  const home = await get("/");
+  if (!home.body.includes("3連系研究所") || !home.body.includes("/lab/sanren")) {
+    fail("/ に3連系研究所の導線が無い");
+  } else {
+    ok("/ 3連系研究所導線");
+  }
+  if (!home.body.includes("3連複研究") || !home.body.includes("3連単研究")) {
+    fail("/ に3連複／3連単のレーンカードが無い");
+  } else {
+    ok("/ 3連系レーンカード");
+  }
+
+  const labHub = await get("/lab/sanren");
+  if (!labHub.body.includes("3連系研究所")) {
+    fail("/lab/sanren に「3連系研究所」が無い");
+  } else {
+    ok("/lab/sanren ハブ見出し");
+  }
+  if (!labHub.body.includes("3連複研究") || !labHub.body.includes("3連単研究")) {
+    fail("/lab/sanren に複／単レーンが無い");
+  } else {
+    ok("/lab/sanren 複／単レーン");
+  }
+
+  const trioLab = await get("/lab/sanren/trio");
+  if (!trioLab.body.includes("3連複研究") || !trioLab.body.includes("オッズ閾値")) {
+    fail("/lab/sanren/trio に3連複研究ボードが無い");
+  } else {
+    ok("/lab/sanren/trio ボード");
+  }
+
+  const trifectaLab = await get("/lab/sanren/trifecta");
+  if (
+    !trifectaLab.body.includes("3連単研究") ||
+    !trifectaLab.body.includes("オッズ閾値")
+  ) {
+    fail("/lab/sanren/trifecta に3連単研究ボードが無い");
+  } else {
+    ok("/lab/sanren/trifecta ボード");
   }
 
   const journal = await get("/journal");

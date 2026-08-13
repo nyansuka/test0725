@@ -5,6 +5,7 @@ import { RaceList } from "@/components/RaceList";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { TodayLongshots } from "@/components/TodayLongshots";
+import { TodaySanrenLab } from "@/components/TodaySanrenLab";
 
 export default function Home() {
   return (
@@ -14,6 +15,8 @@ export default function Home() {
         <Hero />
         <RaceDayBar />
         <TodayLongshots />
+        <div className="section-rail" />
+        <TodaySanrenLab />
         <div className="section-rail" />
         <RaceList />
         <Method />

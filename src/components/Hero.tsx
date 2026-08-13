@@ -55,6 +55,12 @@ export function Hero() {
           >
             レース一覧
           </Link>
+          <Link
+            href="/lab/sanren"
+            className="inline-flex items-center px-2 py-2.5 text-sm text-sand/80 underline-offset-4 transition hover:text-sand hover:underline"
+          >
+            3連系研究所
+          </Link>
         </div>
       </div>
     </section>
