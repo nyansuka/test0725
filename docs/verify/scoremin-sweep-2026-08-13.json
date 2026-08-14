@@ -1,0 +1,59 @@
+{
+  "builtAt": "2026-08-13T15:57:21.351Z",
+  "purpose": "scoreMin sensitivity at fixed odds 25 / oddsMax 80",
+  "dates": [
+    "2026-07-25",
+    "2026-07-26",
+    "2026-08-01",
+    "2026-08-02",
+    "2026-08-08",
+    "2026-08-09"
+  ],
+  "fixed": { "oddsThreshold": 25, "oddsMax": 80 },
+  "hotBand": "[65, 70)",
+  "decision": "adopt scoreMin=65; reject 70",
+  "rationale": "65 keeps C3 注目穴 band, density 6.6 in target 5-15, ticket 1.62%. 70 empties 注目穴, density 1.3, 8/8 and 8/9 ticket 0.",
+  "grid": [
+    {
+      "scoreMin": 60,
+      "candidates": 4624,
+      "density": 21.4,
+      "ticketPrecision": 0.0123,
+      "ticketHits": 57,
+      "hotN": 1149,
+      "hotTicket": 19,
+      "keepN": 3475,
+      "keepTicket": 38,
+      "virtualReturnRatePercent": 57.7
+    },
+    {
+      "scoreMin": 65,
+      "candidates": 1421,
+      "density": 6.6,
+      "ticketPrecision": 0.0162,
+      "ticketHits": 23,
+      "hotN": 1149,
+      "hotTicket": 19,
+      "keepN": 272,
+      "keepTicket": 4,
+      "virtualReturnRatePercent": 66.6
+    },
+    {
+      "scoreMin": 70,
+      "candidates": 272,
+      "density": 1.3,
+      "ticketPrecision": 0.0147,
+      "ticketHits": 4,
+      "hotN": 0,
+      "hotTicket": 0,
+      "keepN": 272,
+      "keepTicket": 4,
+      "virtualReturnRatePercent": 49.6
+    }
+  ],
+  "perDayDensityAt65": {
+    "2026-07-25": 6.1,
+    "2026-08-08": 6.6,
+    "2026-08-09": 5.3
+  }
+}

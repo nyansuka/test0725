@@ -53,6 +53,7 @@ docker compose exec web sh -c "ODDS_MAX=80 npm run loop:freeze -- 2026-08-02"
 ```bash
 docker compose exec web npm run loop:sweep
 docker compose exec web npm run loop:sweep:odds-cap
+docker compose exec web npm run loop:sweep:scoremin
 ```
 
 ゲート内機会（穴馬券内 × 製品オッズゲート）のベースライン:

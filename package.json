@@ -28,6 +28,7 @@
     "loop:sanren:sweep": "node scripts/loop-sanren-sweep.mjs",
     "loop:sweep": "node scripts/loop-threshold-sweep.mjs",
     "loop:sweep:odds-cap": "node scripts/loop-odds-cap-sweep.mjs",
+    "loop:sweep:scoremin": "node scripts/loop-scoremin-sweep.mjs",
     "loop:verify-longshot-in-money": "node scripts/verify-longshot-in-money.mjs",
     "loop:verify-longshot-in-money:tfjv": "node scripts/verify-longshot-in-money.mjs --tfjv",
     "loop:compare": "node scripts/compare-race-day.mjs",

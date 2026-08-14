@@ -1,6 +1,6 @@
 # UMANOTE 構成計画書
 
-最終更新: 2026-08-11  
+最終更新: 2026-08-13  
 対象リポジトリ: 競馬予想サンプル（Next.js + Docker）  
 関連: [DATA-AND-LOOP.md](./DATA-AND-LOOP.md)、[HIT-RATE-PLAN.md](./HIT-RATE-PLAN.md)、[IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md)、[NAR-PLAN.md](./NAR-PLAN.md)、[TRIFECTA-LAB.md](./TRIFECTA-LAB.md)（3連系研究所: 複／単を別研究）
 
@@ -146,7 +146,7 @@ placePotential = currentScorer.score(horse, race)
 ```
 
 - `oddsThreshold` 初期値: `20`（変更可能）
-- `scoreMin` 初期値: `60`（変更可能）
+- `scoreMin` 初期値: `65`（変更可能）
 
 ### 5.3 出力ラベル
 
@@ -158,7 +158,7 @@ placePotential = currentScorer.score(horse, race)
 | 軸馬候補 | 馬単位。`winPotential` がレース内 **上位3頭（Top3）**（単勝オッズ上限なし）。オッズゲートは不要 |
 | 超注目馬 | **注目穴**の関係馬であり、かつ **軸馬候補（Top3）** でもある馬 |
 
-注目穴帯は `HOT_SCORE_MIN`〜`HOT_SCORE_MAX`（半開区間）。C3: ticket 最適帯。70以上は抑えへ。scoreMin（既定60）とは独立。  
+注目穴帯は `HOT_SCORE_MIN`〜`HOT_SCORE_MAX`（半開区間）。C3: ticket 最適帯。70以上は抑えへ。scoreMin（既定65）とは独立だが、65未満はボードに出ない。  
 軸・超注目は買い目ラベルではなく **馬ラベル**（出走表・ボードの印／列で表示）。
 
 ### 5.3.1 レース期待度（S〜D）
@@ -481,7 +481,7 @@ type AxisHorsePick = {
 
 type UserSelectionSettings = {
   oddsThreshold: number; // default 20
-  scoreMin: number;      // default 60
+  scoreMin: number;      // default 65
   enabledBetTypes: BetType[]; // default: 全券種
   // 軸は初期固定 Top3・オッズ上限なし。必要なら後続で axisTopN 等を追加
 };

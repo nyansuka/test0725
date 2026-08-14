@@ -27,10 +27,10 @@ export const DEFAULT_SETTINGS = {
   /** B3: 上限80（感度スイープ推奨。null で上限なし） */
   oddsMax: 80,
   /**
-   * C1/C2 後の再キャリブ（旧75は合成インフレ前提で候補がほぼ消える）。
-   * 25/80/60 ≈ dens 2.9 · ticket≈1.4%（スナップ960R）
+   * 2026-08-13: 60→65（凍結6日 scoreMin スイープ）。
+   * 70 は注目穴帯を空にし密度 1.3。65 は dens≈6.6 · ticket≈1.62%。
    */
-  scoreMin: 60,
+  scoreMin: 65,
   enabledBetTypes: [...ALL_BET_TYPES],
 };
 

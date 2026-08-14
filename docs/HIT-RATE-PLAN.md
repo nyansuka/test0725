@@ -1,8 +1,8 @@
 # 的中率改善プラン
 
-最終更新: 2026-08-09  
-根拠: [IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md) / `loop/trends/latest.json` / `loop/reports/threshold-sweep-2026-07-25_2026-07-26.json` / `loop/reports/analyze-2026-08-02.json` / `loop/reports/odds-cap-sweep-*.json` / `loop/reports/longshot-in-money-snapshots.json` / `loop/reports/c1-c2-after.json` / [VERIFY-2026-08-08.md](./VERIFY-2026-08-08.md) / [VERIFY-2026-08-09.md](./VERIFY-2026-08-09.md)  
-対象期間: 2026-07-25〜26（72レース・凍結オッズ固定スイープ済）＋ 2026-08-01〜02 運用検証 · B3 既定反映 2026-08-03 · ゲート内機会ベースライン / 期待度再キャリブ / **C1/C2** 2026-08-06 · **25/60/oddsMax80 の全日突合 2026-08-08** · **同設定の再検証 2026-08-09**
+最終更新: 2026-08-13  
+根拠: [IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md) / `loop/trends/latest.json` / `loop/reports/threshold-sweep-2026-07-25_2026-07-26.json` / `loop/reports/analyze-2026-08-02.json` / `loop/reports/odds-cap-sweep-*.json` / `loop/reports/longshot-in-money-snapshots.json` / `loop/reports/c1-c2-after.json` / [VERIFY-2026-08-08.md](./VERIFY-2026-08-08.md) / [VERIFY-2026-08-09.md](./VERIFY-2026-08-09.md) / [verify/scoremin-sweep-2026-08-13.json](./verify/scoremin-sweep-2026-08-13.json)  
+対象期間: 2026-07-25〜26（72レース・凍結オッズ固定スイープ済）＋ 2026-08-01〜02 運用検証 · B3 既定反映 2026-08-03 · ゲート内機会ベースライン / 期待度再キャリブ / **C1/C2** 2026-08-06 · **25/60/oddsMax80 の全日突合 2026-08-08** · **同設定の再検証 2026-08-09** · **scoreMin 60→65（2026-08-13）**
 
 運用ルール: **週次で変更は1つだけ**（[DATA-AND-LOOP.md](./DATA-AND-LOOP.md) §5.4）。
 
@@ -289,6 +289,26 @@ Miss 分解（61件・主因）:
 
 読み: place はまだ抑えがやや良い（残合成因子）が、**主指標 ticket は注目穴が +1.2pp**。旧「≥70」より place/ticket とも改善。実装: `HOT_SCORE_MIN/MAX`・`labelForScore`。
 
+#### scoreMin 60→65（2026-08-13）
+
+固定: odds=25 / oddsMax=80 · 凍結6日（7/25・7/26・8/1・8/2・8/8・8/9）· 予測ファイル非破壊  
+ツール: `npm run loop:sweep:scoremin`  
+成果物: [verify/scoremin-sweep-2026-08-13.json](./verify/scoremin-sweep-2026-08-13.json)
+
+| scoreMin | n | dens | ticketP | hits | 注目穴 n/hits | RR |
+|----------|---|------|---------|------|---------------|-----|
+| 60（旧既定） | 4624 | 21.4 | 1.23% | 57 | 1149/19 | 57.7% |
+| **65（採用）** | **1421** | **6.6** | **1.62%** | **23** | **1149/19** | **66.6%** |
+| 70（VERIFY 候補） | 272 | 1.3 | 1.47% | 4 | 0/0 | 49.6% |
+
+読み:
+
+- **70 は不採用。** C3 注目穴帯 [65,70) がボードから消える。8/8・8/9 は ticket 0・密度 1.3（目標 5–15 を下回る過厳選）
+- **65 は密度目標内**（6.6）。ticket +0.39pp。注目穴の 19 hits を維持し、60–64 の抑えだけ切る
+- 研究所レーンは未変更（別 KPI）
+
+既定: **25 / 80上限 / scoreMin 65**。localStorage は v6（旧既定 60/75 のみ寄せる）。
+
 ---
 
 ## 5. 意思決定メモ
@@ -298,7 +318,7 @@ Miss 分解（61件・主因）:
 | 追う的中率 | ticketPrecision（券種払戻）。place は補助 |
 | 副指標 | **gatedOppRecall**（ゲート内穴馬券内のカバー）。広義61%/2.7%は使わない |
 | 密度目標 | 5〜15 件/レース（厳選ボード前提なら 3〜8 も可） |
-| 閾値の当面案 | **25 / 80上限 / 60**（C1/C2 後。旧75は廃止）。8/9 再検証で密度・ticket 未達 → **次の1変更候補は scoreMin≈70**（[VERIFY-2026-08-09.md](./VERIFY-2026-08-09.md)） |
+| 閾値の当面案 | **25 / 80上限 / 65**（2026-08-13）。70 は注目穴消滅＋過厳選で不採用 |
 | 注目穴ラベル | **スコア [65, 70)**（C3）。主指標 ticket 優先 |
 | 券種 | 当面は中オッズ単勝の ticket を観察。3連は後回し。馬連・ワイドは払戻突合を再確認 |
 | 期待度ランク | **日内相対（件数ペナルティ edge）**。S は候補ありの上位約12%。「Sだけ見る」運用可 |
@@ -324,4 +344,5 @@ Miss 分解（61件・主因）:
 | `src/data/loop/reports/expectation-rank-sweep.json` | 期待度再キャリブ感度 |
 | `src/data/loop/reports/c1-c2-after.json` | C1/C2 後の帯別・gatedOppRecall |
 | `src/data/loop/reports/label-threshold-sweep.json` | C3 ラベル境界感度 |
+| [verify/scoremin-sweep-2026-08-13.json](./verify/scoremin-sweep-2026-08-13.json) | scoreMin 60/65/70（25/80 固定・凍結6日） |
 | `src/data/loop/trends/latest.json` | 日次・券種・ラベル別 place 傾向 |

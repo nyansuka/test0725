@@ -29,10 +29,10 @@ export const DEFAULT_SETTINGS = {
   /** B3: 上限80（感度スイープ推奨。null で上限なし） */
   oddsMax: 80 as number | null,
   /**
-   * C1/C2 後: 合成インフレ解消に合わせ 75→60。
-   * （旧75は候補がほぼ消える）
+   * 2026-08-13: 60→65（VERIFY 8/9 の次の1変更）。
+   * 70 は注目穴帯 [65,70) をボードから消し、密度 1.3 で過厳選。
    */
-  scoreMin: 60,
+  scoreMin: 65,
   enabledBetTypes: [...ALL_BET_TYPES] as BetType[],
 };
 

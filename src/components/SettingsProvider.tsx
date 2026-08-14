@@ -12,9 +12,10 @@ import {
 import { ALL_BET_TYPES, DEFAULT_SETTINGS } from "@/domain/betTypes";
 import type { BetType, UserSelectionSettings } from "@/domain/types";
 
-/** v5: C1/C2 後 scoreMin 既定 75→60。v4 は oddsMax 既定80 */
-const STORAGE_KEY = "umanote-selection-settings-v5";
+/** v6: scoreMin 既定 60→65。v5 は 75→60。v4 は oddsMax 既定80 */
+const STORAGE_KEY = "umanote-selection-settings-v6";
 const LEGACY_STORAGE_KEYS = [
+  "umanote-selection-settings-v5",
   "umanote-selection-settings-v4",
   "umanote-selection-settings-v3",
 ];
@@ -62,8 +63,8 @@ function loadSettings(): UserSelectionSettings {
     if (parsed.oddsMax === undefined) {
       parsed.oddsMax = DEFAULT_SETTINGS.oddsMax;
     }
-    // 旧既定 75 が v5 に残っていても C1/C2 後の既定 60 へ寄せる（80 など明示変更は維持）
-    if (parsed.scoreMin === 75) {
+    // 旧既定 60 / 75 は新既定へ寄せる（70・80 など明示変更は維持）
+    if (parsed.scoreMin === 60 || parsed.scoreMin === 75) {
       parsed.scoreMin = DEFAULT_SETTINGS.scoreMin;
     }
     return normalizeSettings(parsed);
