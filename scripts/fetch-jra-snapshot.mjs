@@ -143,6 +143,11 @@ function decodeHtml(s) {
     .trim();
 }
 
+/** タグを除いたテキスト（SP 出馬表の産地マーク span などを落とす） */
+function textOf(htmlFragment) {
+  return decodeHtml(String(htmlFragment ?? "").replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
+}
+
 function parseRaceMeta(html, raceId) {
   const venueCode = raceId.slice(4, 6);
   const raceNumber = Number(raceId.slice(10, 12));
@@ -222,11 +227,8 @@ function parseHorses(html) {
       );
       if (!umaban) continue;
       const waku = Number(row.match(/<td class="Waku(\d+)"/)?.[1]) || Math.ceil(umaban / 2);
-      const name = decodeHtml(
-        row.match(/class="Horse HorseLink"[\s\S]*?<a[^>]*>\s*([^<]+)/)?.[1] ??
-          row.match(/HorseLink[\s\S]*?<a[^>]*>\s*([^<]+)/)?.[1] ??
-          `馬${umaban}`,
-      ).trim();
+      const nameInner = row.match(/class="Horse HorseLink"[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/)?.[1];
+      const name = textOf(nameInner) || `馬${umaban}`;
       const jockey = decodeHtml(
         row.match(/<dd class="Jockey">[\s\S]*?<em>([^<]+)/)?.[1] ??
           row.match(/<dd class="Jockey">[\s\S]*?<a[^>]*>\s*([^<]+)/)?.[1] ??
