@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-15T08:25:16.566Z",
+  "fetchedAt": "2026-08-15T09:22:45.860Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-08-15",
   "raceCount": 36,
@@ -39779,7 +39779,253 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-15 16:40:38",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-15T09:22:44.081Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 9,
+            "bracket": 5,
+            "name": "ダイユウヴェンティ",
+            "jockey": "▲石田",
+            "time": "0:55.9",
+            "popularity": 10
+          },
+          {
+            "rank": 2,
+            "number": 10,
+            "bracket": 5,
+            "name": "ソレム",
+            "jockey": "△石神道",
+            "time": "0:56.1",
+            "popularity": 2,
+            "oddsWin": 4
+          },
+          {
+            "rank": 3,
+            "number": 18,
+            "bracket": 8,
+            "name": "ラウンドヒル",
+            "jockey": "三浦",
+            "time": "0:56.2",
+            "popularity": 1,
+            "oddsWin": 3
+          },
+          {
+            "rank": 4,
+            "number": 16,
+            "bracket": 8,
+            "name": "ルディドゥゲンジ",
+            "jockey": "杉原",
+            "time": "0:56.4",
+            "popularity": 4,
+            "oddsWin": 8.4
+          },
+          {
+            "rank": 5,
+            "number": 8,
+            "bracket": 4,
+            "name": "メーレスブリーゼ",
+            "jockey": "武藤",
+            "time": "0:56.6",
+            "popularity": 15
+          },
+          {
+            "rank": 6,
+            "number": 15,
+            "bracket": 7,
+            "name": "メインテーマ",
+            "jockey": "▲佐藤",
+            "time": "0:56.6",
+            "popularity": 5
+          },
+          {
+            "rank": 7,
+            "number": 2,
+            "bracket": 1,
+            "name": "コンフィアンサ",
+            "jockey": "津村",
+            "time": "0:56.8",
+            "popularity": 3,
+            "oddsWin": 7.9
+          },
+          {
+            "rank": 8,
+            "number": 6,
+            "bracket": 3,
+            "name": "リュウセイコウテイ",
+            "jockey": "戸崎圭",
+            "time": "0:56.9",
+            "popularity": 7
+          },
+          {
+            "rank": 9,
+            "number": 11,
+            "bracket": 6,
+            "name": "シャルマンナナ",
+            "jockey": "柴田大",
+            "time": "0:56.9",
+            "popularity": 6
+          },
+          {
+            "rank": 10,
+            "number": 14,
+            "bracket": 7,
+            "name": "ユアベストダンサー",
+            "jockey": "▲上里",
+            "time": "0:57.0",
+            "popularity": 17
+          },
+          {
+            "rank": 11,
+            "number": 13,
+            "bracket": 7,
+            "name": "エレクトロン",
+            "jockey": "江田照",
+            "time": "0:57.0",
+            "popularity": 9
+          },
+          {
+            "rank": 12,
+            "number": 3,
+            "bracket": 2,
+            "name": "ミヤカグラ",
+            "jockey": "◇今村",
+            "time": "0:57.2",
+            "popularity": 14
+          },
+          {
+            "rank": 13,
+            "number": 7,
+            "bracket": 4,
+            "name": "スタンダールロマン",
+            "jockey": "松岡",
+            "time": "0:57.3",
+            "popularity": 16
+          },
+          {
+            "rank": 14,
+            "number": 12,
+            "bracket": 6,
+            "name": "リナシタ",
+            "jockey": "石川",
+            "time": "0:57.5",
+            "popularity": 8
+          },
+          {
+            "rank": 15,
+            "number": 1,
+            "bracket": 1,
+            "name": "ジーティーソレイユ",
+            "jockey": "丸田",
+            "time": "0:57.6",
+            "popularity": 12
+          },
+          {
+            "rank": 16,
+            "number": 4,
+            "bracket": 2,
+            "name": "スーホ",
+            "jockey": "石橋脩",
+            "time": "0:57.8",
+            "popularity": 11
+          },
+          {
+            "rank": 17,
+            "number": 5,
+            "bracket": 3,
+            "name": "アルティーノ",
+            "jockey": "川須",
+            "time": "0:58.0",
+            "popularity": 18
+          },
+          {
+            "rank": 18,
+            "number": 17,
+            "bracket": 8,
+            "name": "カゼノオモイデ",
+            "jockey": "丸山",
+            "time": "0:58.7",
+            "popularity": 13
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "9",
+            "payoutYen": 3780,
+            "popularity": 10
+          },
+          {
+            "betType": "place",
+            "selection": "9",
+            "payoutYen": 550,
+            "popularity": 10
+          },
+          {
+            "betType": "place",
+            "selection": "10",
+            "payoutYen": 150,
+            "popularity": 2
+          },
+          {
+            "betType": "place",
+            "selection": "18",
+            "payoutYen": 130,
+            "popularity": 1
+          },
+          {
+            "betType": "bracket_quinella",
+            "selection": "5-5",
+            "payoutYen": 9760,
+            "popularity": 25
+          },
+          {
+            "betType": "quinella",
+            "selection": "9-10",
+            "payoutYen": 9830,
+            "popularity": 30
+          },
+          {
+            "betType": "wide",
+            "selection": "9-10",
+            "payoutYen": 2310,
+            "popularity": 28
+          },
+          {
+            "betType": "wide",
+            "selection": "9-18",
+            "payoutYen": 1520,
+            "popularity": 18
+          },
+          {
+            "betType": "wide",
+            "selection": "10-18",
+            "payoutYen": 350,
+            "popularity": 1
+          },
+          {
+            "betType": "exacta",
+            "selection": "9-10",
+            "payoutYen": 24080,
+            "popularity": 69
+          },
+          {
+            "betType": "trio",
+            "selection": "9-10-18",
+            "payoutYen": 7070,
+            "popularity": 19
+          },
+          {
+            "betType": "trifecta",
+            "selection": "9-10-18",
+            "payoutYen": 83960,
+            "popularity": 247
+          }
+        ]
+      }
     },
     {
       "id": "niigata-20260815-12",
@@ -58038,7 +58284,236 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-15 16:25:28",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-15T09:22:44.861Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 9,
+            "bracket": 5,
+            "name": "ミルミナーヴァ",
+            "jockey": "◇永島",
+            "time": "1:24.1",
+            "popularity": 11
+          },
+          {
+            "rank": 2,
+            "number": 2,
+            "bracket": 1,
+            "name": "エブリデイ",
+            "jockey": "秋山稔",
+            "time": "1:24.3",
+            "popularity": 9
+          },
+          {
+            "rank": 3,
+            "number": 14,
+            "bracket": 7,
+            "name": "ジューンセクレタ",
+            "jockey": "富田",
+            "time": "1:24.5",
+            "popularity": 3,
+            "oddsWin": 4.9
+          },
+          {
+            "rank": 4,
+            "number": 10,
+            "bracket": 5,
+            "name": "ザングウィル",
+            "jockey": "岩田望",
+            "time": "1:24.7",
+            "popularity": 1,
+            "oddsWin": 4.2
+          },
+          {
+            "rank": 5,
+            "number": 12,
+            "bracket": 6,
+            "name": "アーガイルショア",
+            "jockey": "団野",
+            "time": "1:24.9",
+            "popularity": 5,
+            "oddsWin": 7.4
+          },
+          {
+            "rank": 6,
+            "number": 5,
+            "bracket": 3,
+            "name": "レーヴドアンジュ",
+            "jockey": "△柴田裕",
+            "time": "1:25.0",
+            "popularity": 16
+          },
+          {
+            "rank": 7,
+            "number": 15,
+            "bracket": 8,
+            "name": "キーンセンス",
+            "jockey": "幸",
+            "time": "1:25.1",
+            "popularity": 6
+          },
+          {
+            "rank": 8,
+            "number": 7,
+            "bracket": 4,
+            "name": "ナムラティアラ",
+            "jockey": "松若",
+            "time": "1:25.2",
+            "popularity": 10
+          },
+          {
+            "rank": 9,
+            "number": 6,
+            "bracket": 3,
+            "name": "バルミラクル",
+            "jockey": "鮫島良",
+            "time": "1:25.2",
+            "popularity": 13
+          },
+          {
+            "rank": 10,
+            "number": 11,
+            "bracket": 6,
+            "name": "エイシンマールス",
+            "jockey": "松山",
+            "time": "1:25.4",
+            "popularity": 4,
+            "oddsWin": 5.1
+          },
+          {
+            "rank": 11,
+            "number": 3,
+            "bracket": 2,
+            "name": "アーディアイリ",
+            "jockey": "吉村",
+            "time": "1:25.7",
+            "popularity": 7
+          },
+          {
+            "rank": 12,
+            "number": 16,
+            "bracket": 8,
+            "name": "ララバッカナール",
+            "jockey": "☆田山",
+            "time": "1:26.2",
+            "popularity": 2,
+            "oddsWin": 4.2
+          },
+          {
+            "rank": 13,
+            "number": 1,
+            "bracket": 1,
+            "name": "タイセイサーブル",
+            "jockey": "西村淳",
+            "time": "1:26.3",
+            "popularity": 12
+          },
+          {
+            "rank": 14,
+            "number": 13,
+            "bracket": 7,
+            "name": "シュテフィ",
+            "jockey": "田口",
+            "time": "1:26.6",
+            "popularity": 14
+          },
+          {
+            "rank": 15,
+            "number": 4,
+            "bracket": 2,
+            "name": "ラブミーナッソー",
+            "jockey": "▲森田",
+            "time": "1:26.8",
+            "popularity": 15
+          },
+          {
+            "rank": 16,
+            "number": 8,
+            "bracket": 4,
+            "name": "アスクムービーオン",
+            "jockey": "コレッ",
+            "time": "1:29.7",
+            "popularity": 8
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "9",
+            "payoutYen": 4570,
+            "popularity": 11
+          },
+          {
+            "betType": "place",
+            "selection": "9",
+            "payoutYen": 1290,
+            "popularity": 11
+          },
+          {
+            "betType": "place",
+            "selection": "2",
+            "payoutYen": 820,
+            "popularity": 9
+          },
+          {
+            "betType": "place",
+            "selection": "14",
+            "payoutYen": 280,
+            "popularity": 5
+          },
+          {
+            "betType": "bracket_quinella",
+            "selection": "1-5",
+            "payoutYen": 5900,
+            "popularity": 18
+          },
+          {
+            "betType": "quinella",
+            "selection": "2-9",
+            "payoutYen": 80350,
+            "popularity": 90
+          },
+          {
+            "betType": "wide",
+            "selection": "2-9",
+            "payoutYen": 16000,
+            "popularity": 91
+          },
+          {
+            "betType": "wide",
+            "selection": "9-14",
+            "payoutYen": 6810,
+            "popularity": 53
+          },
+          {
+            "betType": "wide",
+            "selection": "2-14",
+            "payoutYen": 2610,
+            "popularity": 24
+          },
+          {
+            "betType": "exacta",
+            "selection": "9-2",
+            "payoutYen": 167620,
+            "popularity": 181
+          },
+          {
+            "betType": "trio",
+            "selection": "2-9-14",
+            "payoutYen": 195960,
+            "popularity": 283
+          },
+          {
+            "betType": "trifecta",
+            "selection": "9-2-14",
+            "payoutYen": 1890590,
+            "popularity": 54
+          }
+        ]
+      }
     },
     {
       "id": "chukyo-20260815-11",
@@ -59699,7 +60174,227 @@
         }
       ],
       "oddsUpdatedAt": "2026-08-15 17:08:58",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-08-15T09:22:45.573Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 4,
+            "bracket": 3,
+            "name": "イージーライダー",
+            "jockey": "コレッ",
+            "time": "1:33.4",
+            "popularity": 2,
+            "oddsWin": 4.6
+          },
+          {
+            "rank": 2,
+            "number": 3,
+            "bracket": 2,
+            "name": "プチプランス",
+            "jockey": "吉村",
+            "time": "1:33.6",
+            "popularity": 9
+          },
+          {
+            "rank": 3,
+            "number": 11,
+            "bracket": 6,
+            "name": "マイリトルヒーロー",
+            "jockey": "幸",
+            "time": "1:33.6",
+            "popularity": 4,
+            "oddsWin": 6.4
+          },
+          {
+            "rank": 4,
+            "number": 13,
+            "bracket": 7,
+            "name": "ペプチドブッドレア",
+            "jockey": "団野",
+            "time": "1:33.8",
+            "popularity": 3,
+            "oddsWin": 6
+          },
+          {
+            "rank": 5,
+            "number": 8,
+            "bracket": 5,
+            "name": "ハレアカラフラ",
+            "jockey": "松若",
+            "time": "1:34.0",
+            "popularity": 7
+          },
+          {
+            "rank": 6,
+            "number": 1,
+            "bracket": 1,
+            "name": "スマートティアナ",
+            "jockey": "岩田望",
+            "time": "1:34.0",
+            "popularity": 1,
+            "oddsWin": 3.2
+          },
+          {
+            "rank": 7,
+            "number": 15,
+            "bracket": 8,
+            "name": "ラガークイン",
+            "jockey": "田口",
+            "time": "1:34.0",
+            "popularity": 14
+          },
+          {
+            "rank": 8,
+            "number": 2,
+            "bracket": 2,
+            "name": "ミラキュラスアース",
+            "jockey": "西塚",
+            "time": "1:34.1",
+            "popularity": 5,
+            "oddsWin": 9.2
+          },
+          {
+            "rank": 9,
+            "number": 14,
+            "bracket": 8,
+            "name": "テレプシコーラ",
+            "jockey": "中井",
+            "time": "1:34.1",
+            "popularity": 10
+          },
+          {
+            "rank": 10,
+            "number": 5,
+            "bracket": 3,
+            "name": "メイショウビストロ",
+            "jockey": "富田",
+            "time": "1:34.1",
+            "popularity": 6
+          },
+          {
+            "rank": 11,
+            "number": 7,
+            "bracket": 4,
+            "name": "レインオンミー",
+            "jockey": "▲森田",
+            "time": "1:34.1",
+            "popularity": 12
+          },
+          {
+            "rank": 12,
+            "number": 9,
+            "bracket": 5,
+            "name": "サリーチェ",
+            "jockey": "国分優",
+            "time": "1:34.2",
+            "popularity": 13
+          },
+          {
+            "rank": 13,
+            "number": 10,
+            "bracket": 6,
+            "name": "フェルシナ",
+            "jockey": "☆田山",
+            "time": "1:34.2",
+            "popularity": 8
+          },
+          {
+            "rank": 14,
+            "number": 12,
+            "bracket": 7,
+            "name": "ギザキズラヴ",
+            "jockey": "藤懸",
+            "time": "1:34.3",
+            "popularity": 15
+          },
+          {
+            "rank": 15,
+            "number": 6,
+            "bracket": 4,
+            "name": "マルモア",
+            "jockey": "角田和",
+            "time": "1:34.5",
+            "popularity": 11
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "4",
+            "payoutYen": 460,
+            "popularity": 2
+          },
+          {
+            "betType": "place",
+            "selection": "4",
+            "payoutYen": 220,
+            "popularity": 3
+          },
+          {
+            "betType": "place",
+            "selection": "3",
+            "payoutYen": 580,
+            "popularity": 10
+          },
+          {
+            "betType": "place",
+            "selection": "11",
+            "payoutYen": 240,
+            "popularity": 4
+          },
+          {
+            "betType": "bracket_quinella",
+            "selection": "2-3",
+            "payoutYen": 1570,
+            "popularity": 8
+          },
+          {
+            "betType": "quinella",
+            "selection": "3-4",
+            "payoutYen": 6080,
+            "popularity": 21
+          },
+          {
+            "betType": "wide",
+            "selection": "3-4",
+            "payoutYen": 2020,
+            "popularity": 23
+          },
+          {
+            "betType": "wide",
+            "selection": "4-11",
+            "payoutYen": 890,
+            "popularity": 7
+          },
+          {
+            "betType": "wide",
+            "selection": "3-11",
+            "payoutYen": 2570,
+            "popularity": 29
+          },
+          {
+            "betType": "exacta",
+            "selection": "4-3",
+            "payoutYen": 10210,
+            "popularity": 37
+          },
+          {
+            "betType": "trio",
+            "selection": "3-4-11",
+            "payoutYen": 20080,
+            "popularity": 68
+          },
+          {
+            "betType": "trifecta",
+            "selection": "4-3-11",
+            "payoutYen": 89830,
+            "popularity": 295
+          }
+        ]
+      }
     },
     {
       "id": "chukyo-20260815-12",
@@ -59722,10 +60417,10 @@
           "name": "タマモビスケット",
           "jockey": "柴田裕",
           "horseId": "2023102448",
-          "oddsWin": 29.4,
+          "oddsWin": 28.9,
           "oddsPlace": {
-            "min": 5.2,
-            "max": 7.7
+            "min": 5.1,
+            "max": 8
           },
           "factors": {
             "courseFit": 78,
@@ -59743,10 +60438,10 @@
           "name": "ワンダーミューズ",
           "jockey": "松若",
           "horseId": "2023100166",
-          "oddsWin": 40.8,
+          "oddsWin": 43.4,
           "oddsPlace": {
             "min": 6.6,
-            "max": 10
+            "max": 10.4
           },
           "factors": {
             "courseFit": 60,
@@ -59764,10 +60459,10 @@
           "name": "ブロンザイト",
           "jockey": "国分優",
           "horseId": "2023106979",
-          "oddsWin": 21.1,
+          "oddsWin": 22.8,
           "oddsPlace": {
-            "min": 4.1,
-            "max": 6
+            "min": 4.3,
+            "max": 6.7
           },
           "factors": {
             "courseFit": 70,
@@ -59785,10 +60480,10 @@
           "name": "フェイトブレイカー",
           "jockey": "秋山稔",
           "horseId": "2023101803",
-          "oddsWin": 46.7,
+          "oddsWin": 51.4,
           "oddsPlace": {
-            "min": 5.2,
-            "max": 7.8
+            "min": 5.5,
+            "max": 8.6
           },
           "factors": {
             "courseFit": 80,
@@ -59806,10 +60501,10 @@
           "name": "ナムラロダン",
           "jockey": "田山",
           "horseId": "2023106223",
-          "oddsWin": 3.5,
+          "oddsWin": 3.4,
           "oddsPlace": {
             "min": 1.3,
-            "max": 1.7
+            "max": 1.6
           },
           "factors": {
             "courseFit": 75,
@@ -59827,9 +60522,9 @@
           "name": "ザキノフレンズ",
           "jockey": "団野",
           "horseId": "2023104433",
-          "oddsWin": 10.7,
+          "oddsWin": 9.1,
           "oddsPlace": {
-            "min": 2.7,
+            "min": 2.5,
             "max": 3.8
           },
           "factors": {
@@ -59840,7 +60535,7 @@
             "valueGap": 50,
             "gateJockey": 54
           },
-          "comment": "中人気帯。展開次第で複勝圏争いに加わりうる。"
+          "comment": "上位人気帯。安定感はあるが配当は薄め。"
         },
         {
           "number": 7,
@@ -59848,10 +60543,10 @@
           "name": "チョウスター",
           "jockey": "幸",
           "horseId": "2023104226",
-          "oddsWin": 9.4,
+          "oddsWin": 9.2,
           "oddsPlace": {
-            "min": 2.2,
-            "max": 3.2
+            "min": 2.1,
+            "max": 3.1
           },
           "factors": {
             "courseFit": 67,
@@ -59869,9 +60564,9 @@
           "name": "アイアン",
           "jockey": "吉村",
           "horseId": "2023103096",
-          "oddsWin": 27.1,
+          "oddsWin": 26.7,
           "oddsPlace": {
-            "min": 4.4,
+            "min": 4.3,
             "max": 6.6
           },
           "factors": {
@@ -59890,10 +60585,10 @@
           "name": "ペコリズム",
           "jockey": "田口",
           "horseId": "2023106339",
-          "oddsWin": 12.9,
+          "oddsWin": 13.6,
           "oddsPlace": {
-            "min": 1.7,
-            "max": 2.3
+            "min": 1.8,
+            "max": 2.7
           },
           "factors": {
             "courseFit": 87,
@@ -59911,10 +60606,10 @@
           "name": "ブルークレスト",
           "jockey": "城戸",
           "horseId": "2023101888",
-          "oddsWin": 89.3,
+          "oddsWin": 101.5,
           "oddsPlace": {
-            "min": 18.8,
-            "max": 28.8
+            "min": 18.9,
+            "max": 30.3
           },
           "factors": {
             "courseFit": 54,
@@ -59932,10 +60627,10 @@
           "name": "ハッピーリオン",
           "jockey": "太宰",
           "horseId": "2023101899",
-          "oddsWin": 28.6,
+          "oddsWin": 28.1,
           "oddsPlace": {
-            "min": 4.7,
-            "max": 7
+            "min": 4.6,
+            "max": 7.2
           },
           "factors": {
             "courseFit": 64,
@@ -59953,10 +60648,10 @@
           "name": "チェカ",
           "jockey": "西塚",
           "horseId": "2023104385",
-          "oddsWin": 113.1,
+          "oddsWin": 112.8,
           "oddsPlace": {
-            "min": 19.1,
-            "max": 29.3
+            "min": 18.1,
+            "max": 28.8
           },
           "factors": {
             "courseFit": 74,
@@ -59974,10 +60669,10 @@
           "name": "クリノゴージャス",
           "jockey": "森田",
           "horseId": "2023102488",
-          "oddsWin": 102.4,
+          "oddsWin": 114.7,
           "oddsPlace": {
-            "min": 17.6,
-            "max": 27
+            "min": 16.8,
+            "max": 26.8
           },
           "factors": {
             "courseFit": 84,
@@ -59995,10 +60690,10 @@
           "name": "ファーヴニル",
           "jockey": "筒井勇",
           "horseId": "2023101691",
-          "oddsWin": 78.8,
+          "oddsWin": 91.5,
           "oddsPlace": {
-            "min": 20.1,
-            "max": 30.8
+            "min": 20.9,
+            "max": 33.3
           },
           "factors": {
             "courseFit": 66,
@@ -60016,10 +60711,10 @@
           "name": "ゴールドアーチ",
           "jockey": "岩田望",
           "horseId": "2023102051",
-          "oddsWin": 2.6,
+          "oddsWin": 2.7,
           "oddsPlace": {
-            "min": 1.7,
-            "max": 2.3
+            "min": 1.6,
+            "max": 2.1
           },
           "factors": {
             "courseFit": 61,
@@ -60039,8 +60734,8 @@
           "horseId": "2023104199",
           "oddsWin": 14.3,
           "oddsPlace": {
-            "min": 3.8,
-            "max": 5.6
+            "min": 3.4,
+            "max": 5.3
           },
           "factors": {
             "courseFit": 71,
@@ -60057,32 +60752,32 @@
         {
           "betType": "win",
           "selection": "10",
-          "odds": 89.3
+          "odds": 101.5
         },
         {
           "betType": "win",
           "selection": "11",
-          "odds": 28.6
+          "odds": 28.1
         },
         {
           "betType": "win",
           "selection": "12",
-          "odds": 113.1
+          "odds": 112.8
         },
         {
           "betType": "win",
           "selection": "13",
-          "odds": 102.4
+          "odds": 114.7
         },
         {
           "betType": "win",
           "selection": "14",
-          "odds": 78.8
+          "odds": 91.5
         },
         {
           "betType": "win",
           "selection": "15",
-          "odds": 2.6
+          "odds": 2.7
         },
         {
           "betType": "win",
@@ -60092,82 +60787,82 @@
         {
           "betType": "win",
           "selection": "1",
-          "odds": 29.4
+          "odds": 28.9
         },
         {
           "betType": "win",
           "selection": "2",
-          "odds": 40.8
+          "odds": 43.4
         },
         {
           "betType": "win",
           "selection": "3",
-          "odds": 21.1
+          "odds": 22.8
         },
         {
           "betType": "win",
           "selection": "4",
-          "odds": 46.7
+          "odds": 51.4
         },
         {
           "betType": "win",
           "selection": "5",
-          "odds": 3.5
+          "odds": 3.4
         },
         {
           "betType": "win",
           "selection": "6",
-          "odds": 10.7
+          "odds": 9.1
         },
         {
           "betType": "win",
           "selection": "7",
-          "odds": 9.4
+          "odds": 9.2
         },
         {
           "betType": "win",
           "selection": "8",
-          "odds": 27.1
+          "odds": 26.7
         },
         {
           "betType": "win",
           "selection": "9",
-          "odds": 12.9
+          "odds": 13.6
         },
         {
           "betType": "place",
           "selection": "10",
-          "odds": 23.8
+          "odds": 24.6
         },
         {
           "betType": "place",
           "selection": "11",
-          "odds": 5.8
+          "odds": 5.9
         },
         {
           "betType": "place",
           "selection": "12",
-          "odds": 24.2
+          "odds": 23.5
         },
         {
           "betType": "place",
           "selection": "13",
-          "odds": 22.3
+          "odds": 21.8
         },
         {
           "betType": "place",
           "selection": "14",
-          "odds": 25.5
+          "odds": 27.1
         },
         {
           "betType": "place",
           "selection": "15",
-          "odds": 2
+          "odds": 1.9
         },
         {
           "betType": "place",
           "selection": "16",
-          "odds": 4.7
+          "odds": 4.3
         },
         {
           "betType": "place",
@@ -60177,17 +60872,17 @@
         {
           "betType": "place",
           "selection": "2",
-          "odds": 8.3
+          "odds": 8.5
         },
         {
           "betType": "place",
           "selection": "3",
-          "odds": 5
+          "odds": 5.5
         },
         {
           "betType": "place",
           "selection": "4",
-          "odds": 6.5
+          "odds": 7
         },
         {
           "betType": "place",
@@ -60197,182 +60892,182 @@
         {
           "betType": "place",
           "selection": "6",
-          "odds": 3.3
+          "odds": 3.1
         },
         {
           "betType": "place",
           "selection": "7",
-          "odds": 2.7
+          "odds": 2.6
         },
         {
           "betType": "place",
           "selection": "8",
-          "odds": 5.5
+          "odds": 5.4
         },
         {
           "betType": "place",
           "selection": "9",
-          "odds": 2
+          "odds": 2.3
         },
         {
           "betType": "bracket_quinella",
           "selection": "7-7",
-          "odds": 548
+          "odds": 610.1
         },
         {
           "betType": "bracket_quinella",
           "selection": "6-6",
-          "odds": 480.7
+          "odds": 537.2
         },
         {
           "betType": "bracket_quinella",
           "selection": "5-5",
-          "odds": 375.3
+          "odds": 399.9
         },
         {
           "betType": "bracket_quinella",
           "selection": "1-1",
-          "odds": 338.2
+          "odds": 243.2
         },
         {
           "betType": "bracket_quinella",
           "selection": "2-2",
-          "odds": 330.1
+          "odds": 241.5
         },
         {
           "betType": "bracket_quinella",
           "selection": "1-7",
-          "odds": 148.9
-        },
-        {
-          "betType": "bracket_quinella",
-          "selection": "5-7",
-          "odds": 105.3
-        },
-        {
-          "betType": "bracket_quinella",
-          "selection": "6-7",
-          "odds": 105.3
+          "odds": 159.9
         },
         {
           "betType": "bracket_quinella",
           "selection": "2-7",
-          "odds": 103.7
+          "odds": 116.4
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "5-7",
+          "odds": 115
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "6-7",
+          "odds": 105.8
         },
         {
           "betType": "bracket_quinella",
           "selection": "1-6",
-          "odds": 94.8
+          "odds": 99.4
         },
         {
           "betType": "bracket_quinella",
           "selection": "5-6",
-          "odds": 86.7
+          "odds": 95.7
         },
         {
           "betType": "bracket_quinella",
           "selection": "1-5",
-          "odds": 74.8
+          "odds": 83.7
         },
         {
           "betType": "bracket_quinella",
           "selection": "2-5",
-          "odds": 74.2
-        },
-        {
-          "betType": "bracket_quinella",
-          "selection": "1-2",
-          "odds": 66.6
+          "odds": 83.3
         },
         {
           "betType": "bracket_quinella",
           "selection": "4-7",
-          "odds": 64
+          "odds": 72.7
         },
         {
           "betType": "bracket_quinella",
-          "selection": "8-8",
-          "odds": 50.6
+          "selection": "1-2",
+          "odds": 60.5
         },
         {
           "betType": "bracket_quinella",
           "selection": "2-6",
-          "odds": 46.9
+          "odds": 55.7
         },
         {
           "betType": "bracket_quinella",
-          "selection": "3-7",
-          "odds": 41
+          "selection": "8-8",
+          "odds": 48.5
         },
         {
           "betType": "bracket_quinella",
           "selection": "1-4",
-          "odds": 40.5
-        },
-        {
-          "betType": "bracket_quinella",
-          "selection": "7-8",
-          "odds": 37.3
+          "odds": 43.7
         },
         {
           "betType": "bracket_quinella",
           "selection": "4-4",
-          "odds": 35.1
+          "odds": 42.5
         },
         {
           "betType": "bracket_quinella",
-          "selection": "4-5",
-          "odds": 34.2
+          "selection": "7-8",
+          "odds": 40.1
         },
         {
           "betType": "bracket_quinella",
           "selection": "4-6",
-          "odds": 33.1
+          "odds": 38.1
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "3-7",
+          "odds": 37.6
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "4-5",
+          "odds": 37.1
         },
         {
           "betType": "bracket_quinella",
           "selection": "2-4",
-          "odds": 29.4
+          "odds": 33.4
         },
         {
           "betType": "bracket_quinella",
           "selection": "3-6",
-          "odds": 27.7
+          "odds": 29
         },
         {
           "betType": "bracket_quinella",
           "selection": "1-8",
-          "odds": 26.4
+          "odds": 27.6
         },
         {
           "betType": "bracket_quinella",
           "selection": "6-8",
-          "odds": 24.1
-        },
-        {
-          "betType": "bracket_quinella",
-          "selection": "5-8",
-          "odds": 22.7
+          "odds": 27.2
         },
         {
           "betType": "bracket_quinella",
           "selection": "2-8",
-          "odds": 22.4
+          "odds": 23.6
+        },
+        {
+          "betType": "bracket_quinella",
+          "selection": "5-8",
+          "odds": 23.4
         },
         {
           "betType": "bracket_quinella",
           "selection": "2-3",
-          "odds": 21.8
+          "odds": 22.1
         },
         {
           "betType": "bracket_quinella",
           "selection": "3-5",
-          "odds": 18.4
+          "odds": 19.1
         },
         {
           "betType": "bracket_quinella",
           "selection": "1-3",
-          "odds": 16.3
+          "odds": 16.9
         },
         {
           "betType": "bracket_quinella",
@@ -60382,1010 +61077,1010 @@
         {
           "betType": "bracket_quinella",
           "selection": "4-8",
-          "odds": 8.6
+          "odds": 8.7
         },
         {
           "betType": "quinella",
-          "selection": "8-13",
-          "odds": 994.7
-        },
-        {
-          "betType": "quinella",
-          "selection": "2-10",
-          "odds": 966.8
-        },
-        {
-          "betType": "quinella",
-          "selection": "3-14",
-          "odds": 966.8
-        },
-        {
-          "betType": "quinella",
-          "selection": "8-10",
-          "odds": 940.4
-        },
-        {
-          "betType": "quinella",
-          "selection": "11-13",
-          "odds": 923.6
+          "selection": "1-13",
+          "odds": 925.1
         },
         {
           "betType": "quinella",
           "selection": "8-14",
-          "odds": 854.9
-        },
-        {
-          "betType": "quinella",
-          "selection": "2-11",
-          "odds": 801.9
+          "odds": 913.3
         },
         {
           "betType": "quinella",
           "selection": "9-10",
-          "odds": 801.9
+          "odds": 858.6
         },
         {
           "betType": "quinella",
-          "selection": "2-16",
-          "odds": 738.9
+          "selection": "2-11",
+          "odds": 848.5
         },
         {
           "betType": "quinella",
           "selection": "8-12",
-          "odds": 723.4
+          "odds": 787.9
         },
         {
           "betType": "quinella",
-          "selection": "6-10",
-          "odds": 698.9
-        },
-        {
-          "betType": "quinella",
-          "selection": "6-14",
-          "odds": 680.5
-        },
-        {
-          "betType": "quinella",
-          "selection": "7-10",
-          "odds": 671.7
+          "selection": "2-16",
+          "odds": 783.5
         },
         {
           "betType": "quinella",
           "selection": "2-4",
-          "odds": 650.6
+          "odds": 746.8
+        },
+        {
+          "betType": "quinella",
+          "selection": "6-14",
+          "odds": 731.6
+        },
+        {
+          "betType": "quinella",
+          "selection": "7-10",
+          "odds": 727.9
+        },
+        {
+          "betType": "quinella",
+          "selection": "6-10",
+          "odds": 720.5
+        },
+        {
+          "betType": "quinella",
+          "selection": "7-14",
+          "odds": 679.6
+        },
+        {
+          "betType": "quinella",
+          "selection": "6-13",
+          "odds": 620.7
         },
         {
           "betType": "quinella",
           "selection": "6-12",
-          "odds": 638.5
-        },
-        {
-          "betType": "quinella",
-          "selection": "6-13",
-          "odds": 597.9
-        },
-        {
-          "betType": "quinella",
-          "selection": "7-14",
-          "odds": 584.4
+          "odds": 618
         },
         {
           "betType": "quinella",
           "selection": "7-12",
-          "odds": 550.2
-        },
-        {
-          "betType": "quinella",
-          "selection": "3-11",
-          "odds": 541.6
+          "odds": 569
         },
         {
           "betType": "quinella",
           "selection": "7-13",
-          "odds": 541.6
+          "odds": 569
         },
         {
           "betType": "quinella",
           "selection": "4-16",
-          "odds": 536
+          "odds": 555.8
         },
         {
           "betType": "quinella",
-          "selection": "11-16",
-          "odds": 457.7
+          "selection": "3-11",
+          "odds": 529.1
         },
         {
           "betType": "quinella",
           "selection": "4-11",
-          "odds": 449.7
-        },
-        {
-          "betType": "quinella",
-          "selection": "4-9",
-          "odds": 425.7
+          "odds": 487.7
         },
         {
           "betType": "quinella",
           "selection": "3-4",
-          "odds": 423.9
+          "odds": 484.4
         },
         {
           "betType": "quinella",
-          "selection": "2-8",
-          "odds": 410.5
+          "selection": "4-9",
+          "odds": 479.5
         },
         {
           "betType": "quinella",
           "selection": "2-3",
-          "odds": 402.5
+          "odds": 452.3
+        },
+        {
+          "betType": "quinella",
+          "selection": "2-8",
+          "odds": 448.1
         },
         {
           "betType": "quinella",
           "selection": "1-2",
-          "odds": 391.8
-        },
-        {
-          "betType": "quinella",
-          "selection": "8-11",
-          "odds": 381.7
+          "odds": 442.5
         },
         {
           "betType": "quinella",
           "selection": "4-8",
-          "odds": 380.3
+          "odds": 428
+        },
+        {
+          "betType": "quinella",
+          "selection": "11-16",
+          "odds": 400.5
+        },
+        {
+          "betType": "quinella",
+          "selection": "2-9",
+          "odds": 373.4
+        },
+        {
+          "betType": "quinella",
+          "selection": "8-11",
+          "odds": 369.5
         },
         {
           "betType": "quinella",
           "selection": "1-11",
-          "odds": 345.9
-        },
-        {
-          "betType": "quinella",
-          "selection": "12-15",
-          "odds": 338
+          "odds": 364.8
         },
         {
           "betType": "quinella",
           "selection": "1-4",
+          "odds": 359.3
+        },
+        {
+          "betType": "quinella",
+          "selection": "12-15",
+          "odds": 357.6
+        },
+        {
+          "betType": "quinella",
+          "selection": "14-15",
           "odds": 327.3
         },
         {
           "betType": "quinella",
-          "selection": "2-9",
-          "odds": 307.8
-        },
-        {
-          "betType": "quinella",
-          "selection": "14-15",
-          "odds": 306.9
+          "selection": "9-11",
+          "odds": 306.4
         },
         {
           "betType": "quinella",
           "selection": "13-15",
-          "odds": 289.7
+          "odds": 303.1
         },
         {
           "betType": "quinella",
           "selection": "10-15",
-          "odds": 269.4
-        },
-        {
-          "betType": "quinella",
-          "selection": "9-11",
-          "odds": 269.4
+          "odds": 298.1
         },
         {
           "betType": "quinella",
           "selection": "8-16",
-          "odds": 261.9
+          "odds": 264
+        },
+        {
+          "betType": "quinella",
+          "selection": "2-7",
+          "odds": 257.9
         },
         {
           "betType": "quinella",
           "selection": "9-16",
-          "odds": 255.4
+          "odds": 256
+        },
+        {
+          "betType": "quinella",
+          "selection": "5-14",
+          "odds": 248.9
+        },
+        {
+          "betType": "quinella",
+          "selection": "5-10",
+          "odds": 243.8
+        },
+        {
+          "betType": "quinella",
+          "selection": "5-12",
+          "odds": 243.4
         },
         {
           "betType": "wide",
           "selection": "10-14",
-          "odds": 461.9
+          "odds": 475.4
         },
         {
           "betType": "wide",
           "selection": "2-14",
-          "odds": 397.1
+          "odds": 419.4
         },
         {
           "betType": "wide",
           "selection": "13-14",
-          "odds": 381
+          "odds": 417.2
         },
         {
           "betType": "wide",
           "selection": "12-14",
-          "odds": 320.5
-        },
-        {
-          "betType": "wide",
-          "selection": "1-14",
-          "odds": 318.3
-        },
-        {
-          "betType": "wide",
-          "selection": "10-13",
-          "odds": 311.7
+          "odds": 402.8
         },
         {
           "betType": "wide",
           "selection": "4-14",
-          "odds": 287.5
+          "odds": 346.8
+        },
+        {
+          "betType": "wide",
+          "selection": "1-14",
+          "odds": 345.9
+        },
+        {
+          "betType": "wide",
+          "selection": "10-13",
+          "odds": 335.3
         },
         {
           "betType": "wide",
           "selection": "11-14",
-          "odds": 282.8
+          "odds": 316.3
         },
         {
           "betType": "wide",
           "selection": "2-13",
-          "odds": 267.5
-        },
-        {
-          "betType": "wide",
-          "selection": "10-16",
-          "odds": 262.9
+          "odds": 300.4
         },
         {
           "betType": "wide",
           "selection": "12-16",
-          "odds": 260.2
-        },
-        {
-          "betType": "wide",
-          "selection": "4-10",
-          "odds": 256.6
-        },
-        {
-          "betType": "wide",
-          "selection": "1-12",
-          "odds": 253.4
+          "odds": 284.8
         },
         {
           "betType": "wide",
           "selection": "10-12",
-          "odds": 245.3
+          "odds": 283
         },
         {
           "betType": "wide",
-          "selection": "14-16",
-          "odds": 244.1
-        },
-        {
-          "betType": "wide",
-          "selection": "4-13",
-          "odds": 243.3
+          "selection": "10-16",
+          "odds": 282.4
         },
         {
           "betType": "wide",
           "selection": "3-14",
-          "odds": 232.7
+          "odds": 274.9
         },
         {
           "betType": "wide",
-          "selection": "10-11",
-          "odds": 230.6
+          "selection": "1-12",
+          "odds": 272.8
+        },
+        {
+          "betType": "wide",
+          "selection": "4-10",
+          "odds": 271.9
+        },
+        {
+          "betType": "wide",
+          "selection": "4-13",
+          "odds": 269.5
+        },
+        {
+          "betType": "wide",
+          "selection": "14-16",
+          "odds": 254.7
         },
         {
           "betType": "wide",
           "selection": "13-16",
-          "odds": 213.1
-        },
-        {
-          "betType": "wide",
-          "selection": "1-10",
-          "odds": 204.9
-        },
-        {
-          "betType": "wide",
-          "selection": "3-10",
-          "odds": 202.9
-        },
-        {
-          "betType": "wide",
-          "selection": "4-12",
-          "odds": 200.7
+          "odds": 245.2
         },
         {
           "betType": "wide",
           "selection": "3-12",
-          "odds": 199.6
+          "odds": 243.3
         },
         {
           "betType": "wide",
-          "selection": "9-13",
-          "odds": 196.5
+          "selection": "4-12",
+          "odds": 242.8
         },
         {
           "betType": "wide",
-          "selection": "12-13",
-          "odds": 192.3
-        },
-        {
-          "betType": "wide",
-          "selection": "6-14",
-          "odds": 191.7
+          "selection": "10-11",
+          "odds": 241.7
         },
         {
           "betType": "wide",
           "selection": "3-13",
-          "odds": 191.3
-        },
-        {
-          "betType": "wide",
-          "selection": "2-12",
-          "odds": 187.8
+          "odds": 234.6
         },
         {
           "betType": "wide",
           "selection": "9-14",
-          "odds": 185.6
+          "odds": 231.5
+        },
+        {
+          "betType": "wide",
+          "selection": "3-10",
+          "odds": 223.9
+        },
+        {
+          "betType": "wide",
+          "selection": "2-12",
+          "odds": 216.5
+        },
+        {
+          "betType": "wide",
+          "selection": "9-13",
+          "odds": 206.9
         },
         {
           "betType": "wide",
           "selection": "11-12",
-          "odds": 178.8
-        },
-        {
-          "betType": "wide",
-          "selection": "2-10",
-          "odds": 174.1
+          "odds": 195.7
         },
         {
           "betType": "wide",
           "selection": "8-13",
-          "odds": 164.8
+          "odds": 195.5
+        },
+        {
+          "betType": "wide",
+          "selection": "1-10",
+          "odds": 195.2
+        },
+        {
+          "betType": "wide",
+          "selection": "6-14",
+          "odds": 192.9
+        },
+        {
+          "betType": "wide",
+          "selection": "12-13",
+          "odds": 190.3
         },
         {
           "betType": "wide",
           "selection": "8-10",
-          "odds": 158.3
+          "odds": 189.1
         },
         {
           "betType": "wide",
-          "selection": "1-13",
-          "odds": 150.1
-        },
-        {
-          "betType": "wide",
-          "selection": "6-13",
-          "odds": 147.1
+          "selection": "2-10",
+          "odds": 186.8
         },
         {
           "betType": "wide",
           "selection": "8-14",
-          "odds": 143.1
-        },
-        {
-          "betType": "wide",
-          "selection": "2-16",
-          "odds": 138.3
-        },
-        {
-          "betType": "wide",
-          "selection": "7-14",
-          "odds": 136.8
-        },
-        {
-          "betType": "wide",
-          "selection": "8-12",
-          "odds": 136.5
+          "odds": 180.1
         },
         {
           "betType": "wide",
           "selection": "9-12",
-          "odds": 134.2
+          "odds": 162.4
         },
         {
-          "betType": "exacta",
-          "selection": "4-9",
-          "odds": 984.3
+          "betType": "wide",
+          "selection": "1-13",
+          "odds": 159.8
         },
         {
-          "betType": "exacta",
+          "betType": "wide",
+          "selection": "8-12",
+          "odds": 157.4
+        },
+        {
+          "betType": "wide",
+          "selection": "7-14",
+          "odds": 152
+        },
+        {
+          "betType": "wide",
           "selection": "6-13",
-          "odds": 984.3
+          "odds": 149.3
         },
         {
-          "betType": "exacta",
-          "selection": "2-3",
-          "odds": 957.7
-        },
-        {
-          "betType": "exacta",
-          "selection": "7-10",
-          "odds": 957.7
-        },
-        {
-          "betType": "exacta",
-          "selection": "4-3",
-          "odds": 932.5
-        },
-        {
-          "betType": "exacta",
-          "selection": "12-15",
-          "odds": 908.6
+          "betType": "wide",
+          "selection": "11-13",
+          "odds": 147.2
         },
         {
           "betType": "exacta",
           "selection": "3-11",
-          "odds": 908.6
+          "odds": 995.5
         },
         {
           "betType": "exacta",
-          "selection": "11-3",
-          "odds": 885.9
+          "selection": "6-13",
+          "odds": 995.5
         },
         {
           "betType": "exacta",
           "selection": "3-2",
-          "odds": 843.7
+          "odds": 956.4
         },
         {
           "betType": "exacta",
           "selection": "4-1",
-          "odds": 843.7
+          "odds": 956.4
         },
         {
           "betType": "exacta",
-          "selection": "7-12",
-          "odds": 824.1
-        },
-        {
-          "betType": "exacta",
-          "selection": "11-9",
-          "odds": 787.5
-        },
-        {
-          "betType": "exacta",
-          "selection": "16-11",
-          "odds": 770.3
+          "selection": "11-3",
+          "odds": 938
         },
         {
           "betType": "exacta",
           "selection": "2-8",
-          "odds": 770.3
+          "odds": 938
         },
         {
           "betType": "exacta",
-          "selection": "10-15",
-          "odds": 738.2
+          "selection": "4-9",
+          "odds": 886.9
         },
         {
           "betType": "exacta",
-          "selection": "11-16",
-          "odds": 738.2
-        },
-        {
-          "betType": "exacta",
-          "selection": "8-11",
-          "odds": 738.2
-        },
-        {
-          "betType": "exacta",
-          "selection": "13-15",
-          "odds": 708.7
-        },
-        {
-          "betType": "exacta",
-          "selection": "1-4",
-          "odds": 694.8
-        },
-        {
-          "betType": "exacta",
-          "selection": "9-4",
-          "odds": 694.8
-        },
-        {
-          "betType": "exacta",
-          "selection": "11-8",
-          "odds": 681.4
+          "selection": "12-15",
+          "odds": 871
         },
         {
           "betType": "exacta",
           "selection": "2-1",
-          "odds": 681.4
+          "odds": 855.8
         },
         {
           "betType": "exacta",
           "selection": "2-9",
-          "odds": 681.4
+          "odds": 855.8
         },
         {
           "betType": "exacta",
-          "selection": "2-7",
-          "odds": 668.6
+          "selection": "11-8",
+          "odds": 841
         },
         {
           "betType": "exacta",
-          "selection": "4-6",
-          "odds": 656.2
+          "selection": "1-4",
+          "odds": 841
         },
         {
           "betType": "exacta",
-          "selection": "8-4",
-          "odds": 644.3
+          "selection": "8-11",
+          "odds": 841
         },
         {
           "betType": "exacta",
-          "selection": "14-15",
-          "odds": 632.8
+          "selection": "16-11",
+          "odds": 826.7
         },
         {
           "betType": "exacta",
-          "selection": "3-4",
-          "odds": 632.8
+          "selection": "11-9",
+          "odds": 799.6
         },
         {
           "betType": "exacta",
-          "selection": "4-8",
-          "odds": 632.8
-        },
-        {
-          "betType": "exacta",
-          "selection": "12-5",
-          "odds": 610.9
+          "selection": "11-16",
+          "odds": 786.7
         },
         {
           "betType": "exacta",
           "selection": "1-2",
-          "odds": 610.9
+          "odds": 774.2
+        },
+        {
+          "betType": "exacta",
+          "selection": "2-7",
+          "odds": 774.2
+        },
+        {
+          "betType": "exacta",
+          "selection": "3-4",
+          "odds": 774.2
+        },
+        {
+          "betType": "exacta",
+          "selection": "8-4",
+          "odds": 739.1
         },
         {
           "betType": "exacta",
           "selection": "9-2",
-          "odds": 600.6
+          "odds": 739.1
         },
         {
           "betType": "exacta",
-          "selection": "9-11",
-          "odds": 562.5
+          "selection": "10-15",
+          "odds": 728
         },
         {
           "betType": "exacta",
-          "selection": "10-5",
-          "odds": 553.7
+          "selection": "4-8",
+          "odds": 728
         },
         {
           "betType": "exacta",
-          "selection": "3-16",
-          "odds": 553.7
+          "selection": "7-12",
+          "odds": 728
         },
         {
           "betType": "exacta",
-          "selection": "8-2",
-          "odds": 553.7
+          "selection": "9-4",
+          "odds": 696.8
+        },
+        {
+          "betType": "exacta",
+          "selection": "13-15",
+          "odds": 687
+        },
+        {
+          "betType": "exacta",
+          "selection": "12-5",
+          "odds": 659.1
+        },
+        {
+          "betType": "exacta",
+          "selection": "4-6",
+          "odds": 659.1
         },
         {
           "betType": "exacta",
           "selection": "14-5",
-          "odds": 536.9
+          "odds": 633.5
         },
         {
           "betType": "exacta",
-          "selection": "2-6",
-          "odds": 536.9
+          "selection": "14-15",
+          "odds": 633.5
+        },
+        {
+          "betType": "exacta",
+          "selection": "8-2",
+          "odds": 609.7
+        },
+        {
+          "betType": "exacta",
+          "selection": "10-5",
+          "odds": 602.2
+        },
+        {
+          "betType": "exacta",
+          "selection": "1-11",
+          "odds": 602.2
+        },
+        {
+          "betType": "exacta",
+          "selection": "3-16",
+          "odds": 587.7
+        },
+        {
+          "betType": "exacta",
+          "selection": "11-1",
+          "odds": 573.8
+        },
+        {
+          "betType": "exacta",
+          "selection": "9-11",
+          "odds": 573.8
+        },
+        {
+          "betType": "exacta",
+          "selection": "16-8",
+          "odds": 567.2
         },
         {
           "betType": "exacta",
           "selection": "15-12",
-          "odds": 513.5
+          "odds": 554.3
         },
         {
           "betType": "exacta",
-          "selection": "5-10",
-          "odds": 513.5
+          "selection": "2-6",
+          "odds": 530.2
+        },
+        {
+          "betType": "exacta",
+          "selection": "3-1",
+          "odds": 530.2
         },
         {
           "betType": "trio",
-          "selection": "1-3-9",
-          "odds": 988.3
-        },
-        {
-          "betType": "trio",
-          "selection": "3-4-7",
-          "odds": 988.3
-        },
-        {
-          "betType": "trio",
-          "selection": "1-2-7",
-          "odds": 978.4
-        },
-        {
-          "betType": "trio",
-          "selection": "2-3-9",
-          "odds": 978.4
-        },
-        {
-          "betType": "trio",
-          "selection": "7-8-11",
-          "odds": 963.8
-        },
-        {
-          "betType": "trio",
-          "selection": "1-4-6",
-          "odds": 949.7
-        },
-        {
-          "betType": "trio",
-          "selection": "1-3-16",
-          "odds": 945.1
+          "selection": "1-5-13",
+          "odds": 995.7
         },
         {
           "betType": "trio",
           "selection": "4-6-11",
-          "odds": 945.1
+          "odds": 981.6
         },
         {
           "betType": "trio",
           "selection": "7-12-15",
-          "odds": 936
-        },
-        {
-          "betType": "trio",
-          "selection": "3-9-16",
-          "odds": 927.1
-        },
-        {
-          "betType": "trio",
-          "selection": "1-2-6",
-          "odds": 905.5
-        },
-        {
-          "betType": "trio",
-          "selection": "1-3-8",
-          "odds": 905.5
-        },
-        {
-          "betType": "trio",
-          "selection": "8-9-16",
-          "odds": 889
-        },
-        {
-          "betType": "trio",
-          "selection": "7-13-15",
-          "odds": 885
-        },
-        {
-          "betType": "trio",
-          "selection": "4-6-9",
-          "odds": 873.1
-        },
-        {
-          "betType": "trio",
-          "selection": "1-6-11",
-          "odds": 869.2
-        },
-        {
-          "betType": "trio",
-          "selection": "6-8-16",
-          "odds": 850.2
-        },
-        {
-          "betType": "trio",
-          "selection": "2-5-16",
-          "odds": 846.5
-        },
-        {
-          "betType": "trio",
-          "selection": "2-15-16",
-          "odds": 846.5
-        },
-        {
-          "betType": "trio",
-          "selection": "3-7-11",
-          "odds": 839.2
-        },
-        {
-          "betType": "trio",
-          "selection": "2-6-8",
-          "odds": 832
+          "odds": 978.2
         },
         {
           "betType": "trio",
           "selection": "2-3-7",
-          "odds": 818
+          "odds": 944.9
+        },
+        {
+          "betType": "trio",
+          "selection": "8-9-16",
+          "odds": 929.1
+        },
+        {
+          "betType": "trio",
+          "selection": "2-11-15",
+          "odds": 922.9
+        },
+        {
+          "betType": "trio",
+          "selection": "7-13-15",
+          "odds": 922.9
+        },
+        {
+          "betType": "trio",
+          "selection": "3-9-16",
+          "odds": 919.9
+        },
+        {
+          "betType": "trio",
+          "selection": "1-3-16",
+          "odds": 913.8
+        },
+        {
+          "betType": "trio",
+          "selection": "2-5-11",
+          "odds": 896.1
+        },
+        {
+          "betType": "trio",
+          "selection": "7-8-11",
+          "odds": 896.1
+        },
+        {
+          "betType": "trio",
+          "selection": "2-6-8",
+          "odds": 893.2
         },
         {
           "betType": "trio",
           "selection": "2-7-8",
-          "odds": 804.5
+          "odds": 884.7
         },
         {
           "betType": "trio",
-          "selection": "1-4-15",
-          "odds": 794.7
-        },
-        {
-          "betType": "trio",
-          "selection": "6-11-16",
-          "odds": 775.7
-        },
-        {
-          "betType": "trio",
-          "selection": "4-7-9",
-          "odds": 769.5
+          "selection": "2-5-16",
+          "odds": 868.1
         },
         {
           "betType": "trio",
           "selection": "1-2-3",
-          "odds": 760.5
+          "odds": 862.7
         },
         {
           "betType": "trio",
-          "selection": "7-8-16",
-          "odds": 740.3
+          "selection": "3-7-11",
+          "odds": 846.9
         },
         {
           "betType": "trio",
-          "selection": "7-10-15",
-          "odds": 737.5
+          "selection": "4-6-9",
+          "odds": 831.7
+        },
+        {
+          "betType": "trio",
+          "selection": "2-15-16",
+          "odds": 824.3
+        },
+        {
+          "betType": "trio",
+          "selection": "1-4-15",
+          "odds": 812.3
+        },
+        {
+          "betType": "trio",
+          "selection": "1-6-11",
+          "odds": 807.5
         },
         {
           "betType": "trio",
           "selection": "4-7-11",
-          "odds": 731.9
+          "odds": 791.4
+        },
+        {
+          "betType": "trio",
+          "selection": "6-8-16",
+          "odds": 784.7
         },
         {
           "betType": "trio",
           "selection": "1-8-9",
-          "odds": 695.3
+          "odds": 769.5
         },
         {
           "betType": "trio",
-          "selection": "2-4-5",
-          "odds": 673.7
+          "selection": "7-10-15",
+          "odds": 767.4
         },
         {
           "betType": "trio",
           "selection": "3-6-8",
-          "odds": 666.7
+          "odds": 752.8
         },
         {
           "betType": "trio",
-          "selection": "7-11-16",
-          "odds": 666.7
+          "selection": "2-4-5",
+          "odds": 748.8
         },
         {
           "betType": "trio",
-          "selection": "3-6-16",
-          "odds": 653.3
+          "selection": "6-11-16",
+          "odds": 736.9
         },
         {
           "betType": "trio",
-          "selection": "1-2-15",
-          "odds": 646.8
+          "selection": "7-8-16",
+          "odds": 729.1
+        },
+        {
+          "betType": "trio",
+          "selection": "4-7-9",
+          "odds": 725.3
         },
         {
           "betType": "trio",
           "selection": "3-8-9",
-          "odds": 640.4
+          "odds": 699.7
+        },
+        {
+          "betType": "trio",
+          "selection": "1-2-15",
+          "odds": 696.2
         },
         {
           "betType": "trio",
           "selection": "1-3-6",
-          "odds": 630.1
+          "odds": 682.5
         },
         {
           "betType": "trio",
           "selection": "2-7-9",
-          "odds": 630.1
+          "odds": 677.5
         },
         {
           "betType": "trio",
           "selection": "1-4-7",
-          "odds": 628
+          "odds": 661.4
         },
         {
-          "betType": "trifecta",
-          "selection": "5-9-11",
-          "odds": 992.5
+          "betType": "trio",
+          "selection": "1-7-11",
+          "odds": 644.5
         },
         {
-          "betType": "trifecta",
-          "selection": "6-3-9",
-          "odds": 968.5
+          "betType": "trio",
+          "selection": "2-3-15",
+          "odds": 643
         },
         {
-          "betType": "trifecta",
-          "selection": "15-7-2",
-          "odds": 963.8
+          "betType": "trio",
+          "selection": "3-7-8",
+          "odds": 641.5
         },
         {
-          "betType": "trifecta",
-          "selection": "5-2-6",
-          "odds": 959.2
+          "betType": "trio",
+          "selection": "4-8-15",
+          "odds": 601.3
         },
         {
-          "betType": "trifecta",
-          "selection": "5-3-8",
-          "odds": 950.1
+          "betType": "trio",
+          "selection": "5-6-10",
+          "odds": 596.1
         },
         {
-          "betType": "trifecta",
-          "selection": "8-9-15",
-          "odds": 950.1
-        },
-        {
-          "betType": "trifecta",
-          "selection": "6-9-3",
-          "odds": 945.7
-        },
-        {
-          "betType": "trifecta",
-          "selection": "15-5-12",
-          "odds": 941.2
-        },
-        {
-          "betType": "trifecta",
-          "selection": "15-5-14",
-          "odds": 941.2
+          "betType": "trio",
+          "selection": "7-11-16",
+          "odds": 596.1
         },
         {
           "betType": "trifecta",
           "selection": "6-3-15",
-          "odds": 932.5
+          "odds": 999.6
+        },
+        {
+          "betType": "trifecta",
+          "selection": "7-6-16",
+          "odds": 975.4
         },
         {
           "betType": "trifecta",
           "selection": "8-7-15",
-          "odds": 932.5
-        },
-        {
-          "betType": "trifecta",
-          "selection": "15-6-2",
-          "odds": 928.1
-        },
-        {
-          "betType": "trifecta",
-          "selection": "15-16-1",
-          "odds": 928.1
-        },
-        {
-          "betType": "trifecta",
-          "selection": "5-15-14",
-          "odds": 923.9
-        },
-        {
-          "betType": "trifecta",
-          "selection": "8-5-3",
-          "odds": 923.9
+          "odds": 975.4
         },
         {
           "betType": "trifecta",
           "selection": "9-5-3",
-          "odds": 923.9
-        },
-        {
-          "betType": "trifecta",
-          "selection": "5-8-16",
-          "odds": 907.1
-        },
-        {
-          "betType": "trifecta",
-          "selection": "6-16-5",
-          "odds": 907.1
-        },
-        {
-          "betType": "trifecta",
-          "selection": "5-1-3",
-          "odds": 903.1
-        },
-        {
-          "betType": "trifecta",
-          "selection": "5-3-1",
-          "odds": 903.1
-        },
-        {
-          "betType": "trifecta",
-          "selection": "15-16-9",
-          "odds": 899
-        },
-        {
-          "betType": "trifecta",
-          "selection": "15-16-3",
-          "odds": 891
-        },
-        {
-          "betType": "trifecta",
-          "selection": "5-1-16",
-          "odds": 887.1
+          "odds": 972
         },
         {
           "betType": "trifecta",
           "selection": "8-15-6",
-          "odds": 887.1
+          "odds": 962.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "15-1-16",
+          "odds": 958.8
+        },
+        {
+          "betType": "trifecta",
+          "selection": "7-16-15",
+          "odds": 958.8
+        },
+        {
+          "betType": "trifecta",
+          "selection": "5-15-12",
+          "odds": 955.5
+        },
+        {
+          "betType": "trifecta",
+          "selection": "9-8-15",
+          "odds": 952.3
+        },
+        {
+          "betType": "trifecta",
+          "selection": "5-3-8",
+          "odds": 949.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "15-6-2",
+          "odds": 945.9
         },
         {
           "betType": "trifecta",
           "selection": "5-2-7",
-          "odds": 879.3
+          "odds": 945.9
+        },
+        {
+          "betType": "trifecta",
+          "selection": "16-6-5",
+          "odds": 936.5
         },
         {
           "betType": "trifecta",
           "selection": "7-8-15",
-          "odds": 879.3
+          "odds": 927.2
         },
         {
           "betType": "trifecta",
-          "selection": "16-5-6",
-          "odds": 875.5
+          "selection": "5-3-1",
+          "odds": 915.2
         },
         {
           "betType": "trifecta",
-          "selection": "9-5-16",
-          "odds": 875.5
+          "selection": "5-1-3",
+          "odds": 903.5
         },
         {
           "betType": "trifecta",
-          "selection": "5-16-8",
-          "odds": 871.6
-        },
-        {
-          "betType": "trifecta",
-          "selection": "7-3-5",
-          "odds": 867.9
-        },
-        {
-          "betType": "trifecta",
-          "selection": "3-6-5",
-          "odds": 864.1
-        },
-        {
-          "betType": "trifecta",
-          "selection": "5-1-8",
-          "odds": 860.4
-        },
-        {
-          "betType": "trifecta",
-          "selection": "6-5-4",
-          "odds": 856.7
-        },
-        {
-          "betType": "trifecta",
-          "selection": "5-8-1",
-          "odds": 853.1
-        },
-        {
-          "betType": "trifecta",
-          "selection": "5-16-1",
-          "odds": 845.9
-        },
-        {
-          "betType": "trifecta",
-          "selection": "5-15-13",
-          "odds": 842.3
-        },
-        {
-          "betType": "trifecta",
-          "selection": "7-15-11",
-          "odds": 835.3
-        },
-        {
-          "betType": "trifecta",
-          "selection": "6-7-1",
-          "odds": 828.4
-        },
-        {
-          "betType": "trifecta",
-          "selection": "9-7-6",
-          "odds": 821.6
+          "selection": "5-15-14",
+          "odds": 903.5
         },
         {
           "betType": "trifecta",
           "selection": "8-15-9",
-          "odds": 815
+          "odds": 903.5
+        },
+        {
+          "betType": "trifecta",
+          "selection": "9-15-8",
+          "odds": 892
+        },
+        {
+          "betType": "trifecta",
+          "selection": "3-6-5",
+          "odds": 889.2
+        },
+        {
+          "betType": "trifecta",
+          "selection": "9-5-16",
+          "odds": 889.2
+        },
+        {
+          "betType": "trifecta",
+          "selection": "5-8-16",
+          "odds": 886.4
+        },
+        {
+          "betType": "trifecta",
+          "selection": "6-5-4",
+          "odds": 883.6
+        },
+        {
+          "betType": "trifecta",
+          "selection": "9-7-6",
+          "odds": 880.9
+        },
+        {
+          "betType": "trifecta",
+          "selection": "5-16-8",
+          "odds": 878.1
+        },
+        {
+          "betType": "trifecta",
+          "selection": "5-1-16",
+          "odds": 872.7
+        },
+        {
+          "betType": "trifecta",
+          "selection": "15-5-14",
+          "odds": 862
+        },
+        {
+          "betType": "trifecta",
+          "selection": "15-1-3",
+          "odds": 856.8
+        },
+        {
+          "betType": "trifecta",
+          "selection": "15-6-4",
+          "odds": 854.2
+        },
+        {
+          "betType": "trifecta",
+          "selection": "15-16-1",
+          "odds": 851.6
+        },
+        {
+          "betType": "trifecta",
+          "selection": "15-5-12",
+          "odds": 846.5
+        },
+        {
+          "betType": "trifecta",
+          "selection": "6-7-1",
+          "odds": 844
+        },
+        {
+          "betType": "trifecta",
+          "selection": "6-16-5",
+          "odds": 844
+        },
+        {
+          "betType": "trifecta",
+          "selection": "7-15-11",
+          "odds": 844
+        },
+        {
+          "betType": "trifecta",
+          "selection": "15-16-3",
+          "odds": 834
+        },
+        {
+          "betType": "trifecta",
+          "selection": "5-1-8",
+          "odds": 834
+        },
+        {
+          "betType": "trifecta",
+          "selection": "5-8-1",
+          "odds": 834
+        },
+        {
+          "betType": "trifecta",
+          "selection": "7-3-5",
+          "odds": 826.6
+        },
+        {
+          "betType": "trifecta",
+          "selection": "16-7-15",
+          "odds": 817
+        },
+        {
+          "betType": "trifecta",
+          "selection": "5-9-11",
+          "odds": 814.7
         }
       ],
-      "oddsUpdatedAt": "2026-08-15 16:26:08",
+      "oddsUpdatedAt": "2026-08-15 17:25:33",
       "featured": false
     }
   ]
