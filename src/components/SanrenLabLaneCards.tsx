@@ -42,7 +42,7 @@ export function SanrenLabLaneCards({ races: racesProp }: Props) {
       href: "/lab/sanren/trio",
       eyebrow: "TRIO LANE",
       title: "3連複研究",
-      blurb: `人気×人気×穴（順不同）。オッズ ≥ ${DEFAULT_TRIO_LANE.oddsThreshold} 倍。`,
+      blurb: `当日全レース。人気×人気×穴を ev 指数で最大 ${DEFAULT_TRIO_LANE.topNPerRace} 点。`,
       density: trio.density,
     },
     {

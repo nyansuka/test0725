@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
-import { SanrenLabTable } from "@/components/SanrenLabTable";
+import { compareSanrenRaceOrder, SanrenLabTable } from "@/components/SanrenLabTable";
 import { filterRacesByDate } from "@/data/races";
 import { formatJstDateLabel } from "@/domain/date";
 import { findPayoutYen } from "@/domain/results";
@@ -14,6 +14,7 @@ import {
   selectTrifectaLab,
   summarizeSanrenLabDensity,
 } from "@/domain/sanrenLab";
+import { comboSortScore } from "@/domain/sanrenTrioIndex.mjs";
 import type { Race, SanrenBetType, SanrenLaneSettings, SanrenPick } from "@/domain/types";
 
 type SortKey = "score" | "odds" | "time";
@@ -47,6 +48,7 @@ function TicketSummaryBar({
         pending += 1;
         continue;
       }
+      if (p.odds == null) continue;
       const yen = findPayoutYen(race.result, p.betType, p.selection);
       if (yen != null && yen > 0) hits += 1;
       else misses += 1;
@@ -83,7 +85,7 @@ function TicketSummaryBar({
         </p>
       </div>
       <p className="mt-1 text-xs text-ink/50">
-        研究所は複勝圏ヒットではなく実払戻の的中を主指標にします
+        研究所は複勝圏ヒットではなく実払戻の的中を主指標にします（板つき買い目のみ）
       </p>
     </section>
   );
@@ -101,7 +103,7 @@ export function SanrenLabBoard({ lane, races: racesProp }: Props) {
   const [laneSettings, setLaneSettings] = useState<SanrenLaneSettings>(() =>
     cloneLane(lane),
   );
-  const [sort, setSort] = useState<SortKey>("score");
+  const [sort, setSort] = useState<SortKey>("time");
   const [venue, setVenue] = useState<string>("all");
   const [track, setTrack] = useState<"all" | "芝" | "ダート">("all");
 
@@ -127,15 +129,23 @@ export function SanrenLabBoard({ lane, races: racesProp }: Props) {
     if (venue !== "all") list = list.filter((p) => p.venue === venue);
     if (track !== "all") list = list.filter((p) => p.track === track);
 
-    if (sort === "odds") return [...list].sort((a, b) => b.odds - a.odds);
-    if (sort === "time") {
-      return [...list].sort((a, b) => a.startTime.localeCompare(b.startTime));
+    if (sort === "odds") return [...list].sort((a, b) => (b.odds ?? 0) - (a.odds ?? 0));
+    if (sort === "score") {
+      return [...list].sort((a, b) => {
+        const d = comboSortScore(b) - comboSortScore(a);
+        if (d !== 0) return d;
+        return (b.odds ?? 0) - (a.odds ?? 0);
+      });
     }
-    return [...list].sort((a, b) => {
-      if (b.relatedScore !== a.relatedScore) return b.relatedScore - a.relatedScore;
-      return b.odds - a.odds;
-    });
+    return [...list].sort(compareSanrenRaceOrder);
   }, [dayRaces, lane, laneSettings, venue, track, sort]);
+
+  const visibleRaces = useMemo(() => {
+    let list = dayRaces;
+    if (venue !== "all") list = list.filter((r) => r.venue === venue);
+    if (track !== "all") list = list.filter((r) => r.track === track);
+    return [...list].sort(compareSanrenRaceOrder);
+  }, [dayRaces, venue, track]);
 
   const density = useMemo(() => summarizeSanrenLabDensity(picks), [picks]);
 
@@ -232,9 +242,9 @@ export function SanrenLabBoard({ lane, races: racesProp }: Props) {
           <span className="text-ink/60">ソート</span>
           {(
             [
-              ["score", "スコア順"],
-              ["odds", "オッズ順"],
               ["time", "発走順"],
+              ["score", "指数順"],
+              ["odds", "オッズ順"],
             ] as const
           ).map(([key, label]) => (
             <button
@@ -251,9 +261,9 @@ export function SanrenLabBoard({ lane, races: racesProp }: Props) {
             </button>
           ))}
           <span className="ml-auto text-ink/50">
-            {density.pickCount} 点 · {density.raceCount} R
+            {density.pickCount} 点 · {visibleRaces.length} R
             {density.raceCount > 0
-              ? ` · 平均 ${density.avgPerRace.toFixed(1)} 点/R`
+              ? ` · 候補あり ${density.raceCount} · 平均 ${density.avgPerRace.toFixed(1)} 点/R`
               : ""}
             {" · "}最低スコア {laneSettings.scoreMin}
           </span>
@@ -267,8 +277,9 @@ export function SanrenLabBoard({ lane, races: racesProp }: Props) {
       <div className="mt-6">
         <SanrenLabTable
           picks={picks}
+          dayRaces={visibleRaces}
           emptyMessage={
-            dayRaces.length === 0
+            visibleRaces.length === 0
               ? "この日の開催データがありません。"
               : "閾値・板カバレッジの条件に合う候補がありません。"
           }

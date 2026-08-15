@@ -198,13 +198,18 @@ export type SanrenPick = {
   title: string;
   betType: SanrenBetType;
   selection: string;
-  odds: number;
+  /** オッズ板にあれば倍率。全レース版では板なしもあり */
+  odds: number | null;
   axisHorseNumber: number;
   secondHorseNumber?: number;
   thirdHorseNumber?: number;
   relatedHorseNumbers: number[];
   pattern: SanrenPickPattern;
   relatedScore: number;
+  /** 3連複 v1: 人気対×穴人気×穴place。未設定は3連単など */
+  hitScore?: number;
+  /** 3連複 v1: hit × clip(odds,100,400) / 150。並び・注目の主指標 */
+  evScore?: number;
   axisWinPotential?: number;
   label: SanrenLabLabel;
   hasSuperWatch?: boolean;

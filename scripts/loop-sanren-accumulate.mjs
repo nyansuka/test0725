@@ -234,6 +234,7 @@ async function cmdEvaluateLane(raceDate, lane) {
   let pending = 0;
   let stakeYen = 0;
   let payoutYen = 0;
+  let ticketSettled = 0;
   const byLabel = {};
   const byPattern = {};
 
@@ -243,15 +244,19 @@ async function cmdEvaluateLane(raceDate, lane) {
     const placeHit = outcome === "win" || outcome === "place";
     const pay = findPayoutYen(result, pick.betType, pick.selection);
     const isTicketHit = pay != null && pay > 0;
+    const onBoard = pick.odds != null;
     const virtualStake = 100;
 
     if (outcome !== "pending") {
-      stakeYen += virtualStake;
-      if (placeHit) placeHits += 1;
-      if (isTicketHit) {
-        ticketHits += 1;
-        payoutYen += pay;
+      if (onBoard) {
+        ticketSettled += 1;
+        stakeYen += virtualStake;
+        if (isTicketHit) {
+          ticketHits += 1;
+          payoutYen += pay;
+        }
       }
+      if (placeHit) placeHits += 1;
     } else {
       pending += 1;
     }
@@ -261,7 +266,7 @@ async function cmdEvaluateLane(raceDate, lane) {
       (byLabel[pick.label] = { candidates: 0, placeHits: 0, ticketHits: 0, pending: 0 });
     lab.candidates += 1;
     if (placeHit && outcome !== "pending") lab.placeHits += 1;
-    if (isTicketHit && outcome !== "pending") lab.ticketHits += 1;
+    if (isTicketHit && outcome !== "pending" && onBoard) lab.ticketHits += 1;
     if (outcome === "pending") lab.pending += 1;
 
     const pat =
@@ -274,7 +279,7 @@ async function cmdEvaluateLane(raceDate, lane) {
       });
     pat.candidates += 1;
     if (placeHit && outcome !== "pending") pat.placeHits += 1;
-    if (isTicketHit && outcome !== "pending") pat.ticketHits += 1;
+    if (isTicketHit && outcome !== "pending" && onBoard) pat.ticketHits += 1;
     if (outcome === "pending") pat.pending += 1;
 
     rows.push({
@@ -288,10 +293,12 @@ async function cmdEvaluateLane(raceDate, lane) {
       label: pick.label,
       pattern: pick.pattern,
       relatedScore: pick.relatedScore,
+      hitScore: pick.hitScore,
+      evScore: pick.evScore,
       axisHorseNumber: pick.axisHorseNumber,
       outcome,
       placeCircleHit: placeHit,
-      ticketHit: outcome !== "pending" && isTicketHit,
+      ticketHit: outcome !== "pending" && onBoard && isTicketHit,
       payoutYen: pay,
     });
   }
@@ -299,7 +306,7 @@ async function cmdEvaluateLane(raceDate, lane) {
   const candidates = prediction.picks?.length ?? 0;
   const settled = candidates - pending;
   const placePrecision = settled > 0 ? placeHits / settled : null;
-  const ticketPrecision = settled > 0 ? ticketHits / settled : null;
+  const ticketPrecision = ticketSettled > 0 ? ticketHits / ticketSettled : null;
   const raceCount = frozen.races?.length ?? 0;
   const density = raceCount > 0 ? candidates / raceCount : null;
   const virtualReturnRate =

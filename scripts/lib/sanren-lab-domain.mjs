@@ -9,6 +9,12 @@ import {
   scoreWinPotential,
   selectAxisHorses,
 } from "./loop-domain.mjs";
+import {
+  TRIO_WATCH_TOP_N,
+  comboSortScore,
+  trioEvScore,
+  trioHitScore,
+} from "../../src/domain/sanrenTrioIndex.mjs";
 
 export const DEFAULT_TRIFECTA_LANE = {
   betType: "trifecta",
@@ -30,7 +36,7 @@ export const DEFAULT_TRIO_LANE = {
   oddsMax: null,
   scoreMin: 60,
   formMode: "formation",
-  topNPerRace: 80,
+  topNPerRace: 12,
   axisTopN: 3,
   popularRankMax: 5,
   holeRankMin: 6,
@@ -84,19 +90,20 @@ function buildTrifectaComment(axis, second, third, relatedScore, axisWin, label)
   ].join(" ");
 }
 
-function buildTrioComment(axis, partner, hole, relatedScore, axisPop, label) {
+function buildTrioComment(axis, partner, hole, axisPop, label, hitScore, evScore) {
   return [
     `${label}: 人気軸 ${axis.number}（${axisPop}人気）`,
     `×人気 ${partner.number} ×穴 ${hole.number}`,
-    `下限place=${Math.round(relatedScore)}`,
+    `hit=${Math.round(hitScore)} ev=${Math.round(evScore)}`,
   ].join(" ");
 }
 
 function sortSanrenPicks(picks) {
   return [...picks].sort((a, b) => {
     if (a.startTime !== b.startTime) return a.startTime.localeCompare(b.startTime);
-    if (b.relatedScore !== a.relatedScore) return b.relatedScore - a.relatedScore;
-    return b.odds - a.odds;
+    const ev = comboSortScore(b) - comboSortScore(a);
+    if (ev !== 0) return ev;
+    return (b.odds ?? 0) - (a.odds ?? 0);
   });
 }
 
@@ -256,6 +263,7 @@ export function selectTrioLab(races, settings = DEFAULT_TRIO_LANE) {
       winByNum.set(h.number, scoreWinPotential(h, race));
     }
     const winScores = [...winByNum.values()];
+    const racePlaces = [...placeByNum.values()];
 
     const scored = race.horses.map((h) => {
       const pop = pops.get(h.number) ?? 99;
@@ -310,18 +318,26 @@ export function selectTrioLab(races, settings = DEFAULT_TRIO_LANE) {
           seen.add(selection);
 
           const odds = boardOdds(race, "trio", selection);
-          if (odds == null) continue;
-          if (odds < settings.oddsThreshold) continue;
-          if (settings.oddsMax != null && odds > settings.oddsMax) continue;
+          if (odds != null) {
+            if (odds < settings.oddsThreshold) continue;
+            if (settings.oddsMax != null && odds > settings.oddsMax) continue;
+          }
 
-          const relatedScore = combinePlace([
+          const floorPlace = combinePlace([
             axis.place,
             partner.place,
             hole.place,
           ]);
-          if (relatedScore < settings.scoreMin) continue;
+          if (floorPlace < settings.scoreMin) continue;
 
-          const label = labelForLabScore(relatedScore);
+          const hitScore = trioHitScore({
+            favPopA: axis.pop,
+            favPopB: partner.pop,
+            holePop: hole.pop,
+            holePlace: hole.place,
+            racePlaces,
+          });
+          const evScore = trioEvScore(hitScore, odds);
           const sortedNums = [...nums].sort((a, b) => a - b);
 
           racePicks.push({
@@ -339,28 +355,45 @@ export function selectTrioLab(races, settings = DEFAULT_TRIO_LANE) {
             thirdHorseNumber: hole.horse.number,
             relatedHorseNumbers: sortedNums,
             pattern: "fav_fav_hole",
-            relatedScore,
+            relatedScore: hitScore,
+            hitScore,
+            evScore,
             axisWinPotential: axis.win,
-            label,
-            comment: buildTrioComment(
-              axis.horse,
-              partner.horse,
-              hole.horse,
-              relatedScore,
-              axis.pop,
-              label,
-            ),
+            label: "抑え",
+            comment: "",
           });
         }
       }
     }
 
     racePicks.sort((a, b) => {
-      if (b.relatedScore !== a.relatedScore) return b.relatedScore - a.relatedScore;
-      if (a.label !== b.label) return a.label === "研究所注目" ? -1 : 1;
-      return b.odds - a.odds;
+      const ev = comboSortScore(b) - comboSortScore(a);
+      if (ev !== 0) return ev;
+      return (b.odds ?? 0) - (a.odds ?? 0);
     });
-    out.push(...racePicks.slice(0, settings.topNPerRace));
+
+    const kept = racePicks.slice(0, settings.topNPerRace);
+    for (let i = 0; i < kept.length; i += 1) {
+      const pick = kept[i];
+      const label = i < TRIO_WATCH_TOP_N ? "研究所注目" : "抑え";
+      pick.label = label;
+      const axisH = race.horses.find((h) => h.number === pick.axisHorseNumber);
+      const partnerH = race.horses.find((h) => h.number === pick.secondHorseNumber);
+      const holeH = race.horses.find((h) => h.number === pick.thirdHorseNumber);
+      if (axisH && partnerH && holeH) {
+        pick.comment = buildTrioComment(
+          axisH,
+          partnerH,
+          holeH,
+          pops.get(axisH.number) ?? 99,
+          label,
+          pick.hitScore ?? pick.relatedScore,
+          pick.evScore ?? pick.relatedScore,
+        );
+      }
+    }
+
+    out.push(...kept);
   }
 
   return sortSanrenPicks(out);

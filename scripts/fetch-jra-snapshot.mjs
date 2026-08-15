@@ -12,6 +12,7 @@ import {
   enrichRaceWithForm,
   extractHorseIdFromAnchorHtml,
 } from "./lib/horse-form.mjs";
+import { comboKeepPolicy, keepComboOdds } from "./lib/combo-odds-keep.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
@@ -459,14 +460,12 @@ async function fetchOddsBundle(raceId) {
     }
   }
 
-  // other bet types — keep only odds >= 8 to limit payload size while covering longshots
+  // 枠連〜馬単: odds≥8 の高い順40件（本体）。3連複/単は帯の安い順（combo-odds-keep）。
   for (const typeNum of [3, 4, 5, 6, 7, 8]) {
     const payload = await fetchOddsJson(raceId, typeNum);
     await sleep(100);
-    const flat = flattenOdds(payload, typeNum)
-      .filter((e) => e.odds >= 8)
-      .sort((a, b) => b.odds - a.odds)
-      .slice(0, 40);
+    const betType = API_TYPE_TO_BET[typeNum];
+    const flat = keepComboOdds(flattenOdds(payload, typeNum), comboKeepPolicy(betType));
     entries.push(...flat);
   }
 

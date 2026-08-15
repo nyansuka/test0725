@@ -8,6 +8,7 @@ import {
   selectTrioLab,
   summarizeSanrenLabDensity,
 } from "../src/domain/sanrenLab.ts";
+import { TRIO_WATCH_TOP_N } from "../src/domain/sanrenTrioIndex.mjs";
 
 const date = process.argv[2] ?? "latest";
 const path =
@@ -20,7 +21,10 @@ const races = (snap.races ?? []).filter((r) => r.authority === "JRA");
 const picks = selectTrioLab(races, DEFAULT_TRIO_LANE);
 const density = summarizeSanrenLabDensity(picks);
 
-const oddsOk = picks.every((p) => p.odds >= DEFAULT_TRIO_LANE.oddsThreshold);
+const oddsOk = picks.every(
+  (p) => p.odds == null || p.odds >= DEFAULT_TRIO_LANE.oddsThreshold,
+);
+const allRacesOk = density.raceCount >= Math.min(20, races.length);
 const patternOk = picks.every((p) => p.pattern === "fav_fav_hole");
 const sortedOk = picks.every((p) => {
   const parts = p.selection.split("-").map(Number);
@@ -30,6 +34,28 @@ const sortedOk = picks.every((p) => {
 const noHoleAxis = picks.every((p) => {
   // 軸は人気帯（単勝オッズ順位で再確認はしないが、pattern と comment に人気軸と明記）
   return p.comment.includes("人気軸");
+});
+const indexOk = picks.every(
+  (p) =>
+    typeof p.hitScore === "number" &&
+    typeof p.evScore === "number" &&
+    p.relatedScore === p.hitScore,
+);
+const byRace = new Map();
+for (const p of picks) {
+  const list = byRace.get(p.raceId) ?? [];
+  list.push(p);
+  byRace.set(p.raceId, list);
+}
+const watchOk = [...byRace.values()].every((list) => {
+  const nWatch = list.filter((p) => p.label === "研究所注目").length;
+  return nWatch <= TRIO_WATCH_TOP_N && nWatch <= list.length;
+});
+const evSortedOk = [...byRace.values()].every((list) => {
+  for (let i = 1; i < list.length; i += 1) {
+    if ((list[i - 1].evScore ?? 0) < (list[i].evScore ?? 0)) return false;
+  }
+  return true;
 });
 
 console.log(
@@ -59,18 +85,19 @@ console.log(
         selection: p.selection,
         axis: p.axisHorseNumber,
         odds: p.odds,
-        score: p.relatedScore,
+        hit: p.hitScore,
+        ev: p.evScore,
         label: p.label,
         pattern: p.pattern,
       })),
-      checks: { oddsOk, patternOk, sortedOk, noHoleAxis },
+      checks: { oddsOk, patternOk, sortedOk, noHoleAxis, indexOk, watchOk, evSortedOk, allRacesOk },
     },
     null,
     2,
   ),
 );
 
-if (!oddsOk || !patternOk || !sortedOk || !noHoleAxis) {
+if (!oddsOk || !patternOk || !sortedOk || !noHoleAxis || !indexOk || !watchOk || !evSortedOk || !allRacesOk) {
   console.error("S2B_FAIL checks");
   process.exit(1);
 }
