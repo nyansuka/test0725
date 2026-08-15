@@ -45,8 +45,10 @@ export function RaceCatalogProvider({ children, initial }: Props) {
   const refresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      // 静的 /api/races を CDN から取得（Fast Data Transfer。Origin / ISR を増やさない）
-      const res = await fetch("/api/races", { cache: "force-cache" });
+      // 本番は静的 /api/races を CDN から取得。dev は fetch 直後のスナップを拾う。
+      const res = await fetch("/api/races", {
+        cache: process.env.NODE_ENV === "production" ? "force-cache" : "no-store",
+      });
       if (!res.ok) return;
       const data = (await res.json()) as RaceCatalogPayload;
       if (Array.isArray(data.races) && data.races.length > 0) {

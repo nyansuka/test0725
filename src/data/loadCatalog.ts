@@ -1,4 +1,4 @@
-import { readdir, readFile } from "node:fs/promises";
+import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import type { RaceCatalogPayload } from "@/data/catalogTypes";
 import {
@@ -27,14 +27,28 @@ function threeMonthsBefore(ymd: string): string {
   return date.toISOString().slice(0, 10);
 }
 
-/** ビルド／静的生成中の重複読みを避ける */
+/** ビルド／静的生成中の重複読みを避ける。latest.json が書き換わったら再読込。 */
 let catalogPromise: Promise<RaceCatalogPayload> | null = null;
+let catalogStamp = "";
+
+async function latestStamp(dir: string): Promise<string> {
+  try {
+    const info = await stat(path.join(dir, "latest.json"));
+    return `${info.mtimeMs}:${info.size}`;
+  } catch {
+    return "";
+  }
+}
 
 /** ディスク上の最新スナップショットと直近3か月分の開催日を読む。 */
 export async function loadRaceCatalog(): Promise<RaceCatalogPayload> {
-  if (!catalogPromise) {
+  const dir = path.join(process.cwd(), "src", "data", "snapshots");
+  const stamp = await latestStamp(dir);
+  if (!catalogPromise || stamp !== catalogStamp) {
+    catalogStamp = stamp;
     catalogPromise = readRaceCatalogFromDisk().catch((err) => {
       catalogPromise = null;
+      catalogStamp = "";
       throw err;
     });
   }

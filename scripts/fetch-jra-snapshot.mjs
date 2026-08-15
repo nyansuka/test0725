@@ -57,12 +57,16 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-async function fetchText(url, { userAgent = UA } = {}) {
+/** PC の race.netkeiba.com が CloudFront 400 のとき SP ホストへ切り替える */
+let useSpRaceHost = false;
+
+async function fetchText(url, { userAgent = UA, extraHeaders = {} } = {}) {
   const res = await fetch(url, {
     headers: {
       "User-Agent": userAgent,
       Accept: "text/html,application/json,*/*",
       "Accept-Language": "ja,en;q=0.8",
+      ...extraHeaders,
     },
   });
   if (!res.ok) throw new Error(`${res.status} ${url}`);
@@ -77,13 +81,32 @@ async function fetchTextOrNull(url, opts = {}) {
   }
 }
 
-async function fetchJson(url) {
-  const text = await fetchText(url);
+async function fetchJson(url, opts = {}) {
+  const text = await fetchText(url, opts);
   try {
     return JSON.parse(text);
   } catch {
     return null;
   }
+}
+
+function noteSpFallback(err) {
+  if (!useSpRaceHost) {
+    console.warn(`note: PC race host failed (${err.message}); using SP`);
+  }
+  useSpRaceHost = true;
+}
+
+/** PC 出馬表・一覧が落ちているときは SP を使う */
+async function fetchRacePage(pcUrl, spUrl) {
+  if (!useSpRaceHost) {
+    try {
+      return await fetchText(pcUrl);
+    } catch (err) {
+      noteSpFallback(err);
+    }
+  }
+  return fetchText(spUrl, { userAgent: UA_SP });
 }
 
 function ymdFromArg() {
@@ -127,18 +150,26 @@ function parseRaceMeta(html, raceId) {
 
   const titleRaw =
     html.match(/class="RaceName"[^>]*>([^<\n]+)/i)?.[1] ??
+    html.match(/class="Race_Name"[^>]*>([^<\n]+)/i)?.[1] ??
     html.match(/RaceList_Item02[\s\S]*?class="RaceName"[^>]*>([^<\n]+)/i)?.[1] ??
     `${raceNumber}R`;
   let title = decodeHtml(titleRaw).replace(/\s+/g, " ").trim() || `${raceNumber}R`;
 
-  const data01 = html.match(/class="RaceData01"[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? "";
+  const data01 =
+    html.match(/class="RaceData01"[^>]*>([\s\S]*?)<\/div>/i)?.[1] ??
+    html.match(/class="Race_Data"[^>]*>([\s\S]*?)<\/div>/i)?.[1] ??
+    "";
   const dataPlain = decodeHtml(data01.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ");
 
-  const timeMatch = dataPlain.match(/(\d{1,2}:\d{2})\s*発走/);
+  const timeMatch = dataPlain.match(/(\d{1,2}:\d{2})\s*発走/) ?? dataPlain.match(/(\d{1,2}:\d{2})/);
   // netkeiba はダートを「ダ1000m」と略記する（「ダート」表記は稀）
   const distMatch = dataPlain.match(/(芝|ダート|ダ|障)\s*(\d+)\s*m/);
-  const weatherMatch = dataPlain.match(/天候[:：]\s*([^\s/]+)/);
-  const conditionMatch = dataPlain.match(/馬場[:：]\s*([^\s/]+)/);
+  const weatherMatch =
+    dataPlain.match(/天候[:：]\s*([^\s/]+)/) ?? html.match(/WeatherData">\s*([^\s<]+)/);
+  const conditionMatch =
+    dataPlain.match(/馬場[:：]\s*([^\s/]+)/) ??
+    html.match(/class="Item0[34]">\s*(稍重|不良|良|重)/) ??
+    dataPlain.match(/(稍重|不良|良|重)/);
 
   let startTime = timeMatch ? timeMatch[1].padStart(5, "0") : "00:00";
   let track = "芝";
@@ -183,6 +214,36 @@ function parseHorses(html) {
     const attrs = rowMatch[1];
     const row = rowMatch[2];
     if (/取消|除外/.test(row) && /Cancel_/.test(row)) continue;
+
+    const isSpRow = /<td class="Waku\d+"/.test(row) || /class="Horse_Info"/.test(row);
+    if (isSpRow) {
+      const umaban = Number(
+        row.match(/id="odds-1_(\d+)"/)?.[1] ?? row.match(/<td class="Waku\d+"[^>]*>\s*(\d+)/)?.[1],
+      );
+      if (!umaban) continue;
+      const waku = Number(row.match(/<td class="Waku(\d+)"/)?.[1]) || Math.ceil(umaban / 2);
+      const name = decodeHtml(
+        row.match(/class="Horse HorseLink"[\s\S]*?<a[^>]*>\s*([^<]+)/)?.[1] ??
+          row.match(/HorseLink[\s\S]*?<a[^>]*>\s*([^<]+)/)?.[1] ??
+          `馬${umaban}`,
+      ).trim();
+      const jockey = decodeHtml(
+        row.match(/<dd class="Jockey">[\s\S]*?<em>([^<]+)/)?.[1] ??
+          row.match(/<dd class="Jockey">[\s\S]*?<a[^>]*>\s*([^<]+)/)?.[1] ??
+          "—",
+      )
+        .replace(/\s+\d+(?:\.\d+)?\s*$/, "")
+        .trim();
+      const horseId = extractHorseIdFromAnchorHtml(row);
+      horses.push({
+        number: umaban,
+        bracket: waku,
+        name,
+        jockey: jockey || "—",
+        horseId: horseId || undefined,
+      });
+      continue;
+    }
 
     const umabanFromTd = Number(
       row.match(/<td class="Umaban\d+[^"]*"[^>]*>\s*(\d+)\s*</)?.[1] ??
@@ -328,16 +389,56 @@ function pickFeatured(races) {
   return scored[0]?.r.id;
 }
 
-async function fetchRaceIds(kaisaiDate) {
-  const url = `https://race.netkeiba.com/top/race_list_sub.html?kaisai_date=${kaisaiDate}`;
-  const html = await fetchText(url);
-  const ids = [...html.matchAll(/race_id=(\d{12})/g)].map((m) => m[1]);
-  return [...new Set(ids)].sort();
+function parseSpRaceIds(html, raceDateYmd) {
+  const kaisai = compactDate(raceDateYmd);
+  const ids = [];
+  for (const wrap of html.split(/<div class="RaceListDayWrap"/).slice(1)) {
+    if (!wrap.includes(`data-kaisaidate="${kaisai}"`)) continue;
+    for (const m of wrap.matchAll(/race\/shutuba\.html\?race_id=(\d{12})/g)) {
+      ids.push(m[1]);
+    }
+  }
+  if (ids.length) return [...new Set(ids)].sort();
+  return [...new Set([...html.matchAll(/race_id=(\d{12})/g)].map((m) => m[1]))].sort();
 }
 
-function oddsApiUrl(raceId, typeNum) {
+async function fetchRaceIds(kaisaiDate) {
+  if (!useSpRaceHost) {
+    try {
+      const url = `https://race.netkeiba.com/top/race_list_sub.html?kaisai_date=${kaisaiDate}`;
+      const html = await fetchText(url);
+      const ids = [...new Set([...html.matchAll(/race_id=(\d{12})/g)].map((m) => m[1]))].sort();
+      if (ids.length) return ids;
+    } catch (err) {
+      noteSpFallback(err);
+    }
+  }
+  const spUrl = `https://race.sp.netkeiba.com/?pid=race_list&kaisai_date=${kaisaiDate}`;
+  const html = await fetchText(spUrl, { userAgent: UA_SP });
+  return parseSpRaceIds(html, kaisaiDate);
+}
+
+function oddsApiUrl(raceId, typeNum, { sp = false } = {}) {
   // action=init が無いと発売中レースでも status=middle / reason=result odds empty になりがち
+  if (sp) {
+    return `https://race.sp.netkeiba.com/?pid=api_get_jra_odds&type=${typeNum}&race_id=${raceId}&is_ajax=1&action=init`;
+  }
   return `https://race.netkeiba.com/api/api_get_jra_odds.html?type=${typeNum}&race_id=${raceId}&is_ajax=1&action=init`;
+}
+
+async function fetchOddsJson(raceId, typeNum) {
+  if (!useSpRaceHost) {
+    try {
+      const json = await fetchJson(oddsApiUrl(raceId, typeNum));
+      if (json) return json;
+    } catch (err) {
+      noteSpFallback(err);
+    }
+  }
+  return fetchJson(oddsApiUrl(raceId, typeNum, { sp: true }), {
+    userAgent: UA_SP,
+    extraHeaders: { "X-Requested-With": "XMLHttpRequest" },
+  });
 }
 
 async function fetchOddsBundle(raceId) {
@@ -345,7 +446,7 @@ async function fetchOddsBundle(raceId) {
   const placeRanges = new Map();
 
   // type=1 returns win+place together
-  const winPlace = await fetchJson(oddsApiUrl(raceId, 1));
+  const winPlace = await fetchOddsJson(raceId, 1);
   await sleep(120);
   for (const e of flattenOdds(winPlace, 1)) {
     if (e.betType === "place" && e.placeMin != null) {
@@ -358,7 +459,7 @@ async function fetchOddsBundle(raceId) {
 
   // other bet types — keep only odds >= 8 to limit payload size while covering longshots
   for (const typeNum of [3, 4, 5, 6, 7, 8]) {
-    const payload = await fetchJson(oddsApiUrl(raceId, typeNum));
+    const payload = await fetchOddsJson(raceId, typeNum);
     await sleep(100);
     const flat = flattenOdds(payload, typeNum)
       .filter((e) => e.odds >= 8)
@@ -549,10 +650,14 @@ function scoreResultPayouts(result) {
 
 async function fetchRaceResult(raceId) {
   const candidates = [
-    {
-      url: `https://race.netkeiba.com/race/result.html?race_id=${raceId}`,
-      userAgent: UA,
-    },
+    ...(!useSpRaceHost
+      ? [
+          {
+            url: `https://race.netkeiba.com/race/result.html?race_id=${raceId}`,
+            userAgent: UA,
+          },
+        ]
+      : []),
     {
       url: `https://race.sp.netkeiba.com/?pid=race_result&race_id=${raceId}`,
       userAgent: UA_SP,
@@ -585,7 +690,9 @@ async function fetchHistoricalResultRace(raceId, raceDate) {
 
   // SP/PC 結果 HTML からメタを再取得（PC 失敗時は SP）
   const html =
-    (await fetchTextOrNull(`https://race.netkeiba.com/race/result.html?race_id=${raceId}`)) ??
+    (!useSpRaceHost
+      ? await fetchTextOrNull(`https://race.netkeiba.com/race/result.html?race_id=${raceId}`)
+      : null) ??
     (await fetchTextOrNull(`https://race.sp.netkeiba.com/?pid=race_result&race_id=${raceId}`, {
       userAgent: UA_SP,
     }));
@@ -646,8 +753,10 @@ async function fetchHistoricalResultRace(raceId, raceDate) {
 }
 
 async function fetchOneRace(raceId, raceDate, { withResult = true, withForm = false } = {}) {
-  const shutubaUrl = `https://race.netkeiba.com/race/shutuba.html?race_id=${raceId}`;
-  const html = await fetchText(shutubaUrl);
+  const html = await fetchRacePage(
+    `https://race.netkeiba.com/race/shutuba.html?race_id=${raceId}`,
+    `https://race.sp.netkeiba.com/?pid=shutuba&race_id=${raceId}`,
+  );
   await sleep(150);
   const meta = parseRaceMeta(html, raceId);
   const rawHorses = parseHorses(html);
@@ -970,8 +1079,10 @@ async function enrichSnapshotWithForm(raceDate, { force = false, limit = 0 } = {
     try {
       const missingIds = (race.horses ?? []).some((h) => !h.horseId);
       if (missingIds && race.sourceRaceId) {
-        const shutubaUrl = `https://race.netkeiba.com/race/shutuba.html?race_id=${race.sourceRaceId}`;
-        const html = await fetchText(shutubaUrl);
+        const html = await fetchRacePage(
+          `https://race.netkeiba.com/race/shutuba.html?race_id=${race.sourceRaceId}`,
+          `https://race.sp.netkeiba.com/?pid=shutuba&race_id=${race.sourceRaceId}`,
+        );
         await sleep(120);
         const parsed = parseHorses(html);
         const byNum = new Map(parsed.map((h) => [h.number, h]));
