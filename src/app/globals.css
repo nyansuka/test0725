@@ -12,6 +12,7 @@
   --mist: rgba(255, 255, 255, 0.12);
   --background: #ffffff;
   --foreground: var(--ink);
+  --font-jp: "Noto Sans JP Variable";
 }
 
 @theme inline {
@@ -24,7 +25,8 @@
   --color-sand-dim: var(--sand-dim);
   --color-signal: var(--signal);
   --color-signal-soft: var(--signal-soft);
-  /* display / body も源ノ角ゴシック（--font-jp = Noto Sans JP）に寄せる */
+  /* display / body も源ノ角ゴシック相当（自己ホスト Noto Sans JP Variable） */
+  --font-jp: "Noto Sans JP Variable";
   --font-sans: var(--font-jp);
   --font-display: var(--font-jp);
 }

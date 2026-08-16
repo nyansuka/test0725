@@ -46,6 +46,7 @@
     "test:journal-expand": "node scripts/test-journal-expand.mjs"
   },
   "dependencies": {
+    "@fontsource-variable/noto-sans-jp": "^5.3.0",
     "@neondatabase/serverless": "^1.1.0",
     "next": "16.2.11",
     "pg": "^8.22.0",

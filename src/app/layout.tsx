@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_JP } from "next/font/google";
 import { JournalProvider } from "@/components/JournalProvider";
 import { RaceCatalogProvider } from "@/components/RaceCatalogProvider";
 import { RaceDayProvider } from "@/components/RaceDayProvider";
 import { SettingsProvider } from "@/components/SettingsProvider";
+import "@fontsource-variable/noto-sans-jp/wght.css";
 import "./globals.css";
 
 /**
@@ -11,13 +11,6 @@ import "./globals.css";
  * 初回表示はバンドル済み seed、完全カタログは CDN の /api/races から取得。
  */
 export const dynamic = "force-static";
-
-/** 源ノ角ゴシック（Source Han Sans JP）相当。Google Fonts では Noto Sans JP */
-const jp = Noto_Sans_JP({
-  variable: "--font-jp",
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "800", "900"],
-});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -48,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${jp.variable} h-full antialiased`}>
+    <html lang="ja" className="h-full antialiased">
       <body className="flex min-h-full flex-col font-sans">
         <SettingsProvider>
           <RaceCatalogProvider>

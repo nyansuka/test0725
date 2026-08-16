@@ -262,7 +262,7 @@ export function selectTrifectaLab(
     racePicks.sort((a, b) => {
       if (b.relatedScore !== a.relatedScore) return b.relatedScore - a.relatedScore;
       if (a.label !== b.label) return a.label === "研究所注目" ? -1 : 1;
-      return b.odds - a.odds;
+      return (b.odds ?? 0) - (a.odds ?? 0);
     });
 
     out.push(...racePicks.slice(0, settings.topNPerRace));
