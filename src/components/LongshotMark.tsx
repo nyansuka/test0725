@@ -80,3 +80,25 @@ export function SuperWatchMark({ className = "" }: { className?: string }) {
     </span>
   );
 }
+
+/** 根拠付きで1番人気を切る候補（軸からは除外しない） */
+export function DangerousFavMark({
+  reasons,
+  className = "",
+}: {
+  reasons?: string[];
+  className?: string;
+}) {
+  const title = reasons?.length
+    ? `危険1人気（${reasons.join("・")}）`
+    : "危険1人気";
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center justify-center rounded-sm bg-ink/15 px-1 py-0.5 font-[family-name:var(--font-display)] text-[10px] font-bold leading-none tracking-wide text-ink/80 ${className}`}
+      title={title}
+      aria-label={title}
+    >
+      危1
+    </span>
+  );
+}

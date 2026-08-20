@@ -18,6 +18,7 @@
     "test:combo-odds-keep": "node scripts/test-combo-odds-keep.mjs",
     "test:sanren-trio-index": "node scripts/test-sanren-trio-index.mjs",
     "test:horse-form": "node scripts/test-horse-form.mjs",
+    "test:dangerous-favorite": "node scripts/test-dangerous-favorite.mjs",
     "watch:jra": "node scripts/watch-jra-snapshot.mjs",
     "loop:freeze": "node scripts/loop-accumulate.mjs freeze",
     "loop:evaluate": "node scripts/loop-accumulate.mjs evaluate",

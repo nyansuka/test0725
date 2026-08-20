@@ -22,6 +22,7 @@ import {
   pickKey,
   selectAxisHorses,
   evaluateAxisHorse,
+  selectDangerousFirstFavorites,
 } from "./lib/loop-domain.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -152,6 +153,8 @@ async function cmdFreeze(raceDate, { force = false } = {}) {
   for (const race of frozen.races ?? []) {
     axisPicks.push(...selectAxisHorses(race, picks.filter((p) => p.raceId === race.id)));
   }
+  const dangerousFirstFavs = selectDangerousFirstFavorites(frozen.races ?? []);
+  const dangerousFirstFavFlaggedCount = dangerousFirstFavs.filter((d) => d.flagged).length;
   const prediction = {
     savedAt: new Date().toISOString(),
     raceDate,
@@ -162,12 +165,15 @@ async function cmdFreeze(raceDate, { force = false } = {}) {
     pickCount: picks.length,
     axisCount: axisPicks.length,
     superWatchCount: axisPicks.filter((a) => a.isSuperWatch).length,
+    dangerousFirstFavCount: dangerousFirstFavs.length,
+    dangerousFirstFavFlaggedCount,
     picks,
     axisPicks,
+    dangerousFirstFavs,
   };
   await writeJson(predPath, prediction);
   console.log(
-    `Predictions → ${path.relative(root, predPath)} (${picks.length} picks, ${axisPicks.length} axis, ${prediction.superWatchCount} super)`,
+    `Predictions → ${path.relative(root, predPath)} (${picks.length} picks, ${axisPicks.length} axis, ${prediction.superWatchCount} super, dang1=${dangerousFirstFavFlaggedCount}/${dangerousFirstFavs.length})`,
   );
   return prediction;
 }
@@ -364,6 +370,54 @@ async function cmdEvaluate(raceDate) {
   const axisWinRate = axisSettled > 0 ? axisWins / axisSettled : null;
   const superWinRate = superSettled > 0 ? superWins / superSettled : null;
 
+  let dangerousFirstFavs = prediction.dangerousFirstFavs;
+  if (!dangerousFirstFavs?.length) {
+    dangerousFirstFavs = selectDangerousFirstFavorites(frozen.races ?? []);
+  }
+  const firstFavBuckets = {
+    flagged: { settled: 0, wins: 0, place: 0, miss: 0, pending: 0 },
+    unflagged: { settled: 0, wins: 0, place: 0, miss: 0, pending: 0 },
+  };
+  const firstFavRows = [];
+  for (const fav of dangerousFirstFavs) {
+    const result = resultByRace.get(fav.raceId);
+    const outcome = evaluateAxisHorse({ horseNumber: fav.horseNumber }, result);
+    const bucket = fav.flagged ? firstFavBuckets.flagged : firstFavBuckets.unflagged;
+    if (outcome === "pending") bucket.pending += 1;
+    else {
+      bucket.settled += 1;
+      if (outcome === "win") bucket.wins += 1;
+      if (outcome === "win" || outcome === "place") bucket.place += 1;
+      if (outcome === "miss") bucket.miss += 1;
+    }
+    firstFavRows.push({
+      raceId: fav.raceId,
+      horseNumber: fav.horseNumber,
+      flagged: fav.flagged,
+      reasons: fav.reasons,
+      factorWin: fav.factorWin,
+      factorWinMedian: fav.factorWinMedian,
+      outcome,
+    });
+  }
+  function rate(numer, denom) {
+    return denom > 0 ? numer / denom : null;
+  }
+  const firstFavMetrics = {
+    flaggedCount: dangerousFirstFavs.filter((d) => d.flagged).length,
+    unflaggedCount: dangerousFirstFavs.filter((d) => !d.flagged).length,
+    flagged: {
+      ...firstFavBuckets.flagged,
+      winRate: rate(firstFavBuckets.flagged.wins, firstFavBuckets.flagged.settled),
+      placeRate: rate(firstFavBuckets.flagged.place, firstFavBuckets.flagged.settled),
+    },
+    unflagged: {
+      ...firstFavBuckets.unflagged,
+      winRate: rate(firstFavBuckets.unflagged.wins, firstFavBuckets.unflagged.settled),
+      placeRate: rate(firstFavBuckets.unflagged.place, firstFavBuckets.unflagged.settled),
+    },
+  };
+
   const evaluation = {
     evaluatedAt: new Date().toISOString(),
     raceDate,
@@ -404,12 +458,14 @@ async function cmdEvaluate(raceDate) {
       superWins,
       superPlace,
       superWinRate,
+      firstFav: firstFavMetrics,
     },
     byBetType: byBet,
     byLabel,
     rows,
     gateHits,
     axisRows,
+    firstFavRows,
   };
 
   await writeJson(evalPath, evaluation);
@@ -430,6 +486,11 @@ async function cmdEvaluate(raceDate) {
   );
   console.log(
     `  axisWinRate=${axisWinRate == null ? "—" : axisWinRate.toFixed(3)} (${axisWins}/${axisSettled}) superWinRate=${superWinRate == null ? "—" : superWinRate.toFixed(3)} (${superWins}/${superSettled})`,
+  );
+  const ff = firstFavMetrics.flagged;
+  const sf = firstFavMetrics.unflagged;
+  console.log(
+    `  dang1fav winRate=${ff.winRate == null ? "—" : ff.winRate.toFixed(3)} placeRate=${ff.placeRate == null ? "—" : ff.placeRate.toFixed(3)} (${ff.wins}/${ff.settled} flagged) vs unflagged ${sf.winRate == null ? "—" : sf.winRate.toFixed(3)} (${sf.wins}/${sf.settled})`,
   );
   return evaluation;
 }

@@ -80,8 +80,9 @@ function boardOdds(
 }
 
 /**
- * 危険人気（仮）:
+ * 危険人気（仮・研究所の生成除外）:
  * 1〜2人気かつ winPotential がレース中央値未満。
+ * 本体の危険1人気フラグ（factorWin / 新潟芝差し追込）とは別。接続は後続。
  */
 function isDangerousFavorite(
   winPotential: number,

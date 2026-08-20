@@ -55,7 +55,7 @@ function weighted(factors: HorseFactors, weights: typeof PLACE_WEIGHTS | typeof 
 }
 
 /** 前走・同条件から1着向きの軽い補正（データが無いときは 0） */
-function winFormBoost(horse: Horse): number {
+export function winFormBoost(horse: Horse): number {
   const fs = horse.formStats;
   if (!fs) return 0;
   let boost = 0;
@@ -97,6 +97,12 @@ export function applyDerivedFactors(horse: Horse, race: Race): HorseFactors {
     factors.conditionFit = clamp(factors.conditionFit + (factors.conditionFit >= 65 ? 4 : -2));
   }
   return factors;
+}
+
+/** 人気ブレンド前の1着適性。危険1人気フラグ用（winPotential とは別） */
+export function scoreFactorWin(horse: Horse, race: Race): number {
+  const factors = applyDerivedFactors(horse, race);
+  return weighted(factors, WIN_WEIGHTS) + winFormBoost(horse);
 }
 
 export const ruleBasedScorer: Scorer = {

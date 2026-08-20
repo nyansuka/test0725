@@ -1,6 +1,6 @@
 # UMANOTE 3連系研究所 構成計画書
 
-最終更新: 2026-08-12（S5 trio oddsThreshold スイープ）  
+最終更新: 2026-08-20（本体に危険1人気フラグ。研究所の除外式は未接続）  
 親計画: [PLAN.md](./PLAN.md)（JRA・全券種の高配当選別）  
 関連: [DATA-AND-LOOP.md](./DATA-AND-LOOP.md)、[HIT-RATE-PLAN.md](./HIT-RATE-PLAN.md)、[IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md)、[NAR-PLAN.md](./NAR-PLAN.md)  
 位置づけ: PLAN §5.5 **X4（軸×穴コンボ生成）** の自然な後継。券種を **3連系（`trio` / `trifecta`）** に特化した別施策。  
@@ -476,7 +476,7 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 | 単勝の延長 | 1着=`winPotential` | 採用 |
 | 50〜100点 | `topN` / partnerCap | 仮 |
 | 200倍未満カット | threshold 200 | 仮 |
-| 危険人気を1着から外す | 除外ルール候補 | 未確定式 |
+| 危険人気を1着から外す | 除外ルール候補 | 未確定式。本体の危険1人気フラグ（factorWin 中央値 / 新潟芝の差し追込）とは別。接続は後続1変更 |
 | 高配当レース | 期待度 S〜A | 仮 |
 | 印・裏情報 | 取り込まない | 除外 |
 
@@ -490,7 +490,7 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 | 軸は人気馬（1〜5） | `popularRankMax: 5` | 仮 |
 | 穴を軸にしない | 穴×穴×穴非生成 | 仮方針 |
 | 主パターンは人気×人気×穴 | `pattern: fav_fav_hole` | 仮 |
-| 危険な人気を消す | `excludeDangerousFavs` | 候補 |
+| 危険な人気を消す | `excludeDangerousFavs` | 候補。現行は 1〜2人気かつ winPotential 中央値未満。本体の危1フラグへの切替は後続 |
 | 100倍未満を切る | trio threshold 100 | 仮・**S5 スイープ済**（80/100/150で ticket 差なし→100維持） |
 | 3列目は手広く流す | `partnerCapHole` 広め | 仮 |
 | 合成オッズを意識 | 低配当カットで合成を立てる | 計測後続 |

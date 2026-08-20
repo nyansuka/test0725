@@ -9,6 +9,7 @@ import {
   formSignalFromFormStats,
   valueGapFromPopularity,
 } from "../../src/domain/scoring/deriveFactors.mjs";
+import { assessDangerousFirstFavorite } from "../../src/domain/dangerousFavorite.mjs";
 
 export const ALL_BET_TYPES = [
   "win",
@@ -184,12 +185,43 @@ export function scoreHorse(horse, race) {
   return clamp(weighted(prepareFactors(horse, race), PLACE_WEIGHTS));
 }
 
+export function scoreFactorWin(horse, race) {
+  const factors = prepareFactors(horse, race);
+  return weighted(factors, WIN_WEIGHTS) + winFormBoost(horse);
+}
+
 export function scoreWinPotential(horse, race) {
   const factors = prepareFactors(horse, race);
   const factorWin = weighted(factors, WIN_WEIGHTS);
   const pop = popularityByNumber(race.horses ?? []).get(horse.number) ?? null;
   const popWin = popularityWinScore(pop);
   return clamp(factorWin * (1 - WIN_POP_BLEND) + popWin * WIN_POP_BLEND + winFormBoost(horse));
+}
+
+/** レースの1番人気について危険フラグの有無。軸からは除外しない */
+export function findDangerousFirstFavorite(race) {
+  const horses = race.horses ?? [];
+  if (race.authority !== "JRA" || horses.length === 0) return null;
+  const popularity = popularityByNumber(horses);
+  const factorWins = new Map(horses.map((h) => [h.number, scoreFactorWin(h, race)]));
+  return assessDangerousFirstFavorite({
+    raceId: race.id,
+    venue: race.venue,
+    track: race.track,
+    distance: race.distance,
+    horses,
+    popularity,
+    factorWins,
+  });
+}
+
+export function selectDangerousFirstFavorites(races) {
+  const out = [];
+  for (const race of races ?? []) {
+    const assessment = findDangerousFirstFavorite(race);
+    if (assessment) out.push(assessment);
+  }
+  return out;
 }
 
 function resolveRelatedHorses(race, selection, betType) {

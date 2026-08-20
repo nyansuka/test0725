@@ -1,6 +1,6 @@
 # UMANOTE 構成計画書
 
-最終更新: 2026-08-13  
+最終更新: 2026-08-20  
 対象リポジトリ: 競馬予想サンプル（Next.js + Docker）  
 関連: [DATA-AND-LOOP.md](./DATA-AND-LOOP.md)、[HIT-RATE-PLAN.md](./HIT-RATE-PLAN.md)、[IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md)、[NAR-PLAN.md](./NAR-PLAN.md)、[TRIFECTA-LAB.md](./TRIFECTA-LAB.md)（3連系研究所: 複／単を別研究）
 
@@ -247,6 +247,28 @@ axisCandidates(race) =
 
 抑え候補のみ・見送りのみでは超注目にしない。
 
+#### 危険1人気（フラグのみ・2026-08-20）
+
+1番人気を無条件では消さない。根拠があるときだけ **危1** 印を付ける。軸 Top3 からは除外しない（週次1変更）。
+
+```
+findDangerousFirstFavorite(race) =
+  単勝1番人気が存在するとき:
+    flagged ⇔
+      人気ブレンド前の1着適性 factorWin がレース中央値未満
+      OR 新潟芝かつ脚質が差/追（runningStyle がある場合）
+```
+
+| 項目 | 決定 |
+|------|------|
+| 対象 | **1番人気のみ**（2人気は対象外） |
+| 主根拠 | `scoreFactorWin`（`winPotential` の人気事前を除いた側）が中央値未満 |
+| 補助根拠 | 新潟芝 × 差し/追込。脚質未取得ならこの枝は発火しない |
+| 軸・買い目 | **まだ切らない。** 印と freeze/evaluate の比較だけ |
+| 検証 | フラグあり1人気 vs なし1人気の 1着率・複勝圏率 |
+
+翌週以降の候補: フラグあり1人気を馬連相手／3連系 `excludeDangerousFavs` から除外したときの ticket 比較。
+
 #### ドメイン API（案）
 
 ```ts
@@ -265,6 +287,7 @@ selectLongshots(races, settings): LongshotPick[]
 |------|------|------|
 | 軸馬候補 | 実際に **1着** | 馬単位の Recall / Precision（Top3 命中率） |
 | 超注目馬 | **1着**（主）／ ≤3着（副） | 件数少なめなので日次より週次 |
+| 危険1人気 | フラグあり1人気が **1着でない**（副: ≤3着でない） | フラグなし1人気との差 |
 | 注目穴 | 現行どおり（関係馬 ≤3着 参考 ＋ ticketPrecision 主） | [HIT-RATE-PLAN.md](./HIT-RATE-PLAN.md) |
 
 発走前 freeze に軸 Top3・超注目フラグを保存し、evaluate で突合する（詳細は [DATA-AND-LOOP.md](./DATA-AND-LOOP.md) へ後続追記）。
@@ -620,6 +643,8 @@ src/
   domain/
     longshots.ts        # selectLongshots
     axis.ts             # selectAxisHorses（Top3・超注目判定）
+    dangerousFavorite.mjs  # 危険1人気フラグ判定
+    findDangerousFavorite.ts  # Scorer 接続。軸からは除外しない
     scoring/            # Scorer IF + ruleBased（place / win）
     betTypes.ts         # 券種定義
     journal.ts          # summarizeJournal 等
@@ -688,6 +713,7 @@ src/
 | Scorer | placePotential / winPotential を計算する差し替え可能モジュール |
 | 軸馬候補 | レース内 winPotential **Top3** の馬（単勝オッズ上限なし） |
 | 超注目馬 | 注目穴の関係馬かつ軸馬候補である馬 |
+| 危険1人気 | 1番人気のうち、人気を除いた1着適性が弱い／先行有利コースの差し追込。印のみ。軸からは外さない |
 | 見送り | オッズゲートは通過したが最低スコア未満の買い目 |
 | レース期待度 | 開催日内の穴候補の相対的な厚み（S〜D）。件数だけでは上がらない |
 | BetSlip | 自分の購入または予想家の参考買い目 1 件分の記録 |

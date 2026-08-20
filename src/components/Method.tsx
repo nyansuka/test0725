@@ -12,6 +12,10 @@ const steps = [
     body: "別スコア winPotential で1着見込みを出し、レース内 Top3 を軸馬候補とします。人気を強く反映し、Top3 に中穴が無いときだけ 6〜10人気を適性条件（前走勝ち／複勝圏＋適性、同条件ベストタイムがレース内上位20%、または適性合成≥65）かつスコアが3枠目に近い場合に差し替えます。11人気以下は対象外。",
   },
   {
+    title: "危険1人気",
+    body: "1番人気を無条件では消しません。人気を除いた1着適性がレース中央値未満、または新潟芝で差し・追込のときに「危1」印を付けます。軸候補からは外さず、高配当狙いの相手カット用です。",
+  },
+  {
     title: "短評（評価＋傾向）",
     body: "短評は①オッズ帯のベース文 ②因子トップの評価 ③改善ループ蓄積（券種・会場芝ダ等）の候補成功率。成功は関係馬が3着以内（馬券内以上）。馬の前走成績ではなく、過去候補の統計です。他日があれば表示日を除外し、他日が無いときだけ当日検証を注記付きで使います。",
   },
@@ -30,7 +34,7 @@ export function Method() {
           本命探しではなく高配当候補の選別。穴（複勝圏）と軸（1着）を分け、交差を超注目とします。
         </p>
 
-        <ol className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <ol className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, index) => (
             <li key={step.title}>
               <p className="font-[family-name:var(--font-display)] text-2xl font-bold text-signal-soft/80">

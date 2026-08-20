@@ -14,7 +14,7 @@ import { useSettings } from "@/components/SettingsProvider";
 import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
 import { LongshotTable } from "@/components/LongshotTable";
-import { LongshotMark, AxisMark, SuperWatchMark, MidPromotedMark, longshotHorseNumbers } from "@/components/LongshotMark";
+import { LongshotMark, AxisMark, SuperWatchMark, MidPromotedMark, DangerousFavMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import Link from "next/link";
 import { RaceResultPanel } from "@/components/RaceResultPanel";
 import {
@@ -30,6 +30,10 @@ import {
 } from "@/domain/odds";
 import { evaluatePick, outcomeLabel } from "@/domain/results";
 import { axisIndexByNumber, selectAxisHorses } from "@/domain/axis";
+import {
+  dangerousFavReasonLabels,
+  findDangerousFirstFavorite,
+} from "@/domain/findDangerousFavorite";
 import { filterRacesByDate } from "@/data/races";
 import type { TipsterHorseRef } from "@/domain/tipsterRef";
 import {
@@ -234,6 +238,11 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
   const markedHorses = useMemo(() => longshotHorseNumbers(picks, race.id), [picks, race.id]);
   const axisPicks = useMemo(() => selectAxisHorses(race, picks), [race, picks]);
   const axisByNum = useMemo(() => axisIndexByNumber(axisPicks), [axisPicks]);
+  const dangerousFav = useMemo(() => findDangerousFirstFavorite(race), [race]);
+  const dangerousFavReasons = useMemo(
+    () => (dangerousFav?.flagged ? dangerousFavReasonLabels(dangerousFav.reasons) : []),
+    [dangerousFav],
+  );
   const popularity = useMemo(() => popularityByNumber(race.horses), [race.horses]);
   const [openId, setOpenId] = useState<number | null>(null);
   const [tipster, setTipster] = useState<TipsterRefPayload | null>(initialTipster);
@@ -304,7 +313,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
             {" · "}
             {race.raceDate} · {race.raceNumber}R · {race.startTime}
           </p>
-          <h1 className="mt-1 text-xl font-bold text-ink sm:text-2xl">{race.title}</h1>
+          <h1 className="mt-1 break-words text-xl font-bold text-ink sm:text-2xl">{race.title}</h1>
           <p className="mt-1 text-sm text-ink/60">
             {race.distance} · {race.weather}/{race.condition} · 候補 {picks.length}
           </p>
@@ -322,6 +331,14 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
 
       <RaceResultPanel race={race} compact />
 
+      {dangerousFav?.flagged ? (
+        <p className="border border-ink/15 bg-ink/5 px-3 py-2 text-xs leading-relaxed text-ink/70">
+          <DangerousFavMark reasons={dangerousFavReasons} className="mr-1 align-middle" />
+          {dangerousFav.horseNumber}番は危険1人気（{dangerousFavReasons.join("・")}
+          ）。軸候補からは外していません。高配当を狙うときの相手カット候補です。
+        </p>
+      ) : null}
+
       <section>
         <h2 className="text-sm font-semibold text-ink">軸馬候補（Top3）</h2>
         <ul className="mt-2 divide-y divide-ink/10 border-y border-ink/10">
@@ -335,6 +352,9 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                 <AxisMark rank={ax.rankInRace} />
                 {ax.midPromoted ? <MidPromotedMark /> : null}
                 {ax.isSuperWatch ? <SuperWatchMark /> : null}
+                {dangerousFav?.flagged && ax.horseNumber === dangerousFav.horseNumber ? (
+                  <DangerousFavMark reasons={dangerousFavReasons} />
+                ) : null}
                 <span className="font-[family-name:var(--font-display)] font-semibold tabular-nums">
                   {ax.horseNumber}
                 </span>
@@ -392,11 +412,13 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-sm font-semibold text-ink">
             出馬表
-            <span className="ml-2 text-[11px] font-normal text-ink/45">
+            <span className="ml-2 hidden text-[11px] font-normal text-ink/45 sm:inline">
               穴
               <LongshotMark className="mx-0.5" />
               · 軸
               <AxisMark className="mx-0.5" />
+              · 危1
+              <DangerousFavMark className="mx-0.5" />
               · 超注目
               <SuperWatchMark className="mx-0.5 align-middle" />
               {tipster ? " · 参考印" : ""}
@@ -421,7 +443,125 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
           </button>
         </div>
 
-        <div className="mt-2 overflow-x-auto">
+        <div className="mt-2 flex items-center gap-2 md:hidden">
+          <label className="flex min-w-0 flex-1 items-center gap-2 text-xs text-ink/60">
+            並び
+            <select
+              value={sort.key}
+              onChange={(e) =>
+                setSort({ key: e.target.value as EntrySortKey, dir: sort.dir })
+              }
+              className="min-w-0 flex-1 border border-ink/15 bg-sand px-2 py-1.5 text-sm text-ink"
+            >
+              {(Object.entries(SORT_LABELS) as [EntrySortKey, string][])
+                .filter(([key]) => key !== "tipScore" || Boolean(tipster))
+                .map(([key, label]) => (
+                  <option key={key} value={key}>
+                    {label}
+                  </option>
+                ))}
+            </select>
+          </label>
+          <button
+            type="button"
+            onClick={() =>
+              setSort({ key: sort.key, dir: sort.dir === "asc" ? "desc" : "asc" })
+            }
+            className="shrink-0 border border-ink/15 px-2.5 py-1.5 text-xs text-ink/70"
+          >
+            {sort.dir === "asc" ? "昇順" : "降順"}
+          </button>
+        </div>
+
+        <ul className="mt-2 space-y-1.5 md:hidden">
+          {horseRows.map((horse) => {
+            const open = openId === horse.number;
+            const marked = markedHorses.has(horse.number);
+            const axis = axisByNum.get(horse.number);
+            const tip = tipsterByNum.get(horse.number);
+            const tipMarked = Boolean(tip?.mark);
+            const highlight = marked || Boolean(axis) || tipMarked;
+            return (
+              <li
+                key={horse.number}
+                className={`border border-ink/10 px-2.5 py-2 text-sm ${
+                  axis?.isSuperWatch
+                    ? "bg-signal/8"
+                    : highlight
+                      ? "bg-signal/5"
+                      : "bg-sand"
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenId(open ? null : horse.number)}
+                  className="flex w-full items-start gap-2 text-left"
+                  aria-expanded={open}
+                >
+                  <span className="flex min-w-[1.75rem] flex-wrap items-center gap-0.5 pt-0.5">
+                    {marked ? <LongshotMark /> : null}
+                    {axis ? <AxisMark rank={axis.rankInRace} /> : null}
+                    {axis?.isSuperWatch ? <SuperWatchMark /> : null}
+                    {axis?.midPromoted ? <MidPromotedMark /> : null}
+                    {dangerousFav?.flagged && horse.number === dangerousFav.horseNumber ? (
+                      <DangerousFavMark reasons={dangerousFavReasons} />
+                    ) : null}
+                    {tip ? <TipsterMark mark={tip.mark} /> : null}
+                    {!marked && !axis && !tip && !(dangerousFav?.flagged && horse.number === dangerousFav.horseNumber) ? (
+                      <span className="text-ink/25">{open ? "−" : "+"}</span>
+                    ) : null}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block break-words font-medium text-ink">
+                      <span className="mr-1.5 font-[family-name:var(--font-display)] font-semibold tabular-nums">
+                        {horse.number}
+                      </span>
+                      {horse.name}
+                    </span>
+                    <span className="mt-0.5 block text-[11px] text-ink/55">
+                      {horse.jockey} · {formatPopularity(popularity.get(horse.number))} · 単{" "}
+                      {formatWinOdds(horse.oddsWin)} · 複 {placeOddsLabel(horse, race)}
+                      {tipster ? ` · 参考 ${tip?.score ?? "—"}` : ""}
+                    </span>
+                  </span>
+                  <span className="shrink-0 text-right text-[11px]">
+                    <span className="block font-[family-name:var(--font-display)] text-sm text-turf">
+                      穴 {horse.placePotential}
+                    </span>
+                    <span className="text-ink/55">軸 {horse.winPotential ?? "—"}</span>
+                  </span>
+                </button>
+                {open ? (
+                  <div className="mt-2 border-t border-ink/10 pt-2">
+                    <p className="text-xs leading-relaxed text-ink/70">{horse.rationale}</p>
+                    <div className="mt-2 grid grid-cols-2 gap-1.5">
+                      {factorLabels.map(([key, label]) => {
+                        const value =
+                          key === "gateJockey"
+                            ? (horse.factors.gateJockey ?? 50)
+                            : horse.factors[key];
+                        return (
+                          <div key={key}>
+                            <div className="flex justify-between text-[10px] text-ink/45">
+                              <span>{label}</span>
+                              <span>{value}</span>
+                            </div>
+                            <div className="mt-0.5 h-1 bg-sand-dim">
+                              <div className="h-full bg-turf" style={{ width: `${value}%` }} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <p className="mt-2 text-xs text-ink/55">{horse.comment}</p>
+                  </div>
+                ) : null}
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="mt-2 hidden overflow-x-auto md:block">
           <table className="w-full min-w-[640px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-ink/15 bg-sand-dim/50 text-[11px] text-ink/45">
@@ -472,8 +612,11 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                           {axis ? <AxisMark rank={axis.rankInRace} /> : null}
                           {axis?.isSuperWatch ? <SuperWatchMark /> : null}
                           {axis?.midPromoted ? <MidPromotedMark /> : null}
+                          {dangerousFav?.flagged && horse.number === dangerousFav.horseNumber ? (
+                            <DangerousFavMark reasons={dangerousFavReasons} />
+                          ) : null}
                           {tip ? <TipsterMark mark={tip.mark} /> : null}
-                          {!marked && !axis && !tip ? (
+                          {!marked && !axis && !tip && !(dangerousFav?.flagged && horse.number === dangerousFav.horseNumber) ? (
                             <span className="text-ink/25">{open ? "−" : "+"}</span>
                           ) : null}
                         </button>

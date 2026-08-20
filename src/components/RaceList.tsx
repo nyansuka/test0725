@@ -7,12 +7,12 @@ import {
   assignDayExpectationRanks,
   selectLongshots,
 } from "@/domain/longshots";
-import type { Race } from "@/domain/types";
+import type { Horse, LongshotPick, Race } from "@/domain/types";
 import { useSettings } from "@/components/SettingsProvider";
 import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
 import { filterRacesByDate, groupRacesByVenue } from "@/data/races";
-import { LongshotMark, AxisMark, SuperWatchMark, longshotHorseNumbers } from "@/components/LongshotMark";
+import { LongshotMark, AxisMark, SuperWatchMark, DangerousFavMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import { formatJstDateLabel } from "@/domain/date";
 import { formatFinishLine, raceHasResult } from "@/domain/results";
 import {
@@ -23,6 +23,10 @@ import {
   popularityByNumber,
 } from "@/domain/odds";
 import { axisIndexByNumber, selectAxisHorses } from "@/domain/axis";
+import {
+  dangerousFavReasonLabels,
+  findDangerousFirstFavorite,
+} from "@/domain/findDangerousFavorite";
 
 type Props = {
   races?: Race[];
@@ -35,6 +39,196 @@ const rankColor: Record<string, string> = {
   C: "bg-ink/10 text-ink/70",
   D: "bg-ink/5 text-ink/40",
 };
+
+function RaceExpandBody({
+  race,
+  horses,
+  rank,
+  markedHorses,
+  axisByNum,
+  superWatchCount,
+  pickCount,
+  picks,
+  dangerousFav,
+}: {
+  race: Race;
+  horses: Horse[];
+  rank: string;
+  markedHorses: Set<number>;
+  axisByNum: ReturnType<typeof axisIndexByNumber>;
+  superWatchCount: number;
+  pickCount: number;
+  picks: LongshotPick[];
+  dangerousFav: ReturnType<typeof findDangerousFirstFavorite>;
+}) {
+  const pop = popularityByNumber(horses);
+  const rows = [...horses].sort((a, b) => a.number - b.number);
+  const dangReasons =
+    dangerousFav?.flagged ? dangerousFavReasonLabels(dangerousFav.reasons) : [];
+  return (
+    <>
+      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-ink/60">
+        <span>発走 {race.startTime}</span>
+        <span>{race.track}</span>
+        <span>頭数 {race.horses.length}</span>
+        <span>期待度 {rank}</span>
+        <span>
+          候補 {pickCount} · 穴 {markedHorses.size}
+          {superWatchCount > 0 ? ` · 超注目 ${superWatchCount}` : ""}
+        </span>
+        {dangerousFav?.flagged ? (
+          <span className="inline-flex items-center gap-1">
+            <DangerousFavMark reasons={dangReasons} />
+            {dangerousFav.horseNumber}番
+          </span>
+        ) : null}
+      </div>
+
+      <ul className="mt-3 space-y-1.5 md:hidden">
+        {rows.map((horse) => {
+          const marked = markedHorses.has(horse.number);
+          const axis = axisByNum.get(horse.number);
+          return (
+            <li
+              key={horse.number}
+              className={`border border-ink/10 px-2.5 py-2 text-sm ${
+                axis?.isSuperWatch
+                  ? "bg-signal/8"
+                  : marked || axis
+                    ? "bg-signal/5"
+                    : "bg-sand"
+              }`}
+            >
+              <div className="flex items-start gap-2">
+                <span className="flex min-w-[2rem] flex-wrap items-center gap-0.5">
+                  {marked ? <LongshotMark /> : null}
+                  {axis ? <AxisMark rank={axis.rankInRace} /> : null}
+                  {axis?.isSuperWatch ? <SuperWatchMark /> : null}
+                  {dangerousFav?.flagged && horse.number === dangerousFav.horseNumber ? (
+                    <DangerousFavMark reasons={dangReasons} />
+                  ) : null}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="break-words font-medium text-ink">
+                    <span className="mr-1.5 font-[family-name:var(--font-display)] font-semibold tabular-nums">
+                      {horse.number}
+                    </span>
+                    {horse.name}
+                  </p>
+                  <p className="mt-0.5 text-[11px] text-ink/55">
+                    {horse.jockey} · {formatPopularity(pop.get(horse.number))} · 単{" "}
+                    {formatWinOdds(horse.oddsWin)} · 複 {placeOddsLabel(horse, race)}
+                  </p>
+                </div>
+                <div className="shrink-0 text-right text-[11px]">
+                  <p className="font-[family-name:var(--font-display)] text-sm text-turf">
+                    穴 {horse.placePotential}
+                  </p>
+                  <p className="text-ink/55">軸 {horse.winPotential ?? "—"}</p>
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      <div className="mt-3 hidden overflow-x-auto md:block">
+        <table className="w-full min-w-[600px] text-left text-xs">
+          <thead>
+            <tr className="border-b border-ink/15 text-ink/45">
+              <th className="py-1 pr-2 font-medium">印</th>
+              <th className="py-1 pr-2 font-medium">馬番</th>
+              <th className="py-1 pr-2 font-medium">馬名</th>
+              <th className="py-1 pr-2 font-medium">騎手</th>
+              <th className="py-1 pr-2 font-medium">人気</th>
+              <th className="py-1 pr-2 font-medium">単勝</th>
+              <th className="py-1 pr-2 font-medium">複勝</th>
+              <th className="py-1 pr-2 font-medium">穴</th>
+              <th className="py-1 font-medium">軸</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((horse) => {
+              const marked = markedHorses.has(horse.number);
+              const axis = axisByNum.get(horse.number);
+              return (
+                <tr
+                  key={horse.number}
+                  className={`border-b border-ink/8 ${
+                    axis?.isSuperWatch
+                      ? "bg-signal/8"
+                      : marked || axis
+                        ? "bg-signal/5"
+                        : ""
+                  }`}
+                >
+                  <td className="py-1 pr-2">
+                    <span className="flex flex-wrap items-center gap-0.5">
+                      {marked ? <LongshotMark /> : null}
+                      {axis ? <AxisMark rank={axis.rankInRace} /> : null}
+                      {axis?.isSuperWatch ? <SuperWatchMark /> : null}
+                      {dangerousFav?.flagged && horse.number === dangerousFav.horseNumber ? (
+                        <DangerousFavMark reasons={dangReasons} />
+                      ) : null}
+                    </span>
+                  </td>
+                  <td className="py-1 pr-2 font-[family-name:var(--font-display)] font-semibold tabular-nums">
+                    {horse.number}
+                  </td>
+                  <td className="py-1 pr-2 font-medium">{horse.name}</td>
+                  <td className="py-1 pr-2 text-ink/60">{horse.jockey}</td>
+                  <td className="py-1 pr-2">{formatPopularity(pop.get(horse.number))}</td>
+                  <td className="py-1 pr-2 font-medium text-signal">
+                    {formatWinOdds(horse.oddsWin)}
+                  </td>
+                  <td className="py-1 pr-2 text-ink/70">{placeOddsLabel(horse, race)}</td>
+                  <td className="py-1 pr-2 font-[family-name:var(--font-display)] text-turf">
+                    {horse.placePotential}
+                  </td>
+                  <td className="py-1 font-[family-name:var(--font-display)] text-ink/70">
+                    {horse.winPotential ?? "—"}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {picks.length > 0 && (
+        <div className="mt-3">
+          <p className="text-[11px] tracking-wider text-ink/45">このレースの候補</p>
+          <ul className="mt-1 space-y-0.5 text-xs text-ink/75">
+            {picks.slice(0, 6).map((pick) => {
+              const popLabel = pick.relatedHorseNumbers
+                .map((n) => formatPopularityParen(pop.get(n)))
+                .filter(Boolean)
+                .join("");
+              return (
+                <li key={`${pick.betType}-${pick.selection}`} className="break-words">
+                  {pick.label === "注目穴" && <LongshotMark className="mr-1" />}
+                  {pick.hasSuperWatch && <SuperWatchMark className="mr-1 align-middle" />}
+                  {pick.label} · {pick.selection}
+                  {popLabel ? ` ${popLabel}` : ""} · {formatWinOdds(pick.odds)} · スコア{" "}
+                  {pick.relatedPlacePotential}
+                </li>
+              );
+            })}
+            {picks.length > 6 && (
+              <li className="text-ink/45">ほか {picks.length - 6} 件…</li>
+            )}
+          </ul>
+        </div>
+      )}
+
+      <Link
+        href={`/races/${race.id}`}
+        className="mt-3 inline-flex text-xs font-medium text-turf hover:underline"
+      >
+        レース詳細へ（カテゴリ内訳・オッズ板）
+      </Link>
+    </>
+  );
+}
 
 export function RaceList({ races: racesProp }: Props) {
   const { races: catalogRaces } = useRaceCatalog();
@@ -70,6 +264,7 @@ export function RaceList({ races: racesProp }: Props) {
           markedHorses: longshotHorseNumbers(picks, race.id),
           axisByNum: axisIndexByNumber(axis),
           superWatchCount: axis.filter((a) => a.isSuperWatch).length,
+          dangerousFav: findDangerousFirstFavorite(race),
         };
       }),
     }));
@@ -117,6 +312,8 @@ export function RaceList({ races: racesProp }: Props) {
               <LongshotMark className="mx-0.5" />
               · 超注目
               <SuperWatchMark className="mx-0.5 align-middle" />
+              · 危1
+              <DangerousFavMark className="mx-0.5 align-middle" />
               · 期待度は開催日内の相対評価（S〜D）
             </p>
           </div>
@@ -165,7 +362,104 @@ export function RaceList({ races: racesProp }: Props) {
             aria-labelledby={`tab-${activeGroup.venue}`}
             className="mt-0"
           >
-            <div className="overflow-x-auto">
+            <ul className="divide-y divide-ink/10 md:hidden">
+              {activeGroup.races.map(
+                ({ race, picks, pickCount, rank, markedHorses, axisByNum, superWatchCount, dangerousFav }) => {
+                  const open = expandedId === race.id;
+                  const horses = open ? enrichHorseScores(race) : [];
+                  const done = raceHasResult(race);
+                  return (
+                    <li
+                      key={race.id}
+                      id={race.id}
+                      className={open ? "bg-sand-dim/30" : ""}
+                    >
+                      <div className="flex items-start gap-3 py-2.5">
+                        <button
+                          type="button"
+                          onClick={() => setExpandedId(open ? null : race.id)}
+                          className="min-w-0 flex-1 text-left"
+                          aria-expanded={open}
+                        >
+                          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                            <span
+                              className={`font-[family-name:var(--font-display)] text-sm font-bold tabular-nums ${
+                                done ? "text-ink/50" : "text-ink"
+                              }`}
+                            >
+                              {race.raceNumber}R
+                            </span>
+                            <span className="text-sm tabular-nums text-ink/65">{race.startTime}</span>
+                            {done ? (
+                              <span className="rounded-sm bg-ink/8 px-1 py-0.5 text-[10px] font-medium text-ink/55">
+                                結果
+                              </span>
+                            ) : null}
+                          </div>
+                          <p
+                            className={`mt-0.5 break-words text-sm font-medium leading-snug ${
+                              done ? "text-ink/60" : "text-ink"
+                            }`}
+                          >
+                            {race.title}
+                          </p>
+                          <p className="mt-0.5 text-[11px] text-ink/50">
+                            {race.track} {race.distance} · {race.weather}/{race.condition} · 候補{" "}
+                            {pickCount}/{markedHorses.size}
+                            {superWatchCount > 0 ? ` +${superWatchCount}` : ""}
+                          </p>
+                          {done && race.result ? (
+                            <p className="mt-0.5 break-words text-[11px] text-ink/45">
+                              {formatFinishLine(race.result)}
+                            </p>
+                          ) : null}
+                        </button>
+                        <div className="flex shrink-0 flex-col items-end gap-1 pt-0.5">
+                          <span
+                            className={`inline-flex h-6 w-6 items-center justify-center font-[family-name:var(--font-display)] text-xs font-bold ${rankColor[rank]}`}
+                            title={`レース期待度 ${rank}`}
+                          >
+                            {rank}
+                          </span>
+                          <span className="inline-flex items-center gap-0.5">
+                            {markedHorses.size > 0 ? <LongshotMark className="text-sm" /> : null}
+                            {superWatchCount > 0 ? (
+                              <SuperWatchMark className="align-middle text-sm" />
+                            ) : null}
+                            {dangerousFav?.flagged ? (
+                              <DangerousFavMark
+                                reasons={dangerousFavReasonLabels(dangerousFav.reasons)}
+                                className="text-sm"
+                              />
+                            ) : null}
+                          </span>
+                          <Link href={`/races/${race.id}`} className="text-xs text-turf hover:underline">
+                            詳細
+                          </Link>
+                        </div>
+                      </div>
+                      {open ? (
+                        <div className="pb-3">
+                          <RaceExpandBody
+                            race={race}
+                            horses={horses}
+                            rank={rank}
+                            markedHorses={markedHorses}
+                            axisByNum={axisByNum}
+                            superWatchCount={superWatchCount}
+                            pickCount={pickCount}
+                            picks={picks}
+                            dangerousFav={dangerousFav}
+                          />
+                        </div>
+                      ) : null}
+                    </li>
+                  );
+                },
+              )}
+            </ul>
+
+            <div className="hidden overflow-x-auto md:block">
               <table className="w-full min-w-[640px] border-collapse text-left text-sm">
                 <thead>
                   <tr className="border-b border-ink/15 bg-sand-dim/50 text-[11px] tracking-wide text-ink/45">
@@ -182,14 +476,14 @@ export function RaceList({ races: racesProp }: Props) {
                 </thead>
                 <tbody>
                   {activeGroup.races.map(
-                    ({ race, picks, pickCount, rank, markedHorses, axisByNum, superWatchCount }) => {
+                    ({ race, picks, pickCount, rank, markedHorses, axisByNum, superWatchCount, dangerousFav }) => {
                       const open = expandedId === race.id;
                       const horses = open ? enrichHorseScores(race) : [];
                       const done = raceHasResult(race);
                       return (
                         <Fragment key={race.id}>
                           <tr
-                            id={race.id}
+                            id={`desktop-${race.id}`}
                             className={`border-b border-ink/10 transition hover:bg-sand-dim/40 ${
                               open ? "bg-sand-dim/30" : ""
                             } ${done ? "text-ink/55" : ""}`}
@@ -253,7 +547,15 @@ export function RaceList({ races: racesProp }: Props) {
                                 {superWatchCount > 0 ? (
                                   <SuperWatchMark className="align-middle text-sm" />
                                 ) : null}
-                                {markedHorses.size === 0 && superWatchCount === 0 ? (
+                                {dangerousFav?.flagged ? (
+                                  <DangerousFavMark
+                                    reasons={dangerousFavReasonLabels(dangerousFav.reasons)}
+                                    className="text-sm"
+                                  />
+                                ) : null}
+                                {markedHorses.size === 0 &&
+                                superWatchCount === 0 &&
+                                !dangerousFav?.flagged ? (
                                   <span className="text-ink/25">·</span>
                                 ) : null}
                               </span>
@@ -278,168 +580,17 @@ export function RaceList({ races: racesProp }: Props) {
                           {open ? (
                             <tr className="border-b border-ink/10 bg-sand-dim/25">
                               <td colSpan={9} className="px-3 py-3">
-                                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-ink/60">
-                                  <span>発走 {race.startTime}</span>
-                                  <span>{race.track}</span>
-                                  <span>頭数 {race.horses.length}</span>
-                                  <span>期待度 {rank}</span>
-                                  <span>候補 {pickCount} · 穴 {markedHorses.size}
-                                    {superWatchCount > 0 ? ` · 超注目 ${superWatchCount}` : ""}
-                                  </span>
-                                </div>
-
-                                {(() => {
-                                  const pop = popularityByNumber(horses);
-                                  const rows = [...horses].sort((a, b) => a.number - b.number);
-                                  return (
-                                    <>
-                                      <ul className="mt-3 space-y-1.5 md:hidden">
-                                        {rows.map((horse) => {
-                                          const marked = markedHorses.has(horse.number);
-                                          const axis = axisByNum.get(horse.number);
-                                          return (
-                                            <li
-                                              key={horse.number}
-                                              className={`border border-ink/10 px-2.5 py-2 text-sm ${
-                                                axis?.isSuperWatch
-                                                  ? "bg-signal/8"
-                                                  : marked || axis
-                                                    ? "bg-signal/5"
-                                                    : "bg-sand"
-                                              }`}
-                                            >
-                                              <div className="flex items-start gap-2">
-                                                <span className="flex min-w-[2rem] flex-wrap items-center gap-0.5">
-                                                  {marked ? <LongshotMark /> : null}
-                                                  {axis ? <AxisMark rank={axis.rankInRace} /> : null}
-                                                  {axis?.isSuperWatch ? <SuperWatchMark /> : null}
-                                                </span>
-                                                <div className="min-w-0 flex-1">
-                                                  <p className="font-medium text-ink">
-                                                    <span className="mr-1.5 font-[family-name:var(--font-display)] font-semibold tabular-nums">
-                                                      {horse.number}
-                                                    </span>
-                                                    {horse.name}
-                                                  </p>
-                                                  <p className="mt-0.5 text-[11px] text-ink/55">
-                                                    {horse.jockey} · {formatPopularity(pop.get(horse.number))} ·
-                                                    単 {formatWinOdds(horse.oddsWin)} · 複{" "}
-                                                    {placeOddsLabel(horse, race)}
-                                                  </p>
-                                                </div>
-                                                <div className="shrink-0 text-right text-[11px]">
-                                                  <p className="font-[family-name:var(--font-display)] text-sm text-turf">
-                                                    穴 {horse.placePotential}
-                                                  </p>
-                                                  <p className="text-ink/55">軸 {horse.winPotential ?? "—"}</p>
-                                                </div>
-                                              </div>
-                                            </li>
-                                          );
-                                        })}
-                                      </ul>
-                                      <div className="mt-3 hidden overflow-x-auto md:block">
-                                        <table className="w-full min-w-[600px] text-left text-xs">
-                                          <thead>
-                                            <tr className="border-b border-ink/15 text-ink/45">
-                                              <th className="py-1 pr-2 font-medium">印</th>
-                                              <th className="py-1 pr-2 font-medium">馬番</th>
-                                              <th className="py-1 pr-2 font-medium">馬名</th>
-                                              <th className="py-1 pr-2 font-medium">騎手</th>
-                                              <th className="py-1 pr-2 font-medium">人気</th>
-                                              <th className="py-1 pr-2 font-medium">単勝</th>
-                                              <th className="py-1 pr-2 font-medium">複勝</th>
-                                              <th className="py-1 pr-2 font-medium">穴</th>
-                                              <th className="py-1 font-medium">軸</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                            {rows.map((horse) => {
-                                              const marked = markedHorses.has(horse.number);
-                                              const axis = axisByNum.get(horse.number);
-                                              return (
-                                                <tr
-                                                  key={horse.number}
-                                                  className={`border-b border-ink/8 ${
-                                                    axis?.isSuperWatch
-                                                      ? "bg-signal/8"
-                                                      : marked || axis
-                                                        ? "bg-signal/5"
-                                                        : ""
-                                                  }`}
-                                                >
-                                                  <td className="py-1 pr-2">
-                                                    <span className="flex flex-wrap items-center gap-0.5">
-                                                      {marked ? <LongshotMark /> : null}
-                                                      {axis ? <AxisMark rank={axis.rankInRace} /> : null}
-                                                      {axis?.isSuperWatch ? <SuperWatchMark /> : null}
-                                                    </span>
-                                                  </td>
-                                                  <td className="py-1 pr-2 font-[family-name:var(--font-display)] font-semibold tabular-nums">
-                                                    {horse.number}
-                                                  </td>
-                                                  <td className="py-1 pr-2 font-medium">{horse.name}</td>
-                                                  <td className="py-1 pr-2 text-ink/60">{horse.jockey}</td>
-                                                  <td className="py-1 pr-2">{formatPopularity(pop.get(horse.number))}</td>
-                                                  <td className="py-1 pr-2 font-medium text-signal">
-                                                    {formatWinOdds(horse.oddsWin)}
-                                                  </td>
-                                                  <td className="py-1 pr-2 text-ink/70">
-                                                    {placeOddsLabel(horse, race)}
-                                                  </td>
-                                                  <td className="py-1 pr-2 font-[family-name:var(--font-display)] text-turf">
-                                                    {horse.placePotential}
-                                                  </td>
-                                                  <td className="py-1 font-[family-name:var(--font-display)] text-ink/70">
-                                                    {horse.winPotential ?? "—"}
-                                                  </td>
-                                                </tr>
-                                              );
-                                            })}
-                                          </tbody>
-                                        </table>
-                                      </div>
-                                    </>
-                                  );
-                                })()}
-
-                                {picks.length > 0 && (
-                                  <div className="mt-3">
-                                    <p className="text-[11px] tracking-wider text-ink/45">このレースの候補</p>
-                                    <ul className="mt-1 space-y-0.5 text-xs text-ink/75">
-                                      {picks.slice(0, 6).map((pick) => {
-                                        const pop = popularityByNumber(race.horses);
-                                        const popLabel = pick.relatedHorseNumbers
-                                          .map((n) => formatPopularityParen(pop.get(n)))
-                                          .filter(Boolean)
-                                          .join("");
-                                        return (
-                                          <li key={`${pick.betType}-${pick.selection}`}>
-                                            {pick.label === "注目穴" && (
-                                              <LongshotMark className="mr-1" />
-                                            )}
-                                            {pick.hasSuperWatch && (
-                                              <SuperWatchMark className="mr-1 align-middle" />
-                                            )}
-                                            {pick.label} · {pick.selection}
-                                            {popLabel ? ` ${popLabel}` : ""} · {formatWinOdds(pick.odds)} ·
-                                            スコア {pick.relatedPlacePotential}
-                                          </li>
-                                        );
-                                      })}
-                                      {picks.length > 6 && (
-                                        <li className="text-ink/45">ほか {picks.length - 6} 件…</li>
-                                      )}
-                                    </ul>
-                                  </div>
-                                )}
-
-                                <Link
-                                  href={`/races/${race.id}`}
-                                  className="mt-3 inline-flex text-xs font-medium text-turf hover:underline"
-                                >
-                                  レース詳細へ（カテゴリ内訳・オッズ板）
-                                </Link>
+                                <RaceExpandBody
+                                  race={race}
+                                  horses={horses}
+                                  rank={rank}
+                                  markedHorses={markedHorses}
+                                  axisByNum={axisByNum}
+                                  superWatchCount={superWatchCount}
+                                  pickCount={pickCount}
+                                  picks={picks}
+                                  dangerousFav={dangerousFav}
+                                />
                               </td>
                             </tr>
                           ) : null}
@@ -451,7 +602,7 @@ export function RaceList({ races: racesProp }: Props) {
               </table>
             </div>
             <p className="mt-2 text-[11px] text-ink/40">
-              候補列は「全候補 / 注目穴頭数」。R・レース名クリックで出馬を展開。
+              候補は「全候補 / 注目穴頭数」。レース名タップで出馬を展開。
             </p>
           </div>
         )}

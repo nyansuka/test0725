@@ -8,7 +8,7 @@ export {
   formSignalFromFormStats,
   FORM_SIGNAL_NEUTRAL,
 } from "./deriveFactors.mjs";
-export { applyDerivedFactors } from "./ruleBased";
+export { applyDerivedFactors, scoreFactorWin } from "./ruleBased";
 export {
   popularityWinScore,
   WIN_POP_BLEND,
