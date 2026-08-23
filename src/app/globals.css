@@ -37,13 +37,21 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  max-width: 100%;
+  overflow-x: clip;
   font-family: var(--font-jp), "Source Han Sans JP", "Noto Sans JP", "Hiragino Sans",
     "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, sans-serif;
+}
+
+input[type="date"] {
+  max-width: 100%;
+  min-width: 0;
 }
 
 ::selection {

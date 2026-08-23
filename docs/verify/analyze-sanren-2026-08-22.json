@@ -1,0 +1,149 @@
+{
+  "kind": "sanren-lab-verify",
+  "raceDate": "2026-08-22",
+  "builtAt": "2026-08-22T14:25:58.589Z",
+  "primaryMetric": "ticketPrecision",
+  "note": "Lane-separated. No combined ticketPrecision.",
+  "freeze": {
+    "preRace": false,
+    "frozenAt": "2026-08-22T13:54:17.698Z",
+    "sharedWithMainLoop": true
+  },
+  "lanes": {
+    "trio": {
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60,
+        "topNPerRace": 12,
+        "formMode": "formation"
+      },
+      "metrics": {
+        "candidates": 374,
+        "onBoard": 228,
+        "oddsNull": 146,
+        "ticketHits": 0,
+        "ticketPrecision": 0,
+        "placeHits": 256,
+        "placePrecision": 0.6844919786096256,
+        "density": 10.38888888888889,
+        "virtualStakeYen": 22800,
+        "virtualPayoutYen": 0,
+        "virtualReturnRatePercent": 0
+      },
+      "winningComboOnOddsBoard": 8,
+      "winningComboInPicks": 1,
+      "offBoardPickNote": "chukyo-20260822-11 4-7-12 payout 5130 (51.3x) was in formation picks with null odds; below threshold 100 so not a gate hit",
+      "byLabel": {
+        "研究所注目": { "candidates": 105, "placeHits": 75, "ticketHits": 0 },
+        "抑え": { "candidates": 269, "placeHits": 181, "ticketHits": 0 }
+      },
+      "ticketHits": [],
+      "priorDay": {
+        "raceDate": "2026-08-16",
+        "preRaceFreeze": true,
+        "candidates": 396,
+        "ticketHits": 1,
+        "ticketPrecision": 0.004347826086956522,
+        "virtualReturnRatePercent": 82.4
+      }
+    },
+    "trifecta": {
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60,
+        "topNPerRace": 80,
+        "formMode": "formation"
+      },
+      "metrics": {
+        "candidates": 604,
+        "onBoard": 604,
+        "oddsNull": 0,
+        "ticketHits": 2,
+        "ticketPrecision": 0.0033112582781456954,
+        "placeHits": 478,
+        "placePrecision": 0.7913907284768212,
+        "density": 16.77777777777778,
+        "virtualStakeYen": 60400,
+        "virtualPayoutYen": 53090,
+        "virtualReturnRatePercent": 87.9
+      },
+      "winningComboOnOddsBoard": 17,
+      "winningComboInPicks": 2,
+      "byLabel": {
+        "研究所注目": { "candidates": 82, "placeHits": 67, "ticketHits": 0 },
+        "抑え": { "candidates": 522, "placeHits": 411, "ticketHits": 2 }
+      },
+      "byOddsBand": {
+        "200-499": { "candidates": 365, "ticketHits": 2 },
+        "500-999": { "candidates": 239, "ticketHits": 0 }
+      },
+      "ticketHits": [
+        {
+          "raceId": "niigata-20260822-2",
+          "venue": "新潟",
+          "selection": "10-11-6",
+          "horses": ["ユイノリュウギ", "ベルグラース", "ニシノツムジカゼ"],
+          "axis": 10,
+          "odds": 214.3,
+          "label": "抑え",
+          "payoutYen": 16230
+        },
+        {
+          "raceId": "chukyo-20260822-9",
+          "venue": "中京",
+          "selection": "5-1-6",
+          "horses": ["キャネル", "シャンドゥレール", "ヴラディア"],
+          "axis": 5,
+          "odds": 348.3,
+          "label": "抑え",
+          "payoutYen": 36860
+        }
+      ],
+      "priorDay": {
+        "raceDate": "2026-08-16",
+        "preRaceFreeze": true,
+        "candidates": 626,
+        "ticketHits": 2,
+        "ticketPrecision": 0.003194888178913738,
+        "virtualReturnRatePercent": 147.5
+      }
+    }
+  },
+  "improvements": [
+    "trifecta produced 2 tickets two days in a row (8/16 and 8/22) after 8/08-09 zeros",
+    "both 8/22 trifecta tickets sit in 200-499 抑え with popular axis",
+    "trifecta virtual RR 87.9% (stake 60400 / payout 53090)"
+  ],
+  "regressions": [
+    "trio ticket 0 on board (228 settled); place 68% is not a win",
+    "lab 注目 label 0 tickets on both lanes",
+    "winning trifecta on board 17/36 but formation caught 2",
+    "trio still emits 146 null-odds picks that inflate density",
+    "post-result freeze same as main loop"
+  ],
+  "nextActions": [
+    {
+      "id": "hold-trifecta",
+      "lane": "trifecta",
+      "priority": 1,
+      "change": "Keep trifecta 200 / topN80",
+      "hypothesis": "Two live days of 200-499 抑え tickets; do not retune labels or threshold this week"
+    },
+    {
+      "id": "trio-board",
+      "lane": "trio",
+      "priority": 2,
+      "change": "Next trio lever is odds-board coverage, not oddsThreshold",
+      "hypothesis": "8/36 winning trios on board; today's formation 'hit' was 51.3x off-board and below gate 100"
+    },
+    {
+      "id": "no-merge",
+      "lane": "both",
+      "priority": 3,
+      "change": "Do not merge lab KPI with main board or across lanes; do not change both lanes the same week",
+      "hypothesis": "TRIFECTA-LAB S5 / DATA-AND-LOOP one-change rule"
+    }
+  ]
+}

@@ -147,8 +147,8 @@ function HorseHeadline({
     ? new Map(selectAxisHorses(race).map((a) => [a.horseNumber, a]))
     : new Map<number, ReturnType<typeof selectAxisHorses>[number]>();
   const titleClass = compact
-    ? "mt-0.5 font-[family-name:var(--font-display)] text-base font-semibold text-ink"
-    : "mt-1 font-[family-name:var(--font-display)] text-xl font-semibold text-ink";
+    ? "mt-0.5 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 font-[family-name:var(--font-display)] text-base font-semibold text-ink"
+    : "mt-1 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 font-[family-name:var(--font-display)] text-xl font-semibold text-ink";
   const nameClass = compact ? "ml-1.5 text-sm font-medium" : "ml-2 text-lg font-medium";
 
   if (group.sameHorseAsSelection) {
@@ -163,7 +163,7 @@ function HorseHeadline({
         ) : null}
         <p className={titleClass}>
           <span className="tabular-nums">{n}</span>
-          {horse ? <span className={nameClass}>{horse.name}</span> : null}
+          {horse ? <span className={`${nameClass} break-words`}>{horse.name}</span> : null}
           {rank != null && (
             <span className="ml-1.5 text-xs font-medium text-ink/60 sm:text-sm">
               {formatPopularityParen(rank)}
@@ -202,8 +202,8 @@ function HorseHeadline({
       <p
         className={
           compact
-            ? "mt-0.5 font-[family-name:var(--font-display)] text-sm font-semibold text-ink"
-            : "mt-1 font-[family-name:var(--font-display)] text-lg font-semibold text-ink"
+            ? "mt-0.5 flex flex-wrap items-baseline gap-x-1 gap-y-0.5 font-[family-name:var(--font-display)] text-sm font-semibold text-ink"
+            : "mt-1 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 font-[family-name:var(--font-display)] text-lg font-semibold text-ink"
         }
       >
         {horses.map((h, i) => (
@@ -335,8 +335,8 @@ export function LongshotTable({
             key={group.key}
             className={
               compact
-                ? "border border-ink/10 bg-sand-dim/20 px-3 py-2.5"
-                : "border border-ink/10 bg-sand-dim/25 px-4 py-4 md:px-5 md:py-5"
+                ? "overflow-hidden border border-ink/10 bg-sand-dim/20 px-3 py-2.5"
+                : "overflow-hidden border border-ink/10 bg-sand-dim/25 px-4 py-4 md:px-5 md:py-5"
             }
           >
             <div className="flex flex-wrap items-start justify-between gap-2">

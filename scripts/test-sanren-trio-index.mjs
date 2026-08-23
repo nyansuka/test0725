@@ -11,6 +11,7 @@ import {
   scalePlaceInRace,
   trioEvScore,
   trioHitScore,
+  trioHitScoreFavHoleHole,
 } from "../src/domain/sanrenTrioIndex.mjs";
 
 assert.equal(pairPriorValue(2, 4), 100);
@@ -47,6 +48,25 @@ const hit13 = trioHitScore({
   racePlaces: [40, 80, 90],
 });
 assert.ok(hit24 > hit13, "万馬券モードでは 2-4 が 1-3 より高い");
+
+const holeHole = trioHitScoreFavHoleHole({
+  favPop: 2,
+  holePopA: 7,
+  holePopB: 10,
+  holePlaceA: 80,
+  holePlaceB: 70,
+  racePlaces: [40, 80, 90],
+});
+assert.ok(holeHole > 40, "fav_hole_hole hit is in range");
+const holeHoleWeak = trioHitScoreFavHoleHole({
+  favPop: 5,
+  holePopA: 18,
+  holePopB: 17,
+  holePlaceA: 40,
+  holePlaceB: 40,
+  racePlaces: [40, 80, 90],
+});
+assert.ok(holeHole > holeHoleWeak, "better holes outscore extreme longshots");
 
 const ev150 = trioEvScore(60, 150);
 const ev100 = trioEvScore(60, 100);

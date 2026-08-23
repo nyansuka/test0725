@@ -14,6 +14,7 @@ import {
   comboSortScore,
   trioEvScore,
   trioHitScore,
+  trioHitScoreFavHoleHole,
 } from "./sanrenTrioIndex.mjs";
 
 /** TRIFECTA-LAB §3.2 仮初期値 */
@@ -123,6 +124,22 @@ function buildTrioComment(
   return [
     `${label}: 人気軸 ${axis.number}（${axisPop}人気）`,
     `×人気 ${partner.number} ×穴 ${hole.number}`,
+    `hit=${Math.round(hitScore)} ev=${Math.round(evScore)}`,
+  ].join(" ");
+}
+
+function buildTrioFavHoleHoleComment(
+  axis: Horse,
+  holeA: Horse,
+  holeB: Horse,
+  axisPop: number,
+  label: SanrenLabLabel,
+  hitScore: number,
+  evScore: number,
+): string {
+  return [
+    `${label}: 人気軸 ${axis.number}（${axisPop}人気）`,
+    `×穴 ${holeA.number} ×穴 ${holeB.number}`,
     `hit=${Math.round(hitScore)} ev=${Math.round(evScore)}`,
   ].join(" ");
 }
@@ -273,8 +290,9 @@ export function selectTrifectaLab(
 }
 
 /**
- * 3連複研究所: 人気軸 × 人気相手 × 穴（順不同・fav_fav_hole）。
- * TRIFECTA-LAB §8.3 / S2b。
+ * 3連複研究所: 人気軸 × 人気相手 × 穴（fav_fav_hole）と
+ * 人気軸 × 穴 × 穴（fav_hole_hole）。穴×穴×穴は出さない。
+ * TRIFECTA-LAB §8.3 / S2b。topN 内で ev 順に混ぜる。
  */
 export function selectTrioLab(
   races: Race[],
@@ -342,6 +360,54 @@ export function selectTrioLab(
     const racePicks: SanrenPick[] = [];
     const seen = new Set<string>();
 
+    const pushPick = (
+      nums: number[],
+      axis: (typeof scored)[number],
+      second: (typeof scored)[number],
+      third: (typeof scored)[number],
+      pattern: "fav_fav_hole" | "fav_hole_hole",
+      hitScore: number,
+    ) => {
+      const selection = sortedSelection(nums);
+      if (seen.has(selection)) return;
+      seen.add(selection);
+
+      const odds = boardOdds(race, "trio", selection);
+      if (odds != null) {
+        if (odds < settings.oddsThreshold) return;
+        if (settings.oddsMax != null && odds > settings.oddsMax) return;
+      }
+
+      const floorPlace = combinePlace([axis.place, second.place, third.place]);
+      if (floorPlace < settings.scoreMin) return;
+
+      const evScore = trioEvScore(hitScore, odds);
+      const sortedNums = [...nums].sort((a, b) => a - b);
+
+      racePicks.push({
+        raceId: race.id,
+        venue: race.venue,
+        raceNumber: race.raceNumber,
+        startTime: race.startTime,
+        track: race.track,
+        title: race.title,
+        betType: "trio",
+        selection,
+        odds,
+        axisHorseNumber: axis.horse.number,
+        secondHorseNumber: second.horse.number,
+        thirdHorseNumber: third.horse.number,
+        relatedHorseNumbers: sortedNums,
+        pattern,
+        relatedScore: hitScore,
+        hitScore,
+        evScore,
+        axisWinPotential: axis.win,
+        label: "抑え",
+        comment: "",
+      });
+    };
+
     for (const axis of axisList) {
       const partners = popularPool
         .filter((s) => s.horse.number !== axis.horse.number)
@@ -353,28 +419,6 @@ export function selectTrioLab(
           if (hole.horse.number === axis.horse.number) continue;
           if (hole.horse.number === partner.horse.number) continue;
 
-          const nums = [
-            axis.horse.number,
-            partner.horse.number,
-            hole.horse.number,
-          ];
-          const selection = sortedSelection(nums);
-          if (seen.has(selection)) continue;
-          seen.add(selection);
-
-          const odds = boardOdds(race, "trio", selection);
-          if (odds != null) {
-            if (odds < settings.oddsThreshold) continue;
-            if (settings.oddsMax != null && odds > settings.oddsMax) continue;
-          }
-
-          const floorPlace = combinePlace([
-            axis.place,
-            partner.place,
-            hole.place,
-          ]);
-          if (floorPlace < settings.scoreMin) continue;
-
           const hitScore = trioHitScore({
             favPopA: axis.pop,
             favPopB: partner.pop,
@@ -382,31 +426,44 @@ export function selectTrioLab(
             holePlace: hole.place,
             racePlaces,
           });
-          const evScore = trioEvScore(hitScore, odds);
-          const sortedNums = [...nums].sort((a, b) => a - b);
-
-          racePicks.push({
-            raceId: race.id,
-            venue: race.venue,
-            raceNumber: race.raceNumber,
-            startTime: race.startTime,
-            track: race.track,
-            title: race.title,
-            betType: "trio",
-            selection,
-            odds,
-            axisHorseNumber: axis.horse.number,
-            secondHorseNumber: partner.horse.number,
-            thirdHorseNumber: hole.horse.number,
-            relatedHorseNumbers: sortedNums,
-            pattern: "fav_fav_hole",
-            relatedScore: hitScore,
+          pushPick(
+            [axis.horse.number, partner.horse.number, hole.horse.number],
+            axis,
+            partner,
+            hole,
+            "fav_fav_hole",
             hitScore,
-            evScore,
-            axisWinPotential: axis.win,
-            label: "抑え",
-            comment: "",
-          });
+          );
+        }
+      }
+    }
+
+    if (holePool.length >= 2) {
+      for (const axis of axisList) {
+        for (let i = 0; i < holePool.length; i += 1) {
+          for (let j = i + 1; j < holePool.length; j += 1) {
+            const holeA = holePool[i];
+            const holeB = holePool[j];
+            if (holeA.horse.number === axis.horse.number) continue;
+            if (holeB.horse.number === axis.horse.number) continue;
+
+            const hitScore = trioHitScoreFavHoleHole({
+              favPop: axis.pop,
+              holePopA: holeA.pop,
+              holePopB: holeB.pop,
+              holePlaceA: holeA.place,
+              holePlaceB: holeB.place,
+              racePlaces,
+            });
+            pushPick(
+              [axis.horse.number, holeA.horse.number, holeB.horse.number],
+              axis,
+              holeA,
+              holeB,
+              "fav_hole_hole",
+              hitScore,
+            );
+          }
         }
       }
     }
@@ -427,15 +484,26 @@ export function selectTrioLab(
       const partnerH = race.horses.find((h) => h.number === pick.secondHorseNumber);
       const holeH = race.horses.find((h) => h.number === pick.thirdHorseNumber);
       if (axisH && partnerH && holeH) {
-        pick.comment = buildTrioComment(
-          axisH,
-          partnerH,
-          holeH,
-          pops.get(axisH.number) ?? 99,
-          label,
-          pick.hitScore ?? pick.relatedScore,
-          pick.evScore ?? pick.relatedScore,
-        );
+        pick.comment =
+          pick.pattern === "fav_hole_hole"
+            ? buildTrioFavHoleHoleComment(
+                axisH,
+                partnerH,
+                holeH,
+                pops.get(axisH.number) ?? 99,
+                label,
+                pick.hitScore ?? pick.relatedScore,
+                pick.evScore ?? pick.relatedScore,
+              )
+            : buildTrioComment(
+                axisH,
+                partnerH,
+                holeH,
+                pops.get(axisH.number) ?? 99,
+                label,
+                pick.hitScore ?? pick.relatedScore,
+                pick.evScore ?? pick.relatedScore,
+              );
       }
     }
 

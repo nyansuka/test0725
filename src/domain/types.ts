@@ -161,7 +161,11 @@ export type SanrenFormMode = "formation" | "box" | "multi";
 
 export type SanrenLabLabel = "研究所注目" | "抑え";
 
-export type SanrenPickPattern = "fav_fav_hole" | "ordered_axis" | "other";
+export type SanrenPickPattern =
+  | "fav_fav_hole"
+  | "fav_hole_hole"
+  | "ordered_axis"
+  | "other";
 
 /** レーン別 settings（trio / trifecta で分離） */
 export type SanrenLaneSettings = {

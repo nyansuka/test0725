@@ -32,7 +32,7 @@ export function Hero() {
             priority
             aria-hidden
           />
-          <p className="font-[family-name:var(--font-display)] text-[clamp(1.75rem,5vw,3.25rem)] font-extrabold leading-none tracking-[0.12em] text-sand">
+          <p className="font-[family-name:var(--font-display)] text-[clamp(1.75rem,5vw,3.25rem)] font-extrabold leading-none tracking-[0.06em] text-sand sm:tracking-[0.12em]">
             UMANOTE
           </p>
         </div>

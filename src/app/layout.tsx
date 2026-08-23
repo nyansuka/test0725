@@ -42,7 +42,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className="h-full antialiased">
-      <body className="flex min-h-full flex-col font-sans">
+      <body className="flex min-h-full max-w-full flex-col overflow-x-clip font-sans">
         <SettingsProvider>
           <RaceCatalogProvider>
             <RaceDayProvider>

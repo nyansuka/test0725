@@ -25,7 +25,9 @@ const oddsOk = picks.every(
   (p) => p.odds == null || p.odds >= DEFAULT_TRIO_LANE.oddsThreshold,
 );
 const allRacesOk = density.raceCount >= Math.min(20, races.length);
-const patternOk = picks.every((p) => p.pattern === "fav_fav_hole");
+const TRIO_PATTERNS = new Set(["fav_fav_hole", "fav_hole_hole"]);
+const patternOk = picks.every((p) => TRIO_PATTERNS.has(p.pattern));
+const favHoleHoleOk = picks.some((p) => p.pattern === "fav_hole_hole");
 const sortedOk = picks.every((p) => {
   const parts = p.selection.split("-").map(Number);
   const asc = [...parts].sort((a, b) => a - b);
@@ -90,14 +92,14 @@ console.log(
         label: p.label,
         pattern: p.pattern,
       })),
-      checks: { oddsOk, patternOk, sortedOk, noHoleAxis, indexOk, watchOk, evSortedOk, allRacesOk },
+      checks: { oddsOk, patternOk, favHoleHoleOk, sortedOk, noHoleAxis, indexOk, watchOk, evSortedOk, allRacesOk },
     },
     null,
     2,
   ),
 );
 
-if (!oddsOk || !patternOk || !sortedOk || !noHoleAxis || !indexOk || !watchOk || !evSortedOk || !allRacesOk) {
+if (!oddsOk || !patternOk || !favHoleHoleOk || !sortedOk || !noHoleAxis || !indexOk || !watchOk || !evSortedOk || !allRacesOk) {
   console.error("S2B_FAIL checks");
   process.exit(1);
 }

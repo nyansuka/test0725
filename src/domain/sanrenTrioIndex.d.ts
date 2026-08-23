@@ -17,5 +17,15 @@ export function trioHitScore(input: {
   holePlace: number;
   racePlaces: number[];
 }): number;
+export const FAV_SOLO_PRIOR_VALUE: Record<number, number>;
+export function favSoloPriorValue(favPop: number): number;
+export function trioHitScoreFavHoleHole(input: {
+  favPop: number;
+  holePopA: number;
+  holePopB: number;
+  holePlaceA: number;
+  holePlaceB: number;
+  racePlaces: number[];
+}): number;
 export function trioEvScore(hit: number, odds: number | null | undefined): number;
 export function comboSortScore(pick: { evScore?: number; relatedScore?: number }): number;

@@ -9,7 +9,7 @@ export default function SanrenTrioLabPage() {
         </p>
         <h2 className="mt-1 text-xl font-bold text-ink sm:text-2xl">3連複研究</h2>
         <p className="mt-2 max-w-2xl text-sm text-ink/65">
-          当日全レースの人気×人気×穴を hit / ev 指数で並べます。板に無い組み合わせは「板なし」と出し、的中集計は板つきだけ数えます。
+          当日全レースの人気×人気×穴と人気×穴×穴を hit / ev 指数で最大12点に混ぜます。板に無い組み合わせは「板なし」と出し、的中集計は板つきだけ数えます。
         </p>
       </div>
       <SanrenLabBoard lane="trio" />

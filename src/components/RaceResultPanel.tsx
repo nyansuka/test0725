@@ -32,7 +32,30 @@ export function RaceResultPanel({ race, compact = false }: Props) {
         </p>
       </div>
 
-      <div className="overflow-x-auto">
+      <ul className="divide-y divide-ink/10 md:hidden">
+        {finishes.map((f) => (
+          <li
+            key={f.number}
+            className={`py-1.5 ${compact ? "text-xs" : "text-sm"} ${
+              f.rank != null && f.rank <= 3 ? "bg-turf/5" : ""
+            }`}
+          >
+            <p className="min-w-0 break-words">
+              <span className="font-[family-name:var(--font-display)] font-semibold text-turf">
+                {f.rank ?? "—"}着
+              </span>
+              <span className="ml-2 font-semibold tabular-nums">{f.number}</span>
+              <span className="ml-1.5 font-medium">{f.name}</span>
+            </p>
+            <p className="mt-0.5 text-[11px] text-ink/55">
+              {f.jockey ?? "—"}
+              {f.time ? ` · ${f.time}` : ""}
+              {f.popularity != null ? ` · ${f.popularity}人` : ""}
+            </p>
+          </li>
+        ))}
+      </ul>
+      <div className="hidden overflow-x-auto md:block">
         <table
           className={`w-full text-left ${compact ? "min-w-[480px] text-xs" : "min-w-[520px] text-sm"}`}
         >

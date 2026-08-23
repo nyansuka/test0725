@@ -67,7 +67,7 @@ export function LongshotsBoard({ races: racesProp }: Props) {
           <span className="text-ink/40"> · 開催日は上部バーで変更</span>
         </p>
       </div>
-      <div className="flex flex-col gap-6 border border-ink/10 bg-sand-dim/40 p-5 md:p-6">
+      <div className="flex flex-col gap-4 border border-ink/10 bg-sand-dim/40 p-3 sm:gap-6 sm:p-5 md:p-6">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <label className="block text-sm">
             <span className="text-ink/60">オッズ閾値（以上）</span>
@@ -166,7 +166,7 @@ export function LongshotsBoard({ races: racesProp }: Props) {
               {label}
             </button>
           ))}
-          <span className="ml-auto text-ink/50">
+          <span className="w-full text-xs leading-relaxed text-ink/50 sm:ml-auto sm:w-auto sm:text-sm">
             {hydrated
               ? groupCount === picks.length
                 ? `${picks.length} 枠`

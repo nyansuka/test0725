@@ -19,14 +19,14 @@ export function RaceDayPicker({ variant = "panel", className = "" }: Props) {
   if (variant === "compact") {
     return (
       <div
-        className={`flex flex-wrap items-center gap-2 rounded-sm bg-sand px-2 py-1.5 text-sm text-ink shadow-sm ${className}`}
+        className={`flex min-w-0 max-w-full flex-wrap items-center gap-2 rounded-sm bg-sand px-2 py-1.5 text-sm text-ink shadow-sm ${className}`}
       >
         <span className="font-medium text-ink/70">開催日</span>
         <input
           type="date"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value || today)}
-          className="min-w-[9.5rem] border border-ink/20 bg-white px-2 py-1 text-ink"
+          className="w-[9.75rem] max-w-full min-w-0 border border-ink/20 bg-white px-2 py-1 text-ink"
           aria-label="開催日"
         />
         {hydrated && !isToday ? (

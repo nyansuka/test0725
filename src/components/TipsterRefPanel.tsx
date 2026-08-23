@@ -103,7 +103,7 @@ export function TipsterRefPanel({ tipster }: Props) {
           )}
 
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[420px] text-left text-sm">
+            <table className="w-full text-left text-sm md:min-w-[420px]">
               <thead>
                 <tr className="border-b border-ink/15 text-ink/40">
                   <th className="py-1.5 pr-2 font-medium">順</th>

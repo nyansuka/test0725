@@ -52,7 +52,7 @@ export function SiteHeader({ variant = "solid", showRaceDayBar = true }: Props) 
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6 md:px-8 md:py-5">
           <Link
             href="/"
-            className={`inline-flex items-center gap-2 font-[family-name:var(--font-display)] text-lg font-bold tracking-[0.18em] md:text-xl ${
+            className={`inline-flex min-w-0 items-center gap-2 font-[family-name:var(--font-display)] text-lg font-bold tracking-[0.08em] sm:tracking-[0.18em] md:text-xl ${
               overlay ? "text-sand" : "text-turf"
             }`}
           >

@@ -103,6 +103,43 @@ export function trioHitScore({
   return Number(hit.toFixed(1));
 }
 
+/** 人気1頭のソロ事前。既存 pair 重みに載せる（2人気を厚め） */
+export const FAV_SOLO_PRIOR_VALUE = {
+  1: 72,
+  2: 88,
+  3: 80,
+  4: 76,
+  5: 64,
+};
+
+const FAV_SOLO_FALLBACK = 40;
+
+export function favSoloPriorValue(favPop) {
+  return FAV_SOLO_PRIOR_VALUE[favPop] ?? FAV_SOLO_FALLBACK;
+}
+
+/** 人気1＋穴2。WEIGHTS は fav_fav_hole と同じ。穴2頭の prior / place は平均 */
+export function trioHitScoreFavHoleHole({
+  favPop,
+  holePopA,
+  holePopB,
+  holePlaceA,
+  holePlaceB,
+  racePlaces,
+}) {
+  const fav = favSoloPriorValue(favPop);
+  const hole = (holePriorValue(holePopA) + holePriorValue(holePopB)) / 2;
+  const place =
+    (scalePlaceInRace(holePlaceA, racePlaces) +
+      scalePlaceInRace(holePlaceB, racePlaces)) /
+    2;
+  const hit =
+    TRIO_HIT_WEIGHTS.pair * fav +
+    TRIO_HIT_WEIGHTS.holePop * hole +
+    TRIO_HIT_WEIGHTS.holePlace * place;
+  return Number(hit.toFixed(1));
+}
+
 export function trioEvScore(hit, odds) {
   if (odds == null || !Number.isFinite(odds)) return hit;
   const clipped = clipTrioEvOdds(odds);

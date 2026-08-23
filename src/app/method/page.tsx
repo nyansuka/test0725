@@ -7,7 +7,7 @@ export default function MethodPage() {
     <>
       <SiteHeader />
       <main className="flex-1">
-        <div className="bg-sand px-4 py-12 sm:px-6 md:px-8 md:py-16">
+        <div className="bg-sand px-4 py-8 sm:px-6 md:px-8 md:py-16">
           <div className="mx-auto max-w-6xl">
             <p className="font-[family-name:var(--font-display)] text-sm tracking-[0.2em] text-turf">
               METHOD

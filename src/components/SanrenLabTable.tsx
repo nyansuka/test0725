@@ -20,6 +20,7 @@ import type { Race, SanrenPick, SanrenPickPattern } from "@/domain/types";
 
 const PATTERN_LABELS: Record<SanrenPickPattern, string> = {
   fav_fav_hole: "人気×人気×穴",
+  fav_hole_hole: "人気×穴×穴",
   ordered_axis: "1着固定",
   other: "その他",
 };
