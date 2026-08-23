@@ -45,9 +45,13 @@ export function RaceCatalogProvider({ children, initial }: Props) {
   const refresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      // 本番は静的 /api/races を CDN から取得。dev は fetch 直後のスナップを拾う。
-      const res = await fetch("/api/races", {
-        cache: process.env.NODE_ENV === "production" ? "force-cache" : "no-store",
+      // force-cache だとデプロイ後も昨日のカタログがブラウザに残る。
+      // スナップの fetchedAt で CDN キーを回し、ビルドが変わったら取り直す。
+      const qs = seedMeta.fetchedAt
+        ? `?v=${encodeURIComponent(seedMeta.fetchedAt)}`
+        : "";
+      const res = await fetch(`/api/races${qs}`, {
+        cache: "no-store",
       });
       if (!res.ok) return;
       const data = (await res.json()) as RaceCatalogPayload;
