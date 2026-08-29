@@ -22,6 +22,7 @@ import {
   TipsterRefPanel,
   type TipsterRefPayload,
 } from "@/components/TipsterRefPanel";
+import { SupplementNotesPanel } from "@/components/SupplementNotesPanel";
 import {
   formatPopularity,
   formatWinOdds,
@@ -407,6 +408,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
       </section>
 
       {tipster ? <TipsterRefPanel tipster={tipster} /> : null}
+      <SupplementNotesPanel venue={race.venue} raceDate={race.raceDate} />
 
       <section>
         <div className="flex flex-wrap items-center justify-between gap-2">

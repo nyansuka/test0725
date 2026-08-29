@@ -13,13 +13,15 @@ import type { RaceCatalogPayload } from "@/data/catalogTypes";
 import { races as seedRaces, snapshotMeta as seedMeta } from "@/data/races";
 import type { Race } from "@/domain/types";
 
+export const CATALOG_FORCE_REFRESH_KEY = "umanote-force-catalog-refresh";
+
 type CatalogValue = {
   races: Race[];
   fetchedAt: string | null;
   source: string | null;
   liveRaceDate: string | null;
   refreshing: boolean;
-  refresh: () => Promise<void>;
+  refresh: (opts?: { force?: boolean }) => Promise<void>;
 };
 
 const CatalogContext = createContext<CatalogValue | null>(null);
@@ -42,14 +44,25 @@ export function RaceCatalogProvider({ children, initial }: Props) {
   const [refreshing, setRefreshing] = useState(false);
   const hasInitial = Boolean(initial?.races?.length);
 
-  const refresh = useCallback(async () => {
+  const refresh = useCallback(async (opts?: { force?: boolean }) => {
     setRefreshing(true);
     try {
       // force-cache だとデプロイ後も昨日のカタログがブラウザに残る。
       // スナップの fetchedAt で CDN キーを回し、ビルドが変わったら取り直す。
-      const qs = seedMeta.fetchedAt
-        ? `?v=${encodeURIComponent(seedMeta.fetchedAt)}`
-        : "";
+      // 引き更新は t= で CDN の 1 時間キャッシュを避ける。
+      const params = new URLSearchParams();
+      if (seedMeta.fetchedAt) params.set("v", seedMeta.fetchedAt);
+      let force = Boolean(opts?.force);
+      if (!force && typeof window !== "undefined") {
+        try {
+          force = window.sessionStorage.getItem(CATALOG_FORCE_REFRESH_KEY) === "1";
+          if (force) window.sessionStorage.removeItem(CATALOG_FORCE_REFRESH_KEY);
+        } catch {
+          force = false;
+        }
+      }
+      if (force) params.set("t", String(Date.now()));
+      const qs = params.toString() ? `?${params.toString()}` : "";
       const res = await fetch(`/api/races${qs}`, {
         cache: "no-store",
       });
@@ -74,6 +87,14 @@ export function RaceCatalogProvider({ children, initial }: Props) {
     if (hasInitial) return;
     void refresh();
   }, [hasInitial, refresh]);
+
+  useEffect(() => {
+    const onPageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) void refresh({ force: true });
+    };
+    window.addEventListener("pageshow", onPageShow);
+    return () => window.removeEventListener("pageshow", onPageShow);
+  }, [refresh]);
 
   const value = useMemo(
     () => ({ races, fetchedAt, source, liveRaceDate, refreshing, refresh }),

@@ -1,3 +1,5 @@
+import { WEIGHT_SECTION, WORKOUT_SECTION } from "@/domain/supplementNotes";
+
 const steps = [
   {
     title: "オッズゲート",
@@ -45,6 +47,26 @@ export function Method() {
             </li>
           ))}
         </ol>
+
+        <div className="mt-10 border-t border-sand/15 pt-8">
+          <p className="text-xs tracking-wider text-sand/45">スコア外の補足</p>
+          <h3 className="mt-1 text-base font-semibold">調教・馬体重の読み方</h3>
+          <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-sand/70">
+            穴／軸スコア・危険1人気・3連系研究所には入れない。公開情報に皆が飛びつく／怯えるとオッズが歪む、という見方だけを残す。調教履歴と当日馬体重はスナップショット未収録のため、JRA・新聞で確認する。
+          </p>
+          <div className="mt-5 grid gap-5 sm:grid-cols-2">
+            {[WORKOUT_SECTION, WEIGHT_SECTION].map((section) => (
+              <div key={section.id}>
+                <h4 className="text-sm font-semibold">{section.title}</h4>
+                <ul className="mt-2 list-disc space-y-1 pl-5 text-xs leading-relaxed text-sand/70">
+                  {section.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

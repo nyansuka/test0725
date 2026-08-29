@@ -1,0 +1,159 @@
+{
+  "kind": "sanren-lab-verify",
+  "raceDate": "2026-08-23",
+  "builtAt": "2026-08-23T12:20:00.000Z",
+  "primaryMetric": "ticketPrecision",
+  "note": "Lane-separated. No combined ticketPrecision.",
+  "freeze": {
+    "preRace": false,
+    "morningNoResults": true,
+    "frozenAt": "2026-08-23T01:07:05.862Z",
+    "sharedWithMainLoop": true
+  },
+  "lanes": {
+    "trio": {
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60,
+        "topNPerRace": 12,
+        "formMode": "formation"
+      },
+      "metrics": {
+        "candidates": 414,
+        "onBoard": 349,
+        "oddsNull": 65,
+        "ticketHits": 1,
+        "ticketPrecision": 0.0028653295128939827,
+        "placeHits": 251,
+        "placePrecision": 0.606280193236715,
+        "density": 11.5,
+        "virtualStakeYen": 34900,
+        "virtualPayoutYen": 23450,
+        "virtualReturnRatePercent": 67.2
+      },
+      "winningComboOnOddsBoard": 7,
+      "winningComboInPicks": 1,
+      "byLabel": {
+        "研究所注目": { "candidates": 106, "placeHits": 60, "ticketHits": 0 },
+        "抑え": { "candidates": 308, "placeHits": 191, "ticketHits": 1 }
+      },
+      "byPattern": {
+        "fav_hole_hole": { "candidates": 276, "placeHits": 146, "ticketHits": 1 },
+        "fav_fav_hole": { "candidates": 138, "placeHits": 105, "ticketHits": 0 }
+      },
+      "ticketHits": [
+        {
+          "raceId": "chukyo-20260823-8",
+          "venue": "中京",
+          "title": "豊川特別",
+          "selection": "4-11-12",
+          "horses": ["ワイルドブッター", "カーリキュー", "ケイアイマウンガ"],
+          "axis": 11,
+          "odds": 242.3,
+          "label": "抑え",
+          "pattern": "fav_hole_hole",
+          "payoutYen": 23450
+        }
+      ],
+      "priorDay": {
+        "raceDate": "2026-08-22",
+        "preRaceFreeze": false,
+        "candidates": 374,
+        "ticketHits": 0,
+        "ticketPrecision": 0,
+        "virtualReturnRatePercent": 0,
+        "oddsNull": 146
+      }
+    },
+    "trifecta": {
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60,
+        "topNPerRace": 80,
+        "formMode": "formation"
+      },
+      "metrics": {
+        "candidates": 586,
+        "onBoard": 586,
+        "oddsNull": 0,
+        "ticketHits": 1,
+        "ticketPrecision": 0.0017064846416382253,
+        "placeHits": 448,
+        "placePrecision": 0.764505119453925,
+        "density": 16.27777777777778,
+        "virtualStakeYen": 58600,
+        "virtualPayoutYen": 26000,
+        "virtualReturnRatePercent": 44.4
+      },
+      "winningComboOnOddsBoard": 9,
+      "winningComboInPicks": 1,
+      "byLabel": {
+        "研究所注目": { "candidates": 92, "placeHits": 70, "ticketHits": 0 },
+        "抑え": { "candidates": 494, "placeHits": 378, "ticketHits": 1 }
+      },
+      "byOddsBand": {
+        "200-499": { "candidates": 381, "ticketHits": 1 },
+        "500-999": { "candidates": 205, "ticketHits": 0 }
+      },
+      "ticketHits": [
+        {
+          "raceId": "sapporo-20260823-2",
+          "venue": "札幌",
+          "title": "2歳未勝利",
+          "selection": "1-2-12",
+          "horses": ["デザートスピリット", "トムクリオーザ", "ムッチリスタイル"],
+          "axis": 1,
+          "odds": 313.8,
+          "label": "抑え",
+          "payoutYen": 26000
+        }
+      ],
+      "priorDay": {
+        "raceDate": "2026-08-22",
+        "preRaceFreeze": false,
+        "candidates": 604,
+        "ticketHits": 2,
+        "ticketPrecision": 0.0033112582781456954,
+        "virtualReturnRatePercent": 87.9
+      }
+    }
+  },
+  "improvements": [
+    "trio produced a ticket after 8/22 zero (1/414, 0.29%, RR 67.2%)",
+    "trio null-odds 146→65; board coverage improved",
+    "trifecta ticket again in 200-499 抑え (same shape as 8/16 and 8/22)",
+    "shared morning freeze with main loop (no results)"
+  ],
+  "regressions": [
+    "trifecta ticketPrecision 0.33%→0.17%; RR 87.9%→44.4%",
+    "lab 注目 label 0 tickets on both lanes again",
+    "winning trifecta on board 9/36 but formation caught 1",
+    "winning trio on board 7/36 but formation caught 1",
+    "true pre-first-post freeze still missed"
+  ],
+  "nextActions": [
+    {
+      "id": "hold-trifecta",
+      "lane": "trifecta",
+      "priority": 1,
+      "change": "Keep trifecta 200 / topN80",
+      "hypothesis": "Three live days of 200-499 抑え tickets; do not retune labels or threshold this week"
+    },
+    {
+      "id": "trio-board",
+      "lane": "trio",
+      "priority": 2,
+      "change": "Do not lower trio oddsThreshold; keep working board coverage",
+      "hypothesis": "Today's hit was 242x inside the gate; null-odds already improved 146→65"
+    },
+    {
+      "id": "no-merge",
+      "lane": "both",
+      "priority": 3,
+      "change": "Do not merge lab KPI with main board or across lanes; do not change both lanes the same week",
+      "hypothesis": "TRIFECTA-LAB S5 / DATA-AND-LOOP one-change rule"
+    }
+  ]
+}

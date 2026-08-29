@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { JournalProvider } from "@/components/JournalProvider";
+import { PullToRefresh } from "@/components/PullToRefresh";
 import { RaceCatalogProvider } from "@/components/RaceCatalogProvider";
 import { RaceDayProvider } from "@/components/RaceDayProvider";
 import { SettingsProvider } from "@/components/SettingsProvider";
@@ -42,14 +43,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className="h-full antialiased">
-      <body className="flex min-h-full max-w-full flex-col overflow-x-clip font-sans">
-        <SettingsProvider>
-          <RaceCatalogProvider>
-            <RaceDayProvider>
-              <JournalProvider>{children}</JournalProvider>
-            </RaceDayProvider>
-          </RaceCatalogProvider>
-        </SettingsProvider>
+      <body className="min-h-full max-w-full font-sans">
+        <div className="flex min-h-full max-w-full flex-col overflow-x-clip">
+          <PullToRefresh />
+          <SettingsProvider>
+            <RaceCatalogProvider>
+              <RaceDayProvider>
+                <JournalProvider>{children}</JournalProvider>
+              </RaceDayProvider>
+            </RaceCatalogProvider>
+          </SettingsProvider>
+        </div>
       </body>
     </html>
   );
