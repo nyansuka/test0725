@@ -386,11 +386,11 @@ export function isInMoney(outcome) {
 export function outcomeLabel(outcome) {
   switch (outcome) {
     case "win":
-      return "大当たり";
+      return "1着";
     case "place":
-      return "馬券内";
+      return "複勝圏";
     case "miss":
-      return "はずれ";
+      return "圏外";
     default:
       return "待ち";
   }
@@ -399,9 +399,9 @@ export function outcomeLabel(outcome) {
 /**
  * 複勝圏ベース判定（券種の厳密払戻とは別）
  * @returns {"win"|"place"|"miss"|"pending"}
- * - win … 1着（大当たり）
- * - place … 2・3着（馬券内）
- * - miss … 4着以下（はずれ）
+ * - win … 1着
+ * - place … 2・3着（複勝圏）
+ * - miss … 4着以下（圏外）
  */
 export function evaluatePick(pick, result) {
   if (!result?.finishes?.length) return "pending";

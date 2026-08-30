@@ -8,6 +8,8 @@
 | `predictions/YYYY-MM-DD.json` | 当時設定の `selectLongshots` 候補 | freeze のたびに更新可 |
 | `evaluations/YYYY-MM-DD.json` | 的中突合と Precision / Recall 等 | evaluate のたびに更新 |
 | `trends/latest.json` | 短評用の券種・会場などの傾向 | evaluate / `loop:trends` で再生成（**Git 管理**） |
+| `hits/catalog.json` | 設定ゲート内の券種的中（払戻）ログ | evaluate / `loop:hits` で再生成（**Git 管理**） |
+| `hits/conditions.json` | レーン別・本体は券種別の発生条件・捕捉率 | 同上。本体券種どうし、および 3連複 / 3連単は合算しない |
 | `reports/report-*.json` | 複数日のメトリクスまとめ | 都度新規（ローカルのみ） |
 
 `evaluations` / `predictions` / `snapshots` はサイズが大きいため `.gitignore` 対象。短評に必要な傾向は `trends/latest.json` をコミットする。
@@ -29,7 +31,10 @@ docker compose exec web npm run loop:freeze
 docker compose exec web npm run loop:evaluate
 docker compose exec web npm run loop:report -- 2026-07-25
 docker compose exec web npm run loop:trends
+docker compose exec web npm run loop:hits
 ```
+
+`loop:evaluate` / `loop:sanren:evaluate` のあとに的中帳も再生成する。サイトは `/hits`。本体は単勝〜馬単を基本設定ゲートで券種別に見る。3連複・3連単は研究所レーン。選別閾値は変えない。
 
 開催日どうしの突合（例: 8/8 ベースライン vs 翌日）:
 

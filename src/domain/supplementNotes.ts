@@ -3,12 +3,20 @@
  * Scorer / selectLongshots / 軸選定には混ぜない。
  */
 
+import type { LongshotLabel, LongshotPick } from "./types";
+
 export const STAY_RACE_VENUES = ["札幌", "函館", "小倉"] as const;
 
 export type SupplementNoteSection = {
   id: "workout" | "weight";
   title: string;
   items: readonly string[];
+};
+
+export type SupplementCandidate = {
+  number: number;
+  name: string;
+  label: LongshotLabel;
 };
 
 export type SupplementNotes = {
@@ -79,4 +87,32 @@ export function buildSupplementNotes(input: {
     weight: WEIGHT_SECTION,
     raceHints,
   };
+}
+
+/**
+ * 補足で調教・馬体重を見る対象。注目穴を優先し、抑え候補と混ぜてラベルしない。
+ */
+export function supplementCandidatesFromPicks(
+  picks: Pick<LongshotPick, "relatedHorseNumbers" | "label">[],
+  horses: { number: number; name: string }[],
+): SupplementCandidate[] {
+  const byNumber = new Map<number, LongshotLabel>();
+  for (const pick of picks) {
+    for (const n of pick.relatedHorseNumbers ?? []) {
+      const prev = byNumber.get(n);
+      if (prev === "注目穴") continue;
+      if (pick.label === "注目穴" || !prev) byNumber.set(n, pick.label);
+    }
+  }
+  const nameOf = new Map(horses.map((h) => [h.number, h.name]));
+  return [...byNumber.entries()]
+    .map(([number, label]) => ({
+      number,
+      name: nameOf.get(number) ?? `#${number}`,
+      label,
+    }))
+    .sort((a, b) => {
+      if (a.label !== b.label) return a.label === "注目穴" ? -1 : 1;
+      return a.number - b.number;
+    });
 }

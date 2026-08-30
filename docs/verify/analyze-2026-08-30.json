@@ -1,0 +1,314 @@
+{
+  "kind": "race-day-verify",
+  "raceDate": "2026-08-30",
+  "builtAt": "2026-08-30T11:40:00.000Z",
+  "primaryMetric": "ticketPrecision",
+  "settings": {
+    "oddsThreshold": 25,
+    "oddsMax": 80,
+    "scoreMin": 65,
+    "enabledBetTypes": [
+      "win",
+      "place",
+      "bracket_quinella",
+      "bracket_exacta",
+      "quinella",
+      "wide",
+      "exacta",
+      "trio",
+      "trifecta"
+    ]
+  },
+  "settingsChange": "Hold 25 / oddsMax80 / scoreMin65. Sixth live day after 8/15, 8/16, 8/22, 8/23, 8/29. True pre-first-post freeze.",
+  "freeze": {
+    "preRace": true,
+    "morningNoResults": true,
+    "frozenAt": "2026-08-30T00:31:15.172Z",
+    "firstStart": "09:40",
+    "note": "09:31 JST freeze without results. Niigata 1R 09:40 not yet underway. Same measurement premise as 8/16 and 8/29."
+  },
+  "resultCoverage": {
+    "official": 36,
+    "total": 36,
+    "source": "netkeiba payback_list top3 + payouts (home IP CloudFront 400; Actions did not push results after 15:58 workflow change)",
+    "fetchedAt": "2026-08-30T10:00:00.000Z",
+    "payoutTypes": {
+      "win": 36,
+      "place": 108,
+      "bracket_quinella": 34,
+      "quinella": 36,
+      "wide": 108,
+      "exacta": 36,
+      "trio": 36,
+      "trifecta": 36
+    },
+    "note": "Finishes are top-3 only. TicketPrecision uses payouts. Missing bracket_quinella on Sapporo 5 and Niigata 3."
+  },
+  "metrics": {
+    "candidates": 258,
+    "ticketHits": 2,
+    "candidateHits": 61,
+    "density": 7.166666666666667,
+    "ticketPrecision": 0.007751937984496124,
+    "placePrecision": 0.2364341085271318,
+    "recall": 0.12127236580516898,
+    "virtualReturnRatePercent": 39.3,
+    "virtualStakeYen": 25800,
+    "virtualPayoutYen": 10140,
+    "axisWinRate": 0.24074074074074073,
+    "axisWins": 26,
+    "axisSettled": 108,
+    "superWinRate": 0.16666666666666666,
+    "superWins": 4,
+    "superPlace": 15,
+    "superSettled": 24,
+    "gateCorrect": 503,
+    "passMisses": 442
+  },
+  "baselineDate": "2026-08-29",
+  "midDate": "2026-08-16",
+  "baselineNote": "8/29 was a hot outlier (5.52%, RR 308%). 8/16, 8/29, 8/30 are true pre-first-post.",
+  "deltasVsBaseline": {
+    "ticketPrecisionPp": -4.74,
+    "placePrecisionPp": -26.02,
+    "density": 3.14,
+    "virtualReturnRatePp": -269.5,
+    "candidates": 113,
+    "ticketHits": -6
+  },
+  "sixDay": {
+    "dates": ["2026-08-15", "2026-08-16", "2026-08-22", "2026-08-23", "2026-08-29", "2026-08-30"],
+    "candidates": 1234,
+    "ticketHits": 25,
+    "ticketPrecision": 0.02025931928687196,
+    "density": 5.712962962962963,
+    "virtualStakeYen": 123400,
+    "virtualPayoutYen": 124690,
+    "virtualReturnRatePercent": 101.0
+  },
+  "fiveDayPrior": {
+    "dates": ["2026-08-15", "2026-08-16", "2026-08-22", "2026-08-23", "2026-08-29"],
+    "candidates": 976,
+    "ticketHits": 23,
+    "ticketPrecision": 0.0235655737704918,
+    "density": 5.422222222222222,
+    "virtualStakeYen": 97600,
+    "virtualPayoutYen": 114550,
+    "virtualReturnRatePercent": 117.4
+  },
+  "sweepAt65": {
+    "source": "docs/verify/scoremin-sweep-2026-08-13.json",
+    "density": 6.6,
+    "ticketPrecision": 0.0162
+  },
+  "planChecks": {
+    "ticketPrecisionGoalGe1pct": false,
+    "densityInBand5to15": true,
+    "densityInStrictBand3to8": true,
+    "ticketHitsHeldWhileCuttingCandidates": true,
+    "hotBandStillOnBoard": true,
+    "bracketQuinellaTickets": true,
+    "wideTickets": false,
+    "winTickets": false,
+    "oddsMaxRemoved100Plus": true,
+    "scoreMin65SixthLive": true,
+    "preRaceFreeze": true,
+    "morningFreezeNoResults": true
+  },
+  "byBetType": {
+    "win": {
+      "candidates": 70,
+      "hits": 2,
+      "ticketHits": 0,
+      "ticketPrecision": 0
+    },
+    "place": {
+      "candidates": 1,
+      "hits": 0,
+      "ticketHits": 0,
+      "ticketPrecision": 0
+    },
+    "bracket_quinella": {
+      "candidates": 44,
+      "hits": 17,
+      "ticketHits": 2,
+      "ticketPrecision": 0.045454545454545456
+    },
+    "bracket_exacta": {
+      "candidates": 0,
+      "hits": 0,
+      "ticketHits": 0,
+      "ticketPrecision": null
+    },
+    "quinella": {
+      "candidates": 17,
+      "hits": 10,
+      "ticketHits": 0,
+      "ticketPrecision": 0
+    },
+    "wide": {
+      "candidates": 125,
+      "hits": 31,
+      "ticketHits": 0,
+      "ticketPrecision": 0
+    },
+    "exacta": {
+      "candidates": 1,
+      "hits": 1,
+      "ticketHits": 0,
+      "ticketPrecision": 0
+    },
+    "trio": {
+      "candidates": 0,
+      "hits": 0,
+      "ticketHits": 0,
+      "ticketPrecision": null
+    },
+    "trifecta": {
+      "candidates": 0,
+      "hits": 0,
+      "ticketHits": 0,
+      "ticketPrecision": null
+    }
+  },
+  "byBetTypeSixDay": {
+    "win": { "candidates": 342, "ticketHits": 5, "ticketPrecision": 0.014619883040935672 },
+    "place": { "candidates": 35, "ticketHits": 0, "ticketPrecision": 0 },
+    "bracket_quinella": { "candidates": 234, "ticketHits": 9, "ticketPrecision": 0.038461538461538464 },
+    "quinella": { "candidates": 101, "ticketHits": 1, "ticketPrecision": 0.009900990099009901 },
+    "wide": { "candidates": 500, "ticketHits": 10, "ticketPrecision": 0.02 },
+    "exacta": { "candidates": 22, "ticketHits": 0, "ticketPrecision": 0 }
+  },
+  "byLabel": {
+    "注目穴": {
+      "candidates": 211,
+      "hits": 53,
+      "ticketHits": 1,
+      "ticketPrecision": 0.004739336492890996,
+      "placePrecision": 0.25118483412322273
+    },
+    "抑え候補": {
+      "candidates": 47,
+      "hits": 8,
+      "ticketHits": 1,
+      "ticketPrecision": 0.02127659574468085,
+      "placePrecision": 0.1702127659574468
+    }
+  },
+  "byOddsBand": {
+    "20-49": {
+      "candidates": 152,
+      "ticketHits": 1,
+      "hits": 41,
+      "ticketPrecision": 0.006578947368421052,
+      "placePrecision": 0.26973684210526316
+    },
+    "50-99": {
+      "candidates": 106,
+      "ticketHits": 1,
+      "hits": 20,
+      "ticketPrecision": 0.009433962264150943,
+      "placePrecision": 0.18867924528301888
+    },
+    "100+": {
+      "candidates": 0,
+      "ticketHits": 0,
+      "hits": 0,
+      "ticketPrecision": null,
+      "placePrecision": null
+    }
+  },
+  "byVenue": {
+    "札幌": { "candidates": 74, "hits": 15, "ticketHits": 0 },
+    "新潟": { "candidates": 88, "hits": 24, "ticketHits": 1 },
+    "中京": { "candidates": 96, "hits": 22, "ticketHits": 1 }
+  },
+  "firstFav": {
+    "flagged": { "settled": 18, "wins": 8, "place": 14, "winRate": 0.4444444444444444, "placeRate": 0.7777777777777778 },
+    "unflagged": { "settled": 18, "wins": 6, "place": 9, "winRate": 0.3333333333333333, "placeRate": 0.5 }
+  },
+  "ticketHits": [
+    {
+      "raceId": "niigata-20260830-7",
+      "venue": "新潟",
+      "title": "日本海S",
+      "betType": "bracket_quinella",
+      "selection": "1-2",
+      "horses": ["シャドウメテオ", "ウインデイジー"],
+      "odds": 57.3,
+      "label": "注目穴",
+      "payoutYen": 7080
+    },
+    {
+      "raceId": "chukyo-20260830-10",
+      "venue": "中京",
+      "title": "3歳以上1勝クラス",
+      "betType": "bracket_quinella",
+      "selection": "2-6",
+      "horses": ["エテルノレガーメ", "レッドヴァリアート"],
+      "odds": 45.1,
+      "label": "抑え候補",
+      "payoutYen": 3060
+    }
+  ],
+  "improvements": [
+    "true pre-first-post freeze at 09:31 JST (Niigata 1R 09:40); third such day after 8/16 and 8/29",
+    "density recovered 4.03→7.17 into target 5-15 without lowering scoreMin",
+    "bracket_quinella tickets 2/44 (4.55%); six-day 9/234 (3.85%)",
+    "oddsMax=80 still removed 100+ dead band",
+    "six-day ticket 2.03% still meets 1-month ≥2% goal after a cold day",
+    "super place 62.5% (15/24) again stronger than super win 16.7%",
+    "settings held after 8/29 hot day"
+  ],
+  "regressions": [
+    "ticket 0.78% (2/258) is the first scoreMin65 day below 1%; do not treat as new floor",
+    "wide 0/125 after 8/29 5/67 (do not cut wide; six-day 10/500)",
+    "win 0/70 (do not cut win; six-day 5/342)",
+    "Sapporo 0/74 tickets (do not overfit venue; 8/29 Sapporo carried the tickets)",
+    "virtual RR 39.3% rests on two payouts (7080 and 3060)",
+    "place still 0/35 over six days; today 0/1 so OFF would be almost a no-op for this card"
+  ],
+  "nextActions": [
+    {
+      "id": "hold-settings",
+      "priority": 1,
+      "change": "Keep 25 / oddsMax80 / scoreMin65",
+      "hypothesis": "Six-day combined still meets ticket goal; density back in band; do not loosen after a cold day or tighten after 8/29"
+    },
+    {
+      "id": "pre-first-post-freeze",
+      "priority": 2,
+      "change": "Freeze before first post next card (before 09:00 JST)",
+      "hypothesis": "09:31 made it with 9 minutes to spare; keep the measurement premise"
+    },
+    {
+      "id": "place-off",
+      "priority": 3,
+      "change": "Next one-change candidate: default place OFF (B2 minimum slice). Keep win / bracket_quinella / wide",
+      "hypothesis": "Place is 0/35 tickets over 6 days; cutting win would drop 5 of 25 six-day tickets"
+    },
+    {
+      "id": "d4",
+      "priority": 4,
+      "change": "Continue remaining synthetic factors (paceFit / conditionFit). Do not tweak WEIGHTS",
+      "hypothesis": "Ceiling beyond threshold tuning"
+    }
+  ],
+  "compareProtocol": {
+    "baselineFile": "docs/verify/analyze-2026-08-29.json",
+    "compareReport": "src/data/loop/reports/compare-2026-08-29_2026-08-30.json",
+    "verifyDoc": "docs/VERIFY-2026-08-30.md",
+    "keepSettingsUnlessOneChange": true
+  },
+  "sanren": {
+    "verifyDoc": "docs/VERIFY-2026-08-30.md#8-3連系研究所レーン別合算しない",
+    "analyzeFile": "docs/verify/analyze-sanren-2026-08-30.json",
+    "doNotMergeKpi": true
+  },
+  "ops": {
+    "homeFetcherStopped": true,
+    "actionsWeekendOnly": true,
+    "actionsDidNotPushResultsToday": true,
+    "hitLabelRenameUncommitted": true
+  }
+}

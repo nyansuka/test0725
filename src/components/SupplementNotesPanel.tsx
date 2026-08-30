@@ -1,24 +1,40 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
-import { buildSupplementNotes } from "@/domain/supplementNotes";
+import { LongshotMark } from "@/components/LongshotMark";
+import {
+  buildSupplementNotes,
+  type SupplementCandidate,
+} from "@/domain/supplementNotes";
 
 type Props = {
   venue: string;
   raceDate: string;
+  candidates?: SupplementCandidate[];
 };
 
-export function SupplementNotesPanel({ venue, raceDate }: Props) {
+function candidateLine(items: SupplementCandidate[]) {
+  return items.map((c) => `${c.number} ${c.name}`).join(" · ");
+}
+
+export function SupplementNotesPanel({ venue, raceDate, candidates = [] }: Props) {
   const notes = useMemo(
     () => buildSupplementNotes({ venue, raceDate }),
     [venue, raceDate],
   );
   const panelId = useId();
   const [open, setOpen] = useState(false);
-  const summary =
+  const hot = candidates.filter((c) => c.label === "注目穴");
+  const hold = candidates.filter((c) => c.label === "抑え候補");
+  const hintSummary =
     notes.raceHints.length > 0
       ? notes.raceHints.join(" ")
       : "調教は縦比較。馬体重は2桁増減だけで消さない。";
+  const summary = hot.length
+    ? `注目穴 ${candidateLine(hot)}`
+    : hold.length
+      ? `注目穴なし · 抑え候補 ${hold.length}頭`
+      : `注目穴なし · ${hintSummary}`;
 
   return (
     <section
@@ -28,7 +44,10 @@ export function SupplementNotesPanel({ venue, raceDate }: Props) {
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="min-w-0">
           <p className="text-xs tracking-wider text-ink/45">補足 · スコア外</p>
-          <p className="mt-0.5 truncate text-sm text-ink/60">{summary}</p>
+          <p className="mt-0.5 text-sm text-ink/80">
+            <span className="text-ink/45">候補（注目穴） · </span>
+            {summary}
+          </p>
         </div>
         <button
           type="button"
@@ -43,6 +62,32 @@ export function SupplementNotesPanel({ venue, raceDate }: Props) {
 
       {open ? (
         <div id={panelId} className="mt-4 space-y-4">
+          <div>
+            <h3 className="text-sm font-semibold text-ink">このレースの候補</h3>
+            <p className="mt-1 text-xs text-ink/45">
+              調教・馬体重を見るときの対象。穴スコアには使わない。
+            </p>
+            {candidates.length === 0 ? (
+              <p className="mt-2 text-sm text-ink/50">
+                このレースに現在の設定で残る候補はありません。
+              </p>
+            ) : (
+              <ul className="mt-2 space-y-1 text-sm text-ink/80">
+                {candidates.map((c) => (
+                  <li key={c.number} className="flex flex-wrap items-baseline gap-x-2">
+                    {c.label === "注目穴" ? <LongshotMark /> : null}
+                    <span className="font-[family-name:var(--font-display)] font-semibold tabular-nums">
+                      {c.number}
+                    </span>
+                    <span className="font-medium">{c.name}</span>
+                    <span className={c.label === "注目穴" ? "text-signal" : "text-ink/50"}>
+                      {c.label}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           {notes.raceHints.length > 0 ? (
             <ul className="space-y-1 text-sm text-ink/65">
               {notes.raceHints.map((hint) => (

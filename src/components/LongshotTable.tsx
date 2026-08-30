@@ -13,9 +13,8 @@ import {
 } from "@/domain/odds";
 import {
   evaluateHorse,
-  evaluatePick,
+  formatTicketOutcome,
   horseFinishRank,
-  outcomeLabel,
 } from "@/domain/results";
 import { useMemo, type ReactNode } from "react";
 import { selectAxisHorses } from "@/domain/axis";
@@ -40,11 +39,7 @@ function HorseOutcomeBadge({
   const outcome = evaluateHorse(horseNumber, race?.result);
   const rank = horseFinishRank(horseNumber, race?.result);
   const text =
-    outcome === "pending"
-      ? outcomeLabel(outcome)
-      : rank != null
-        ? `${rank}着 · ${outcomeLabel(outcome)}`
-        : outcomeLabel(outcome);
+    outcome === "pending" ? "待ち" : rank != null ? `${rank}着` : "—";
   return <span className={`ml-2 text-sm ${outcomeClass(outcome)}`}>{text}</span>;
 }
 
@@ -255,7 +250,7 @@ function BetLines({
   return (
     <ul className="mt-3 space-y-2">
       {group.picks.map((pick) => {
-        const outcome = evaluatePick(pick, race?.result);
+        const ticket = formatTicketOutcome(pick, race?.result);
         let selection: ReactNode;
         if (group.sameHorseAsSelection) {
           // 馬番は見出し側に出したので券種＋オッズのみ
@@ -287,16 +282,14 @@ function BetLines({
             {showOutcome && (
               <span
                 className={
-                  outcome === "win"
+                  ticket.outcome === "hit"
                     ? "font-medium text-signal"
-                    : outcome === "place"
-                      ? "font-medium text-turf"
-                      : outcome === "miss"
-                        ? "text-ink/40"
-                        : "text-ink/55"
+                    : ticket.outcome === "miss"
+                      ? "text-ink/40"
+                      : "text-ink/55"
                 }
               >
-                {outcomeLabel(outcome)}
+                {ticket.label}
               </span>
             )}
           </li>

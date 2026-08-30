@@ -58,6 +58,7 @@ async function checkHttp() {
     "/races",
     "/settings",
     "/journal",
+    "/hits",
     "/method",
   ];
   for (const p of paths) {
@@ -122,11 +123,43 @@ async function checkHttp() {
     ok("/journal 複数券種入力");
   }
 
-  const longshots = await get("/longshots");
-  if (!longshots.body.includes("注目馬の的中")) {
-    fail("/longshots に「注目馬の的中」サマリー説明が無い");
+  const hits = await get("/hits");
+  if (!hits.body.includes("的中帳") || !hits.body.includes("発生条件")) {
+    fail("/hits に的中帳・発生条件が無い");
   } else {
-    ok("/longshots 注目馬サマリー");
+    ok("/hits 的中帳");
+  }
+  if (
+    !hits.body.includes("本体") ||
+    !hits.body.includes("3連複") ||
+    !hits.body.includes("3連単")
+  ) {
+    fail("/hits にレーン切替が無い");
+  } else {
+    ok("/hits レーン分離");
+  }
+  if (
+    !hits.body.includes("券種別") ||
+    !hits.body.includes("単勝") ||
+    !hits.body.includes("枠連") ||
+    !hits.body.includes("ワイド") ||
+    !hits.body.includes("馬連")
+  ) {
+    fail("/hits に本体の券種別分析が無い");
+  } else {
+    ok("/hits 券種別");
+  }
+
+  const longshots = await get("/longshots");
+  if (!longshots.body.includes("買い目のヒット")) {
+    fail("/longshots に「買い目のヒット」サマリー説明が無い");
+  } else {
+    ok("/longshots 買い目ヒットサマリー");
+  }
+  if (longshots.body.includes("大当たり")) {
+    fail("/longshots に旧「大当たり」表記が残っている");
+  } else {
+    ok("/longshots 大当たり表記なし");
   }
 
   const method = await get("/method");
@@ -150,6 +183,14 @@ async function checkHttp() {
     const detail = await get(m[0]);
     if (detail.status !== 200) fail(`${m[0]} status=${detail.status}`);
     else ok(`${m[0]} ${detail.status}`);
+    if (
+      !detail.body.includes("補足") ||
+      !detail.body.includes("候補（注目穴）")
+    ) {
+      fail(`${m[0]} に補足の候補（注目穴）が無い`);
+    } else {
+      ok(`${m[0]} 補足に候補（注目穴）`);
+    }
   }
 }
 
@@ -239,6 +280,8 @@ async function checkDocsAlign() {
   );
   if (methodSrc.includes("表示中の開催日は傾向から除外します")) {
     fail("Method.tsx に旧除外文言が残っている");
+  } else if (methodSrc.includes("大当たり")) {
+    fail("Method.tsx に旧「大当たり」表記が残っている");
   } else {
     ok("Method.tsx 文言OK");
   }

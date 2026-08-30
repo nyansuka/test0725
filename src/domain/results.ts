@@ -11,11 +11,11 @@ export function isInMoney(outcome: PickOutcome): boolean {
 export function outcomeLabel(outcome: PickOutcome): string {
   switch (outcome) {
     case "win":
-      return "大当たり";
+      return "1着";
     case "place":
-      return "馬券内";
+      return "複勝圏";
     case "miss":
-      return "はずれ";
+      return "圏外";
     default:
       return "待ち";
   }
@@ -47,10 +47,10 @@ export function bestRelatedRank(
 }
 
 /**
- * 候補の結果判定（製品方針: 複勝圏ポテンシャル）
- * - 1着 → 大当たり (win)
- * - 2・3着 → 馬券内 (place) ※はずれにしない
- * - 4着以下 → はずれ (miss)
+ * 関係馬の着順判定（券種払戻とは別。参考表示・ループ互換）
+ * - 1着 → win
+ * - 2・3着 → place
+ * - 4着以下 → miss
  */
 export function evaluatePick(pick: PickLike, result: RaceResult | undefined): PickOutcome {
   if (!result?.finishes?.length) return "pending";
@@ -188,4 +188,83 @@ export function findPayoutYen(
   const key = payoutNormKey(betType, selection);
   const hit = result.payouts.find((p) => payoutNormKey(p.betType, p.selection) === key);
   return hit ? hit.payoutYen : null;
+}
+
+/** 券種払戻ベース。ヒット＝その券種の買い目が的中 */
+export type TicketOutcome = "hit" | "miss" | "pending";
+
+type TicketPickLike = {
+  betType: BetType;
+  selection: string;
+};
+
+export function evaluateTicket(
+  pick: TicketPickLike,
+  result: RaceResult | undefined,
+): TicketOutcome {
+  if (!result?.finishes?.length) return "pending";
+  const yen = findPayoutYen(result, pick.betType, pick.selection);
+  if (yen != null && yen > 0) return "hit";
+  return "miss";
+}
+
+export function ticketOutcomeLabel(outcome: TicketOutcome): string {
+  switch (outcome) {
+    case "hit":
+      return "ヒット";
+    case "miss":
+      return "はずれ";
+    default:
+      return "待ち";
+  }
+}
+
+export function formatTicketOutcome(
+  pick: TicketPickLike,
+  result: RaceResult | undefined,
+): { outcome: TicketOutcome; label: string } {
+  const outcome = evaluateTicket(pick, result);
+  if (outcome === "hit") {
+    const yen = findPayoutYen(result, pick.betType, pick.selection);
+    return {
+      outcome,
+      label: yen != null ? `ヒット · ¥${yen.toLocaleString("ja-JP")}` : "ヒット",
+    };
+  }
+  return { outcome, label: ticketOutcomeLabel(outcome) };
+}
+
+export type TicketHitSummary = {
+  total: number;
+  settled: number;
+  hits: number;
+  misses: number;
+  pending: number;
+  hitRatePercent: number | null;
+};
+
+/** 表示中の買い目を券種払戻で集計する（ヒット＝その券種の的中） */
+export function summarizeTicketHits(
+  picks: { raceId: string; betType: BetType; selection: string }[],
+  raceById: Map<string, Race>,
+): TicketHitSummary {
+  let hits = 0;
+  let misses = 0;
+  let pending = 0;
+  for (const pick of picks) {
+    const outcome = evaluateTicket(pick, raceById.get(pick.raceId)?.result);
+    if (outcome === "pending") pending += 1;
+    else if (outcome === "hit") hits += 1;
+    else misses += 1;
+  }
+  const total = picks.length;
+  const settled = hits + misses;
+  return {
+    total,
+    settled,
+    hits,
+    misses,
+    pending,
+    hitRatePercent: settled === 0 ? null : Math.round((hits / settled) * 1000) / 10,
+  };
 }

@@ -1,0 +1,188 @@
+{
+  "kind": "sanren-lab-verify",
+  "raceDate": "2026-08-30",
+  "builtAt": "2026-08-30T11:40:00.000Z",
+  "primaryMetric": "ticketPrecision",
+  "note": "Lane-separated. No combined ticketPrecision.",
+  "freeze": {
+    "preRace": true,
+    "morningNoResults": true,
+    "frozenAt": "2026-08-30T00:31:15.172Z",
+    "sharedWithMainLoop": true
+  },
+  "lanes": {
+    "trio": {
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60,
+        "topNPerRace": 12,
+        "formMode": "formation"
+      },
+      "metrics": {
+        "candidates": 432,
+        "onBoard": 383,
+        "oddsNull": 49,
+        "ticketHits": 0,
+        "ticketPrecision": 0,
+        "placeHits": 318,
+        "placePrecision": 0.7361111111111112,
+        "density": 12,
+        "virtualStakeYen": 38300,
+        "virtualPayoutYen": 0,
+        "virtualReturnRatePercent": 0
+      },
+      "winningComboOnOddsBoard": 8,
+      "winningComboInPicks": 0,
+      "byLabel": {
+        "研究所注目": { "candidates": 108, "placeHits": 78, "ticketHits": 0 },
+        "抑え": { "candidates": 324, "placeHits": 240, "ticketHits": 0 }
+      },
+      "byPattern": {
+        "fav_hole_hole": { "candidates": 286, "placeHits": 210, "ticketHits": 0 },
+        "fav_fav_hole": { "candidates": 146, "placeHits": 108, "ticketHits": 0 }
+      },
+      "ticketHits": [],
+      "priorDay": {
+        "raceDate": "2026-08-29",
+        "preRaceFreeze": true,
+        "candidates": 417,
+        "ticketHits": 2,
+        "ticketPrecision": 0.005698005698005698,
+        "virtualReturnRatePercent": 147,
+        "oddsNull": 66
+      },
+      "fiveDay": {
+        "dates": ["2026-08-16", "2026-08-22", "2026-08-23", "2026-08-29", "2026-08-30"],
+        "candidates": 2089,
+        "ticketHits": 4,
+        "ticketPrecision": 0.0019147917663954045,
+        "virtualStakeYen": 175900,
+        "virtualPayoutYen": 103710,
+        "virtualReturnRatePercent": 59.0
+      }
+    },
+    "trifecta": {
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60,
+        "topNPerRace": 80,
+        "formMode": "formation"
+      },
+      "metrics": {
+        "candidates": 575,
+        "onBoard": 575,
+        "oddsNull": 0,
+        "ticketHits": 3,
+        "ticketPrecision": 0.0052173913043478265,
+        "placeHits": 500,
+        "placePrecision": 0.8695652173913043,
+        "density": 15.972222222222221,
+        "virtualStakeYen": 57500,
+        "virtualPayoutYen": 225960,
+        "virtualReturnRatePercent": 393
+      },
+      "winningComboOnOddsBoard": 14,
+      "winningComboInPicks": 3,
+      "byLabel": {
+        "研究所注目": { "candidates": 78, "placeHits": 70, "ticketHits": 0 },
+        "抑え": { "candidates": 497, "placeHits": 430, "ticketHits": 3 }
+      },
+      "byOddsBand": {
+        "200-499": { "candidates": 377, "ticketHits": 2 },
+        "500-999": { "candidates": 198, "ticketHits": 1 }
+      },
+      "ticketHits": [
+        {
+          "raceId": "sapporo-20260830-2",
+          "venue": "札幌",
+          "title": "2歳未勝利",
+          "selection": "13-8-5",
+          "horses": ["ギャルズマインド", "アルテクィーン", "ミハテヌユメ"],
+          "axis": 13,
+          "odds": 500.3,
+          "label": "抑え",
+          "pattern": "ordered_axis",
+          "payoutYen": 57430
+        },
+        {
+          "raceId": "niigata-20260830-3",
+          "venue": "新潟",
+          "title": "2歳未勝利",
+          "selection": "2-5-6",
+          "horses": ["ニシノリリックス", "エクスマキナ", "ウイニングレイ"],
+          "axis": 2,
+          "odds": 477.3,
+          "label": "抑え",
+          "pattern": "ordered_axis",
+          "payoutYen": 115940
+        },
+        {
+          "raceId": "chukyo-20260830-11",
+          "venue": "中京",
+          "title": "3歳未勝利",
+          "selection": "17-13-7",
+          "horses": ["カルロット", "パトローナス", "ハピネスサンライズ"],
+          "axis": 17,
+          "odds": 476.0,
+          "label": "抑え",
+          "pattern": "ordered_axis",
+          "payoutYen": 52590
+        }
+      ],
+      "priorDay": {
+        "raceDate": "2026-08-29",
+        "preRaceFreeze": true,
+        "candidates": 817,
+        "ticketHits": 0,
+        "ticketPrecision": 0,
+        "virtualReturnRatePercent": 0
+      },
+      "fiveDay": {
+        "dates": ["2026-08-16", "2026-08-22", "2026-08-23", "2026-08-29", "2026-08-30"],
+        "candidates": 3208,
+        "ticketHits": 8,
+        "ticketPrecision": 0.0024937655860349127,
+        "virtualStakeYen": 320800,
+        "virtualPayoutYen": 397380,
+        "virtualReturnRatePercent": 123.9
+      }
+    }
+  },
+  "improvements": [
+    "trifecta 3 tickets (0.52%, RR 393%) after 8/29 0/817",
+    "trifecta 200-499 抑え returned (2/377) plus one 500.3 just over the band",
+    "trifecta density 22.7→16.0 back toward prior ~16-17",
+    "shared true pre-first-post freeze with main loop"
+  ],
+  "regressions": [
+    "trio 0/432; RR 0% after 8/29 2/417",
+    "trio winning combo on board 8/36 vs 18/36 on 8/29; formation caught 0",
+    "lab 注目 label 0 tickets on both lanes again",
+    "trifecta RR 393% rests on Niigata 3 payout 115940; do not move threshold"
+  ],
+  "nextActions": [
+    {
+      "id": "hold-trio",
+      "lane": "trio",
+      "priority": 1,
+      "change": "Keep trio 100 / topN12",
+      "hypothesis": "Five live days ticket 0-2; zero day is variance"
+    },
+    {
+      "id": "hold-trifecta",
+      "lane": "trifecta",
+      "priority": 2,
+      "change": "Keep trifecta 200 / topN80",
+      "hypothesis": "200-499 抑え tickets returned; do not widen or cut topN on a hot RR day"
+    },
+    {
+      "id": "no-merge",
+      "lane": "both",
+      "priority": 3,
+      "change": "Do not merge lab KPI with main board or across lanes; do not change both lanes the same week",
+      "hypothesis": "TRIFECTA-LAB S5 / DATA-AND-LOOP one-change rule"
+    }
+  ]
+}

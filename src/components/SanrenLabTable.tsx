@@ -8,7 +8,6 @@ import { BET_TYPE_LABELS } from "@/domain/betTypes";
 import {
   findPayoutYen,
   horseFinishRank,
-  outcomeLabel,
   evaluateHorse,
 } from "@/domain/results";
 import {
@@ -38,7 +37,7 @@ function ticketLabel(
   const yen = findPayoutYen(race.result, pick.betType, pick.selection);
   if (yen != null && yen > 0) {
     return {
-      text: `的中 · ¥${yen.toLocaleString("ja-JP")}`,
+      text: `ヒット · ¥${yen.toLocaleString("ja-JP")}`,
       className: "font-medium text-signal",
     };
   }
@@ -79,7 +78,7 @@ function HorseChip({
                 : "text-xs text-ink/40"
           }
         >
-          {finish}着 · {outcomeLabel(outcome)}
+          {finish}着
         </span>
       ) : null}
     </span>

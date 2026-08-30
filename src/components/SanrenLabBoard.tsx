@@ -71,21 +71,21 @@ function TicketSummaryBar({
       className="border border-turf/30 bg-turf/5 px-4 py-4 md:px-5"
     >
       <p className="text-xs font-medium tracking-wider text-turf">
-        ticketHit（払戻突合）
+        ticketHit（券種的中）
       </p>
       <div className="mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
         <p className="font-[family-name:var(--font-display)] text-3xl font-semibold text-ink">
           {summary.rate == null ? "—" : `${summary.rate}%`}
         </p>
         <p className="text-sm text-ink/70">
-          的中 {summary.hits} / 確定 {summary.settled}
+          ヒット {summary.hits} / 確定 {summary.settled}
           {summary.pending > 0 ? ` · 待ち ${summary.pending}` : ""}
           {" · "}
           はずれ {summary.misses}
         </p>
       </div>
       <p className="mt-1 text-xs text-ink/50">
-        研究所は複勝圏ヒットではなく実払戻の的中を主指標にします（板つき買い目のみ）
+        研究所は複勝圏ではなく、その券種の払戻があればヒットとします（板つき買い目のみ）
       </p>
     </section>
   );

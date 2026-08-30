@@ -11,6 +11,7 @@ const links = [
   { href: "/lab/sanren", label: "3連研" },
   { href: "/races", label: "レース" },
   { href: "/journal", label: "成績日記" },
+  { href: "/hits", label: "的中帳" },
   { href: "/method", label: "予想の見方" },
   { href: "/settings", label: "設定" },
 ];

@@ -23,13 +23,14 @@ import {
   type TipsterRefPayload,
 } from "@/components/TipsterRefPanel";
 import { SupplementNotesPanel } from "@/components/SupplementNotesPanel";
+import { supplementCandidatesFromPicks } from "@/domain/supplementNotes";
 import {
   formatPopularity,
   formatWinOdds,
   placeOddsLabel,
   popularityByNumber,
 } from "@/domain/odds";
-import { evaluatePick, outcomeLabel } from "@/domain/results";
+import { formatTicketOutcome } from "@/domain/results";
 import { axisIndexByNumber, selectAxisHorses } from "@/domain/axis";
 import {
   dangerousFavReasonLabels,
@@ -218,6 +219,10 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
     () => dayPicks.filter((p) => p.raceId === race.id),
     [dayPicks, race.id],
   );
+  const supplementCandidates = useMemo(
+    () => supplementCandidatesFromPicks(picks, horses),
+    [picks, horses],
+  );
   const rank = useMemo(() => {
     const map = assignDayExpectationRanks(
       dayRaces.map((r) => ({
@@ -385,19 +390,16 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
         {race.result && picks.length > 0 && (
           <ul className="mt-2 space-y-0.5 text-xs text-ink/65">
             {picks.slice(0, 8).map((pick) => {
-              const outcome = evaluatePick(pick, race.result);
-              const label = outcomeLabel(outcome);
+              const ticket = formatTicketOutcome(pick, race.result);
               const cls =
-                outcome === "win"
+                ticket.outcome === "hit"
                   ? "text-signal font-medium"
-                  : outcome === "place"
-                    ? "text-turf font-medium"
-                    : outcome === "miss"
-                      ? "text-ink/40"
-                      : "text-ink/55";
+                  : ticket.outcome === "miss"
+                    ? "text-ink/40"
+                    : "text-ink/55";
               return (
                 <li key={`${pick.betType}-${pick.selection}`}>
-                  <span className={cls}>{label}</span>
+                  <span className={cls}>{ticket.label}</span>
                   {" · "}
                   {BET_TYPE_LABELS[pick.betType]} {pick.selection}
                 </li>
@@ -408,7 +410,11 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
       </section>
 
       {tipster ? <TipsterRefPanel tipster={tipster} /> : null}
-      <SupplementNotesPanel venue={race.venue} raceDate={race.raceDate} />
+      <SupplementNotesPanel
+        venue={race.venue}
+        raceDate={race.raceDate}
+        candidates={supplementCandidates}
+      />
 
       <section>
         <div className="flex flex-wrap items-center justify-between gap-2">

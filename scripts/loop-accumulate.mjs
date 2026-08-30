@@ -477,6 +477,13 @@ async function cmdEvaluate(raceDate) {
     console.warn("trends rebuild skipped:", err?.message ?? err);
   }
 
+  try {
+    const { rebuildHitCatalog } = await import("./loop-hits.mjs");
+    await rebuildHitCatalog();
+  } catch (err) {
+    console.warn("hit catalog rebuild skipped:", err?.message ?? err);
+  }
+
   console.log(`Evaluation → ${path.relative(root, evalPath)}`);
   console.log(
     `  candidates=${candidates} ticketHits=${ticketHits} placeHits=${candidateHits} pending=${candidatePending} gateCorrect=${gateCorrect}`,
