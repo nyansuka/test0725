@@ -44,8 +44,9 @@ docker compose exec web npm run fetch:jra:odds
 # 終了済みレースの結果だけ差分更新
 docker compose exec web npm run fetch:jra:results
 
-# 自動監視（未発走オッズ更新 + 発走8分後から結果）
-docker compose up fetcher
+# 自動監視は使わない（自宅 IP が CloudFront 400 になる）。
+# 取得は GitHub Actions「Refresh JRA odds」（土日 8–19 時 JST・30 分、結果優先）。
+# docker compose --profile fetch up fetcher
 ```
 
 ### 改善ループ（日次 JSON 蓄積）
@@ -61,7 +62,7 @@ docker compose exec web npm run loop:evaluate
 docker compose exec web npm run loop:report -- 2026-07-25
 ```
 
-`docker compose up` すると `web` と一緒に `fetcher` も起動します（90秒間隔でオッズ＋結果）。
+`docker compose up` は `web` のみ。`fetcher` は `--profile fetch` 付きでないと起動しません。
 
 - 取得元: netkeiba 公開の出馬表 / オッズ API / 結果ページ（デモ用途）
 - 反映先: `src/data/snapshots/latest.json`（JST 当日スナップを優先。未来日の先取りでは上書きしない）

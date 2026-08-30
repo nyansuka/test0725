@@ -315,8 +315,8 @@ JV-Link はインストール済みでも、HTTP API ではないためサイト
 
 運用の推奨順（**プラン C**）— 詳細は [SITE-CHECK.md](./SITE-CHECK.md):
 
-1. **開催日・朝:** `fetch:jra` → `loop:freeze`（オッズが揃ってから。薄い凍結は `--force` のみ）  
-2. **開催日・定期（〜30分）:** ライブ再 fetch（サイト更新）→ `loop:evaluate` / `loop:trends` → `site:check`（PASS かつ変更ありなら commit / push）。結果ポーリングは `fetcher` が常時担当  
+1. **土日・朝:** GitHub Actions 8:00 JST の full fetch → `git pull` → `loop:freeze`（オッズが揃ってから。薄い凍結は `--force` のみ）  
+2. **土日・8:30–19:00 JST（30分）:** Actions が結果のみ更新 → ローカルは `git pull` → `loop:evaluate` / `loop:trends` → `site:check`（PASS かつ変更ありなら commit / push）。自宅 `fetcher` は使わない  
 3. **週次:** `loop:report` で Recall / Precision / 密度を見て **変更は1つだけ**  
 4. Want から「前走・人気」だけ netkeiba 拡張（D4）。JV-Link は保留  
 

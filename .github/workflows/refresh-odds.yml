@@ -1,28 +1,38 @@
-# 開催日の未発走オッズを定期取得し、変化があれば main に commit & push する。
+# 土日 8–19 時 JST だけスナップを更新し、変化があれば main に commit & push する。
 # Vercel は main push で再デプロイされる想定。
+# 間隔は 30 分（20–30 分の上限）。自宅 fetcher は使わない。
 name: Refresh JRA odds
 
 on:
   schedule:
-    # 毎時0分（JST 開催帯を広くカバー）
-    - cron: "0 * * * *"
+    # cron は UTC。JST = UTC+9
+    # 土日 8:00 JST（金土 23:00 UTC）— 出馬表＋オッズ＋結果
+    - cron: "0 23 * * 5,6"
+    # 土日 8:30 JST（金土 23:30 UTC）— 以降は結果優先
+    - cron: "30 23 * * 5,6"
+    # 土日 9:00–18:30 JST（土日 0:00–9:30 UTC）
+    - cron: "0,30 0-9 * * 0,6"
+    # 土日 19:00 JST（土日 10:00 UTC）
+    - cron: "0 10 * * 0,6"
   workflow_dispatch:
     inputs:
       mode:
-        description: "odds = odds/results only; full = re-fetch shutuba+odds+results (fixes stale 馬番)"
+        description: "results = 結果のみ（既定の定期）; odds = 未発走オッズ+結果; full = 出馬表から取り直し"
         required: true
-        default: full
+        default: results
         type: choice
         options:
-          - full
+          - results
           - odds
+          - full
 
 permissions:
   contents: write
 
 concurrency:
   group: refresh-jra-odds
-  cancel-in-progress: true
+  # 朝の full を 8:30 の結果ティックで殺さない
+  cancel-in-progress: false
 
 jobs:
   refresh:
@@ -36,20 +46,48 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Resolve mode
+        id: mode
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          INPUT_MODE: ${{ github.event.inputs.mode }}
+        run: |
+          if [ "$EVENT_NAME" = "schedule" ]; then
+            if [ "$SCHEDULE" = "0 23 * * 5,6" ]; then
+              echo "mode=full" >> "$GITHUB_OUTPUT"
+            else
+              echo "mode=results" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "mode=${INPUT_MODE:-results}" >> "$GITHUB_OUTPUT"
+          fi
+          echo "JST=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M')" >> "$GITHUB_OUTPUT"
+
       - name: Refresh today's snapshot
         env:
-          MODE: ${{ github.event.inputs.mode || 'odds' }}
+          MODE: ${{ steps.mode.outputs.mode }}
         run: |
-          if [ "$MODE" = "full" ]; then
-            echo "Running full fetch:jra (shutuba + odds + results)"
-            npm run fetch:jra
-          else
-            echo "Running odds/results refresh"
-            npm run fetch:jra:odds
-            npm run fetch:jra:results
-          fi
+          echo "mode=$MODE JST=${{ steps.mode.outputs.JST }}"
+          case "$MODE" in
+            full)
+              echo "Running full fetch:jra (shutuba + odds + results)"
+              npm run fetch:jra
+              ;;
+            odds)
+              echo "Running odds then results"
+              npm run fetch:jra:odds
+              npm run fetch:jra:results
+              ;;
+            *)
+              echo "Running results only"
+              npm run fetch:jra:results
+              ;;
+          esac
 
       - name: Commit and push if changed
+        env:
+          MODE: ${{ steps.mode.outputs.mode }}
         run: |
           if git diff --quiet -- src/data/snapshots; then
             echo "No snapshot changes"
@@ -58,6 +96,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add src/data/snapshots
-          MODE="${{ github.event.inputs.mode || 'odds' }}"
           git commit -m "chore: refresh JRA ${MODE} snapshot ($(date -u +%Y-%m-%dT%H:%MZ))"
           git push

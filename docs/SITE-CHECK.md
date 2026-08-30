@@ -1,23 +1,23 @@
 # 定期運用（データ収集・突合・サイトチェック）
 
-間隔の目安: **30分**（開催日）。非開催日は site:check のみでも可。
+間隔の目安: **30分**（土日開催中の結果取り込み）。非開催日は site:check のみでも可。
 
 ## 役割分担
 
 | 層 | 誰がやるか | 内容 |
 |----|------------|------|
-| 結果ポーリング | `fetcher` コンテナ（常時） | 発走＋猶予後の結果を差分取得 |
-| 発走前固定 | 手動／朝一回 | `fetch:jra` → `loop:freeze`（薄いときだけ `--force`） |
-| 定期ティック | エージェント loop | ライブ再取得 → 突合 → trends → site:check →（PASSなら）commit/push |
+| 結果・オッズ更新 | GitHub Actions（自宅以外） | 土日 8–19 時 JST・30 分間隔。8:00 は full、以降は結果のみ。自宅 `fetcher` は起動しない |
+| 発走前固定 | Actions 朝の full のあと | `git pull` → `loop:freeze`（薄いときだけ `--force`） |
+| 定期ティック | エージェント loop | `git pull` → 突合 → trends → site:check →（PASSなら）commit/push |
 | 週次改善 | 人＋エージェント | `loop:report` を見て **変更は1つだけ**（DATA-AND-LOOP §5.4） |
 
-凍結オッズ（`loop/snapshots`）は原則触らない。サイト表示用の `src/data/snapshots/` は定期 fetch と fetcher で更新してよい。
+凍結オッズ（`loop/snapshots`）は原則触らない。サイト表示用の `src/data/snapshots/` は GitHub Actions の Refresh で更新する。
 
 ## ホスト手動
 
 ```powershell
-# 朝（オッズが揃ってから）
-docker compose exec -T web npm run fetch:jra
+# 朝（Actions の Refresh が終わってから git pull）
+git pull
 docker compose exec -T web npm run loop:freeze -- 2026-07-26
 
 # 結果が溜まったら／夜
@@ -40,7 +40,7 @@ docker compose exec -T web npm run site:verify-vercel
 ## エージェント用プロンプト（30分 tick）
 
 > `project/test0725` でプラン C 運用ティックを実行:
-> 1. `docker compose exec -T web npm run fetch:jra`（当日。失敗したら理由を短く）
+> 1. `git pull` して Actions が積んだ当日スナップを揃える。**自宅から `fetch:jra` / `watch:jra` しない**。スナップが古い・欠けるときだけ `gh workflow run "Refresh JRA odds"` を1回。失敗したら理由を短く
 > 2. `docker compose exec -T web npm run loop:evaluate`（当日。freeze 済み前提）
 > 3. `docker compose exec -T web npm run loop:trends`
 > 4. `docker compose exec -T web npm run site:check`

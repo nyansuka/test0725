@@ -17,8 +17,11 @@ services:
     stdin_open: true
     tty: true
 
-  # 未発走オッズ＋発走後結果を自動取得（デフォルト90秒間隔）
+  # 自宅 IP からの常時ポーリングは CloudFront 400 の原因になるため、
+  # デフォルト起動しない。必要なときだけ:
+  #   docker compose --profile fetch up fetcher
   fetcher:
+    profiles: ["fetch"]
     build: .
     command: ["node", "scripts/watch-jra-snapshot.mjs"]
     volumes:
@@ -28,7 +31,7 @@ services:
       - INTERVAL_SEC=90
       - GRACE_MIN=8
       - ODDS_REFRESH=1
-    restart: unless-stopped
+    restart: "no"
 
 volumes:
   web_node_modules:
