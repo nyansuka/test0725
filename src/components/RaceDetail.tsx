@@ -23,6 +23,7 @@ import {
   type TipsterRefPayload,
 } from "@/components/TipsterRefPanel";
 import { SupplementNotesPanel } from "@/components/SupplementNotesPanel";
+import { CourseNotesPanel } from "@/components/CourseNotesPanel";
 import { supplementCandidatesFromPicks } from "@/domain/supplementNotes";
 import {
   formatPopularity,
@@ -410,6 +411,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
       </section>
 
       {tipster ? <TipsterRefPanel tipster={tipster} /> : null}
+      <CourseNotesPanel venue={race.venue} track={race.track} distance={race.distance} />
       <SupplementNotesPanel
         venue={race.venue}
         raceDate={race.raceDate}

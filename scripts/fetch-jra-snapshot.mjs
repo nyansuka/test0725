@@ -359,7 +359,7 @@ function flattenOdds(payload, typeNum) {
   return out;
 }
 
-function synthesizeFactors(horse, oddsWin, fieldSize, track) {
+function synthesizeFactors(horse, oddsWin, fieldSize, track, venue, distance) {
   // valueGap / formSignal は Scorer が人気・前走から上書き（C1/C2）。
   // paceFit / conditionFit は当面プレースホルダ。courseFit は --enrich-form で上書き可。
   const base = 52 + ((horse.number * 7 + fieldSize) % 28);
@@ -369,7 +369,7 @@ function synthesizeFactors(horse, oddsWin, fieldSize, track) {
     conditionFit: Math.min(90, base + 4),
     formSignal: 50,
     valueGap: 50,
-    gateJockey: trackGateBiasScore(track, horse.bracket),
+    gateJockey: trackGateBiasScore(track, horse.bracket, venue, distance),
   };
 }
 
@@ -712,7 +712,14 @@ async function fetchHistoricalResultRace(raceId, raceDate) {
         min: Math.max(1.1, Number((oddsWin * 0.28).toFixed(1))),
         max: Math.max(1.3, Number((oddsWin * 0.55).toFixed(1))),
       },
-      factors: synthesizeFactors(finish, oddsWin, fieldSize, meta.track),
+      factors: synthesizeFactors(
+        finish,
+        oddsWin,
+        fieldSize,
+        meta.track,
+        meta.venue,
+        meta.distance,
+      ),
       comment: buildComment(oddsWin),
     };
   });
@@ -784,7 +791,14 @@ async function fetchOneRace(raceId, raceDate, { withResult = true, withForm = fa
             max: Math.max(1.3, Number((oddsWin * 0.55).toFixed(1))),
           },
       runningStyle: h.runningStyle,
-      factors: synthesizeFactors(h, oddsWin, rawHorses.length, meta.track),
+      factors: synthesizeFactors(
+        h,
+        oddsWin,
+        rawHorses.length,
+        meta.track,
+        meta.venue,
+        meta.distance,
+      ),
       comment: buildComment(oddsWin),
     };
   });
@@ -948,7 +962,14 @@ function applyOddsBundleToRace(race, { entries, placeRanges, officialDatetime })
           min: Math.max(1.1, Number((oddsWin * 0.28).toFixed(1))),
           max: Math.max(1.3, Number((oddsWin * 0.55).toFixed(1))),
         };
-    h.factors = synthesizeFactors(h, oddsWin, fieldSize, race.track);
+    h.factors = synthesizeFactors(
+      h,
+      oddsWin,
+      fieldSize,
+      race.track,
+      race.venue,
+      race.distance,
+    );
     h.comment = buildComment(oddsWin);
   }
 

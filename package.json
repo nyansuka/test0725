@@ -46,7 +46,8 @@
     "tfjv:migrate": "node scripts/tfjv-migrate.mjs",
     "tfjv:load": "node scripts/tfjv-load.mjs",
     "test:journal-expand": "node scripts/test-journal-expand.mjs",
-    "test:supplement-notes": "node --experimental-strip-types scripts/test-supplement-notes.mts"
+    "test:supplement-notes": "node --experimental-strip-types scripts/test-supplement-notes.mts",
+    "test:course-notes": "node scripts/test-course-notes.mjs"
   },
   "dependencies": {
     "@fontsource-variable/noto-sans-jp": "^5.3.0",

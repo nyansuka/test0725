@@ -4,6 +4,8 @@
  * 軸選定・買い目生成からはまだ除外しない（週次1変更）。
  */
 
+import { isFrontBiasedCourse as courseFrontBias } from "./courseNotes.mjs";
+
 export const DANGEROUS_FAV_REASONS = [
   "factor_win_below_median",
   "closer_on_front_course",
@@ -17,11 +19,11 @@ export const DANGEROUS_FAV_REASON_LABELS = {
 const CLOSER_STYLES = new Set(["差", "追"]);
 
 /**
- * 先行有利とみなすコース（仮・Derive）。
- * 初期は新潟芝のみ。距離細分は出現率を見て後続。
+ * 先行有利とみなすコース。
+ * 新潟芝は従来どおり全距離。阪神は検証済み距離だけ（1200/1400/2000芝、1200/1800ダ）。
  */
-export function isFrontBiasedCourse(venue, track, _distance) {
-  return track === "芝" && String(venue ?? "").includes("新潟");
+export function isFrontBiasedCourse(venue, track, distance) {
+  return courseFrontBias(venue, track, distance);
 }
 
 export function isCloserStyle(runningStyle) {

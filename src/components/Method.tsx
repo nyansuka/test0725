@@ -7,7 +7,7 @@ const steps = [
   },
   {
     title: "複勝圏スコア（穴）",
-    body: "コース適性・展開・馬場・近況・人気乖離などから placePotential を算出。近況は前走（あれば）、人気乖離は単勝人気から導出。関係馬は下限合成。差し替え可能なルール実装です。",
+    body: "コース適性・展開・馬場・近況・人気乖離などから placePotential を算出。近況は前走（あれば）、人気乖離は単勝人気から導出。阪神の距離別は枠（gateJockey）へ±4以内。courseFit は同条件成績のまま。関係馬は下限合成。差し替え可能なルール実装です。",
   },
   {
     title: "軸馬・超注目",
@@ -47,6 +47,14 @@ export function Method() {
             </li>
           ))}
         </ol>
+
+        <div className="mt-10 border-t border-sand/15 pt-8">
+          <p className="text-xs tracking-wider text-sand/45">コース参考</p>
+          <h3 className="mt-1 text-base font-semibold">競馬場・距離の読み方</h3>
+          <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-sand/70">
+            レース詳細に、内回り／外回り・最初のコーナーまでの長さ・前残りか差し余地かを出す。阪神は検証済みの距離だけ枠スコアへ小さく寄せる（place でおおむね ±0.4）。脚質データが薄いので展開適性には載せない。血統・転戦ローテの数字は使わない。
+          </p>
+        </div>
 
         <div className="mt-10 border-t border-sand/15 pt-8">
           <p className="text-xs tracking-wider text-sand/45">スコア外の補足</p>

@@ -85,7 +85,12 @@ function topFactors(factors: HorseFactors, limit = 2): string[] {
 /** C1/C2: 埋め込み合成を捨て、人気・前走から因子を確定 */
 export function applyDerivedFactors(horse: Horse, race: Race): HorseFactors {
   const factors: HorseFactors = { ...horse.factors };
-  factors.gateJockey = trackGateBiasScore(race.track, horse.bracket);
+  factors.gateJockey = trackGateBiasScore(
+    race.track,
+    horse.bracket,
+    race.venue,
+    race.distance,
+  );
 
   const pop = popularityByNumber(race.horses).get(horse.number) ?? null;
   factors.valueGap = valueGapFromPopularity(pop);

@@ -147,7 +147,12 @@ function clamp(n, min = 0, max = 100) {
 
 function prepareFactors(horse, race) {
   const factors = { ...horse.factors };
-  factors.gateJockey = trackGateBiasScore(race.track, horse.bracket);
+  factors.gateJockey = trackGateBiasScore(
+    race.track,
+    horse.bracket,
+    race.venue,
+    race.distance,
+  );
   const pop = popularityByNumber(race.horses ?? []).get(horse.number) ?? null;
   factors.valueGap = valueGapFromPopularity(pop);
   const derivedForm = formSignalFromFormStats(horse.formStats);

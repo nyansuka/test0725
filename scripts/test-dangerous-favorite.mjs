@@ -13,6 +13,9 @@ import { findDangerousFirstFavorite } from "./lib/loop-domain.mjs";
 assert.equal(isFrontBiasedCourse("新潟", "芝"), true);
 assert.equal(isFrontBiasedCourse("新潟", "ダート"), false);
 assert.equal(isFrontBiasedCourse("東京", "芝"), false);
+assert.equal(isFrontBiasedCourse("阪神", "芝", "芝1200m"), true);
+assert.equal(isFrontBiasedCourse("阪神", "芝", "芝1600m"), false);
+assert.equal(isFrontBiasedCourse("阪神", "ダート", "ダート1800m"), true);
 assert.equal(isCloserStyle("差"), true);
 assert.equal(isCloserStyle("逃"), false);
 
@@ -75,6 +78,45 @@ const closerNiigata = assessDangerousFirstFavorite({
 });
 assert.equal(closerNiigata?.flagged, true);
 assert.deepEqual(closerNiigata?.reasons, ["closer_on_front_course"]);
+
+const closerHanshinSprint = assessDangerousFirstFavorite({
+  raceId: "r3h",
+  venue: "阪神",
+  track: "芝",
+  distance: "芝1200m",
+  horses: horses([{ n: 2, style: "追" }, { n: 4, style: "先" }, { n: 6, style: "逃" }]),
+  popularity: new Map([
+    [2, 1],
+    [4, 2],
+    [6, 3],
+  ]),
+  factorWins: new Map([
+    [2, 70],
+    [4, 60],
+    [6, 50],
+  ]),
+});
+assert.equal(closerHanshinSprint?.flagged, true);
+assert.ok(closerHanshinSprint?.reasons.includes("closer_on_front_course"));
+
+const closerHanshinMile = assessDangerousFirstFavorite({
+  raceId: "r3m",
+  venue: "阪神",
+  track: "芝",
+  distance: "芝1600m",
+  horses: horses([{ n: 2, style: "追" }, { n: 4, style: "先" }, { n: 6, style: "逃" }]),
+  popularity: new Map([
+    [2, 1],
+    [4, 2],
+    [6, 3],
+  ]),
+  factorWins: new Map([
+    [2, 70],
+    [4, 60],
+    [6, 50],
+  ]),
+});
+assert.equal(closerHanshinMile?.flagged, false);
 
 const secondFavWeak = assessDangerousFirstFavorite({
   raceId: "r4",
