@@ -3,7 +3,7 @@ import { parseSelectionNumbers } from "./betTypes";
 import { getScorer } from "./scoring";
 import { buildPickComment } from "./comment";
 import { getTrendIndex } from "./trendData";
-import { selectAxisHorses } from "./axis";
+import { selectAxisHorses, scoreWinPotential } from "./axis";
 
 /** 注目穴スコア帯（C3: ticket 最適。下限含む・上限含まず） */
 export const HOT_SCORE_MIN = 65;
@@ -57,6 +57,29 @@ function combinePlacePotential(scores: number[]): number {
 /** 埋め込み値に依存せず、常に現行 Scorer で算出（出走表と候補の一致を保証） */
 export function scoreHorse(horse: Race["horses"][number], race: Race): number {
   return getScorer().score(horse, race).placePotential;
+}
+
+/**
+ * 関係馬スコアの合成。馬単だけ 1着=winPotential / 2着=placePotential。
+ * 他券種は従来どおり placePotential の下限。
+ */
+export function combineRelatedScore(
+  race: Race,
+  selection: string,
+  betType: BetType,
+  related: Race["horses"],
+): number {
+  if (betType === "exacta") {
+    const nums = parseSelectionNumbers(selection);
+    if (nums.length >= 2) {
+      const first = race.horses.find((h) => h.number === nums[0]);
+      const second = race.horses.find((h) => h.number === nums[1]);
+      if (first && second) {
+        return Math.min(scoreWinPotential(first, race), scoreHorse(second, race));
+      }
+    }
+  }
+  return combinePlacePotential(related.map((h) => scoreHorse(h, race)));
 }
 
 function pickComment(
@@ -125,7 +148,12 @@ export function classifyOddsEntry(
     };
   }
 
-  const relatedPlacePotential = combinePlacePotential(related.map((h) => scoreHorse(h, race)));
+  const relatedPlacePotential = combineRelatedScore(
+    race,
+    entry.selection,
+    entry.betType,
+    related,
+  );
   if (relatedPlacePotential < settings.scoreMin) {
     const label = labelFor(relatedPlacePotential);
     return {

@@ -292,8 +292,10 @@ async function checkDocsAlign() {
   );
   if (!longshots.includes("Math.min")) {
     fail("relatedPlacePotential が下限合成でない可能性");
+  } else if (!longshots.includes('betType === "exacta"')) {
+    fail("馬単の win×place 合成が longshots に無い");
   } else {
-    ok("longshots 下限合成");
+    ok("longshots 下限合成（馬単は win×place）");
   }
 }
 

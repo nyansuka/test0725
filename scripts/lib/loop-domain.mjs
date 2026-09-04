@@ -242,6 +242,24 @@ function combinePlacePotential(scores) {
   return Math.min(...scores);
 }
 
+/**
+ * 関係馬スコアの合成。馬単だけ 1着=winPotential / 2着=placePotential。
+ * 他券種は従来どおり placePotential の下限。src/domain/longshots.ts と同期。
+ */
+export function combineRelatedScore(race, selection, betType, related) {
+  if (betType === "exacta") {
+    const nums = parseSelectionNumbers(selection);
+    if (nums.length >= 2) {
+      const first = race.horses.find((h) => h.number === nums[0]);
+      const second = race.horses.find((h) => h.number === nums[1]);
+      if (first && second) {
+        return Math.min(scoreWinPotential(first, race), scoreHorse(second, race));
+      }
+    }
+  }
+  return combinePlacePotential(related.map((h) => scoreHorse(h, race)));
+}
+
 function pickComment(race, related) {
   if (related.length === 0) return "関係馬の評価が不足しています。";
   const best = [...related].sort((a, b) => scoreHorse(b, race) - scoreHorse(a, race))[0];
@@ -263,7 +281,12 @@ export function classifyOddsEntry(race, entry, settings) {
   if (related.length === 0) {
     return { status: "no_related", relatedHorseNumbers: [], relatedPlacePotential: 0 };
   }
-  const relatedPlacePotential = combinePlacePotential(related.map((h) => scoreHorse(h, race)));
+  const relatedPlacePotential = combineRelatedScore(
+    race,
+    entry.selection,
+    entry.betType,
+    related,
+  );
   if (relatedPlacePotential < settings.scoreMin) {
     return {
       status: "pass",

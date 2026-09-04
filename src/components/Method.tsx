@@ -7,7 +7,7 @@ const steps = [
   },
   {
     title: "複勝圏スコア（穴）",
-    body: "コース適性・展開・馬場・近況・人気乖離などから placePotential を算出。近況は前走（あれば）、人気乖離は単勝人気から導出。阪神の距離別は枠（gateJockey）へ±4以内。courseFit は同条件成績のまま。関係馬は下限合成。差し替え可能なルール実装です。",
+    body: "コース適性・展開・馬場・近況・人気乖離などから placePotential を算出。近況は前走（あれば）、人気乖離は単勝人気から導出。阪神の距離別は枠（gateJockey）へ±4以内。courseFit は同条件成績のまま。関係馬は下限合成。馬単だけ1着を winPotential、2着を placePotential の下限（軸×穴）。差し替え可能なルール実装です。",
   },
   {
     title: "軸馬・超注目",
