@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-05T07:49:24.576Z",
+  "fetchedAt": "2026-09-05T09:45:40.382Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-09-05",
   "raceCount": 36,
@@ -1933,7 +1933,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T01:09:57.598Z",
+        "finishedAt": "2026-09-05T09:45:24.836Z",
         "finishes": [
           {
             "rank": 1,
@@ -4474,7 +4474,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T03:20:15.529Z",
+        "finishedAt": "2026-09-05T09:45:25.372Z",
         "finishes": [
           {
             "rank": 1,
@@ -6981,7 +6981,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T03:20:16.703Z",
+        "finishedAt": "2026-09-05T09:45:25.852Z",
         "finishes": [
           {
             "rank": 1,
@@ -9724,7 +9724,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T03:20:17.587Z",
+        "finishedAt": "2026-09-05T09:45:26.300Z",
         "finishes": [
           {
             "rank": 1,
@@ -12569,7 +12569,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T03:20:18.674Z",
+        "finishedAt": "2026-09-05T09:45:26.728Z",
         "finishes": [
           {
             "rank": 1,
@@ -12586,7 +12586,7 @@
             "bracket": 5,
             "name": "プレシャスタイム",
             "jockey": "佐々木",
-            "time": "2",
+            "time": "1:31.8",
             "popularity": 3,
             "oddsWin": 6.3
           },
@@ -12596,7 +12596,7 @@
             "bracket": 2,
             "name": "ローズファミリー",
             "jockey": "▲大久保",
-            "time": "クビ",
+            "time": "1:31.8",
             "popularity": 2,
             "oddsWin": 3.1
           },
@@ -12606,7 +12606,7 @@
             "bracket": 1,
             "name": "グレーターマーク",
             "jockey": "◇小林美",
-            "time": "1.1/2",
+            "time": "1:32.1",
             "popularity": 4
           },
           {
@@ -12615,8 +12615,90 @@
             "bracket": 7,
             "name": "ミーアキース",
             "jockey": "鮫島駿",
-            "time": "1/2",
+            "time": "1:32.2",
             "popularity": 5
+          },
+          {
+            "rank": 6,
+            "number": 14,
+            "bracket": 8,
+            "name": "コーズサム",
+            "jockey": "黛",
+            "time": "1:32.6",
+            "popularity": 9
+          },
+          {
+            "rank": 7,
+            "number": 9,
+            "bracket": 6,
+            "name": "ララアウローラ",
+            "jockey": "小沢",
+            "time": "1:32.7",
+            "popularity": 7
+          },
+          {
+            "rank": 8,
+            "number": 3,
+            "bracket": 3,
+            "name": "ポーラールート",
+            "jockey": "北村友",
+            "time": "1:32.9",
+            "popularity": 1,
+            "oddsWin": 2.4
+          },
+          {
+            "rank": 9,
+            "number": 11,
+            "bracket": 7,
+            "name": "ジャスコヒラリアス",
+            "jockey": "斎藤",
+            "time": "1:33.0",
+            "popularity": 8
+          },
+          {
+            "rank": 10,
+            "number": 10,
+            "bracket": 6,
+            "name": "アンミツ",
+            "jockey": "▲和田陽",
+            "time": "1:33.0",
+            "popularity": 10
+          },
+          {
+            "rank": 11,
+            "number": 6,
+            "bracket": 4,
+            "name": "ラガーレッドムーン",
+            "jockey": "荻野琢",
+            "time": "1:33.8",
+            "popularity": 13
+          },
+          {
+            "rank": 12,
+            "number": 8,
+            "bracket": 5,
+            "name": "ルナディアナ",
+            "jockey": "松本",
+            "time": "1:33.9",
+            "popularity": 12
+          },
+          {
+            "rank": 13,
+            "number": 13,
+            "bracket": 8,
+            "name": "アルーリングボーイ",
+            "jockey": "伊藤",
+            "time": "1:34.2",
+            "popularity": 14
+          },
+          {
+            "rank": 14,
+            "number": 4,
+            "bracket": 3,
+            "name": "フェアリースノー",
+            "jockey": "☆長浜",
+            "time": "1:39.3",
+            "popularity": 11
           }
         ],
         "payouts": [
@@ -15653,7 +15735,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T05:14:11.073Z",
+        "finishedAt": "2026-09-05T09:45:27.136Z",
         "finishes": [
           {
             "rank": 1,
@@ -18344,7 +18426,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T05:14:11.693Z",
+        "finishedAt": "2026-09-05T09:45:27.585Z",
         "finishes": [
           {
             "rank": 1,
@@ -20799,7 +20881,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T05:14:12.112Z",
+        "finishedAt": "2026-09-05T09:45:28.017Z",
         "finishes": [
           {
             "rank": 1,
@@ -23664,7 +23746,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:10.474Z",
+        "finishedAt": "2026-09-05T09:45:28.545Z",
         "finishes": [
           {
             "rank": 1,
@@ -26737,7 +26819,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:11.322Z",
+        "finishedAt": "2026-09-05T09:45:28.941Z",
         "finishes": [
           {
             "rank": 1,
@@ -28380,7 +28462,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:12.068Z",
+        "finishedAt": "2026-09-05T09:45:29.402Z",
         "finishes": [
           {
             "rank": 1,
@@ -31278,7 +31360,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:13.453Z",
+        "finishedAt": "2026-09-05T09:45:29.791Z",
         "finishes": [
           {
             "rank": 1,
@@ -32983,7 +33065,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T03:20:19.798Z",
+        "finishedAt": "2026-09-05T09:45:30.385Z",
         "finishes": [
           {
             "rank": 1,
@@ -35819,7 +35901,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T03:20:21.346Z",
+        "finishedAt": "2026-09-05T09:45:31.079Z",
         "finishes": [
           {
             "rank": 1,
@@ -38163,7 +38245,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T03:20:22.471Z",
+        "finishedAt": "2026-09-05T09:45:31.492Z",
         "finishes": [
           {
             "rank": 1,
@@ -40169,7 +40251,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T03:20:23.580Z",
+        "finishedAt": "2026-09-05T09:45:31.913Z",
         "finishes": [
           {
             "rank": 1,
@@ -42639,7 +42721,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T05:14:12.466Z",
+        "finishedAt": "2026-09-05T09:45:32.297Z",
         "finishes": [
           {
             "rank": 1,
@@ -45258,7 +45340,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T05:14:12.824Z",
+        "finishedAt": "2026-09-05T09:45:32.715Z",
         "finishes": [
           {
             "rank": 1,
@@ -48095,7 +48177,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T05:14:13.187Z",
+        "finishedAt": "2026-09-05T09:45:33.071Z",
         "finishes": [
           {
             "rank": 1,
@@ -51041,7 +51123,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T05:14:13.635Z",
+        "finishedAt": "2026-09-05T09:45:33.514Z",
         "finishes": [
           {
             "rank": 1,
@@ -53796,7 +53878,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:15.197Z",
+        "finishedAt": "2026-09-05T09:45:33.954Z",
         "finishes": [
           {
             "rank": 1,
@@ -56433,7 +56515,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:16.966Z",
+        "finishedAt": "2026-09-05T09:45:34.317Z",
         "finishes": [
           {
             "rank": 1,
@@ -59645,7 +59727,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:18.210Z",
+        "finishedAt": "2026-09-05T09:45:34.809Z",
         "finishes": [
           {
             "rank": 1,
@@ -62198,7 +62280,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:19.528Z",
+        "finishedAt": "2026-09-05T09:45:35.187Z",
         "finishes": [
           {
             "rank": 1,
@@ -64769,7 +64851,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T01:09:58.718Z",
+        "finishedAt": "2026-09-05T09:45:35.554Z",
         "finishes": [
           {
             "rank": 1,
@@ -65308,7 +65390,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T03:20:24.599Z",
+        "finishedAt": "2026-09-05T09:45:35.943Z",
         "finishes": [
           {
             "rank": 1,
@@ -67914,7 +67996,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T03:20:25.607Z",
+        "finishedAt": "2026-09-05T09:45:36.323Z",
         "finishes": [
           {
             "rank": 1,
@@ -70730,7 +70812,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T03:20:27.137Z",
+        "finishedAt": "2026-09-05T09:45:36.780Z",
         "finishes": [
           {
             "rank": 1,
@@ -73506,7 +73588,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T05:14:14.090Z",
+        "finishedAt": "2026-09-05T09:45:37.207Z",
         "finishes": [
           {
             "rank": 1,
@@ -76442,7 +76524,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T05:14:14.495Z",
+        "finishedAt": "2026-09-05T09:45:37.665Z",
         "finishes": [
           {
             "rank": 1,
@@ -79395,7 +79477,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T05:14:14.998Z",
+        "finishedAt": "2026-09-05T09:45:38.171Z",
         "finishes": [
           {
             "rank": 1,
@@ -81775,7 +81857,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T05:14:15.375Z",
+        "finishedAt": "2026-09-05T09:45:38.603Z",
         "finishes": [
           {
             "rank": 1,
@@ -84188,7 +84270,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:20.724Z",
+        "finishedAt": "2026-09-05T09:45:38.964Z",
         "finishes": [
           {
             "rank": 1,
@@ -85393,7 +85475,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:21.448Z",
+        "finishedAt": "2026-09-05T09:45:39.387Z",
         "finishes": [
           {
             "rank": 1,
@@ -88089,7 +88171,7 @@
       "featured": true,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:22.676Z",
+        "finishedAt": "2026-09-05T09:45:39.795Z",
         "finishes": [
           {
             "rank": 1,
@@ -90635,7 +90717,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-09-05T07:49:23.828Z",
+        "finishedAt": "2026-09-05T09:45:40.218Z",
         "finishes": [
           {
             "rank": 1,
