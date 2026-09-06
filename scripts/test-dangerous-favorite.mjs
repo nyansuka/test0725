@@ -16,6 +16,9 @@ assert.equal(isFrontBiasedCourse("東京", "芝"), false);
 assert.equal(isFrontBiasedCourse("阪神", "芝", "芝1200m"), true);
 assert.equal(isFrontBiasedCourse("阪神", "芝", "芝1600m"), false);
 assert.equal(isFrontBiasedCourse("阪神", "ダート", "ダート1800m"), true);
+assert.equal(isFrontBiasedCourse("中山", "芝", "芝1800m"), true);
+assert.equal(isFrontBiasedCourse("中山", "芝", "芝2000m"), false);
+assert.equal(isFrontBiasedCourse("中山", "ダート", "ダート1200m"), true);
 assert.equal(isCloserStyle("差"), true);
 assert.equal(isCloserStyle("逃"), false);
 
@@ -117,6 +120,103 @@ const closerHanshinMile = assessDangerousFirstFavorite({
   ]),
 });
 assert.equal(closerHanshinMile?.flagged, false);
+
+const closerNakayama1800 = assessDangerousFirstFavorite({
+  raceId: "r3n",
+  venue: "中山",
+  track: "芝",
+  distance: "芝1800m",
+  horses: horses([{ n: 2, style: "差" }, { n: 4, style: "先" }, { n: 6, style: "逃" }]),
+  popularity: new Map([
+    [2, 1],
+    [4, 2],
+    [6, 3],
+  ]),
+  factorWins: new Map([
+    [2, 70],
+    [4, 60],
+    [6, 50],
+  ]),
+});
+assert.equal(closerNakayama1800?.flagged, true);
+assert.ok(closerNakayama1800?.reasons.includes("closer_on_front_course"));
+
+const closerNakayama2000 = assessDangerousFirstFavorite({
+  raceId: "r3n2",
+  venue: "中山",
+  track: "芝",
+  distance: "芝2000m",
+  horses: horses([{ n: 2, style: "追" }, { n: 4, style: "先" }, { n: 6, style: "逃" }]),
+  popularity: new Map([
+    [2, 1],
+    [4, 2],
+    [6, 3],
+  ]),
+  factorWins: new Map([
+    [2, 70],
+    [4, 60],
+    [6, 50],
+  ]),
+});
+assert.equal(closerNakayama2000?.flagged, false);
+
+const closerSapporo1800 = assessDangerousFirstFavorite({
+  raceId: "r3s",
+  venue: "札幌",
+  track: "芝",
+  distance: "芝1800m",
+  horses: horses([{ n: 2, style: "差" }, { n: 4, style: "先" }, { n: 6, style: "逃" }]),
+  popularity: new Map([
+    [2, 1],
+    [4, 2],
+    [6, 3],
+  ]),
+  factorWins: new Map([
+    [2, 70],
+    [4, 60],
+    [6, 50],
+  ]),
+});
+assert.equal(closerSapporo1800?.flagged, true);
+assert.ok(closerSapporo1800?.reasons.includes("closer_on_front_course"));
+
+const closerSapporo2000 = assessDangerousFirstFavorite({
+  raceId: "r3s2",
+  venue: "札幌",
+  track: "芝",
+  distance: "芝2000m",
+  horses: horses([{ n: 2, style: "追" }, { n: 4, style: "先" }, { n: 6, style: "逃" }]),
+  popularity: new Map([
+    [2, 1],
+    [4, 2],
+    [6, 3],
+  ]),
+  factorWins: new Map([
+    [2, 70],
+    [4, 60],
+    [6, 50],
+  ]),
+});
+assert.equal(closerSapporo2000?.flagged, false);
+
+const closerSapporoDirt = assessDangerousFirstFavorite({
+  raceId: "r3sd",
+  venue: "札幌",
+  track: "ダート",
+  distance: "ダート1000m",
+  horses: horses([{ n: 2, style: "追" }, { n: 4, style: "先" }, { n: 6, style: "逃" }]),
+  popularity: new Map([
+    [2, 1],
+    [4, 2],
+    [6, 3],
+  ]),
+  factorWins: new Map([
+    [2, 70],
+    [4, 60],
+    [6, 50],
+  ]),
+});
+assert.equal(closerSapporoDirt?.flagged, true);
 
 const secondFavWeak = assessDangerousFirstFavorite({
   raceId: "r4",

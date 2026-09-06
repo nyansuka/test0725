@@ -3,7 +3,7 @@
  * fetcher と Scorer の単一ソース。
  *
  * 加点帯: 内枠 1〜3 / 外枠 6〜8（標準8枠の両端3枠）
- * 阪神は距離別の小さな上乗せだけ（courseNotes.gateOverlayDelta）。
+ * 阪神・中山・札幌は距離別の小さな上乗せだけ（courseNotes.gateOverlayDelta）。
  */
 import { gateOverlayDelta } from "../courseNotes.mjs";
 
