@@ -20,7 +20,7 @@ const CLOSER_STYLES = new Set(["差", "追"]);
 
 /**
  * 先行有利とみなすコース。
- * 新潟芝は従来どおり全距離。阪神・中山・札幌は検証済み距離だけ。
+ * 新潟芝は従来どおり全距離。ほかは検証済み距離だけ。京都は未検証。
  */
 export function isFrontBiasedCourse(venue, track, distance) {
   return courseFrontBias(venue, track, distance);
