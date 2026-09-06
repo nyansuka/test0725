@@ -211,6 +211,7 @@ export function findDangerousFirstFavorite(race) {
   const factorWins = new Map(horses.map((h) => [h.number, scoreFactorWin(h, race)]));
   return assessDangerousFirstFavorite({
     raceId: race.id,
+    raceDate: race.raceDate,
     venue: race.venue,
     track: race.track,
     distance: race.distance,

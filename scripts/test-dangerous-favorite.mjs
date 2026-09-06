@@ -7,6 +7,8 @@ import {
   assessDangerousFirstFavorite,
   isCloserStyle,
   isFrontBiasedCourse,
+  isLongLayoff,
+  LAYOFF_DAYS_MIN,
 } from "../src/domain/dangerousFavorite.mjs";
 import { findDangerousFirstFavorite } from "./lib/loop-domain.mjs";
 
@@ -21,6 +23,11 @@ assert.equal(isFrontBiasedCourse("中山", "芝", "芝2000m"), false);
 assert.equal(isFrontBiasedCourse("中山", "ダート", "ダート1200m"), true);
 assert.equal(isCloserStyle("差"), true);
 assert.equal(isCloserStyle("逃"), false);
+assert.equal(LAYOFF_DAYS_MIN, 180);
+assert.equal(isLongLayoff("2026-01-01", "2026-06-30"), true);
+assert.equal(isLongLayoff("2026-01-02", "2026-06-30"), false);
+assert.equal(isLongLayoff(null, "2026-06-30"), false);
+assert.equal(isLongLayoff("2026-01-01", null), false);
 
 function horses(rows) {
   return rows.map((r) => ({
@@ -235,6 +242,68 @@ const secondFavWeak = assessDangerousFirstFavorite({
 assert.equal(secondFavWeak?.flagged, false);
 assert.equal(secondFavWeak?.horseNumber, 1);
 
+const layoffFirst = assessDangerousFirstFavorite({
+  raceId: "r5",
+  raceDate: "2026-06-30",
+  venue: "東京",
+  track: "芝",
+  horses: [
+    { number: 1, runningStyle: "逃", formStats: { lastDate: "2026-01-01" } },
+    { number: 2 },
+    { number: 3 },
+  ],
+  popularity: { 1: 1, 2: 2, 3: 3 },
+  factorWins: { 1: 80, 2: 50, 3: 40 },
+});
+assert.equal(layoffFirst?.flagged, true);
+assert.deepEqual(layoffFirst?.reasons, ["layoff_over_6_months"]);
+assert.equal(layoffFirst?.layoffDays, 180);
+assert.equal(layoffFirst?.horseNumber, 1);
+
+const layoffShort = assessDangerousFirstFavorite({
+  raceId: "r5s",
+  raceDate: "2026-06-30",
+  venue: "東京",
+  track: "芝",
+  horses: [
+    { number: 1, runningStyle: "逃", formStats: { lastDate: "2026-01-02" } },
+    { number: 2 },
+  ],
+  popularity: { 1: 1, 2: 2 },
+  factorWins: { 1: 80, 2: 50 },
+});
+assert.equal(layoffShort?.flagged, false);
+assert.deepEqual(layoffShort?.reasons, []);
+assert.equal(layoffShort?.layoffDays, 179);
+
+const layoffNoDate = assessDangerousFirstFavorite({
+  raceId: "r5n",
+  raceDate: "2026-06-30",
+  venue: "東京",
+  track: "芝",
+  horses: [
+    { number: 1, runningStyle: "逃" },
+    { number: 2 },
+  ],
+  popularity: { 1: 1, 2: 2 },
+  factorWins: { 1: 80, 2: 50 },
+});
+assert.equal(layoffNoDate?.flagged, false);
+assert.equal(layoffNoDate?.layoffDays, null);
+
+const layoffNoRaceDate = assessDangerousFirstFavorite({
+  raceId: "r5r",
+  venue: "東京",
+  track: "芝",
+  horses: [
+    { number: 1, runningStyle: "逃", formStats: { lastDate: "2025-01-01" } },
+    { number: 2 },
+  ],
+  popularity: { 1: 1, 2: 2 },
+  factorWins: { 1: 80, 2: 50 },
+});
+assert.equal(layoffNoRaceDate?.flagged, false);
+
 function dummyFactors() {
   return {
     courseFit: 50,
@@ -298,6 +367,36 @@ assert.ok(found?.reasons.includes("closer_on_front_course"));
 
 const nar = findDangerousFirstFavorite({ ...liveRace, authority: "NAR" });
 assert.equal(nar, null);
+
+const liveLayoff = findDangerousFirstFavorite({
+  ...liveRace,
+  id: "live-layoff",
+  venue: "東京",
+  track: "芝",
+  distance: "芝1600m",
+  horses: liveRace.horses.map((h) =>
+    h.number === 2
+      ? {
+          ...h,
+          runningStyle: "逃",
+          formStats: {
+            pastStarts: 3,
+            sameCourseStarts: 0,
+            bestTimeSec: null,
+            avgSameRank: 2.0,
+            lastRank: 1,
+            lastPopularity: 2,
+            lastDate: "2026-02-02",
+          },
+          factors: { ...dummyFactors(), courseFit: 80, paceFit: 82, formSignal: 78 },
+        }
+      : h,
+  ),
+});
+assert.equal(liveLayoff?.horseNumber, 2);
+assert.equal(liveLayoff?.flagged, true);
+assert.deepEqual(liveLayoff?.reasons, ["layoff_over_6_months"]);
+assert.equal(liveLayoff?.layoffDays, 180);
 
 console.log(
   JSON.stringify(

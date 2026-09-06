@@ -9,14 +9,20 @@ import { isFrontBiasedCourse as courseFrontBias } from "./courseNotes.mjs";
 export const DANGEROUS_FAV_REASONS = [
   "factor_win_below_median",
   "closer_on_front_course",
+  "layoff_over_6_months",
 ];
 
 export const DANGEROUS_FAV_REASON_LABELS = {
   factor_win_below_median: "人気を除いた1着適性がレース中央値未満",
   closer_on_front_course: "先行有利コースの差し・追込",
+  layoff_over_6_months: "前走から半年以上の休み明け",
 };
 
+/** 半年以上。lastDate が無いときはこの枝は発火しない */
+export const LAYOFF_DAYS_MIN = 180;
+
 const CLOSER_STYLES = new Set(["差", "追"]);
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 /**
  * 先行有利とみなすコース。
@@ -42,10 +48,33 @@ export function dangerousFavReasonLabels(reasons) {
     .filter(Boolean);
 }
 
+/** YYYY-MM-DD 同士の暦日差。不正なら null */
+export function calendarDaysBetween(fromIso, toIso) {
+  const parse = (iso) => {
+    if (typeof iso !== "string") return null;
+    const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!m) return null;
+    return Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  };
+  const a = parse(fromIso);
+  const b = parse(toIso);
+  if (a == null || b == null) return null;
+  return Math.round((b - a) / DAY_MS);
+}
+
+export function isLongLayoff(lastDate, raceDate, minDays = LAYOFF_DAYS_MIN) {
+  const days = calendarDaysBetween(lastDate, raceDate);
+  return days != null && days >= minDays;
+}
+
 function lookup(mapLike, key) {
   if (mapLike == null) return undefined;
   if (typeof mapLike.get === "function") return mapLike.get(key);
   return mapLike[key];
+}
+
+function lastDateOf(horse) {
+  return horse?.formStats?.lastDate ?? null;
 }
 
 /**
@@ -58,10 +87,12 @@ function lookup(mapLike, key) {
  *   factorWin: number,
  *   factorWinMedian: number,
  *   runningStyle: string | null,
+ *   layoffDays: number | null,
  * }}
  */
 export function assessDangerousFirstFavorite({
   raceId,
+  raceDate,
   venue,
   track,
   distance,
@@ -77,6 +108,7 @@ export function assessDangerousFirstFavorite({
   const wins = horses.map((h) => Number(lookup(factorWins, h.number) ?? 0));
   const factorWin = Number(lookup(factorWins, first.number) ?? 0);
   const factorWinMedian = lowerMedian(wins);
+  const layoffDays = calendarDaysBetween(lastDateOf(first), raceDate);
   const reasons = [];
 
   if (factorWin < factorWinMedian) {
@@ -84,6 +116,9 @@ export function assessDangerousFirstFavorite({
   }
   if (isCloserStyle(first.runningStyle) && isFrontBiasedCourse(venue, track, distance)) {
     reasons.push("closer_on_front_course");
+  }
+  if (isLongLayoff(lastDateOf(first), raceDate)) {
+    reasons.push("layoff_over_6_months");
   }
 
   return {
@@ -95,5 +130,6 @@ export function assessDangerousFirstFavorite({
     factorWin,
     factorWinMedian,
     runningStyle: first.runningStyle ?? null,
+    layoffDays,
   };
 }

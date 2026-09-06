@@ -30,6 +30,7 @@ export function findDangerousFirstFavorite(
   );
   return assessCore({
     raceId: race.id,
+    raceDate: race.raceDate,
     venue: race.venue,
     track: race.track,
     distance: race.distance,
