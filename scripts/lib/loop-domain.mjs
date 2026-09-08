@@ -267,6 +267,43 @@ function pickComment(race, related) {
   return best.comment ?? "";
 }
 
+const TWO_LEG = new Set(["quinella", "wide", "exacta"]);
+const EXPERIMENT_DATES = new Set(["2026-09-12", "2026-09-13"]);
+
+function isWeekendExperiment(raceDate) {
+  return EXPERIMENT_DATES.has(raceDate);
+}
+
+function isAxisBandMidHoleCombo(race, entry) {
+  if (!TWO_LEG.has(entry.betType)) return false;
+  const nums = parseSelectionNumbers(entry.selection);
+  if (nums.length !== 2) return false;
+  const pops = popularityByNumber(race.horses ?? []);
+  const bands = nums.map((n) => {
+    const p = pops.get(n) ?? 99;
+    if (p <= 5) return "axis";
+    if (p <= 10) return "mid";
+    return "deep";
+  });
+  return new Set(bands).has("axis") && new Set(bands).has("mid") && new Set(bands).size === 2;
+}
+
+function relaxedRelatedScore(race, selection, betType, related) {
+  if (betType === "exacta") {
+    const nums = parseSelectionNumbers(selection);
+    if (nums.length >= 2) {
+      const first = race.horses.find((h) => h.number === nums[0]);
+      const second = race.horses.find((h) => h.number === nums[1]);
+      if (first && second) {
+        return (scoreWinPotential(first, race) + scoreHorse(second, race)) / 2;
+      }
+    }
+  }
+  const scores = related.map((h) => scoreHorse(h, race));
+  if (scores.length === 0) return 0;
+  return scores.reduce((s, n) => s + n, 0) / scores.length;
+}
+
 export function classifyOddsEntry(race, entry, settings) {
   const enabled = new Set(settings.enabledBetTypes);
   if (!enabled.has(entry.betType)) {
@@ -289,6 +326,21 @@ export function classifyOddsEntry(race, entry, settings) {
     related,
   );
   if (relatedPlacePotential < settings.scoreMin) {
+    if (
+      isWeekendExperiment(race.raceDate) &&
+      isAxisBandMidHoleCombo(race, entry)
+    ) {
+      const relaxed = relaxedRelatedScore(race, entry.selection, entry.betType, related);
+      if (relaxed >= settings.scoreMin) {
+        return {
+          status: "candidate",
+          relatedHorseNumbers: related.map((h) => h.number),
+          relatedPlacePotential: relaxed,
+          label: "検討",
+          comment: pickComment(race, related),
+        };
+      }
+    }
     return {
       status: "pass",
       relatedHorseNumbers: related.map((h) => h.number),

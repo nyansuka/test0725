@@ -13,6 +13,7 @@ import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { useRaceDay } from "@/components/RaceDayProvider";
 import { filterRacesByDate, groupRacesByVenue } from "@/data/races";
 import { LongshotMark, AxisMark, SuperWatchMark, DangerousFavMark, longshotHorseNumbers } from "@/components/LongshotMark";
+import { formatCandidateLabel } from "@/domain/experiment";
 import { formatJstDateLabel } from "@/domain/date";
 import { formatFinishLine, raceHasResult } from "@/domain/results";
 import {
@@ -207,7 +208,7 @@ function RaceExpandBody({
                 <li key={`${pick.betType}-${pick.selection}`} className="break-words">
                   {pick.label === "注目穴" && <LongshotMark className="mr-1" />}
                   {pick.hasSuperWatch && <SuperWatchMark className="mr-1 align-middle" />}
-                  {pick.label} · {pick.selection}
+                  {formatCandidateLabel(pick.label)} · {pick.selection}
                   {popLabel ? ` ${popLabel}` : ""} · {formatWinOdds(pick.odds)} · スコア{" "}
                   {pick.relatedPlacePotential}
                 </li>

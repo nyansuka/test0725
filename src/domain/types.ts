@@ -114,7 +114,7 @@ export type Race = {
   result?: RaceResult;
 };
 
-export type LongshotLabel = "注目穴" | "抑え候補";
+export type LongshotLabel = "注目穴" | "抑え候補" | "検討";
 
 export type LongshotPick = {
   raceId: string;
@@ -159,7 +159,7 @@ export type SanrenBetType = "trio" | "trifecta";
 /** 初期実装は formation のみ有効（box/multi は Domains で生成しない） */
 export type SanrenFormMode = "formation" | "box" | "multi";
 
-export type SanrenLabLabel = "研究所注目" | "抑え";
+export type SanrenLabLabel = "研究所注目" | "抑え" | "検討";
 
 export type SanrenPickPattern =
   | "fav_fav_hole"

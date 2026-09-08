@@ -18,7 +18,9 @@ const path =
 const snap = JSON.parse(readFileSync(path, "utf8"));
 const races = (snap.races ?? []).filter((r) => r.authority === "JRA");
 const picks = selectTrifectaLab(races, DEFAULT_TRIFECTA_LANE);
+const corePicks = picks.filter((p) => p.label !== "検討");
 const density = summarizeTrifectaLabDensity(picks);
+const coreDensity = summarizeTrifectaLabDensity(corePicks);
 
 const oddsOk = picks.every((p) => p.odds >= DEFAULT_TRIFECTA_LANE.oddsThreshold);
 const legsOk = picks.every((p) => {
@@ -51,6 +53,7 @@ console.log(
       labelCounts: {
         研究所注目: picks.filter((p) => p.label === "研究所注目").length,
         抑え: picks.filter((p) => p.label === "抑え").length,
+        検討: picks.filter((p) => p.label === "検討").length,
       },
       sample: picks.slice(0, 5).map((p) => ({
         raceId: p.raceId,
@@ -68,9 +71,9 @@ console.log(
 
 // 完了条件: 候補が出るレースで概ね 50〜100 点帯（平均）に近づくこと
 const inBand =
-  density.raceCount > 0 &&
-  density.avgPerRace >= 20 &&
-  density.maxPerRace <= DEFAULT_TRIFECTA_LANE.topNPerRace;
+  coreDensity.raceCount > 0 &&
+  coreDensity.avgPerRace >= 20 &&
+  coreDensity.maxPerRace <= DEFAULT_TRIFECTA_LANE.topNPerRace;
 
 if (!oddsOk || !legsOk || !patternOk) {
   console.error("S2A_FAIL checks");

@@ -1,6 +1,7 @@
 /**
  * 調教・馬体重の読み方（スコア外）。
  * Scorer / selectLongshots / 軸選定には混ぜない。
+ * 瞬発戦／持続力戦のラベルは補足にも載せない（場・馬の固定分類にしない）。
  */
 
 import type { LongshotLabel, LongshotPick } from "./types";
@@ -89,8 +90,14 @@ export function buildSupplementNotes(input: {
   };
 }
 
+const SUPPLEMENT_LABEL_RANK: Record<LongshotLabel, number> = {
+  注目穴: 3,
+  抑え候補: 2,
+  検討: 1,
+};
+
 /**
- * 補足で調教・馬体重を見る対象。注目穴を優先し、抑え候補と混ぜてラベルしない。
+ * 補足で調教・馬体重を見る対象。注目穴を優先し、検討は混ぜて穴扱いにしない。
  */
 export function supplementCandidatesFromPicks(
   picks: Pick<LongshotPick, "relatedHorseNumbers" | "label">[],
@@ -100,8 +107,9 @@ export function supplementCandidatesFromPicks(
   for (const pick of picks) {
     for (const n of pick.relatedHorseNumbers ?? []) {
       const prev = byNumber.get(n);
-      if (prev === "注目穴") continue;
-      if (pick.label === "注目穴" || !prev) byNumber.set(n, pick.label);
+      if (!prev || SUPPLEMENT_LABEL_RANK[pick.label] > SUPPLEMENT_LABEL_RANK[prev]) {
+        byNumber.set(n, pick.label);
+      }
     }
   }
   const nameOf = new Map(horses.map((h) => [h.number, h.name]));
@@ -112,7 +120,8 @@ export function supplementCandidatesFromPicks(
       label,
     }))
     .sort((a, b) => {
-      if (a.label !== b.label) return a.label === "注目穴" ? -1 : 1;
+      const rankDiff = SUPPLEMENT_LABEL_RANK[b.label] - SUPPLEMENT_LABEL_RANK[a.label];
+      if (rankDiff !== 0) return rankDiff;
       return a.number - b.number;
     });
 }

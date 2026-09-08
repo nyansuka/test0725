@@ -52,6 +52,11 @@ export const DEFAULT_SANREN_LAB = {
   trifecta: DEFAULT_TRIFECTA_LANE,
 };
 
+const EXPERIMENT_DATES = new Set(["2026-09-12", "2026-09-13"]);
+function isWeekendExperiment(raceDate) {
+  return EXPERIMENT_DATES.has(raceDate);
+}
+
 export const SANREN_LANES = ["trio", "trifecta"];
 
 function labelForLabScore(score) {
@@ -240,7 +245,82 @@ export function selectTrifectaLab(races, settings = DEFAULT_TRIFECTA_LANE) {
       if (a.label !== b.label) return a.label === "研究所注目" ? -1 : 1;
       return b.odds - a.odds;
     });
-    out.push(...racePicks.slice(0, settings.topNPerRace));
+    const kept = racePicks.slice(0, settings.topNPerRace);
+    out.push(...kept);
+
+    if (isWeekendExperiment(race.raceDate)) {
+      const winAxisNums = new Set(axisHorses.map((h) => h.number));
+      const popAxes = [...race.horses]
+        .map((h) => ({
+          horse: h,
+          pop: pops.get(h.number) ?? 99,
+          place: placeByNum.get(h.number) ?? 0,
+          win: winByNum.get(h.number) ?? 0,
+        }))
+        .filter((s) => {
+          if (s.pop < 1 || s.pop > 5) return false;
+          if (winAxisNums.has(s.horse.number)) return false;
+          if (excludeDangerous && isDangerousFavorite(s.win, s.pop, winScores)) return false;
+          return true;
+        })
+        .sort((a, b) => b.place - a.place || b.win - a.win || a.pop - b.pop)
+        .slice(0, axisTopN)
+        .map((s) => s.horse);
+
+      for (const axis of popAxes) {
+        const col2 = byPlaceDesc.filter((h) => h.number !== axis.number).slice(0, partnerCap2);
+        const col2Nums = new Set(col2.map((h) => h.number));
+        const col3 = byPlaceDesc
+          .filter((h) => h.number !== axis.number && !col2Nums.has(h.number))
+          .slice(0, partnerCap3);
+        if (col2.length === 0 || col3.length === 0) continue;
+        const pairs = [];
+        for (const a of col2) {
+          for (const b of col3) {
+            pairs.push([a, b]);
+            pairs.push([b, a]);
+          }
+        }
+        const axisWin = winByNum.get(axis.number) ?? 0;
+        const axisPlace = placeByNum.get(axis.number) ?? 0;
+        for (const [second, third] of pairs) {
+          const selection = `${axis.number}-${second.number}-${third.number}`;
+          if (seen.has(selection)) continue;
+          seen.add(selection);
+          const odds = boardOdds(race, "trifecta", selection);
+          if (odds == null) continue;
+          if (odds < settings.oddsThreshold) continue;
+          if (settings.oddsMax != null && odds > settings.oddsMax) continue;
+          const relatedScore = combinePlace([
+            axisPlace,
+            placeByNum.get(second.number) ?? 0,
+            placeByNum.get(third.number) ?? 0,
+          ]);
+          if (relatedScore < settings.scoreMin) continue;
+          out.push({
+            raceId: race.id,
+            venue: race.venue,
+            raceNumber: race.raceNumber,
+            startTime: race.startTime,
+            track: race.track,
+            title: race.title,
+            betType: "trifecta",
+            selection,
+            odds,
+            axisHorseNumber: axis.number,
+            secondHorseNumber: second.number,
+            thirdHorseNumber: third.number,
+            relatedHorseNumbers: [axis.number, second.number, third.number],
+            pattern: "ordered_axis",
+            relatedScore,
+            axisWinPotential: axisWin,
+            label: "検討",
+            hasSuperWatch: false,
+            comment: buildTrifectaComment(axis, second, third, relatedScore, axisWin, "検討"),
+          });
+        }
+      }
+    }
   }
 
   return sortSanrenPicks(out);
@@ -446,6 +526,70 @@ export function selectTrioLab(races, settings = DEFAULT_TRIO_LANE) {
     }
 
     out.push(...kept);
+
+    if (isWeekendExperiment(race.raceDate)) {
+      const keptKeys = new Set(kept.map((p) => p.selection));
+      for (const axis of axisList) {
+        const extraPartners = popularPool
+          .filter((s) => s.horse.number !== axis.horse.number)
+          .slice(partnerCapPopular, 3);
+        for (const partner of extraPartners) {
+          for (const hole of holePool) {
+            if (hole.horse.number === axis.horse.number) continue;
+            if (hole.horse.number === partner.horse.number) continue;
+            const hitScore = trioHitScore({
+              favPopA: axis.pop,
+              favPopB: partner.pop,
+              holePop: hole.pop,
+              holePlace: hole.place,
+              racePlaces,
+            });
+            const nums = [axis.horse.number, partner.horse.number, hole.horse.number];
+            const selection = sortedSelection(nums);
+            if (keptKeys.has(selection) || seen.has(selection)) continue;
+            seen.add(selection);
+            const odds = boardOdds(race, "trio", selection);
+            if (odds != null) {
+              if (odds < settings.oddsThreshold) continue;
+              if (settings.oddsMax != null && odds > settings.oddsMax) continue;
+            }
+            const floorPlace = combinePlace([axis.place, partner.place, hole.place]);
+            if (floorPlace < settings.scoreMin) continue;
+            const evScore = trioEvScore(hitScore, odds);
+            out.push({
+              raceId: race.id,
+              venue: race.venue,
+              raceNumber: race.raceNumber,
+              startTime: race.startTime,
+              track: race.track,
+              title: race.title,
+              betType: "trio",
+              selection,
+              odds,
+              axisHorseNumber: axis.horse.number,
+              secondHorseNumber: partner.horse.number,
+              thirdHorseNumber: hole.horse.number,
+              relatedHorseNumbers: [...nums].sort((a, b) => a - b),
+              pattern: "fav_fav_hole",
+              relatedScore: hitScore,
+              hitScore,
+              evScore,
+              axisWinPotential: axis.win,
+              label: "検討",
+              comment: buildTrioComment(
+                axis.horse,
+                partner.horse,
+                hole.horse,
+                pops.get(axis.horse.number) ?? 99,
+                "検討",
+                hitScore,
+                evScore,
+              ),
+            });
+          }
+        }
+      }
+    }
   }
 
   return sortSanrenPicks(out);

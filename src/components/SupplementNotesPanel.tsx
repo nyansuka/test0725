@@ -2,6 +2,7 @@
 
 import { useId, useMemo, useState } from "react";
 import { LongshotMark } from "@/components/LongshotMark";
+import { formatCandidateLabel } from "@/domain/experiment";
 import {
   buildSupplementNotes,
   type SupplementCandidate,
@@ -26,6 +27,7 @@ export function SupplementNotesPanel({ venue, raceDate, candidates = [] }: Props
   const [open, setOpen] = useState(false);
   const hot = candidates.filter((c) => c.label === "注目穴");
   const hold = candidates.filter((c) => c.label === "抑え候補");
+  const trial = candidates.filter((c) => c.label === "検討");
   const hintSummary =
     notes.raceHints.length > 0
       ? notes.raceHints.join(" ")
@@ -34,7 +36,9 @@ export function SupplementNotesPanel({ venue, raceDate, candidates = [] }: Props
     ? `注目穴 ${candidateLine(hot)}`
     : hold.length
       ? `注目穴なし · 抑え候補 ${hold.length}頭`
-      : `注目穴なし · ${hintSummary}`;
+      : trial.length
+        ? `注目穴なし · 候補（検討） ${trial.length}頭`
+        : `注目穴なし · ${hintSummary}`;
 
   return (
     <section
@@ -80,8 +84,16 @@ export function SupplementNotesPanel({ venue, raceDate, candidates = [] }: Props
                       {c.number}
                     </span>
                     <span className="font-medium">{c.name}</span>
-                    <span className={c.label === "注目穴" ? "text-signal" : "text-ink/50"}>
-                      {c.label}
+                    <span
+                      className={
+                        c.label === "注目穴"
+                          ? "text-signal"
+                          : c.label === "検討"
+                            ? "text-ink/70"
+                            : "text-ink/50"
+                      }
+                    >
+                      {formatCandidateLabel(c.label)}
                     </span>
                   </li>
                 ))}
@@ -106,7 +118,7 @@ export function SupplementNotesPanel({ venue, raceDate, candidates = [] }: Props
             </div>
           ))}
           <p className="text-xs text-ink/40">
-            穴／軸スコア・危険1人気・3連系研究所には使わない。調教履歴と当日馬体重はスナップショット未収録のため、JRA・新聞で確認する。
+            穴／軸スコア・危険1人気・3連系研究所には使わない。調教履歴と当日馬体重はスナップショット未収録のため、JRA・新聞で確認する。場や馬を瞬発戦／持続力戦には分けない。
           </p>
         </div>
       ) : null}

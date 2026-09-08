@@ -4,6 +4,8 @@ import { getScorer } from "./scoring";
 import { buildPickComment } from "./comment";
 import { getTrendIndex } from "./trendData";
 import { selectAxisHorses, scoreWinPotential } from "./axis";
+import { popularityByNumber } from "./odds";
+import { EXPERIMENT_LABEL, isWeekendExperiment } from "./experiment";
 
 /** 注目穴スコア帯（C3: ticket 最適。下限含む・上限含まず） */
 export const HOT_SCORE_MIN = 65;
@@ -107,6 +109,48 @@ function labelFor(score: number): LongshotLabel {
   return labelForScore(score);
 }
 
+const TWO_LEG = new Set<BetType>(["quinella", "wide", "exacta"]);
+
+/** 人気 1〜5 × 6〜10 の2頭券。枠連は対象外。 */
+function isAxisBandMidHoleCombo(race: Race, entry: OddsEntry): boolean {
+  if (!TWO_LEG.has(entry.betType)) return false;
+  const nums = parseSelectionNumbers(entry.selection);
+  if (nums.length !== 2) return false;
+  const pops = popularityByNumber(race.horses);
+  const bands = nums.map((n) => {
+    const p = pops.get(n) ?? 99;
+    if (p <= 5) return "axis";
+    if (p <= 10) return "mid";
+    return "deep";
+  });
+  return new Set(bands).has("axis") && new Set(bands).has("mid") && new Set(bands).size === 2;
+}
+
+function average(scores: number[]): number {
+  if (scores.length === 0) return 0;
+  return scores.reduce((s, n) => s + n, 0) / scores.length;
+}
+
+/** 軸帯×中穴の実験合成。下限の代わりに平均。ゲートは別途。 */
+function relaxedRelatedScore(
+  race: Race,
+  selection: string,
+  betType: BetType,
+  related: Race["horses"],
+): number {
+  if (betType === "exacta") {
+    const nums = parseSelectionNumbers(selection);
+    if (nums.length >= 2) {
+      const first = race.horses.find((h) => h.number === nums[0]);
+      const second = race.horses.find((h) => h.number === nums[1]);
+      if (first && second) {
+        return average([scoreWinPotential(first, race), scoreHorse(second, race)]);
+      }
+    }
+  }
+  return average(related.map((h) => scoreHorse(h, race)));
+}
+
 export function classifyOddsEntry(
   race: Race,
   entry: OddsEntry,
@@ -155,6 +199,21 @@ export function classifyOddsEntry(
     related,
   );
   if (relatedPlacePotential < settings.scoreMin) {
+    if (
+      isWeekendExperiment(race.raceDate) &&
+      isAxisBandMidHoleCombo(race, entry) &&
+      relaxedRelatedScore(race, entry.selection, entry.betType, related) >= settings.scoreMin
+    ) {
+      const relaxed = relaxedRelatedScore(race, entry.selection, entry.betType, related);
+      return {
+        entry,
+        status: "candidate",
+        relatedHorseNumbers: related.map((h) => h.number),
+        relatedPlacePotential: relaxed,
+        label: EXPERIMENT_LABEL,
+        comment: pickComment(race, related, entry, EXPERIMENT_LABEL),
+      };
+    }
     const label = labelFor(relatedPlacePotential);
     return {
       entry,
@@ -277,7 +336,11 @@ export function groupLongshotPicks(picks: LongshotPick[]): LongshotPickGroup[] {
         if (p.relatedHorseNumbers[0] !== relatedHorseNumbers[0]) return false;
         return p.selection.trim() === String(relatedHorseNumbers[0]);
       });
-    const label = groupPicks.some((p) => p.label === "注目穴") ? "注目穴" : head.label;
+    const label = groupPicks.some((p) => p.label === "注目穴")
+      ? "注目穴"
+      : groupPicks.some((p) => p.label === "検討")
+        ? "検討"
+        : head.label;
     const relatedPlacePotential = Math.max(
       ...groupPicks.map((p) => p.relatedPlacePotential),
     );
@@ -315,12 +378,13 @@ export function expectationEdge(picksForRace: LongshotPick[]): {
   pickCount: number;
   edge: number;
 } {
-  if (picksForRace.length === 0) {
+  const core = picksForRace.filter((p) => p.label !== "検討");
+  if (core.length === 0) {
     return { top: 0, highCount: 0, pickCount: 0, edge: 0 };
   }
-  const top = Math.max(...picksForRace.map((p) => p.relatedPlacePotential));
-  const highCount = picksForRace.filter((p) => isHotScore(p.relatedPlacePotential)).length;
-  const pickCount = picksForRace.length;
+  const top = Math.max(...core.map((p) => p.relatedPlacePotential));
+  const highCount = core.filter((p) => isHotScore(p.relatedPlacePotential)).length;
+  const pickCount = core.length;
   const edge = Math.max(
     0,
     top * 0.75 + Math.min(highCount, 3) * 10 - Math.max(0, pickCount - 3) * 4,

@@ -17,7 +17,7 @@ import {
   horseFinishRank,
 } from "@/domain/results";
 import { useMemo, type ReactNode } from "react";
-import { selectAxisHorses } from "@/domain/axis";
+import { formatCandidateLabel } from "@/domain/experiment";
 
 function outcomeClass(outcome: ReturnType<typeof evaluateHorse>): string {
   if (outcome === "win") return "font-medium text-signal";
@@ -273,10 +273,14 @@ function BetLines({
             {pick.label !== group.label && (
               <span
                 className={
-                  pick.label === "注目穴" ? "font-medium text-signal" : "text-ink/55"
+                  pick.label === "注目穴"
+                    ? "font-medium text-signal"
+                    : pick.label === "検討"
+                      ? "text-ink/70"
+                      : "text-ink/55"
                 }
               >
-                {pick.label}
+                {formatCandidateLabel(pick.label)}
               </span>
             )}
             {showOutcome && (
@@ -344,12 +348,14 @@ export function LongshotTable({
                   <span className="text-xs text-ink/50">{group.startTime}</span>
                   <span
                     className={
-                      group.label === "注目穴"
-                        ? "text-xs font-medium text-signal sm:text-sm"
-                        : "text-xs text-ink/55 sm:text-sm"
+                  group.label === "注目穴"
+                    ? "text-xs font-medium text-signal sm:text-sm"
+                    : group.label === "検討"
+                      ? "text-xs text-ink/70 sm:text-sm"
+                      : "text-xs text-ink/55 sm:text-sm"
                     }
                   >
-                    {group.label}
+                    {formatCandidateLabel(group.label)}
                   </span>
                   {group.hasSuperWatch ? (
                     <span className="align-middle">

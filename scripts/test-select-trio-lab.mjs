@@ -53,6 +53,10 @@ const watchOk = [...byRace.values()].every((list) => {
   const nWatch = list.filter((p) => p.label === "研究所注目").length;
   return nWatch <= TRIO_WATCH_TOP_N && nWatch <= list.length;
 });
+const coreCapOk = [...byRace.values()].every((list) => {
+  const nCore = list.filter((p) => p.label !== "検討").length;
+  return nCore <= DEFAULT_TRIO_LANE.topNPerRace;
+});
 const evSortedOk = [...byRace.values()].every((list) => {
   for (let i = 1; i < list.length; i += 1) {
     if ((list[i - 1].evScore ?? 0) < (list[i].evScore ?? 0)) return false;
@@ -81,6 +85,7 @@ console.log(
       labelCounts: {
         研究所注目: picks.filter((p) => p.label === "研究所注目").length,
         抑え: picks.filter((p) => p.label === "抑え").length,
+        検討: picks.filter((p) => p.label === "検討").length,
       },
       sample: picks.slice(0, 5).map((p) => ({
         raceId: p.raceId,
@@ -92,14 +97,14 @@ console.log(
         label: p.label,
         pattern: p.pattern,
       })),
-      checks: { oddsOk, patternOk, favHoleHoleOk, sortedOk, noHoleAxis, indexOk, watchOk, evSortedOk, allRacesOk },
+      checks: { oddsOk, patternOk, favHoleHoleOk, sortedOk, noHoleAxis, indexOk, watchOk, coreCapOk, evSortedOk, allRacesOk },
     },
     null,
     2,
   ),
 );
 
-if (!oddsOk || !patternOk || !favHoleHoleOk || !sortedOk || !noHoleAxis || !indexOk || !watchOk || !evSortedOk || !allRacesOk) {
+if (!oddsOk || !patternOk || !favHoleHoleOk || !sortedOk || !noHoleAxis || !indexOk || !watchOk || !coreCapOk || !evSortedOk || !allRacesOk) {
   console.error("S2B_FAIL checks");
   process.exit(1);
 }

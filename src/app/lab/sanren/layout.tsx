@@ -1,6 +1,7 @@
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SanrenLabNav } from "@/components/SanrenLabNav";
+import { ExperimentNote } from "@/components/ExperimentNote";
 
 export default function SanrenLabLayout({
   children,
@@ -21,6 +22,7 @@ export default function SanrenLabLayout({
           <p className="mt-3 max-w-2xl text-ink/70">
             3連複と3連単を別レーンで選別します。本体の注目穴ボードとは独立した研究所面です。
           </p>
+          <ExperimentNote />
           <div className="mt-8">
             <SanrenLabNav />
           </div>

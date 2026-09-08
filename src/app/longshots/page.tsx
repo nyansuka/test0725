@@ -1,4 +1,5 @@
 import { LongshotsBoard } from "@/components/LongshotsBoard";
+import { ExperimentNote } from "@/components/ExperimentNote";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 
@@ -17,6 +18,7 @@ export default function LongshotsPage() {
             <span className="text-ink">買い目のヒット（券種的中）</span>
             を一覧上部に表示し、各買い目のヒット／はずれも示します。
           </p>
+          <ExperimentNote />
           <div className="mt-10">
             <LongshotsBoard />
           </div>

@@ -16,6 +16,7 @@ import {
   popularityByNumber,
 } from "@/domain/odds";
 import type { Race, SanrenPick, SanrenPickPattern } from "@/domain/types";
+import { formatCandidateLabel } from "@/domain/experiment";
 
 const PATTERN_LABELS: Record<SanrenPickPattern, string> = {
   fav_fav_hole: "人気×人気×穴",
@@ -162,10 +163,12 @@ function RacePickList({
                     className={
                       pick.label === "研究所注目"
                         ? "font-medium text-signal"
-                        : "text-ink/55"
+                        : pick.label === "検討"
+                          ? "text-ink/70"
+                          : "text-ink/55"
                     }
                   >
-                    {pick.label}
+                    {formatCandidateLabel(pick.label)}
                   </span>
                   <span className="text-xs text-ink/45">
                     {PATTERN_LABELS[pick.pattern]}
@@ -232,9 +235,11 @@ function RacePickList({
 function racePeekLabel(racePicks: SanrenPick[], race: Race | undefined): string | null {
   if (racePicks.length === 0) return "候補なし";
   const watch = racePicks.filter((p) => p.label === "研究所注目").length;
+  const trial = racePicks.filter((p) => p.label === "検討").length;
   const hits = racePicks.filter((p) => ticketLabel(p, race).text.startsWith("的中")).length;
   const parts = [`${racePicks.length} 点`];
   if (watch > 0) parts.push(`注目 ${watch}`);
+  if (trial > 0) parts.push(`検討 ${trial}`);
   if (hits > 0) parts.push(`的中 ${hits}`);
   return parts.join(" · ");
 }
