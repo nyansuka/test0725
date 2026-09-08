@@ -31,6 +31,66 @@ function pct(n: number | null | undefined) {
   return formatCatchRate(n);
 }
 
+const CATCH_STATUS = {
+  unknown: {
+    label: "予測なし",
+    hint: "その日の予測が残っておらず、捕捉かどうかを判定できない",
+    className: "bg-ink/5 text-ink/45",
+  },
+  picked: {
+    label: "捕捉",
+    hint: "当日の候補に、この買い目が入っていた",
+    className: "bg-turf/10 text-turf",
+  },
+  missed: {
+    label: "未捕捉",
+    hint: "払戻は出たが、当日の候補には入っていなかった",
+    className: "bg-signal/10 text-signal",
+  },
+} as const;
+
+function catchStatus(hit: GatedHit) {
+  if (!hit.pickKnown) return CATCH_STATUS.unknown;
+  return hit.picked ? CATCH_STATUS.picked : CATCH_STATUS.missed;
+}
+
+function HitGlossary() {
+  return (
+    <details className="group mt-3">
+      <summary className="flex w-fit cursor-pointer list-none items-baseline gap-1 text-xs text-ink/40 hover:text-ink/65 [&::-webkit-details-marker]:hidden">
+        <span
+          aria-hidden
+          className="inline-block text-[10px] transition group-open:rotate-90"
+        >
+          ▸
+        </span>
+        用語の説明
+      </summary>
+      <p className="mt-2 text-xs text-ink/45">
+        1件は払戻が出た買い目です。捕捉／未捕捉は、それを当日の候補で拾えていたかの印です。
+      </p>
+      <dl className="mt-2 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
+        {(
+          [
+            ["捕捉", "当日の候補に、この買い目が入っていた。当たったこと自体ではない。"],
+            ["未捕捉", "払戻は出たが、当日の候補には入っていなかった。"],
+            ["予測なし", "その日の予測が残っておらず、捕捉かどうかを判定できない。"],
+            ["捕捉率", "予測があるゲート内的中のうち、捕捉だった割合。"],
+            ["ゲート内的中", "凍結オッズが当時の下限〜上限に入り、払戻が出た買い目。"],
+            ["凍結オッズ", "発走前に保存したオッズ。結果後の終値ではない。"],
+            ["板 → ゲート", "払戻のうち、凍結板に載り、かつ下限〜上限を通った割合。"],
+          ] as const
+        ).map(([term, body]) => (
+          <div key={term} className="flex gap-2">
+            <dt className="shrink-0 text-xs text-ink/55">{term}</dt>
+            <dd className="text-xs leading-relaxed text-ink/40">{body}</dd>
+          </div>
+        ))}
+      </dl>
+    </details>
+  );
+}
+
 function bucketRows(map: Record<string, ConditionBucket> | undefined) {
   return Object.entries(map ?? {}).sort((a, b) => b[1].n - a[1].n || a[0].localeCompare(b[0], "ja"));
 }
@@ -58,9 +118,15 @@ function ConditionTable({
           <thead className="text-xs text-ink/50">
             <tr>
               <th className="px-4 py-2 font-medium">条件</th>
-              <th className="px-3 py-2 font-medium">件数</th>
-              <th className="px-3 py-2 font-medium">捕捉</th>
-              <th className="px-3 py-2 font-medium">捕捉率</th>
+              <th className="px-3 py-2 font-medium" title="ゲート内的中の件数">
+                件数
+              </th>
+              <th className="px-3 py-2 font-medium text-turf" title="当日の候補に載っていた件数">
+                捕捉
+              </th>
+              <th className="px-3 py-2 font-medium" title="予測がある的中のうち捕捉だった割合">
+                捕捉率
+              </th>
               <th className="px-4 py-2 font-medium">払戻合計</th>
             </tr>
           </thead>
@@ -69,7 +135,7 @@ function ConditionTable({
               <tr key={key} className="border-t border-ink/8">
                 <td className="px-4 py-2 font-medium text-ink">{key}</td>
                 <td className="px-3 py-2 tabular-nums text-ink/80">{row.n}</td>
-                <td className="px-3 py-2 tabular-nums text-ink/80">{row.picked}</td>
+                <td className="px-3 py-2 tabular-nums text-turf">{row.picked}</td>
                 <td className="px-3 py-2 tabular-nums text-ink/80">{pct(row.catchRate)}</td>
                 <td className="px-4 py-2 tabular-nums text-ink/80">{formatYen(row.payoutYen)}</td>
               </tr>
@@ -84,38 +150,45 @@ function ConditionTable({
 function CoverageStrip({ lane }: { lane: LaneConditions }) {
   const c = lane.coverage;
   return (
-    <dl className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      <div className="rounded-xl border border-ink/10 bg-white px-4 py-3">
-        <dt className="text-xs text-ink/50">ゲート内的中</dt>
-        <dd className="mt-1 text-xl font-semibold tabular-nums text-ink">
-          {lane.n}
-          <span className="ml-2 text-sm font-normal text-ink/50">件</span>
-        </dd>
-        <p className="mt-1 text-xs text-ink/45">払戻があり凍結オッズが設定内</p>
-      </div>
-      <div className="rounded-xl border border-ink/10 bg-white px-4 py-3">
-        <dt className="text-xs text-ink/50">捕捉 / 未捕捉</dt>
-        <dd className="mt-1 text-xl font-semibold tabular-nums text-ink">
-          {lane.picked}
-          <span className="mx-1 text-sm font-normal text-ink/40">/</span>
-          {lane.missed}
-        </dd>
-        <p className="mt-1 text-xs text-ink/45">捕捉率 {pct(lane.catchRate)}</p>
-      </div>
-      <div className="rounded-xl border border-ink/10 bg-white px-4 py-3">
-        <dt className="text-xs text-ink/50">板 → ゲート</dt>
-        <dd className="mt-1 text-xl font-semibold tabular-nums text-ink">{pct(c.gateRate)}</dd>
-        <p className="mt-1 text-xs text-ink/45">
-          払戻 {c.payouts} · 凍結板 {c.onBoard} · ゲート {c.gated}
-          {c.knownGated != null && c.knownGated !== c.gated ? ` · 予測あり ${c.knownGated}` : ""}
-        </p>
-      </div>
-      <div className="rounded-xl border border-ink/10 bg-white px-4 py-3">
-        <dt className="text-xs text-ink/50">ゲート内払戻合計</dt>
-        <dd className="mt-1 text-xl font-semibold tabular-nums text-ink">{formatYen(lane.payoutYen)}</dd>
-        <p className="mt-1 text-xs text-ink/45">券種・レーンは混ぜない</p>
-      </div>
-    </dl>
+    <>
+      <dl className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="rounded-xl border border-ink/10 bg-white px-4 py-3">
+          <dt className="text-xs text-ink/50">ゲート内的中</dt>
+          <dd className="mt-1 text-xl font-semibold tabular-nums text-ink">
+            {lane.n}
+            <span className="ml-2 text-sm font-normal text-ink/50">件</span>
+          </dd>
+          <p className="mt-1 text-xs text-ink/45">払戻があり、凍結オッズが設定内</p>
+        </div>
+        <div className="rounded-xl border border-turf/20 bg-turf/5 px-4 py-3">
+          <dt className="text-xs text-turf">捕捉</dt>
+          <dd className="mt-1 text-xl font-semibold tabular-nums text-turf">
+            {lane.picked}
+            <span className="ml-2 text-sm font-normal text-turf/70">件</span>
+          </dd>
+          <p className="mt-1 text-xs text-ink/55">当日の候補に載っていた · 捕捉率 {pct(lane.catchRate)}</p>
+        </div>
+        <div className="rounded-xl border border-signal/20 bg-signal/5 px-4 py-3">
+          <dt className="text-xs text-signal">未捕捉</dt>
+          <dd className="mt-1 text-xl font-semibold tabular-nums text-signal">
+            {lane.missed}
+            <span className="ml-2 text-sm font-normal text-signal/80">件</span>
+          </dd>
+          <p className="mt-1 text-xs text-ink/55">候補に無く、払戻だけ出た</p>
+        </div>
+        <div className="rounded-xl border border-ink/10 bg-white px-4 py-3">
+          <dt className="text-xs text-ink/50">ゲート内払戻合計</dt>
+          <dd className="mt-1 text-xl font-semibold tabular-nums text-ink">{formatYen(lane.payoutYen)}</dd>
+          <p className="mt-1 text-xs text-ink/45">券種・レーンは混ぜない</p>
+        </div>
+      </dl>
+      <p className="mt-3 text-xs text-ink/45">
+        板 → ゲート {pct(c.gateRate)}
+        <span className="mx-1.5">·</span>
+        払戻 {c.payouts} · 凍結板 {c.onBoard} · ゲート {c.gated}
+        {c.knownGated != null && c.knownGated !== c.gated ? ` · 予測あり ${c.knownGated}` : ""}
+      </p>
+    </>
   );
 }
 
@@ -129,10 +202,13 @@ function BetTypeOverview({
   const rows = MAIN_HIT_BET_TYPES.map((betType) => {
     const detail = lane.byBetTypeDetail?.[betType];
     const bucket = lane.byBetType?.[betType];
+    const n = detail?.n ?? bucket?.n ?? 0;
+    const picked = detail?.picked ?? bucket?.picked ?? 0;
     return {
       betType,
-      n: detail?.n ?? bucket?.n ?? 0,
-      picked: detail?.picked ?? bucket?.picked ?? 0,
+      n,
+      picked,
+      missed: detail?.missed ?? Math.max(0, n - picked),
       catchRate: detail?.catchRate ?? bucket?.catchRate ?? null,
       payoutYen: detail?.payoutYen ?? bucket?.payoutYen ?? 0,
     };
@@ -141,16 +217,25 @@ function BetTypeOverview({
     <section className="mt-6 overflow-hidden rounded-xl border border-ink/10 bg-white">
       <h2 className="border-b border-ink/10 px-4 py-3 text-sm font-semibold text-ink">券種別</h2>
       <p className="px-4 pt-3 text-xs text-ink/50">
-        基本設定（下限25・上限80）を通った払戻だけ。3連複・3連単は上のレーンへ。券種は合算しません。行を選ぶと発生条件が出ます。
+        基本設定（下限25・上限80）を通った払戻だけ。捕捉は当日の候補に載っていた件数。3連複・3連単は上のレーンへ。券種は合算しません。行を選ぶと発生条件が出ます。
       </p>
       <div className="overflow-x-auto">
-        <table className="mt-2 w-full min-w-[32rem] text-left text-sm">
+        <table className="mt-2 w-full min-w-[36rem] text-left text-sm">
           <thead className="text-xs text-ink/50">
             <tr>
               <th className="px-4 py-2 font-medium">券種</th>
-              <th className="px-3 py-2 font-medium">ゲート内</th>
-              <th className="px-3 py-2 font-medium">捕捉</th>
-              <th className="px-3 py-2 font-medium">捕捉率</th>
+              <th className="px-3 py-2 font-medium" title="ゲート内的中の件数">
+                ゲート内
+              </th>
+              <th className="px-3 py-2 font-medium text-turf" title="当日の候補に載っていた件数">
+                捕捉
+              </th>
+              <th className="px-3 py-2 font-medium text-signal" title="払戻は出たが、当日の候補には入っていなかった件数">
+                未捕捉
+              </th>
+              <th className="px-3 py-2 font-medium" title="予測がある的中のうち捕捉だった割合">
+                捕捉率
+              </th>
               <th className="px-4 py-2 font-medium">払戻合計</th>
             </tr>
           </thead>
@@ -167,7 +252,8 @@ function BetTypeOverview({
                   </button>
                 </td>
                 <td className="px-3 py-2 tabular-nums text-ink/80">{row.n}</td>
-                <td className="px-3 py-2 tabular-nums text-ink/80">{row.picked}</td>
+                <td className="px-3 py-2 tabular-nums text-turf">{row.picked}</td>
+                <td className="px-3 py-2 tabular-nums text-signal">{row.missed}</td>
                 <td className="px-3 py-2 tabular-nums text-ink/80">{pct(row.catchRate)}</td>
                 <td className="px-4 py-2 tabular-nums text-ink/80">{formatYen(row.payoutYen)}</td>
               </tr>
@@ -181,6 +267,7 @@ function BetTypeOverview({
 
 function HitRow({ hit }: { hit: GatedHit }) {
   const names = hit.horses.map((h) => h.name).join(" · ");
+  const status = catchStatus(hit);
   return (
     <li className="border-t border-ink/8 px-4 py-3 first:border-t-0">
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -192,15 +279,11 @@ function HitRow({ hit }: { hit: GatedHit }) {
         <span className="text-ink/70">{BET_TYPE_LABELS[hit.betType] ?? hit.betType}</span>
         <span className="font-mono text-ink">{hit.selection}</span>
         <span
-          className={`rounded-full px-2 py-0.5 text-xs ${
-            !hit.pickKnown
-              ? "bg-ink/5 text-ink/45"
-              : hit.picked
-                ? "bg-turf/10 text-turf"
-                : "bg-ink/5 text-ink/55"
-          }`}
+          title={status.hint}
+          aria-label={`${status.label}。${status.hint}`}
+          className={`rounded-full px-2 py-0.5 text-xs ${status.className}`}
         >
-          {!hit.pickKnown ? "予測なし" : hit.picked ? "捕捉" : "未捕捉"}
+          {status.label}
         </span>
         {hit.label ? <span className="text-xs text-ink/45">{hit.label}</span> : null}
       </div>
@@ -282,6 +365,7 @@ export function HitCatalogBoard({ catalog, conditions }: Props) {
         本体の券種どうし、および 3連複 / 3連単とは混ぜません。選別ロジックは変えません。
         {scanned > 0 ? ` 走査 ${scanned} 日 · ゲート内 ${catalog.hitCount} 件。` : " まだ蓄積がありません。"}
       </p>
+      <HitGlossary />
 
       <div className="mt-6 flex flex-wrap gap-2" role="tablist" aria-label="レーン">
         {LANES.map((id) => {
@@ -382,7 +466,7 @@ export function HitCatalogBoard({ catalog, conditions }: Props) {
         <>
           <h2 className="mt-10 text-lg font-semibold text-ink">発生条件</h2>
           <p className="mt-1 text-sm text-ink/50">
-            この券種のゲート内的中の内訳。捕捉は当日の候補に入っていた件数です。
+            この券種のゲート内的中の内訳。捕捉列は当日の候補に載っていた件数、捕捉率はその割合です。
           </p>
           <div className="mt-4 grid gap-4 lg:grid-cols-2">
             <ConditionTable title="開催日" rows={bucketRows(viewCond?.byDay)} />
@@ -409,17 +493,21 @@ export function HitCatalogBoard({ catalog, conditions }: Props) {
       ) : null}
 
       <h2 className="mt-10 text-lg font-semibold text-ink">的中一覧</h2>
+      <p className="mt-1 text-sm text-ink/50">
+        緑の捕捉は当日の候補にあった的中、橙の未捕捉は候補に無く払戻だけ出た的中です。
+      </p>
       <div className="mt-3 flex flex-wrap gap-2">
         {(
           [
             ["all", "すべて"],
-            ["picked", "捕捉のみ"],
-            ["missed", "未捕捉のみ"],
+            ["picked", "捕捉のみ（候補にあった）"],
+            ["missed", "未捕捉のみ（候補になし）"],
           ] as const
         ).map(([id, label]) => (
           <button
             key={id}
             type="button"
+            aria-pressed={catchFilter === id}
             onClick={() => setCatchFilter(id)}
             className={`rounded-full px-3 py-1.5 text-xs ${
               catchFilter === id ? "bg-ink text-sand" : "bg-sand-dim text-ink/70"
