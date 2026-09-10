@@ -49,7 +49,8 @@
     "test:journal-expand": "node scripts/test-journal-expand.mjs",
     "test:supplement-notes": "node --experimental-strip-types scripts/test-supplement-notes.mts",
     "test:course-notes": "node scripts/test-course-notes.mjs",
-    "test:weekend-experiment": "npx tsx scripts/test-weekend-experiment.mjs"
+    "test:weekend-experiment": "npx tsx scripts/test-weekend-experiment.mjs",
+    "test:display-odds": "npx tsx scripts/test-display-odds.mjs"
   },
   "dependencies": {
     "@fontsource-variable/noto-sans-jp": "^5.3.0",

@@ -15,13 +15,18 @@ import { filterRacesByDate, groupRacesByVenue } from "@/data/races";
 import { LongshotMark, AxisMark, SuperWatchMark, DangerousFavMark, longshotHorseNumbers } from "@/components/LongshotMark";
 import { formatCandidateLabel } from "@/domain/experiment";
 import { formatJstDateLabel } from "@/domain/date";
-import { formatFinishLine, raceHasResult } from "@/domain/results";
+import {
+  displayHorsePlaceOddsLabel,
+  displayHorseWinOdds,
+  displayPopularityMap,
+  displayTicketOdds,
+  formatFinishLine,
+  raceHasResult,
+} from "@/domain/results";
 import {
   formatPopularity,
   formatPopularityParen,
   formatWinOdds,
-  placeOddsLabel,
-  popularityByNumber,
 } from "@/domain/odds";
 import { axisIndexByNumber, selectAxisHorses } from "@/domain/axis";
 import {
@@ -62,7 +67,7 @@ function RaceExpandBody({
   picks: LongshotPick[];
   dangerousFav: ReturnType<typeof findDangerousFirstFavorite>;
 }) {
-  const pop = popularityByNumber(horses);
+  const pop = displayPopularityMap(race);
   const rows = [...horses].sort((a, b) => a.number - b.number);
   const dangReasons =
     dangerousFav?.flagged ? dangerousFavReasonLabels(dangerousFav.reasons) : [];
@@ -118,7 +123,8 @@ function RaceExpandBody({
                   </p>
                   <p className="mt-0.5 text-[11px] text-ink/55">
                     {horse.jockey} · {formatPopularity(pop.get(horse.number))} · 単{" "}
-                    {formatWinOdds(horse.oddsWin)} · 複 {placeOddsLabel(horse, race)}
+                    {formatWinOdds(displayHorseWinOdds(horse, race))} · 複{" "}
+                    {displayHorsePlaceOddsLabel(horse, race)}
                   </p>
                 </div>
                 <div className="shrink-0 text-right text-[11px]">
@@ -179,9 +185,9 @@ function RaceExpandBody({
                   <td className="py-1 pr-2 text-ink/60">{horse.jockey}</td>
                   <td className="py-1 pr-2">{formatPopularity(pop.get(horse.number))}</td>
                   <td className="py-1 pr-2 font-medium text-signal">
-                    {formatWinOdds(horse.oddsWin)}
+                    {formatWinOdds(displayHorseWinOdds(horse, race))}
                   </td>
-                  <td className="py-1 pr-2 text-ink/70">{placeOddsLabel(horse, race)}</td>
+                  <td className="py-1 pr-2 text-ink/70">{displayHorsePlaceOddsLabel(horse, race)}</td>
                   <td className="py-1 pr-2 font-[family-name:var(--font-display)] text-turf">
                     {horse.placePotential}
                   </td>
@@ -209,7 +215,7 @@ function RaceExpandBody({
                   {pick.label === "注目穴" && <LongshotMark className="mr-1" />}
                   {pick.hasSuperWatch && <SuperWatchMark className="mr-1 align-middle" />}
                   {formatCandidateLabel(pick.label)} · {pick.selection}
-                  {popLabel ? ` ${popLabel}` : ""} · {formatWinOdds(pick.odds)} · スコア{" "}
+                  {popLabel ? ` ${popLabel}` : ""} · {formatWinOdds(displayTicketOdds(pick, race.result) ?? pick.odds)} · スコア{" "}
                   {pick.relatedPlacePotential}
                 </li>
               );

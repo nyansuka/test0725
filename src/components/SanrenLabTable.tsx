@@ -6,6 +6,8 @@ import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import { AxisMark, SuperWatchMark } from "@/components/LongshotMark";
 import { BET_TYPE_LABELS } from "@/domain/betTypes";
 import {
+  displayPopularityMap,
+  displayTicketOdds,
   findPayoutYen,
   horseFinishRank,
   evaluateHorse,
@@ -13,7 +15,6 @@ import {
 import {
   formatPopularityParen,
   formatWinOdds,
-  popularityByNumber,
 } from "@/domain/odds";
 import type { Race, SanrenPick, SanrenPickPattern } from "@/domain/types";
 import { formatCandidateLabel } from "@/domain/experiment";
@@ -57,7 +58,7 @@ function HorseChip({
   showOutcome: boolean;
 }) {
   const horse = race?.horses.find((h) => h.number === number);
-  const pop = race ? popularityByNumber(race.horses).get(number) : undefined;
+  const pop = race ? displayPopularityMap(race).get(number) : undefined;
   const finish = showOutcome ? horseFinishRank(number, race?.result) : null;
   const outcome = showOutcome ? evaluateHorse(number, race?.result) : "pending";
 
@@ -157,7 +158,7 @@ function RacePickList({
                     {pick.selection}
                   </span>
                   <span className={pick.odds == null ? "text-ink/40" : "font-medium text-signal"}>
-                    {comboOddsLabel(pick.odds)}
+                    {comboOddsLabel(displayTicketOdds(pick, race?.result))}
                   </span>
                   <span
                     className={

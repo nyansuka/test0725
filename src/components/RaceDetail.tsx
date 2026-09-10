@@ -28,10 +28,15 @@ import { supplementCandidatesFromPicks } from "@/domain/supplementNotes";
 import {
   formatPopularity,
   formatWinOdds,
-  placeOddsLabel,
-  popularityByNumber,
+  oddsFromPayoutYen,
 } from "@/domain/odds";
-import { formatTicketOutcome } from "@/domain/results";
+import {
+  displayHorsePlaceOddsLabel,
+  displayHorseWinOdds,
+  displayPopularityMap,
+  findPayoutYen,
+  formatTicketOutcome,
+} from "@/domain/results";
 import { axisIndexByNumber, selectAxisHorses } from "@/domain/axis";
 import {
   dangerousFavReasonLabels,
@@ -89,6 +94,8 @@ const SORT_LABELS: Record<EntrySortKey, string> = {
 };
 
 function placeOddsValue(horse: Horse, race: Race): number {
+  const yen = findPayoutYen(race.result, "place", String(horse.number));
+  if (yen != null && yen > 0) return oddsFromPayoutYen(yen);
   if (horse.oddsPlace) return horse.oddsPlace.min;
   const entry = race.oddsBoard.find(
     (e) => e.betType === "place" && e.selection === String(horse.number),
@@ -114,7 +121,7 @@ function sortValue(
     case "popularity":
       return popularity.get(horse.number) ?? 99;
     case "oddsWin":
-      return horse.oddsWin;
+      return displayHorseWinOdds(horse, race);
     case "placeOdds":
       return placeOddsValue(horse, race);
     case "tipScore":
@@ -250,7 +257,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
     () => (dangerousFav?.flagged ? dangerousFavReasonLabels(dangerousFav.reasons) : []),
     [dangerousFav],
   );
-  const popularity = useMemo(() => popularityByNumber(race.horses), [race.horses]);
+  const popularity = useMemo(() => displayPopularityMap(race), [race]);
   const [openId, setOpenId] = useState<number | null>(null);
   const [tipster, setTipster] = useState<TipsterRefPayload | null>(initialTipster);
   const [sort, setSort] = useState<EntrySortPref>(DEFAULT_ENTRY_SORT);
@@ -368,7 +375,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                 <span className="font-medium">{horse?.name ?? "—"}</span>
                 <span className="text-xs text-ink/50">{horse?.jockey}</span>
                 <span className="text-xs font-medium text-signal">
-                  {horse ? formatWinOdds(horse.oddsWin) : "—"}
+                  {horse ? formatWinOdds(displayHorseWinOdds(horse, race)) : "—"}
                 </span>
                 <span className="ml-auto font-[family-name:var(--font-display)] font-semibold text-turf">
                   {ax.winPotential}
@@ -530,7 +537,8 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                     </span>
                     <span className="mt-0.5 block text-[11px] text-ink/55">
                       {horse.jockey} · {formatPopularity(popularity.get(horse.number))} · 単{" "}
-                      {formatWinOdds(horse.oddsWin)} · 複 {placeOddsLabel(horse, race)}
+                      {formatWinOdds(displayHorseWinOdds(horse, race))} · 複{" "}
+                      {displayHorsePlaceOddsLabel(horse, race)}
                       {tipster ? ` · 参考 ${tip?.score ?? "—"}` : ""}
                     </span>
                   </span>
@@ -652,9 +660,9 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                       <td className="px-1.5 py-1 text-ink/60">{horse.jockey}</td>
                       <td className="px-1.5 py-1">{formatPopularity(popularity.get(horse.number))}</td>
                       <td className="px-1.5 py-1 font-medium text-signal">
-                        {formatWinOdds(horse.oddsWin)}
+                        {formatWinOdds(displayHorseWinOdds(horse, race))}
                       </td>
-                      <td className="px-1.5 py-1 text-ink/70">{placeOddsLabel(horse, race)}</td>
+                      <td className="px-1.5 py-1 text-ink/70">{displayHorsePlaceOddsLabel(horse, race)}</td>
                       {tipster ? (
                         <td className="px-1.5 py-1 text-xs tabular-nums text-ink/40">
                           {tip?.score ?? "—"}

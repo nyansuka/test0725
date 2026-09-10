@@ -1,5 +1,11 @@
-import type { BetType, Race, RaceResult } from "./types";
+import type { BetType, Horse, Race, RaceResult } from "./types";
 import { parseSelectionNumbers } from "./betTypes";
+import {
+  formatWinOdds,
+  oddsFromPayoutYen,
+  placeOddsLabel,
+  popularityByNumber,
+} from "./odds";
 
 /** 複勝圏ベースの結果判定（券種の厳密払戻とは別） */
 export type PickOutcome = "win" | "place" | "miss" | "pending";
@@ -188,6 +194,57 @@ export function findPayoutYen(
   const key = payoutNormKey(betType, selection);
   const hit = result.payouts.find((p) => payoutNormKey(p.betType, p.selection) === key);
   return hit ? hit.payoutYen : null;
+}
+
+type TicketOddsLike = {
+  betType: BetType;
+  selection: string;
+  odds?: number | null;
+};
+
+/**
+ * 画面に出す買い目オッズ。的中時は確定払戻（100円あたり）に合わせる。
+ * 板なし（odds == null）は集計どおり板なしのまま。凍結オッズ自体は変えない。
+ */
+export function displayTicketOdds(
+  pick: TicketOddsLike,
+  result: RaceResult | undefined,
+): number | null {
+  if (pick.odds == null) return null;
+  const yen = findPayoutYen(result, pick.betType, pick.selection);
+  if (yen != null && yen > 0) return oddsFromPayoutYen(yen);
+  return pick.odds;
+}
+
+/** 単勝の画面表示。1着払戻があれば確定オッズ、なければ公開オッズ。 */
+export function displayHorseWinOdds(
+  horse: Pick<Horse, "number" | "oddsWin">,
+  race: Race | undefined,
+): number {
+  const yen = findPayoutYen(race?.result, "win", String(horse.number));
+  if (yen != null && yen > 0) return oddsFromPayoutYen(yen);
+  return horse.oddsWin;
+}
+
+/** 複勝の画面表示。複勝払戻があれば確定、なければ公開レンジ。 */
+export function displayHorsePlaceOddsLabel(
+  horse: Horse,
+  race: Race | undefined,
+): string {
+  const yen = findPayoutYen(race?.result, "place", String(horse.number));
+  if (yen != null && yen > 0) return formatWinOdds(oddsFromPayoutYen(yen));
+  return placeOddsLabel(horse, race);
+}
+
+/** 人気の画面表示。確定着順の人気があればそれを使い、なければ公開オッズ順。 */
+export function displayPopularityMap(race: Race): Map<number, number> {
+  const fromOdds = popularityByNumber(race.horses);
+  if (!race.result?.finishes?.length) return fromOdds;
+  const map = new Map(fromOdds);
+  for (const finish of race.result.finishes) {
+    if (finish.popularity != null) map.set(finish.number, finish.popularity);
+  }
+  return map;
 }
 
 /** 券種払戻ベース。ヒット＝その券種の買い目が的中 */

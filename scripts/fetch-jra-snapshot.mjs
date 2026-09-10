@@ -627,6 +627,15 @@ function parseResultHtml(html) {
     });
   }
 
+  for (const p of payouts) {
+    if (p.betType !== "win" || !(p.payoutYen > 0)) continue;
+    const n = Number(p.selection);
+    const finish = finishes.find((f) => f.number === n);
+    if (finish && (finish.oddsWin == null || !Number.isFinite(finish.oddsWin))) {
+      finish.oddsWin = Number((p.payoutYen / 100).toFixed(1));
+    }
+  }
+
   return {
     status: "official",
     finishedAt: new Date().toISOString(),

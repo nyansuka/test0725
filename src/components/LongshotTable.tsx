@@ -9,15 +9,17 @@ import { useRaceCatalog } from "@/components/RaceCatalogProvider";
 import {
   formatPopularityParen,
   formatWinOdds,
-  popularityByNumber,
 } from "@/domain/odds";
 import {
+  displayPopularityMap,
+  displayTicketOdds,
   evaluateHorse,
   formatTicketOutcome,
   horseFinishRank,
 } from "@/domain/results";
 import { useMemo, type ReactNode } from "react";
 import { formatCandidateLabel } from "@/domain/experiment";
+import { selectAxisHorses } from "@/domain/axis";
 
 function outcomeClass(outcome: ReturnType<typeof evaluateHorse>): string {
   if (outcome === "win") return "font-medium text-signal";
@@ -80,7 +82,7 @@ function CommentBlock({ text }: { text: string }) {
 }
 
 function SelectionLabel({ pick, race }: { pick: LongshotPick; race: Race | undefined }) {
-  const pop = race ? popularityByNumber(race.horses) : new Map<number, number>();
+  const pop = race ? displayPopularityMap(race) : new Map<number, number>();
 
   if (!race) {
     return <>{pick.selection}</>;
@@ -136,7 +138,7 @@ function HorseHeadline({
   race: Race | undefined;
   compact?: boolean;
 }) {
-  const pop = race ? popularityByNumber(race.horses) : new Map<number, number>();
+  const pop = race ? displayPopularityMap(race) : new Map<number, number>();
   const byNum = new Map((race?.horses ?? []).map((h) => [h.number, h]));
   const axisByNum = race
     ? new Map(selectAxisHorses(race).map((a) => [a.horseNumber, a]))
@@ -269,7 +271,9 @@ function BetLines({
           >
             <span className="min-w-[3.5rem] text-ink/70">{BET_TYPE_LABELS[pick.betType]}</span>
             {selection}
-            <span className="font-medium text-signal">{formatWinOdds(pick.odds)}</span>
+            <span className="font-medium text-signal">
+              {formatWinOdds(displayTicketOdds(pick, race?.result) ?? pick.odds)}
+            </span>
             {pick.label !== group.label && (
               <span
                 className={

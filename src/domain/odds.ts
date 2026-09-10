@@ -25,6 +25,13 @@ export function formatWinOdds(odds: number): string {
   return `${odds.toFixed(1)}倍`;
 }
 
+/** JRA 払戻金は 100 円あたり。確定オッズ = 払戻円 / 100 */
+export const JRA_PAYOUT_STAKE_YEN = 100;
+
+export function oddsFromPayoutYen(payoutYen: number): number {
+  return Number((payoutYen / JRA_PAYOUT_STAKE_YEN).toFixed(1));
+}
+
 /** 複勝オッズ表示（馬データ or オッズ板から） */
 export function placeOddsLabel(horse: Horse, race?: Race): string {
   if (horse.oddsPlace) {
