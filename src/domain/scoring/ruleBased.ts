@@ -19,7 +19,11 @@ export type Scorer = {
   score(horse: Horse, race: Race): ScoreResult;
 };
 
-/** 複勝圏（1〜3着）向け */
+/**
+ * 複勝圏（1〜3着）向け。
+ * paceFit は馬の埋め込み因子。コースを瞬発戦／持続力戦に分類して加点しない。
+ * 調教・馬体重も見ない（補足のみ）。
+ */
 const PLACE_WEIGHTS = {
   courseFit: 0.25,
   paceFit: 0.2,

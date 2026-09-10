@@ -14,6 +14,8 @@ import { findDangerousFirstFavorite } from "./lib/loop-domain.mjs";
 
 assert.equal(isFrontBiasedCourse("新潟", "芝"), true);
 assert.equal(isFrontBiasedCourse("新潟", "ダート"), false);
+assert.equal(isFrontBiasedCourse("新潟", "ダート", "ダート1200m"), true);
+assert.equal(isFrontBiasedCourse("新潟", "ダート", "ダート1800m"), false);
 assert.equal(isFrontBiasedCourse("東京", "芝"), false);
 assert.equal(isFrontBiasedCourse("阪神", "芝", "芝1200m"), true);
 assert.equal(isFrontBiasedCourse("阪神", "芝", "芝1600m"), false);
@@ -224,6 +226,45 @@ const closerSapporoDirt = assessDangerousFirstFavorite({
   ]),
 });
 assert.equal(closerSapporoDirt?.flagged, true);
+
+const closerNiigataDirt1200 = assessDangerousFirstFavorite({
+  raceId: "r3nd12",
+  venue: "新潟",
+  track: "ダート",
+  distance: "ダート1200m",
+  horses: horses([{ n: 2, style: "差" }, { n: 4, style: "先" }, { n: 6, style: "逃" }]),
+  popularity: new Map([
+    [2, 1],
+    [4, 2],
+    [6, 3],
+  ]),
+  factorWins: new Map([
+    [2, 70],
+    [4, 60],
+    [6, 50],
+  ]),
+});
+assert.equal(closerNiigataDirt1200?.flagged, true);
+assert.ok(closerNiigataDirt1200?.reasons.includes("closer_on_front_course"));
+
+const closerNiigataDirt1800 = assessDangerousFirstFavorite({
+  raceId: "r3nd18",
+  venue: "新潟",
+  track: "ダート",
+  distance: "ダート1800m",
+  horses: horses([{ n: 2, style: "差" }, { n: 4, style: "先" }, { n: 6, style: "逃" }]),
+  popularity: new Map([
+    [2, 1],
+    [4, 2],
+    [6, 3],
+  ]),
+  factorWins: new Map([
+    [2, 70],
+    [4, 60],
+    [6, 50],
+  ]),
+});
+assert.equal(closerNiigataDirt1800?.flagged, false);
 
 const secondFavWeak = assessDangerousFirstFavorite({
   raceId: "r4",

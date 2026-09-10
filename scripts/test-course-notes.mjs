@@ -32,6 +32,12 @@ assert.equal(t1600?.frontBias, false);
 
 const t1800 = courseProfile("阪神", "芝", "芝1800m");
 assert.equal(t1800?.gate.mode, "flatten");
+assert.ok(t1800?.bullets.some((b) => b.includes("内回り")));
+assert.ok(t1800?.summary.includes("外回り") || t1800?.bullets.some((b) => b.includes("外回り")));
+
+const hs2000 = courseProfile("阪神", "芝", "芝2000m");
+assert.ok(hs2000?.bullets.some((b) => b.includes("1800は外回り")));
+assert.ok(courseProfile("阪神", "芝", "障害3200m")?.summary.includes("右回り"));
 
 assert.equal(isFrontBiasedCourse("新潟", "芝", "芝1800m"), true);
 assert.equal(isFrontBiasedCourse("新潟", "ダート", "ダート1800m"), false);
@@ -383,5 +389,61 @@ assert.equal(trackGateBiasScore("芝", 8, "小倉", "芝1800m"), 52);
 assert.equal(trackGateBiasScore("芝", 1, "小倉", "芝1200m"), 62);
 assert.equal(trackGateBiasScore("ダート", 8, "小倉", "ダート1000m"), 62);
 assert.equal(gateOverlayDelta("芝", 1, "京都", "芝1600m"), 0);
+
+assert.equal(courseProfile("京都", "ダート", "ダート1400m"), null);
+
+const niGeneric = courseProfile("新潟", "芝", "芝1800m");
+assert.ok(niGeneric);
+assert.equal(niGeneric.scoreInGate, false);
+assert.equal(niGeneric.frontBias, false);
+assert.ok(niGeneric.summary.includes("左回り"));
+assert.ok(niGeneric.bullets.some((b) => b.includes("別物")));
+assert.equal(isFrontBiasedCourse("新潟", "芝", "芝1800m"), true);
+assert.equal(gateOverlayDelta("芝", 1, "新潟", "芝1800m"), 0);
+assert.equal(trackGateBiasScore("芝", 1, "新潟", "芝1800m"), 62);
+
+const niD12 = courseProfile("新潟", "ダート", "ダート1200m");
+assert.equal(niD12?.gate.mode, "outer");
+assert.equal(niD12?.scoreInGate, true);
+assert.equal(niD12?.frontBias, true);
+assert.ok(niD12?.bullets.some((b) => b.includes("芝スタート")));
+assert.equal(isFrontBiasedCourse("新潟", "ダート", "ダート1200m"), true);
+assert.equal(isFrontBiasedCourse("新潟", "ダート", "ダート1800m"), false);
+assert.equal(favFront("新潟", "ダート", "ダート1200m"), true);
+assert.equal(favFront("新潟", "ダート", "ダート1800m"), false);
+assert.equal(trackGateBiasScore("ダート", 8, "新潟", "ダート1200m"), 64);
+assert.equal(trackGateBiasScore("ダート", 1, "新潟", "ダート1200m"), 52);
+assert.equal(trackGateBiasScore("ダート", 8, "新潟", "ダート1800m"), 62);
+assert.equal(gateOverlayDelta("ダート", 8, "新潟", "ダート1800m"), 0);
+assert.equal(courseProfile("新潟競馬場", "芝", "芝2000m")?.venue, "新潟");
+
+const RACE_TYPE_LABEL = /瞬発|持続力/;
+const VENUES = ["阪神", "中山", "札幌", "東京", "函館", "福島", "中京", "小倉", "新潟"];
+const METERS = [1000, 1150, 1200, 1400, 1500, 1600, 1700, 1800, 2000, 2200, 2400, 2500, 2600];
+for (const venue of VENUES) {
+  for (const track of ["芝", "ダート"]) {
+    const generic = courseProfile(venue, track, "障害3200m");
+    assert.ok(generic, `${venue} generic`);
+    assert.equal(RACE_TYPE_LABEL.test(`${generic.summary} ${generic.bullets.join(" ")}`), false);
+    for (const meters of METERS) {
+      const p = courseProfile(venue, track, `${track}${meters}m`);
+      if (!p) continue;
+      const blob = `${p.summary} ${p.bullets.join(" ")}`;
+      assert.equal(
+        RACE_TYPE_LABEL.test(blob),
+        false,
+        `${venue} ${track}${meters}m に瞬発／持続ラベル`,
+      );
+    }
+  }
+}
+
+const nkGeneric = courseProfile("中山", "芝", "障害3200m");
+assert.ok(nkGeneric?.bullets.some((b) => b.includes("急坂")));
+assert.equal(nkGeneric?.bullets.some((b) => b.includes("瞬発")), false);
+
+const hs2400 = courseProfile("阪神", "芝", "芝2400m");
+assert.ok(hs2400?.bullets.some((b) => b.includes("末脚")));
+assert.equal(hs2400?.bullets.some((b) => b.includes("トップスピード")), false);
 
 console.log("course-notes: ok");

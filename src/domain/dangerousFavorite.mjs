@@ -26,7 +26,7 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 
 /**
  * 先行有利とみなすコース。
- * 新潟芝は従来どおり全距離。ほかは検証済み距離だけ。京都は未検証。
+ * 新潟芝は従来どおり全距離。新潟ダ1200は芝スタートの前残り。ほかは検証済み距離だけ。京都は未検証。
  */
 export function isFrontBiasedCourse(venue, track, distance) {
   return courseFrontBias(venue, track, distance);
