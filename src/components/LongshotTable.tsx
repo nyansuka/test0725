@@ -18,6 +18,7 @@ import {
   horseFinishRank,
 } from "@/domain/results";
 import { useMemo, type ReactNode } from "react";
+import { selectAxisHorses } from "@/domain/axis";
 import { formatCandidateLabel } from "@/domain/experiment";
 import { selectAxisHorses } from "@/domain/axis";
 
