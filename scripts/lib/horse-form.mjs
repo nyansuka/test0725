@@ -7,9 +7,51 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { formSignalFromFormStats } from "../../src/domain/scoring/deriveFactors.mjs";
 
+/** "6-5" / "13-12-14-14" */
+export function parsePassingCell(raw) {
+  const t = String(raw ?? "").trim();
+  if (!/^\d+(-\d+)+$/.test(t)) return null;
+  const parts = t.split("-").map(Number);
+  if (parts.some((n) => !Number.isFinite(n))) return null;
+  return { first: parts[0], last: parts[parts.length - 1], parts };
+}
+
+/** "34.8-35.2" */
+export function parsePaceCell(raw) {
+  const m = String(raw ?? "")
+    .trim()
+    .match(/^(\d+\.\d+)-(\d+\.\d+)$/);
+  if (!m) return null;
+  return { frontSec: Number(m[1]), backSec: Number(m[2]) };
+}
+
+function extractWrapCells(cells) {
+  let passing = null;
+  let pace = null;
+  let last3f = null;
+  for (let i = 19; i < cells.length; i++) {
+    const t = cells[i];
+    if (!passing) {
+      passing = parsePassingCell(t);
+      if (passing) continue;
+    }
+    if (passing && !pace) {
+      pace = parsePaceCell(t);
+      if (pace) continue;
+    }
+    if (pace && last3f == null && /^\d+\.\d+$/.test(t)) {
+      last3f = Number(t);
+      break;
+    }
+  }
+  return { passing, pace, last3f };
+}
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "../..");
 const CACHE_DIR = path.join(root, "src", "data", "cache", "horse-form");
+/** 通過・ペース・上りを runs に載せる。旧キャッシュは再取得 */
+const RUNS_SCHEMA = 2;
 
 const UA =
   "Mozilla/5.0 (compatible; UMANOTE-demo/0.1; +https://github.com/nyansuka/test0725)";
@@ -127,6 +169,9 @@ export function parseHorseResultHtml(html) {
     const popularity = /^\d+$/.test(cells[10]) ? Number(cells[10]) : null;
     const timeSec = timeToSec(cells[18]);
     const condition = cells[16] || undefined;
+    const fieldSize = /^\d+$/.test(cells[6]) ? Number(cells[6]) : null;
+    const bracket = /^\d+$/.test(cells[7]) ? Number(cells[7]) : null;
+    const wrap = extractWrapCells(cells);
 
     if (!venue || !dist) continue;
 
@@ -143,6 +188,13 @@ export function parseHorseResultHtml(html) {
       rank,
       popularity,
       timeSec,
+      fieldSize,
+      bracket,
+      passFirst: wrap.passing?.first ?? null,
+      passLast: wrap.passing?.last ?? null,
+      paceFrontSec: wrap.pace?.frontSec ?? null,
+      paceBackSec: wrap.pace?.backSec ?? null,
+      last3fSec: wrap.last3f ?? null,
       raceName: cells[4] || undefined,
       kaiji: cells[1],
     });
@@ -199,12 +251,12 @@ export async function loadHorseRuns(horseId, opts = {}) {
   const { force = false, sleepMs = 150 } = opts;
   if (!force) {
     const cached = await readCache(horseId);
-    if (cached?.runs) return cached;
+    if (cached?.runs && cached.schema === RUNS_SCHEMA) return cached;
   }
   const html = await fetchHorseResultHtml(horseId);
   if (sleepMs) await sleep(sleepMs);
   const runs = parseHorseResultHtml(html);
-  const payload = { horseId, fetchedAt: new Date().toISOString(), runs };
+  const payload = { horseId, schema: RUNS_SCHEMA, fetchedAt: new Date().toISOString(), runs };
   await writeCache(horseId, payload);
   return payload;
 }
@@ -270,6 +322,16 @@ export function applyFormToRace(race, runsByHorseId) {
       lastRank: last?.rank ?? null,
       lastPopularity: last?.popularity ?? null,
       lastDate: last?.date ?? null,
+      lastFieldSize: last?.fieldSize ?? null,
+      lastBracket: last?.bracket ?? null,
+      lastVenue: last?.venue ?? null,
+      lastTrack: last?.track ?? null,
+      lastDistanceLabel: last?.distanceLabel ?? null,
+      lastPassFirst: last?.passFirst ?? null,
+      lastPassLast: last?.passLast ?? null,
+      lastPaceFrontSec: last?.paceFrontSec ?? null,
+      lastPaceBackSec: last?.paceBackSec ?? null,
+      lastLast3fSec: last?.last3fSec ?? null,
     };
     let placeScore = placeScoreFromSame(soft);
     // 同距離フォールバックはやや控えめ

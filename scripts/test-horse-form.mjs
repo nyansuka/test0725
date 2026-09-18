@@ -11,6 +11,8 @@ import {
   courseKey,
   parseDistanceCell,
   parseHorseResultHtml,
+  parsePaceCell,
+  parsePassingCell,
   parseVenueCell,
   timeToSec,
 } from "./lib/horse-form.mjs";
@@ -31,6 +33,11 @@ assert.deepEqual(parseDistanceCell("ダ1000"), {
 assert.equal(parseVenueCell("1札幌1"), "札幌");
 assert.equal(courseKey("札幌", "ダート", "ダート1000m"), "札幌|ダート|1000");
 
+assert.equal(parsePassingCell("6-5").first, 6);
+assert.equal(parsePassingCell("13-12-14-14").last, 14);
+assert.equal(parsePaceCell("34.8-35.2").frontSec, 34.8);
+assert.equal(parsePaceCell("**"), null);
+
 const html = await readFile(fixturePath, "utf8");
 const runs = parseHorseResultHtml(html);
 assert.ok(runs.length >= 2, `expected past runs, got ${runs.length}`);
@@ -39,6 +46,13 @@ assert.equal(runs[0].track, "ダート");
 assert.equal(runs[0].distanceM, 1000);
 assert.equal(runs[0].timeSec, 60.3);
 assert.equal(runs[0].rank, 6);
+assert.equal(runs[0].fieldSize, 8);
+assert.equal(runs[0].bracket, 1);
+assert.equal(runs[0].passFirst, 6);
+assert.equal(runs[0].passLast, 5);
+assert.equal(runs[0].paceFrontSec, 34.8);
+assert.equal(runs[0].paceBackSec, 35.2);
+assert.equal(runs[0].last3fSec, 36.3);
 
 const race = {
   raceDate: "2026-07-25",
@@ -93,6 +107,13 @@ const runsByHorseId = new Map([
           rank: 2,
           popularity: 4,
           timeSec: 59.9,
+          fieldSize: 16,
+          bracket: 8,
+          passFirst: 12,
+          passLast: 6,
+          paceFrontSec: 36.4,
+          paceBackSec: 35.1,
+          last3fSec: 34.2,
         },
       ],
     },
@@ -110,6 +131,8 @@ assert.ok(race.horses[1].formStats.sameCourseStarts >= 1);
 assert.equal(race.horses[1].formStats.courseMatch, "venue");
 assert.ok(race.horses[1].factors.courseFit >= 70);
 assert.ok(race.horses[1].factors.formSignal >= 70, "好走前走で formSignal 上昇");
+assert.equal(race.horses[1].formStats.lastPassFirst, 12);
+assert.equal(race.horses[1].formStats.lastPaceFrontSec, 36.4);
 assert.ok(
   race.horses[1].factors.courseFit > race.horses[0].factors.courseFit,
   "同場好タイムの方が courseFit 高い",

@@ -43,7 +43,7 @@ docker compose exec -T web npm run loop:compare -- 2026-08-08 2026-08-09
 # → src/data/loop/reports/compare-2026-08-08_2026-08-09.json
 ```
 
-検証メモ（Git 管理）: [docs/VERIFY-2026-08-08.md](../../../docs/VERIFY-2026-08-08.md) · [docs/verify/analyze-2026-08-08.json](../../../docs/verify/analyze-2026-08-08.json)
+検証メモ（Git 管理）: [docs/VERIFY-2026-08-08.md](../../../docs/VERIFY-2026-08-08.md) · [docs/VERIFY-2026-09-12.md](../../../docs/VERIFY-2026-09-12.md)（scoreMin65 の9開催合算・9/19–21 据え置き）
 
 閾値を変えて予測だけ作り直す（凍結オッズは触らない）:
 

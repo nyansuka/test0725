@@ -1,0 +1,145 @@
+{
+  "kind": "race-day-verify",
+  "raceDate": "2026-09-12",
+  "builtAt": "2026-09-16T11:40:00.000Z",
+  "primaryMetric": "ticketPrecision",
+  "settings": {
+    "oddsThreshold": 25,
+    "oddsMax": 80,
+    "scoreMin": 65,
+    "enabledBetTypes": [
+      "win",
+      "place",
+      "bracket_quinella",
+      "bracket_exacta",
+      "quinella",
+      "wide",
+      "exacta",
+      "trio",
+      "trifecta"
+    ]
+  },
+  "settingsChange": "Hold 25 / oddsMax80 / scoreMin65. Ninth live day. No product change this week. Next sample 2026-09-19..21.",
+  "decision": {
+    "decidedAt": "2026-09-16",
+    "action": "hold",
+    "nextRaceDates": ["2026-09-19", "2026-09-20", "2026-09-21"],
+    "nextOneChangeCandidate": "place_default_off",
+    "skipDates": ["2026-09-13"],
+    "skipReason": "No morning freeze. Remaining odds are Saturday 07:07 JST."
+  },
+  "freeze": {
+    "preRace": true,
+    "morningNoResults": true,
+    "frozenAt": "2026-09-12T00:05:58.530Z",
+    "firstStart": "09:45",
+    "note": "Live snapshot fetched 09:05 JST with no results. Frozen on 2026-09-16 from that file. Nakayama 1R 09:45."
+  },
+  "metrics": {
+    "candidates": 209,
+    "ticketHits": 3,
+    "candidateHits": 86,
+    "density": 8.708333333333334,
+    "ticketPrecision": 0.014354066985645933,
+    "placePrecision": 0.41148325358851673,
+    "recall": 0.23626373626373626,
+    "virtualReturnRatePercent": 128.4,
+    "virtualStakeYen": 20900,
+    "virtualPayoutYen": 26840,
+    "axisWinRate": 0.2638888888888889,
+    "axisWins": 19,
+    "axisSettled": 72,
+    "superWinRate": 0.3076923076923077,
+    "superWins": 8,
+    "superPlace": 12,
+    "superSettled": 26
+  },
+  "nineDay": {
+    "dates": [
+      "2026-08-15",
+      "2026-08-16",
+      "2026-08-22",
+      "2026-08-23",
+      "2026-08-29",
+      "2026-08-30",
+      "2026-09-05",
+      "2026-09-06",
+      "2026-09-12"
+    ],
+    "races": 312,
+    "candidates": 1986,
+    "ticketHits": 37,
+    "ticketPrecision": 0.01863041289023162,
+    "density": 6.365384615384615,
+    "virtualStakeYen": 198600,
+    "virtualPayoutYen": 194310,
+    "virtualReturnRatePercent": 97.83987915407855,
+    "byBetType": {
+      "win": { "candidates": 507, "ticketHits": 8, "ticketPrecision": 0.015779092702169626 },
+      "place": { "candidates": 42, "ticketHits": 0, "ticketPrecision": 0 },
+      "bracket_quinella": { "candidates": 365, "ticketHits": 13, "ticketPrecision": 0.03561643835616438 },
+      "quinella": { "candidates": 181, "ticketHits": 2, "ticketPrecision": 0.011049723756906077 },
+      "wide": { "candidates": 843, "ticketHits": 13, "ticketPrecision": 0.015421115065243179 },
+      "exacta": { "candidates": 47, "ticketHits": 1, "ticketPrecision": 0.02127659574468085 }
+    },
+    "byLabel": {
+      "注目穴": { "candidates": 1536, "ticketHits": 27, "ticketPrecision": 0.017578125 },
+      "抑え候補": { "candidates": 404, "ticketHits": 10, "ticketPrecision": 0.024752475247524754 }
+    }
+  },
+  "planChecks": {
+    "ticketPrecisionGoalGe1pct": true,
+    "ticketPrecisionMonthGoalGe2pct": false,
+    "densityInBand5to15": true,
+    "hotBandStillOnBoard": true,
+    "bracketQuinellaTickets": true,
+    "wideTickets": false,
+    "winTickets": true,
+    "placeTickets": false,
+    "oddsMaxRemoved100Plus": true,
+    "preRaceFreeze": true,
+    "holdAnotherWeek": true
+  },
+  "ticketHits": [
+    {
+      "raceId": "nakayama-20260912-4",
+      "venue": "中山",
+      "raceNumber": 4,
+      "title": "3歳未勝利",
+      "betType": "win",
+      "selection": "4",
+      "odds": 48.5,
+      "label": "注目穴",
+      "payoutYen": 6480
+    },
+    {
+      "raceId": "nakayama-20260912-10",
+      "venue": "中山",
+      "raceNumber": 10,
+      "title": "レインボーS",
+      "betType": "bracket_quinella",
+      "selection": "2-5",
+      "odds": 64.7,
+      "label": "注目穴",
+      "payoutYen": 10170
+    },
+    {
+      "raceId": "nakayama-20260912-10",
+      "venue": "中山",
+      "raceNumber": 10,
+      "title": "レインボーS",
+      "betType": "quinella",
+      "selection": "2-5",
+      "odds": 75.9,
+      "label": "注目穴",
+      "payoutYen": 10190
+    }
+  ],
+  "nextActions": [
+    "Hold 25/80/65 on 2026-09-19, 2026-09-20, 2026-09-21",
+    "loop:freeze before first post each morning (~09:00 JST)",
+    "On 2026-09-21 run gh workflow Refresh JRA odds mode=full (Monday holiday, no cron)",
+    "After three days re-judge 12-day ticketPrecision vs 2%",
+    "If below 2%, next one change is place default OFF"
+  ]
+}

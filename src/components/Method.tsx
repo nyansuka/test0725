@@ -1,4 +1,4 @@
-import { WEIGHT_SECTION, WORKOUT_SECTION } from "@/domain/supplementNotes";
+import { PADDOCK_SECTION, WEIGHT_SECTION, WORKOUT_SECTION } from "@/domain/supplementNotes";
 
 const steps = [
   {
@@ -7,7 +7,7 @@ const steps = [
   },
   {
     title: "複勝圏スコア（穴）",
-    body: "コース適性・展開・馬場・近況・人気乖離などから placePotential を算出。近況は前走（あれば）、人気乖離は単勝人気から導出。検証済み場の距離別は枠（gateJockey）へ±4以内。courseFit は同条件成績のまま。関係馬は下限合成。馬単だけ1着を winPotential、2着を placePotential の下限（軸×穴）。差し替え可能なルール実装です。",
+    body: "コース適性・展開・馬場・近況・人気乖離などから placePotential を算出。近況は前走着順を、そのレースのペース（ラップ）・通過・枠の一般不利で読み替えて使う。人気乖離は単勝人気から導出。検証済み場の距離別は枠（gateJockey）へ±4以内。courseFit は同条件成績のまま。関係馬は下限合成。馬単だけ1着を winPotential、2着を placePotential の下限（軸×穴）。差し替え可能なルール実装です。",
   },
   {
     title: "軸馬・超注目",
@@ -71,7 +71,7 @@ export function Method() {
                 <li>通常ダート＝内枠。ダートはもともと外寄り。</li>
                 <li>1800で届かなかった差しを2000で狙う、という脚質の入替。</li>
                 <li>平坦連勝→急坂で危険人気、の自動判定。血統・転戦ローテの数字。</li>
-                <li>場や馬を瞬発戦／持続力戦に固定する。ラップの二分法はスコアにもコース参考にも載せない。</li>
+                <li>場や馬を瞬発戦／持続力戦に固定する。コースのラップ二分法はスコアにもコース参考にも載せない。前走そのレースのペースで着順を読み替えるのは近況（formSignal）だけ。</li>
               </ul>
             </div>
           </div>
@@ -79,12 +79,12 @@ export function Method() {
 
         <div className="mt-10 border-t border-sand/15 pt-8">
           <p className="text-xs tracking-wider text-sand/45">スコア外の補足</p>
-          <h3 className="mt-1 text-base font-semibold">調教・馬体重の読み方</h3>
+          <h3 className="mt-1 text-base font-semibold">調教・馬体重・パドックの読み方</h3>
           <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-sand/70">
-            穴／軸スコア・危険1人気・3連系研究所には入れない。公開情報に皆が飛びつく／怯えるとオッズが歪む、という見方だけを残す。調教履歴と当日馬体重はスナップショット未収録のため、JRA・新聞で確認する。レース詳細の補足に、見る対象の注目穴／抑え候補を出している。
+            穴／軸スコア・危険1人気・3連系研究所には入れない。公開情報に皆が飛びつく／怯えるとオッズが歪む、という見方だけを残す。調教履歴・当日馬体重・パドック映像はスナップショット未収録のため、JRA・新聞で確認する。レース詳細の補足に、見る対象の注目穴／抑え候補を出している。
           </p>
-          <div className="mt-5 grid gap-5 sm:grid-cols-2">
-            {[WORKOUT_SECTION, WEIGHT_SECTION].map((section) => (
+          <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[WORKOUT_SECTION, WEIGHT_SECTION, PADDOCK_SECTION].map((section) => (
               <div key={section.id}>
                 <h4 className="text-sm font-semibold">{section.title}</h4>
                 <ul className="mt-2 list-disc space-y-1 pl-5 text-xs leading-relaxed text-sand/70">

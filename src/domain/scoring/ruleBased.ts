@@ -4,8 +4,10 @@ import { trackGateBiasScore } from "./trackGateBias.mjs";
 import { popularityWinScore, WIN_POP_BLEND } from "./popularityPrior";
 import {
   FORM_SIGNAL_NEUTRAL,
+  formContextLabel,
   formSignalFromFormStats,
   valueGapFromPopularity,
+  winFormBoostFromStats,
 } from "./deriveFactors.mjs";
 
 export type ScoreResult = {
@@ -22,7 +24,8 @@ export type Scorer = {
 /**
  * 複勝圏（1〜3着）向け。
  * paceFit は馬の埋め込み因子。コースを瞬発戦／持続力戦に分類して加点しない。
- * 調教・馬体重も見ない（補足のみ）。
+ * 前走着順はペース・通過・枠の一般不利で読み替える（formSignal）。
+ * 調教・馬体重・パドックは見ない（補足のみ）。
  */
 const PLACE_WEIGHTS = {
   courseFit: 0.25,
@@ -60,15 +63,7 @@ function weighted(factors: HorseFactors, weights: typeof PLACE_WEIGHTS | typeof 
 
 /** 前走・同条件から1着向きの軽い補正（データが無いときは 0） */
 export function winFormBoost(horse: Horse): number {
-  const fs = horse.formStats;
-  if (!fs) return 0;
-  let boost = 0;
-  if (fs.lastRank === 1) boost += 8;
-  else if (fs.lastRank === 2) boost += 3;
-  else if (fs.lastRank != null && fs.lastRank >= 8) boost -= 4;
-  if (fs.avgSameRank != null && fs.avgSameRank > 0 && fs.avgSameRank <= 2.5) boost += 5;
-  else if (fs.avgSameRank != null && fs.avgSameRank >= 6) boost -= 3;
-  return boost;
+  return winFormBoostFromStats(horse.formStats);
 }
 
 function topFactors(factors: HorseFactors, limit = 2): string[] {
@@ -130,7 +125,7 @@ export const ruleBasedScorer: Scorer = {
     const popNote = pop != null ? `${pop}番人気` : "人気不明";
     const formNote =
       horse.formStats?.lastRank != null
-        ? `前走${horse.formStats.lastRank}着`
+        ? `前走${horse.formStats.lastRank}着${formContextLabel(horse.formStats)}`
         : "前走データなし";
     const rationale = `${horse.name}は複勝圏${placePotential}／1着見込み${winPotential}（${popNote}・${formNote}）。${highlights.join("・")}が牽引。単勝${horse.oddsWin.toFixed(1)}倍。`;
 

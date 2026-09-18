@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-09-06T11:07:53.441Z",
+  "builtAt": "2026-09-15T14:50:38.657Z",
   "kind": "gated-ticket-hits",
   "note": "Freeze odds met that day's settings and the payout hit. Main = non-sanren bet types at board settings. Trio/trifecta are separate. Do not merge KPI.",
   "scannedDates": [
@@ -16,7 +16,8 @@
     "2026-08-29",
     "2026-08-30",
     "2026-09-05",
-    "2026-09-06"
+    "2026-09-06",
+    "2026-09-12"
   ],
   "dates": [
     "2026-07-25",
@@ -32,9 +33,10 @@
     "2026-08-29",
     "2026-08-30",
     "2026-09-05",
-    "2026-09-06"
+    "2026-09-06",
+    "2026-09-12"
   ],
-  "hitCount": 411,
+  "hitCount": 437,
   "hits": [
     {
       "id": "main|2026-07-25|chukyo-20260725-4|place:9",
@@ -6768,7 +6770,7 @@
       "odds": 60.6,
       "oddsBand": "50-79",
       "payoutYen": 4650,
-      "score": 56,
+      "score": 55,
       "label": null,
       "pattern": null,
       "axisHorseNumber": null,
@@ -6975,7 +6977,7 @@
       "odds": 51.7,
       "oddsBand": "50-79",
       "payoutYen": 5900,
-      "score": 54,
+      "score": 53,
       "label": null,
       "pattern": null,
       "axisHorseNumber": null,
@@ -21052,6 +21054,1354 @@
       "axisHorseNumber": null,
       "picked": false,
       "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "main|2026-09-12|hanshin-20260912-1|wide:5-8",
+      "lane": "main",
+      "raceDate": "2026-09-12",
+      "raceId": "hanshin-20260912-1",
+      "venue": "阪神",
+      "raceNumber": 1,
+      "title": "3歳以上障害未勝利",
+      "track": "芝",
+      "distanceM": 2970,
+      "distanceBand": "2200+",
+      "classBand": "障害",
+      "fieldSize": 8,
+      "fieldBand": "〜10頭",
+      "weather": "曇",
+      "condition": "良",
+      "weekday": "土",
+      "startTime": "10:00",
+      "betType": "wide",
+      "selection": "5-8",
+      "horses": [
+        {
+          "number": 5,
+          "name": "クリアクォーツ",
+          "popularity": 8
+        },
+        {
+          "number": 8,
+          "name": "バトラーズワーフ",
+          "popularity": 6
+        }
+      ],
+      "odds": 26.4,
+      "oddsBand": "25-49",
+      "payoutYen": 3840,
+      "score": 61,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "pass",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "main|2026-09-12|hanshin-20260912-4|bracket_quinella:3-3",
+      "lane": "main",
+      "raceDate": "2026-09-12",
+      "raceId": "hanshin-20260912-4",
+      "venue": "阪神",
+      "raceNumber": 4,
+      "title": "3歳未勝利",
+      "track": "芝",
+      "distanceM": 1800,
+      "distanceBand": "1800-2000",
+      "classBand": "未勝利",
+      "fieldSize": 18,
+      "fieldBand": "15頭+",
+      "weather": "曇",
+      "condition": "良",
+      "weekday": "土",
+      "startTime": "11:35",
+      "betType": "bracket_quinella",
+      "selection": "3-3",
+      "horses": [
+        {
+          "number": 5,
+          "name": "ラッキーストーン",
+          "popularity": 11
+        },
+        {
+          "number": 6,
+          "name": "コスモフィレンツェ",
+          "popularity": 1
+        }
+      ],
+      "odds": 63.4,
+      "oddsBand": "50-79",
+      "payoutYen": 6260,
+      "score": 61,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "pass",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "main|2026-09-12|hanshin-20260912-5|wide:1-8",
+      "lane": "main",
+      "raceDate": "2026-09-12",
+      "raceId": "hanshin-20260912-5",
+      "venue": "阪神",
+      "raceNumber": 5,
+      "title": "2歳新馬",
+      "track": "芝",
+      "distanceM": 1600,
+      "distanceBand": "1400-1600",
+      "classBand": "新馬",
+      "fieldSize": 10,
+      "fieldBand": "〜10頭",
+      "weather": "曇",
+      "condition": "良",
+      "weekday": "土",
+      "startTime": "12:25",
+      "betType": "wide",
+      "selection": "1-8",
+      "horses": [
+        {
+          "number": 1,
+          "name": "ブラッドバローズ",
+          "popularity": 3
+        },
+        {
+          "number": 8,
+          "name": "ベルセルク",
+          "popularity": 10
+        }
+      ],
+      "odds": 40.4,
+      "oddsBand": "25-49",
+      "payoutYen": 5570,
+      "score": 62,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "pass",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "main|2026-09-12|hanshin-20260912-9|bracket_quinella:2-6",
+      "lane": "main",
+      "raceDate": "2026-09-12",
+      "raceId": "hanshin-20260912-9",
+      "venue": "阪神",
+      "raceNumber": 9,
+      "title": "瀬戸内海特別",
+      "track": "芝",
+      "distanceM": 1400,
+      "distanceBand": "1400-1600",
+      "classBand": "特別他",
+      "fieldSize": 13,
+      "fieldBand": "11-14頭",
+      "weather": "曇",
+      "condition": "良",
+      "weekday": "土",
+      "startTime": "14:25",
+      "betType": "bracket_quinella",
+      "selection": "2-6",
+      "horses": [
+        {
+          "number": 2,
+          "name": "ライラ",
+          "popularity": 2
+        },
+        {
+          "number": 8,
+          "name": "ワンコールアウェイ",
+          "popularity": 6
+        },
+        {
+          "number": 9,
+          "name": "ジッピーレーサー",
+          "popularity": 13
+        }
+      ],
+      "odds": 31.9,
+      "oddsBand": "25-49",
+      "payoutYen": 2330,
+      "score": 64,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "pass",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "main|2026-09-12|nakayama-20260912-10|bracket_quinella:2-5",
+      "lane": "main",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-10",
+      "venue": "中山",
+      "raceNumber": 10,
+      "title": "レインボーS",
+      "track": "芝",
+      "distanceM": 2000,
+      "distanceBand": "1800-2000",
+      "classBand": "特別他",
+      "fieldSize": 11,
+      "fieldBand": "11-14頭",
+      "weather": "雨",
+      "condition": "重",
+      "weekday": "土",
+      "startTime": "14:50",
+      "betType": "bracket_quinella",
+      "selection": "2-5",
+      "horses": [
+        {
+          "number": 2,
+          "name": "マイネルブリックス",
+          "popularity": 7
+        },
+        {
+          "number": 5,
+          "name": "アマイ",
+          "popularity": 8
+        }
+      ],
+      "odds": 64.7,
+      "oddsBand": "50-79",
+      "payoutYen": 10170,
+      "score": 65,
+      "label": "注目穴",
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": true,
+      "pickKnown": true,
+      "gateStatus": "candidate",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "main|2026-09-12|nakayama-20260912-10|quinella:2-5",
+      "lane": "main",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-10",
+      "venue": "中山",
+      "raceNumber": 10,
+      "title": "レインボーS",
+      "track": "芝",
+      "distanceM": 2000,
+      "distanceBand": "1800-2000",
+      "classBand": "特別他",
+      "fieldSize": 11,
+      "fieldBand": "11-14頭",
+      "weather": "雨",
+      "condition": "重",
+      "weekday": "土",
+      "startTime": "14:50",
+      "betType": "quinella",
+      "selection": "2-5",
+      "horses": [
+        {
+          "number": 2,
+          "name": "マイネルブリックス",
+          "popularity": 7
+        },
+        {
+          "number": 5,
+          "name": "アマイ",
+          "popularity": 8
+        }
+      ],
+      "odds": 75.9,
+      "oddsBand": "50-79",
+      "payoutYen": 10190,
+      "score": 65,
+      "label": "注目穴",
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": true,
+      "pickKnown": true,
+      "gateStatus": "candidate",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "main|2026-09-12|nakayama-20260912-4|bracket_quinella:1-2",
+      "lane": "main",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-4",
+      "venue": "中山",
+      "raceNumber": 4,
+      "title": "3歳未勝利",
+      "track": "芝",
+      "distanceM": 2000,
+      "distanceBand": "1800-2000",
+      "classBand": "未勝利",
+      "fieldSize": 18,
+      "fieldBand": "15頭+",
+      "weather": "雨",
+      "condition": "重",
+      "weekday": "土",
+      "startTime": "11:20",
+      "betType": "bracket_quinella",
+      "selection": "1-2",
+      "horses": [
+        {
+          "number": 1,
+          "name": "クールチェンジ",
+          "popularity": 15
+        },
+        {
+          "number": 2,
+          "name": "ミナヅキ",
+          "popularity": 1
+        },
+        {
+          "number": 3,
+          "name": "シルバープレミア",
+          "popularity": 11
+        },
+        {
+          "number": 4,
+          "name": "カーヴドヴァン",
+          "popularity": 17
+        }
+      ],
+      "odds": 36.4,
+      "oddsBand": "25-49",
+      "payoutYen": 2200,
+      "score": 58,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "pass",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "main|2026-09-12|nakayama-20260912-4|win:4",
+      "lane": "main",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-4",
+      "venue": "中山",
+      "raceNumber": 4,
+      "title": "3歳未勝利",
+      "track": "芝",
+      "distanceM": 2000,
+      "distanceBand": "1800-2000",
+      "classBand": "未勝利",
+      "fieldSize": 18,
+      "fieldBand": "15頭+",
+      "weather": "雨",
+      "condition": "重",
+      "weekday": "土",
+      "startTime": "11:20",
+      "betType": "win",
+      "selection": "4",
+      "horses": [
+        {
+          "number": 4,
+          "name": "カーヴドヴァン",
+          "popularity": 17
+        }
+      ],
+      "odds": 48.5,
+      "oddsBand": "25-49",
+      "payoutYen": 6480,
+      "score": 65,
+      "label": "注目穴",
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": true,
+      "pickKnown": true,
+      "gateStatus": "candidate",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "main|2026-09-12|nakayama-20260912-6|bracket_quinella:3-8",
+      "lane": "main",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-6",
+      "venue": "中山",
+      "raceNumber": 6,
+      "title": "2歳新馬",
+      "track": "ダート",
+      "distanceM": 1200,
+      "distanceBand": "〜1200",
+      "classBand": "新馬",
+      "fieldSize": 12,
+      "fieldBand": "11-14頭",
+      "weather": "雨",
+      "condition": "不",
+      "weekday": "土",
+      "startTime": "12:40",
+      "betType": "bracket_quinella",
+      "selection": "3-8",
+      "horses": [
+        {
+          "number": 3,
+          "name": "ジェミニディウ",
+          "popularity": 7
+        },
+        {
+          "number": 11,
+          "name": "ナイトパイロット",
+          "popularity": 3
+        },
+        {
+          "number": 12,
+          "name": "ノーブルパラス",
+          "popularity": 8
+        }
+      ],
+      "odds": 39.8,
+      "oddsBand": "25-49",
+      "payoutYen": 6800,
+      "score": 59,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "pass",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "trifecta|2026-09-12|hanshin-20260912-1|trifecta:1-8-5",
+      "lane": "trifecta",
+      "raceDate": "2026-09-12",
+      "raceId": "hanshin-20260912-1",
+      "venue": "阪神",
+      "raceNumber": 1,
+      "title": "3歳以上障害未勝利",
+      "track": "芝",
+      "distanceM": 2970,
+      "distanceBand": "2200+",
+      "classBand": "障害",
+      "fieldSize": 8,
+      "fieldBand": "〜10頭",
+      "weather": "曇",
+      "condition": "良",
+      "weekday": "土",
+      "startTime": "10:00",
+      "betType": "trifecta",
+      "selection": "1-8-5",
+      "horses": [
+        {
+          "number": 1,
+          "name": "メイショウトム",
+          "popularity": 1
+        },
+        {
+          "number": 8,
+          "name": "バトラーズワーフ",
+          "popularity": 6
+        },
+        {
+          "number": 5,
+          "name": "クリアクォーツ",
+          "popularity": 8
+        }
+      ],
+      "odds": 397.1,
+      "oddsBand": "200-499",
+      "payoutYen": 32320,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-09-12|hanshin-20260912-10|trifecta:5-2-10",
+      "lane": "trifecta",
+      "raceDate": "2026-09-12",
+      "raceId": "hanshin-20260912-10",
+      "venue": "阪神",
+      "raceNumber": 10,
+      "title": "竹田城S",
+      "track": "ダート",
+      "distanceM": 1800,
+      "distanceBand": "1800-2000",
+      "classBand": "特別他",
+      "fieldSize": 15,
+      "fieldBand": "15頭+",
+      "weather": "曇",
+      "condition": "稍",
+      "weekday": "土",
+      "startTime": "15:05",
+      "betType": "trifecta",
+      "selection": "5-2-10",
+      "horses": [
+        {
+          "number": 5,
+          "name": "パシアンジャン",
+          "popularity": 2
+        },
+        {
+          "number": 2,
+          "name": "ペンナヴェローチェ",
+          "popularity": 3
+        },
+        {
+          "number": 10,
+          "name": "レヴァンテシチー",
+          "popularity": 5
+        }
+      ],
+      "odds": 221,
+      "oddsBand": "200-499",
+      "payoutYen": 14270,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-09-12|hanshin-20260912-5|trifecta:1-9-8",
+      "lane": "trifecta",
+      "raceDate": "2026-09-12",
+      "raceId": "hanshin-20260912-5",
+      "venue": "阪神",
+      "raceNumber": 5,
+      "title": "2歳新馬",
+      "track": "芝",
+      "distanceM": 1600,
+      "distanceBand": "1400-1600",
+      "classBand": "新馬",
+      "fieldSize": 10,
+      "fieldBand": "〜10頭",
+      "weather": "曇",
+      "condition": "良",
+      "weekday": "土",
+      "startTime": "12:25",
+      "betType": "trifecta",
+      "selection": "1-9-8",
+      "horses": [
+        {
+          "number": 1,
+          "name": "ブラッドバローズ",
+          "popularity": 3
+        },
+        {
+          "number": 9,
+          "name": "ルーメンルーナエ",
+          "popularity": 1
+        },
+        {
+          "number": 8,
+          "name": "ベルセルク",
+          "popularity": 10
+        }
+      ],
+      "odds": 616.3,
+      "oddsBand": "500-999",
+      "payoutYen": 47890,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-09-12|hanshin-20260912-9|trifecta:2-8-4",
+      "lane": "trifecta",
+      "raceDate": "2026-09-12",
+      "raceId": "hanshin-20260912-9",
+      "venue": "阪神",
+      "raceNumber": 9,
+      "title": "瀬戸内海特別",
+      "track": "芝",
+      "distanceM": 1400,
+      "distanceBand": "1400-1600",
+      "classBand": "特別他",
+      "fieldSize": 13,
+      "fieldBand": "11-14頭",
+      "weather": "曇",
+      "condition": "良",
+      "weekday": "土",
+      "startTime": "14:25",
+      "betType": "trifecta",
+      "selection": "2-8-4",
+      "horses": [
+        {
+          "number": 2,
+          "name": "ライラ",
+          "popularity": 2
+        },
+        {
+          "number": 8,
+          "name": "ワンコールアウェイ",
+          "popularity": 6
+        },
+        {
+          "number": 4,
+          "name": "ダガーリング",
+          "popularity": 5
+        }
+      ],
+      "odds": 252.1,
+      "oddsBand": "200-499",
+      "payoutYen": 20150,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-09-12|nakayama-20260912-1|trifecta:9-11-6",
+      "lane": "trifecta",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-1",
+      "venue": "中山",
+      "raceNumber": 1,
+      "title": "2歳未勝利",
+      "track": "ダート",
+      "distanceM": 1800,
+      "distanceBand": "1800-2000",
+      "classBand": "未勝利",
+      "fieldSize": 12,
+      "fieldBand": "11-14頭",
+      "weather": "雨",
+      "condition": "不",
+      "weekday": "土",
+      "startTime": "09:45",
+      "betType": "trifecta",
+      "selection": "9-11-6",
+      "horses": [
+        {
+          "number": 9,
+          "name": "サクセスボーイ",
+          "popularity": 3
+        },
+        {
+          "number": 11,
+          "name": "イキフン",
+          "popularity": 2
+        },
+        {
+          "number": 6,
+          "name": "ナムラダックス",
+          "popularity": 9
+        }
+      ],
+      "odds": 332.9,
+      "oddsBand": "200-499",
+      "payoutYen": 46670,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-09-12|nakayama-20260912-11|trifecta:15-5-16",
+      "lane": "trifecta",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-11",
+      "venue": "中山",
+      "raceNumber": 11,
+      "title": "ラジオ日本賞",
+      "track": "ダート",
+      "distanceM": 1200,
+      "distanceBand": "〜1200",
+      "classBand": "特別他",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "雨",
+      "condition": "不",
+      "weekday": "土",
+      "startTime": "15:30",
+      "betType": "trifecta",
+      "selection": "15-5-16",
+      "horses": [
+        {
+          "number": 15,
+          "name": "ユキマル",
+          "popularity": 3
+        },
+        {
+          "number": 5,
+          "name": "ジョーローリット",
+          "popularity": 4
+        },
+        {
+          "number": 16,
+          "name": "ロードフロンティア",
+          "popularity": 9
+        }
+      ],
+      "odds": 384,
+      "oddsBand": "200-499",
+      "payoutYen": 38150,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-09-12|nakayama-20260912-12|trifecta:8-12-9",
+      "lane": "trifecta",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-12",
+      "venue": "中山",
+      "raceNumber": 12,
+      "title": "3歳以上1勝クラス",
+      "track": "ダート",
+      "distanceM": 1800,
+      "distanceBand": "1800-2000",
+      "classBand": "1勝",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "雨",
+      "condition": "不",
+      "weekday": "土",
+      "startTime": "16:10",
+      "betType": "trifecta",
+      "selection": "8-12-9",
+      "horses": [
+        {
+          "number": 8,
+          "name": "インナーパッション",
+          "popularity": 4
+        },
+        {
+          "number": 12,
+          "name": "ユアフェリシティ",
+          "popularity": 1
+        },
+        {
+          "number": 9,
+          "name": "ロードフロリゼル",
+          "popularity": 10
+        }
+      ],
+      "odds": 632.8,
+      "oddsBand": "500-999",
+      "payoutYen": 67090,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-09-12|nakayama-20260912-3|trifecta:15-13-8",
+      "lane": "trifecta",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-3",
+      "venue": "中山",
+      "raceNumber": 3,
+      "title": "3歳未勝利",
+      "track": "ダート",
+      "distanceM": 1200,
+      "distanceBand": "〜1200",
+      "classBand": "未勝利",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "雨",
+      "condition": "不",
+      "weekday": "土",
+      "startTime": "10:50",
+      "betType": "trifecta",
+      "selection": "15-13-8",
+      "horses": [
+        {
+          "number": 15,
+          "name": "ミッキーサウザンド",
+          "popularity": 2
+        },
+        {
+          "number": 13,
+          "name": "エンジェルサン",
+          "popularity": 7
+        },
+        {
+          "number": 8,
+          "name": "ハングローズ",
+          "popularity": 1
+        }
+      ],
+      "odds": 284.1,
+      "oddsBand": "200-499",
+      "payoutYen": 26400,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-09-12|nakayama-20260912-7|trifecta:14-7-2",
+      "lane": "trifecta",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-7",
+      "venue": "中山",
+      "raceNumber": 7,
+      "title": "3歳未勝利",
+      "track": "ダート",
+      "distanceM": 1800,
+      "distanceBand": "1800-2000",
+      "classBand": "未勝利",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "雨",
+      "condition": "不",
+      "weekday": "土",
+      "startTime": "13:10",
+      "betType": "trifecta",
+      "selection": "14-7-2",
+      "horses": [
+        {
+          "number": 14,
+          "name": "カシマライフウ",
+          "popularity": 1
+        },
+        {
+          "number": 7,
+          "name": "イーサンミラー",
+          "popularity": 9
+        },
+        {
+          "number": 2,
+          "name": "プロミスライン",
+          "popularity": 5
+        }
+      ],
+      "odds": 425.3,
+      "oddsBand": "200-499",
+      "payoutYen": 28120,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-09-12|hanshin-20260912-11|trio:7-8-15",
+      "lane": "trio",
+      "raceDate": "2026-09-12",
+      "raceId": "hanshin-20260912-11",
+      "venue": "阪神",
+      "raceNumber": 11,
+      "title": "チャレンジC",
+      "track": "芝",
+      "distanceM": 2000,
+      "distanceBand": "1800-2000",
+      "classBand": "特別他",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "曇",
+      "condition": "良",
+      "weekday": "土",
+      "startTime": "15:45",
+      "betType": "trio",
+      "selection": "7-8-15",
+      "horses": [
+        {
+          "number": 7,
+          "name": "ジーティーアダマン",
+          "popularity": 5
+        },
+        {
+          "number": 8,
+          "name": "カラマティアノス",
+          "popularity": 8
+        },
+        {
+          "number": 15,
+          "name": "ジョバンニ",
+          "popularity": 3
+        }
+      ],
+      "odds": 163.8,
+      "oddsBand": "150-299",
+      "payoutYen": 16840,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-09-12|hanshin-20260912-5|trio:1-8-9",
+      "lane": "trio",
+      "raceDate": "2026-09-12",
+      "raceId": "hanshin-20260912-5",
+      "venue": "阪神",
+      "raceNumber": 5,
+      "title": "2歳新馬",
+      "track": "芝",
+      "distanceM": 1600,
+      "distanceBand": "1400-1600",
+      "classBand": "新馬",
+      "fieldSize": 10,
+      "fieldBand": "〜10頭",
+      "weather": "曇",
+      "condition": "良",
+      "weekday": "土",
+      "startTime": "12:25",
+      "betType": "trio",
+      "selection": "1-8-9",
+      "horses": [
+        {
+          "number": 1,
+          "name": "ブラッドバローズ",
+          "popularity": 3
+        },
+        {
+          "number": 8,
+          "name": "ベルセルク",
+          "popularity": 10
+        },
+        {
+          "number": 9,
+          "name": "ルーメンルーナエ",
+          "popularity": 1
+        }
+      ],
+      "odds": 137.1,
+      "oddsBand": "100-149",
+      "payoutYen": 11210,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-09-12|nakayama-20260912-10|trio:2-4-5",
+      "lane": "trio",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-10",
+      "venue": "中山",
+      "raceNumber": 10,
+      "title": "レインボーS",
+      "track": "芝",
+      "distanceM": 2000,
+      "distanceBand": "1800-2000",
+      "classBand": "特別他",
+      "fieldSize": 11,
+      "fieldBand": "11-14頭",
+      "weather": "雨",
+      "condition": "重",
+      "weekday": "土",
+      "startTime": "14:50",
+      "betType": "trio",
+      "selection": "2-4-5",
+      "horses": [
+        {
+          "number": 2,
+          "name": "マイネルブリックス",
+          "popularity": 7
+        },
+        {
+          "number": 4,
+          "name": "マイネルフーガ",
+          "popularity": 6
+        },
+        {
+          "number": 5,
+          "name": "アマイ",
+          "popularity": 8
+        }
+      ],
+      "odds": 133.5,
+      "oddsBand": "100-149",
+      "payoutYen": 18740,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-09-12|nakayama-20260912-12|trio:8-9-12",
+      "lane": "trio",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-12",
+      "venue": "中山",
+      "raceNumber": 12,
+      "title": "3歳以上1勝クラス",
+      "track": "ダート",
+      "distanceM": 1800,
+      "distanceBand": "1800-2000",
+      "classBand": "1勝",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "雨",
+      "condition": "不",
+      "weekday": "土",
+      "startTime": "16:10",
+      "betType": "trio",
+      "selection": "8-9-12",
+      "horses": [
+        {
+          "number": 8,
+          "name": "インナーパッション",
+          "popularity": 4
+        },
+        {
+          "number": 9,
+          "name": "ロードフロリゼル",
+          "popularity": 10
+        },
+        {
+          "number": 12,
+          "name": "ユアフェリシティ",
+          "popularity": 1
+        }
+      ],
+      "odds": 102.1,
+      "oddsBand": "100-149",
+      "payoutYen": 12540,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-09-12|nakayama-20260912-2|trio:6-7-10",
+      "lane": "trio",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-2",
+      "venue": "中山",
+      "raceNumber": 2,
+      "title": "2歳未勝利",
+      "track": "芝",
+      "distanceM": 1600,
+      "distanceBand": "1400-1600",
+      "classBand": "未勝利",
+      "fieldSize": 12,
+      "fieldBand": "11-14頭",
+      "weather": "雨",
+      "condition": "重",
+      "weekday": "土",
+      "startTime": "10:20",
+      "betType": "trio",
+      "selection": "6-7-10",
+      "horses": [
+        {
+          "number": 6,
+          "name": "マーズワース",
+          "popularity": 6
+        },
+        {
+          "number": 7,
+          "name": "コスモティタノ",
+          "popularity": 8
+        },
+        {
+          "number": 10,
+          "name": "アイファーマーリン",
+          "popularity": 3
+        }
+      ],
+      "odds": 160.5,
+      "oddsBand": "150-299",
+      "payoutYen": 16110,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-09-12|nakayama-20260912-6|trio:2-3-11",
+      "lane": "trio",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-6",
+      "venue": "中山",
+      "raceNumber": 6,
+      "title": "2歳新馬",
+      "track": "ダート",
+      "distanceM": 1200,
+      "distanceBand": "〜1200",
+      "classBand": "新馬",
+      "fieldSize": 12,
+      "fieldBand": "11-14頭",
+      "weather": "雨",
+      "condition": "不",
+      "weekday": "土",
+      "startTime": "12:40",
+      "betType": "trio",
+      "selection": "2-3-11",
+      "horses": [
+        {
+          "number": 2,
+          "name": "アーバーバイティ",
+          "popularity": 4
+        },
+        {
+          "number": 3,
+          "name": "ジェミニディウ",
+          "popularity": 7
+        },
+        {
+          "number": 11,
+          "name": "ナイトパイロット",
+          "popularity": 3
+        }
+      ],
+      "odds": 185.1,
+      "oddsBand": "150-299",
+      "payoutYen": 30760,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-09-12|nakayama-20260912-7|trio:2-7-14",
+      "lane": "trio",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-7",
+      "venue": "中山",
+      "raceNumber": 7,
+      "title": "3歳未勝利",
+      "track": "ダート",
+      "distanceM": 1800,
+      "distanceBand": "1800-2000",
+      "classBand": "未勝利",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "雨",
+      "condition": "不",
+      "weekday": "土",
+      "startTime": "13:10",
+      "betType": "trio",
+      "selection": "2-7-14",
+      "horses": [
+        {
+          "number": 2,
+          "name": "プロミスライン",
+          "popularity": 5
+        },
+        {
+          "number": 7,
+          "name": "イーサンミラー",
+          "popularity": 9
+        },
+        {
+          "number": 14,
+          "name": "カシマライフウ",
+          "popularity": 1
+        }
+      ],
+      "odds": 126,
+      "oddsBand": "100-149",
+      "payoutYen": 8760,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-09-12|nakayama-20260912-8|trio:2-5-12",
+      "lane": "trio",
+      "raceDate": "2026-09-12",
+      "raceId": "nakayama-20260912-8",
+      "venue": "中山",
+      "raceNumber": 8,
+      "title": "3歳以上1勝クラス",
+      "track": "芝",
+      "distanceM": 2500,
+      "distanceBand": "2200+",
+      "classBand": "1勝",
+      "fieldSize": 14,
+      "fieldBand": "11-14頭",
+      "weather": "雨",
+      "condition": "重",
+      "weekday": "土",
+      "startTime": "13:40",
+      "betType": "trio",
+      "selection": "2-5-12",
+      "horses": [
+        {
+          "number": 2,
+          "name": "スノーディーヴァ",
+          "popularity": 11
+        },
+        {
+          "number": 5,
+          "name": "ヤマニンヘルシェ",
+          "popularity": 3
+        },
+        {
+          "number": 12,
+          "name": "コスモナエマ",
+          "popularity": 4
+        }
+      ],
+      "odds": 263.7,
+      "oddsBand": "150-299",
+      "payoutYen": 32730,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": false,
       "gateStatus": "lab",
       "settings": {
         "oddsThreshold": 100,

@@ -31,7 +31,7 @@ export function SupplementNotesPanel({ venue, raceDate, candidates = [] }: Props
   const hintSummary =
     notes.raceHints.length > 0
       ? notes.raceHints.join(" ")
-      : "調教は縦比較。馬体重は2桁増減だけで消さない。";
+      : "調教は縦比較。馬体重は2桁増減だけで消さない。パドックはスコアに入れない。";
   const summary = hot.length
     ? `注目穴 ${candidateLine(hot)}`
     : hold.length
@@ -69,7 +69,7 @@ export function SupplementNotesPanel({ venue, raceDate, candidates = [] }: Props
           <div>
             <h3 className="text-sm font-semibold text-ink">このレースの候補</h3>
             <p className="mt-1 text-xs text-ink/45">
-              調教・馬体重を見るときの対象。穴スコアには使わない。
+              調教・馬体重・パドックを見るときの対象。穴スコアには使わない。
             </p>
             {candidates.length === 0 ? (
               <p className="mt-2 text-sm text-ink/50">
@@ -107,7 +107,7 @@ export function SupplementNotesPanel({ venue, raceDate, candidates = [] }: Props
               ))}
             </ul>
           ) : null}
-          {[notes.workout, notes.weight].map((section) => (
+          {[notes.workout, notes.weight, notes.paddock].map((section) => (
             <div key={section.id}>
               <h3 className="text-sm font-semibold text-ink">{section.title}</h3>
               <ul className="mt-1.5 list-disc space-y-1 pl-5 text-xs leading-relaxed text-ink/60">
@@ -118,7 +118,7 @@ export function SupplementNotesPanel({ venue, raceDate, candidates = [] }: Props
             </div>
           ))}
           <p className="text-xs text-ink/40">
-            穴／軸スコア・危険1人気・3連系研究所には使わない。調教履歴と当日馬体重はスナップショット未収録のため、JRA・新聞で確認する。場や馬を瞬発戦／持続力戦には分けない。
+            穴／軸スコア・危険1人気・3連系研究所には使わない。調教履歴・当日馬体重・パドック映像はスナップショット未収録のため、JRA・新聞で確認する。場や馬を瞬発戦／持続力戦には分けない。
           </p>
         </div>
       ) : null}

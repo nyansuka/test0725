@@ -6,6 +6,11 @@ export { trackGateBiasScore } from "./trackGateBias.mjs";
 export {
   valueGapFromPopularity,
   formSignalFromFormStats,
+  formContextAdjust,
+  formContextLabel,
+  classifyPace,
+  classifyTrip,
+  winFormBoostFromStats,
   FORM_SIGNAL_NEUTRAL,
 } from "./deriveFactors.mjs";
 export { applyDerivedFactors, scoreFactorWin } from "./ruleBased";

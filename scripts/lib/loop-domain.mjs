@@ -7,6 +7,7 @@ import { trackGateBiasScore } from "../../src/domain/scoring/trackGateBias.mjs";
 import {
   FORM_SIGNAL_NEUTRAL,
   formSignalFromFormStats,
+  winFormBoostFromStats,
   valueGapFromPopularity,
 } from "../../src/domain/scoring/deriveFactors.mjs";
 import { assessDangerousFirstFavorite } from "../../src/domain/dangerousFavorite.mjs";
@@ -175,15 +176,7 @@ function weighted(factors, weights) {
 }
 
 function winFormBoost(horse) {
-  const fs = horse.formStats;
-  if (!fs) return 0;
-  let boost = 0;
-  if (fs.lastRank === 1) boost += 8;
-  else if (fs.lastRank === 2) boost += 3;
-  else if (fs.lastRank != null && fs.lastRank >= 8) boost -= 4;
-  if (fs.avgSameRank != null && fs.avgSameRank > 0 && fs.avgSameRank <= 2.5) boost += 5;
-  else if (fs.avgSameRank != null && fs.avgSameRank >= 6) boost -= 3;
-  return boost;
+  return winFormBoostFromStats(horse.formStats);
 }
 
 export function scoreHorse(horse, race) {

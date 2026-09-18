@@ -56,15 +56,19 @@ assert.deepEqual(
 assert.equal(mixed.find((c) => c.number === 7)?.name, "穴馬");
 assert.equal(supplementCandidatesFromPicks([], []).length, 0);
 
-assert.ok(tokyo.workout.items.some((s) => s.includes("縦比較")));
+assert.ok(hakodate.paddock.items.some((s) => s.includes("初期スコア")));
+assert.equal(tokyo.paddock.items.some((s) => /加点|減点材料にしない/.test(s)), true);
+assert.equal(tokyo.paddock.items.some((s) => /瞬発|持続力/.test(s)), false);
 assert.equal(tokyo.workout.items.some((s) => /瞬発|持続力/.test(s)), false);
 assert.equal(tokyo.weight.items.some((s) => /瞬発|持続力/.test(s)), false);
 assert.equal(hakodate.raceHints.some((s) => /瞬発|持続力/.test(s)), false);
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const method = readFileSync(join(root, "src/components/Method.tsx"), "utf8");
-assert.ok(method.includes("調教・馬体重の読み方"));
+assert.ok(method.includes("調教・馬体重・パドックの読み方"));
 assert.ok(method.includes("スコア外の補足"));
 assert.ok(method.includes("場や馬を瞬発戦／持続力戦に固定する"));
+assert.ok(method.includes("前走そのレースのペースで着順を読み替える"));
+assert.ok(method.includes("パドック"));
 
 console.log("supplement-notes: ok");

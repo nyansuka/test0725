@@ -35,6 +35,17 @@ export type HorseFormStats = {
   lastRank: number | null;
   lastPopularity: number | null;
   lastDate: string | null;
+  /** 前走の頭数・枠・会場。着順読み替え用。パドックは持たない */
+  lastFieldSize?: number | null;
+  lastBracket?: number | null;
+  lastVenue?: string | null;
+  lastTrack?: "芝" | "ダート" | null;
+  lastDistanceLabel?: string | null;
+  lastPassFirst?: number | null;
+  lastPassLast?: number | null;
+  lastPaceFrontSec?: number | null;
+  lastPaceBackSec?: number | null;
+  lastLast3fSec?: number | null;
 };
 
 export type Horse = {

@@ -1,5 +1,5 @@
 /**
- * 調教・馬体重の読み方（スコア外）。
+ * 調教・馬体重・パドックの読み方（スコア外）。
  * Scorer / selectLongshots / 軸選定には混ぜない。
  * 瞬発戦／持続力戦のラベルは補足にも載せない（場・馬の固定分類にしない）。
  */
@@ -9,7 +9,7 @@ import type { LongshotLabel, LongshotPick } from "./types";
 export const STAY_RACE_VENUES = ["札幌", "函館", "小倉"] as const;
 
 export type SupplementNoteSection = {
-  id: "workout" | "weight";
+  id: "workout" | "weight" | "paddock";
   title: string;
   items: readonly string[];
 };
@@ -25,6 +25,7 @@ export type SupplementNotes = {
   scoreExcluded: true;
   workout: SupplementNoteSection;
   weight: SupplementNoteSection;
+  paddock: SupplementNoteSection;
   /** 会場・季節から出る注意。データが無い項目の読み方だけ */
   raceHints: string[];
 };
@@ -46,6 +47,13 @@ const WEIGHT_ITEMS = [
   "夏の減は夏バテ疑い。夏の増は食欲の証拠として見る。",
 ] as const;
 
+const PADDOCK_ITEMS = [
+  "パドックはほぼ全員が見る。同じ解釈なら人気に織り込まれる。初期スコアの加減点にしない。",
+  "発汗・落ち着きの悪さ・歩様の印象で候補から消さない。",
+  "見映えが悪い馬は嫌われてオッズが開きやすい。減点材料にしない。",
+  "自分だけ読める兆候があるときだけ日記へ残す。",
+] as const;
+
 export const WORKOUT_SECTION: SupplementNoteSection = {
   id: "workout",
   title: "調教",
@@ -56,6 +64,12 @@ export const WEIGHT_SECTION: SupplementNoteSection = {
   id: "weight",
   title: "馬体重",
   items: WEIGHT_ITEMS,
+};
+
+export const PADDOCK_SECTION: SupplementNoteSection = {
+  id: "paddock",
+  title: "パドック",
+  items: PADDOCK_ITEMS,
 };
 
 export function isStayRaceVenue(venue: string): boolean {
@@ -86,6 +100,7 @@ export function buildSupplementNotes(input: {
     scoreExcluded: true,
     workout: WORKOUT_SECTION,
     weight: WEIGHT_SECTION,
+    paddock: PADDOCK_SECTION,
     raceHints,
   };
 }
@@ -97,7 +112,7 @@ const SUPPLEMENT_LABEL_RANK: Record<LongshotLabel, number> = {
 };
 
 /**
- * 補足で調教・馬体重を見る対象。注目穴を優先し、検討は混ぜて穴扱いにしない。
+ * 補足で調教・馬体重・パドックを見る対象。注目穴を優先し、検討は混ぜて穴扱いにしない。
  */
 export function supplementCandidatesFromPicks(
   picks: Pick<LongshotPick, "relatedHorseNumbers" | "label">[],

@@ -2,6 +2,18 @@
 
 間隔の目安: **30分**（土日開催中の結果取り込み）。非開催日は site:check のみでも可。
 
+## 2026-09-19〜21（敬老の日3連休）
+
+設定は **25 / oddsMax 80 / scoreMin 65 据え置き**（[HIT-RATE-PLAN.md](./HIT-RATE-PLAN.md) §4.4）。変更は入れない。
+
+| 日 | 朝 | 夜 | 注意 |
+|----|----|----|------|
+| 9/19 土 | `git pull` → `loop:freeze -- 2026-09-19`（目安 9:00 JST、最初の発走前） | `loop:evaluate` → trends → site:check | Actions の 8:00 full のあと |
+| 9/20 日 | 同じ。`loop:freeze -- 2026-09-20` | 同じ | 9/13 のように朝 freeze を飛ばさない |
+| 9/21 月 | **schedule は土日のみ。** `gh workflow run "Refresh JRA odds" -f mode=full` のあと pull → freeze | evaluate | 自宅から `fetch:jra` しない |
+
+3日終わったら 12開催合算の ticketPrecision で 2% を再判定。届かなければ次の1変更は複勝既定 OFF。9/13 は欠測のまま（土曜朝オッズで後追い freeze しない）。
+
 ## 役割分担
 
 | 層 | 誰がやるか | 内容 |
