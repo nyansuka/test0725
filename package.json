@@ -17,6 +17,7 @@
     "test:payout-parse": "node scripts/test-payout-parse.mjs",
     "test:combo-odds-keep": "node scripts/test-combo-odds-keep.mjs",
     "test:sanren-trio-index": "node scripts/test-sanren-trio-index.mjs",
+    "test:sanren-trifecta-index": "node scripts/test-sanren-trifecta-index.mjs",
     "test:horse-form": "node scripts/test-horse-form.mjs",
     "test:form-context": "node scripts/test-form-context.mjs",
     "test:dangerous-favorite": "node scripts/test-dangerous-favorite.mjs",
@@ -51,7 +52,8 @@
     "test:supplement-notes": "node --experimental-strip-types scripts/test-supplement-notes.mts",
     "test:course-notes": "node scripts/test-course-notes.mjs",
     "test:weekend-experiment": "npx tsx scripts/test-weekend-experiment.mjs",
-    "test:display-odds": "npx tsx scripts/test-display-odds.mjs"
+    "test:display-odds": "npx tsx scripts/test-display-odds.mjs",
+    "test:sanren-funnel": "node scripts/test-sanren-funnel.mjs"
   },
   "dependencies": {
     "@fontsource-variable/noto-sans-jp": "^5.3.0",

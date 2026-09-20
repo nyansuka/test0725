@@ -11,3 +11,5 @@
 | `reports/compare-lanes-*.json` | ignore |
 
 凍結オッズは親の `../snapshots/` を共有。使い方は [README.md](../README.md) の「3連系研究所」節と [TRIFECTA-LAB.md](../../../../docs/TRIFECTA-LAB.md) S4。
+
+evaluate 以降の JSON に `funnel`（payouts→watch）と `missCounts` / `misses` が入る。trends もレーン別に載せる。合算しない。

@@ -8,6 +8,7 @@ import {
   selectTrifectaLab,
   summarizeTrifectaLabDensity,
 } from "../src/domain/sanrenLab.ts";
+import { TRIFECTA_WATCH_TOP_N } from "../src/domain/sanrenTrifectaIndex.mjs";
 
 const date = process.argv[2] ?? "latest";
 const path =
@@ -33,6 +34,27 @@ const legsOk = picks.every((p) => {
   );
 });
 const patternOk = picks.every((p) => p.pattern === "ordered_axis");
+const evOk = corePicks.every(
+  (p) => typeof p.hitScore === "number" && typeof p.evScore === "number",
+);
+const byRace = new Map();
+for (const p of corePicks) {
+  const list = byRace.get(p.raceId) ?? [];
+  list.push(p);
+  byRace.set(p.raceId, list);
+}
+const watchCapOk = [...byRace.values()].every((list) => {
+  const nWatch = list.filter((p) => p.label === "研究所注目").length;
+  return nWatch <= TRIFECTA_WATCH_TOP_N && nWatch <= list.length;
+});
+const watchIsTopEvOk = [...byRace.values()].every((list) => {
+  const watch = list.filter((p) => p.label === "研究所注目");
+  const rest = list.filter((p) => p.label === "抑え");
+  if (watch.length === 0 || rest.length === 0) return true;
+  const minWatch = Math.min(...watch.map((p) => p.evScore ?? 0));
+  const maxRest = Math.max(...rest.map((p) => p.evScore ?? 0));
+  return minWatch >= maxRest;
+});
 
 console.log(
   JSON.stringify(
@@ -60,9 +82,11 @@ console.log(
         selection: p.selection,
         odds: p.odds,
         score: p.relatedScore,
+        hit: p.hitScore,
+        ev: p.evScore,
         label: p.label,
       })),
-      checks: { oddsOk, legsOk, patternOk },
+      checks: { oddsOk, legsOk, patternOk, evOk, watchCapOk, watchIsTopEvOk },
     },
     null,
     2,
@@ -75,7 +99,7 @@ const inBand =
   coreDensity.avgPerRace >= 20 &&
   coreDensity.maxPerRace <= DEFAULT_TRIFECTA_LANE.topNPerRace;
 
-if (!oddsOk || !legsOk || !patternOk) {
+if (!oddsOk || !legsOk || !patternOk || !evOk || !watchCapOk || !watchIsTopEvOk) {
   console.error("S2A_FAIL checks");
   process.exit(1);
 }

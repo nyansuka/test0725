@@ -92,6 +92,15 @@ docker compose exec web npm run loop:sanren:sweep -- --lane=trio --param=oddsThr
 
 主指標は各レーンの `ticketPrecision`。比較 JSON は並記のみ（合算フィールドなし）。詳細は [TRIFECTA-LAB.md](../../../docs/TRIFECTA-LAB.md) S4 / S5。
 
+`loop:sanren:evaluate` / `report` / `trends` に **払戻起点ファネル** と **Miss 分解** を載せる（レーン別。合算しない）。
+
+```
+payouts → onBoard → gated → generated → scorePass → topN → watch（研究所注目）
+Miss: 板なし / ゲート落ち / 未生成 / scoreMin落ち / topN落ち
+```
+
+ゲート落ちは未生成を汚さないための5つ目。再 evaluate しないと既存 evaluations には入らない。
+
 ## 注意
 
 - **freeze は結果が出る前に一度実行する。** 既存の `loop/snapshots` は原則上書きしない（`--force` のみ差し替え可）。

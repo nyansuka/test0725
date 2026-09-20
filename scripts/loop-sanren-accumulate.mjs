@@ -26,6 +26,16 @@ import {
   selectSanrenLane,
   summarizeSanrenLabDensity,
 } from "./lib/sanren-lab-domain.mjs";
+import {
+  analyzeSanrenHitFunnel,
+  emptyFunnel,
+  emptyMissCounts,
+  formatFunnelLine,
+  formatMissLine,
+  funnelRates,
+  mergeFunnel,
+  mergeMissCounts,
+} from "./lib/sanren-funnel.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
@@ -312,6 +322,14 @@ async function cmdEvaluateLane(raceDate, lane) {
   const virtualReturnRate =
     stakeYen > 0 ? Number(((payoutYen / stakeYen) * 100).toFixed(1)) : null;
 
+  const hitFunnel = analyzeSanrenHitFunnel({
+    lane,
+    settings,
+    frozenRaces: frozen.races ?? [],
+    liveRaces: live.data.races ?? [],
+    productionPicks: prediction.picks ?? [],
+  });
+
   const evaluation = {
     evaluatedAt: new Date().toISOString(),
     raceDate,
@@ -338,7 +356,14 @@ async function cmdEvaluateLane(raceDate, lane) {
       virtualReturnRatePercent: virtualReturnRate,
       primaryMetric: "ticketPrecision",
       note: "主指標は ticketPrecision（払戻突合）。placePrecision は参考のみ。レーン合算禁止。",
+      funnel: hitFunnel.funnel,
+      funnelRates: hitFunnel.rates,
+      missCounts: hitFunnel.missCounts,
     },
+    funnel: hitFunnel.funnel,
+    funnelRates: hitFunnel.rates,
+    missCounts: hitFunnel.missCounts,
+    misses: hitFunnel.missRows,
     byLabel,
     byPattern,
     rows,
@@ -367,6 +392,8 @@ async function cmdEvaluateLane(raceDate, lane) {
   console.log(
     `  ticketP=${ticketPrecision == null ? "—" : ticketPrecision.toFixed(4)} placeP=${placePrecision == null ? "—" : placePrecision.toFixed(3)} dens=${density == null ? "—" : density.toFixed(2)} RR=${virtualReturnRate ?? "—"}%`,
   );
+  console.log(`  funnel ${formatFunnelLine(hitFunnel.funnel)}`);
+  console.log(`  miss ${formatMissLine(hitFunnel.missCounts)}`);
   return evaluation;
 }
 
@@ -377,6 +404,8 @@ async function cmdReport(dates, lanes) {
   for (const lane of lanes) {
     const dirs = laneDirs(lane);
     const summaries = [];
+    let funnel = emptyFunnel();
+    let missCounts = emptyMissCounts();
     for (const d of dates) {
       const evalPath = path.join(dirs.evaluations, `${d}.json`);
       if (!(await exists(evalPath))) {
@@ -384,9 +413,24 @@ async function cmdReport(dates, lanes) {
         continue;
       }
       const ev = await readJson(evalPath);
-      summaries.push({ raceDate: d, ...ev.metrics });
+      const dayFunnel = ev.funnel ?? ev.metrics?.funnel ?? emptyFunnel();
+      const dayMiss = ev.missCounts ?? ev.metrics?.missCounts ?? emptyMissCounts();
+      funnel = mergeFunnel(funnel, dayFunnel);
+      missCounts = mergeMissCounts(missCounts, dayMiss);
+      summaries.push({
+        raceDate: d,
+        ...ev.metrics,
+        funnel: dayFunnel,
+        funnelRates: funnelRates(dayFunnel),
+        missCounts: dayMiss,
+      });
     }
-    byLane[lane] = summaries;
+    const funnelTotal = {
+      ...funnel,
+      rates: funnelRates(funnel),
+      missCounts,
+    };
+    byLane[lane] = { summaries, funnel: funnelTotal };
 
     const reportPath = path.join(
       dirs.reports,
@@ -398,16 +442,23 @@ async function cmdReport(dates, lanes) {
       lane,
       primaryMetric: "ticketPrecision",
       days: summaries.length,
+      funnel: funnelTotal,
+      missCounts,
       summaries,
-      note: "レーン別レポート。他レーンと合算しない。",
+      note: "レーン別レポート。他レーンと合算しない。funnel は払戻起点（payouts→watch）。",
     });
     console.log(
       `[${lane}] Report → ${path.relative(root, reportPath)} (primary=ticketPrecision)`,
     );
+    console.log(`  [${lane}] funnel ${formatFunnelLine(funnel)}`);
+    console.log(`  [${lane}] miss ${formatMissLine(missCounts)}`);
     for (const s of summaries) {
       console.log(
         `  ${s.raceDate}  ticketP=${s.ticketPrecision == null ? "—" : s.ticketPrecision.toFixed(4)}  placeP=${s.placePrecision == null ? "—" : s.placePrecision.toFixed(3)}  n=${s.candidates}  ticketHits=${s.ticketHits ?? "—"}  dens=${s.density == null ? "—" : s.density.toFixed(1)}  RR=${s.virtualReturnRatePercent ?? "—"}%`,
       );
+      if (s.funnel) {
+        console.log(`           funnel ${formatFunnelLine(s.funnel)}`);
+      }
     }
   }
 

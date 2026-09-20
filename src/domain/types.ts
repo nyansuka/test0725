@@ -221,9 +221,9 @@ export type SanrenPick = {
   relatedHorseNumbers: number[];
   pattern: SanrenPickPattern;
   relatedScore: number;
-  /** 3連複 v1: 人気対×穴人気×穴place。未設定は3連単など */
+  /** 3連複: 人気対×穴。3連単: axisWin×2着place×3着place */
   hitScore?: number;
-  /** 3連複 v1: hit × clip(odds,100,400) / 150。並び・注目の主指標 */
+  /** コンボ EV。並び・注目の主指標（複・単とも） */
   evScore?: number;
   axisWinPotential?: number;
   label: SanrenLabLabel;

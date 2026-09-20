@@ -1,6 +1,6 @@
 # UMANOTE 3連系研究所 構成計画書
 
-最終更新: 2026-08-20（本体に危険1人気フラグ。研究所の除外式は未接続）  
+最終更新: 2026-09-20（R2: 3連単の研究所注目を EV 上位へ）  
 親計画: [PLAN.md](./PLAN.md)（JRA・全券種の高配当選別）  
 関連: [DATA-AND-LOOP.md](./DATA-AND-LOOP.md)、[HIT-RATE-PLAN.md](./HIT-RATE-PLAN.md)、[IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md)、[NAR-PLAN.md](./NAR-PLAN.md)  
 位置づけ: PLAN §5.5 **X4（軸×穴コンボ生成）** の自然な後継。券種を **3連系（`trio` / `trifecta`）** に特化した別施策。  
@@ -385,6 +385,8 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 7. **S6（後続）:** 危険人気式の正式化・日記プリフィル
 8. 別ルートのみ。**本体デフォルト券種は変えない**
 9. 次の週次実験は **どちらか一方のレーンだけ**（例: trifecta 閾値、または trio `popularRankMax`）
+10. ~~**M1/M2:** 的中ファネルと Miss 分解~~ → **済（2026-09-20）** `scripts/lib/sanren-funnel.mjs`。再 `loop:sanren:evaluate` で evaluations / trends に載る
+11. ~~**R2:** 3連単の研究所注目を EV 上位へ~~ → **済（2026-09-20）** HOT_SCORE 帯を単に使わない。候補集合（閾値・topN）は据え置き
 
 ### S1 メモ（2026-08-11）
 
@@ -398,6 +400,8 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 
 - `selectTrifectaLab`: 軸=winPotential Top3（危険人気1着除外仮）→ place 上位を2列・3列 → 裏返し列挙
 - ゲート: oddsBoard 上の trifecta のみ、`odds≥200`、`relatedScore=min(place)≥60`、`topNPerRace=80`
+- **R2（2026-09-20）:** 研究所注目は HOT_SCORE（place下限 [65,70)）を使わない。`hit=0.50·axisWin+0.30·2着place+0.20·3着place`、`ev=hit×clip(odds,200,500)/250`。レース内 ev 上位 `TRIFECTA_WATCH_TOP_N=3` を注目。topN 切片の並び（relatedScore）は据え置き
+- R2 9開催: 注目 ticket 2/817（0.24%）vs 抑え 7/3644（0.19%）。旧注目は 0/755。捕捉9件のうち注目は 0→2。閾値200・topN80 は据え置き
 - 確認: 8/9 で 151件/31R（平均≈4.9）、8/8 で 114件/29R。理論上の 50〜100点は板に無い組合せが多いため未達になりやすい（板カバレッジの制約）
 - fetcher 側で trifecta 板を厚くするのは別変更
 
@@ -421,6 +425,7 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 - パス: `src/data/loop/sanren/{lane}/{predictions,evaluations,trends}/`。凍結オッズは本体 `loop/snapshots` 共有
 - セレクタ: `scripts/lib/sanren-lab-domain.mjs`（`selectTrioLab` / `selectTrifectaLab`）
 - 主指標: レーン別 `ticketPrecision` + 仮想 RR。比較 JSON は並記のみ（合算フィールドなし）
+- **M1/M2（2026-09-20）:** evaluate / report / trends に払戻起点ファネル `payouts→onBoard→gated→generated→scorePass→topN→watch` と Miss（板なし / ゲート落ち / 未生成 / scoreMin落ち / topN落ち）。`npm run test:sanren-funnel`
 - 次週次実験は S5 スイープツールを使う
 
 ### S5 メモ（2026-08-12）

@@ -6,7 +6,7 @@ import type {
   SanrenLabSettings,
   SanrenPick,
 } from "./types";
-import { HOT_SCORE_MAX, HOT_SCORE_MIN, scoreHorse } from "./longshots";
+import { scoreHorse } from "./longshots";
 import { scoreWinPotential, selectAxisHorses } from "./axis";
 import { popularityByNumber } from "./odds";
 import { EXPERIMENT_LABEL, isWeekendExperiment } from "./experiment";
@@ -17,6 +17,11 @@ import {
   trioHitScore,
   trioHitScoreFavHoleHole,
 } from "./sanrenTrioIndex.mjs";
+import {
+  TRIFECTA_WATCH_TOP_N,
+  trifectaEvScore,
+  trifectaHitScore,
+} from "./sanrenTrifectaIndex.mjs";
 
 /** TRIFECTA-LAB §3.2 仮初期値 */
 export const DEFAULT_TRIFECTA_LANE: SanrenLaneSettings = {
@@ -55,11 +60,6 @@ export const DEFAULT_SANREN_LAB: SanrenLabSettings = {
   trio: DEFAULT_TRIO_LANE,
   trifecta: DEFAULT_TRIFECTA_LANE,
 };
-
-function labelForLabScore(score: number): SanrenLabLabel {
-  if (score >= HOT_SCORE_MIN && score < HOT_SCORE_MAX) return "研究所注目";
-  return "抑え";
-}
 
 function combinePlace(scores: number[]): number {
   if (scores.length === 0) return 0;
@@ -102,15 +102,45 @@ function buildTrifectaComment(
   axis: Horse,
   second: Horse,
   third: Horse,
-  relatedScore: number,
   axisWin: number,
   label: SanrenLabLabel,
+  hitScore: number,
+  evScore: number,
 ): string {
   return [
     `${label}: 1着固定 ${axis.number}（win${Math.round(axisWin)}）`,
     `→${second.number}-${third.number}`,
-    `下限place=${Math.round(relatedScore)}`,
+    `hit=${Math.round(hitScore)} ev=${Math.round(evScore)}`,
   ].join(" ");
+}
+
+function assignTrifectaWatchLabels(picks: SanrenPick[], race: Race): void {
+  const ranked = [...picks].sort((a, b) => {
+    const ev = comboSortScore(b) - comboSortScore(a);
+    if (ev !== 0) return ev;
+    return (b.odds ?? 0) - (a.odds ?? 0);
+  });
+  const rank = new Map(ranked.map((p, i) => [p.selection, i]));
+  for (const pick of picks) {
+    const i = rank.get(pick.selection) ?? Number.POSITIVE_INFINITY;
+    const label: SanrenLabLabel =
+      i < TRIFECTA_WATCH_TOP_N ? "研究所注目" : "抑え";
+    pick.label = label;
+    const axisH = race.horses.find((h) => h.number === pick.axisHorseNumber);
+    const secondH = race.horses.find((h) => h.number === pick.secondHorseNumber);
+    const thirdH = race.horses.find((h) => h.number === pick.thirdHorseNumber);
+    if (axisH && secondH && thirdH) {
+      pick.comment = buildTrifectaComment(
+        axisH,
+        secondH,
+        thirdH,
+        pick.axisWinPotential ?? 0,
+        label,
+        pick.hitScore ?? pick.relatedScore,
+        pick.evScore ?? pick.relatedScore,
+      );
+    }
+  }
 }
 
 function buildTrioComment(
@@ -243,7 +273,14 @@ export function selectTrifectaLab(
         ]);
         if (relatedScore < settings.scoreMin) continue;
 
-        const label = labelForLabScore(relatedScore);
+        const secondPlace = placeByNum.get(second.number) ?? 0;
+        const thirdPlace = placeByNum.get(third.number) ?? 0;
+        const hitScore = trifectaHitScore({
+          axisWin,
+          secondPlace,
+          thirdPlace,
+        });
+        const evScore = trifectaEvScore(hitScore, odds);
         const relatedHorseNumbers = [axis.number, second.number, third.number];
         const axisPick = axisPool.find((a) => a.horseNumber === axis.number);
 
@@ -263,28 +300,23 @@ export function selectTrifectaLab(
           relatedHorseNumbers,
           pattern: "ordered_axis",
           relatedScore,
+          hitScore,
+          evScore,
           axisWinPotential: axisWin,
-          label,
+          label: "抑え",
           hasSuperWatch: axisPick?.isSuperWatch === true,
-          comment: buildTrifectaComment(
-            axis,
-            second,
-            third,
-            relatedScore,
-            axisWin,
-            label,
-          ),
+          comment: "",
         });
       }
     }
 
     racePicks.sort((a, b) => {
       if (b.relatedScore !== a.relatedScore) return b.relatedScore - a.relatedScore;
-      if (a.label !== b.label) return a.label === "研究所注目" ? -1 : 1;
       return (b.odds ?? 0) - (a.odds ?? 0);
     });
 
     const kept = racePicks.slice(0, settings.topNPerRace);
+    assignTrifectaWatchLabels(kept, race);
     out.push(...kept);
 
     if (isWeekendExperiment(race.raceDate)) {
@@ -336,6 +368,14 @@ export function selectTrifectaLab(
             placeByNum.get(third.number) ?? 0,
           ]);
           if (relatedScore < settings.scoreMin) continue;
+          const secondPlace = placeByNum.get(second.number) ?? 0;
+          const thirdPlace = placeByNum.get(third.number) ?? 0;
+          const hitScore = trifectaHitScore({
+            axisWin,
+            secondPlace,
+            thirdPlace,
+          });
+          const evScore = trifectaEvScore(hitScore, odds);
           const relatedHorseNumbers = [axis.number, second.number, third.number];
           out.push({
             raceId: race.id,
@@ -353,6 +393,8 @@ export function selectTrifectaLab(
             relatedHorseNumbers,
             pattern: "ordered_axis",
             relatedScore,
+            hitScore,
+            evScore,
             axisWinPotential: axisWin,
             label: EXPERIMENT_LABEL,
             hasSuperWatch: false,
@@ -360,9 +402,10 @@ export function selectTrifectaLab(
               axis,
               second,
               third,
-              relatedScore,
               axisWin,
               EXPERIMENT_LABEL,
+              hitScore,
+              evScore,
             ),
           });
         }

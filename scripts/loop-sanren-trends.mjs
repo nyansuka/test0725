@@ -7,6 +7,13 @@ import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { SANREN_LANES } from "./lib/sanren-lab-domain.mjs";
+import {
+  emptyFunnel,
+  emptyMissCounts,
+  funnelRates,
+  mergeFunnel,
+  mergeMissCounts,
+} from "./lib/sanren-funnel.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
@@ -77,6 +84,9 @@ export async function buildSanrenTrends(lane) {
   const byDay = {};
   const daySlices = {};
   let overall = emptyBucket();
+  let funnel = emptyFunnel();
+  let missCounts = emptyMissCounts();
+  const funnelByDay = {};
 
   function oddsBand(odds) {
     if (odds < 100) return "lt100";
@@ -117,11 +127,22 @@ export async function buildSanrenTrends(lane) {
       bump(slice.byOddsBand, oddsBand(Number(row.odds) || 0), flags);
     }
 
+    const dayFunnel = ev.funnel ?? ev.metrics?.funnel ?? emptyFunnel();
+    const dayMiss = ev.missCounts ?? ev.metrics?.missCounts ?? emptyMissCounts();
+    funnel = mergeFunnel(funnel, dayFunnel);
+    missCounts = mergeMissCounts(missCounts, dayMiss);
+    funnelByDay[raceDate] = {
+      ...dayFunnel,
+      rates: funnelRates(dayFunnel),
+      missCounts: dayMiss,
+    };
+
     daySlices[raceDate] = {
       overall: withPrecision(slice.overall),
       byLabel: finalize(slice.byLabel),
       byPattern: finalize(slice.byPattern),
       byOddsBand: finalize(slice.byOddsBand),
+      funnel: funnelByDay[raceDate],
     };
   }
 
@@ -139,8 +160,15 @@ export async function buildSanrenTrends(lane) {
     byLabel: finalize(byLabel),
     byPattern: finalize(byPattern),
     byOddsBand: finalize(byOddsBand),
+    funnel: {
+      ...funnel,
+      rates: funnelRates(funnel),
+      missCounts,
+    },
+    funnelByDay,
+    missCounts,
     daySlices,
-    note: "レーン専用 trends。本体 loop/trends および他レーンと合算しない。主指標 ticketPrecision。",
+    note: "レーン専用 trends。本体 loop/trends および他レーンと合算しない。主指標 ticketPrecision。funnel は払戻起点（再 evaluate 後に埋まる）。",
   };
 
   await mkdir(path.dirname(outPath), { recursive: true });
