@@ -8,6 +8,7 @@ import { filterRacesByDate } from "@/data/races";
 import {
   DEFAULT_TRIO_LANE,
   DEFAULT_TRIFECTA_LANE,
+  isSanrenCorePick,
   selectTrioLab,
   selectTrifectaLab,
   summarizeSanrenLabDensity,
@@ -29,7 +30,8 @@ export function SanrenLabLaneCards({ races: racesProp }: Props) {
 
   const trio = useMemo(() => {
     const picks = selectTrioLab(dayRaces, DEFAULT_TRIO_LANE);
-    return { picks, density: summarizeSanrenLabDensity(picks) };
+    const core = picks.filter(isSanrenCorePick);
+    return { picks, density: summarizeSanrenLabDensity(core) };
   }, [dayRaces]);
 
   const trifecta = useMemo(() => {
@@ -42,7 +44,7 @@ export function SanrenLabLaneCards({ races: racesProp }: Props) {
       href: "/lab/sanren/trio",
       eyebrow: "TRIO LANE",
       title: "3連複研究",
-      blurb: `当日全レース。人気×人気×穴と人気×穴×穴を ev 指数で最大 ${DEFAULT_TRIO_LANE.topNPerRace} 点。`,
+      blurb: `当日全レース。既定は人気×人気×穴を ev 指数で最大 ${DEFAULT_TRIO_LANE.topNPerRace} 点。人気×穴×穴は検討。`,
       density: trio.density,
     },
     {

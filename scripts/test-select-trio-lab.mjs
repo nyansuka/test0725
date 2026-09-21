@@ -5,6 +5,7 @@
 import { readFileSync } from "node:fs";
 import {
   DEFAULT_TRIO_LANE,
+  isSanrenCorePick,
   selectTrioLab,
   summarizeSanrenLabDensity,
 } from "../src/domain/sanrenLab.ts";
@@ -19,15 +20,18 @@ const path =
 const snap = JSON.parse(readFileSync(path, "utf8"));
 const races = (snap.races ?? []).filter((r) => r.authority === "JRA");
 const picks = selectTrioLab(races, DEFAULT_TRIO_LANE);
-const density = summarizeSanrenLabDensity(picks);
+const corePicks = picks.filter(isSanrenCorePick);
+const trialPicks = picks.filter((p) => !isSanrenCorePick(p));
+const density = summarizeSanrenLabDensity(corePicks);
+const allDensity = summarizeSanrenLabDensity(picks);
 
 const oddsOk = picks.every(
   (p) => p.odds == null || p.odds >= DEFAULT_TRIO_LANE.oddsThreshold,
 );
-const allRacesOk = density.raceCount >= Math.min(20, races.length);
-const TRIO_PATTERNS = new Set(["fav_fav_hole", "fav_hole_hole"]);
-const patternOk = picks.every((p) => TRIO_PATTERNS.has(p.pattern));
-const favHoleHoleOk = picks.some((p) => p.pattern === "fav_hole_hole");
+const allRacesOk = density.raceCount >= Math.min(20, Math.max(1, races.length - 1));
+const corePatternOk = corePicks.every((p) => p.pattern === "fav_fav_hole");
+const trialPatternOk = trialPicks.every((p) => p.pattern === "fav_hole_hole");
+const favHoleHoleOk = trialPicks.some((p) => p.pattern === "fav_hole_hole");
 const sortedOk = picks.every((p) => {
   const parts = p.selection.split("-").map(Number);
   const asc = [...parts].sort((a, b) => a - b);
@@ -44,7 +48,7 @@ const indexOk = picks.every(
     p.relatedScore === p.hitScore,
 );
 const byRace = new Map();
-for (const p of picks) {
+for (const p of corePicks) {
   const list = byRace.get(p.raceId) ?? [];
   list.push(p);
   byRace.set(p.raceId, list);
@@ -53,10 +57,13 @@ const watchOk = [...byRace.values()].every((list) => {
   const nWatch = list.filter((p) => p.label === "研究所注目").length;
   return nWatch <= TRIO_WATCH_TOP_N && nWatch <= list.length;
 });
-const coreCapOk = [...byRace.values()].every((list) => {
-  const nCore = list.filter((p) => p.label !== "検討").length;
-  return nCore <= DEFAULT_TRIO_LANE.topNPerRace;
+const coreCapOk = [...byRace.values()].every(
+  (list) => list.length <= DEFAULT_TRIO_LANE.topNPerRace,
+);
+const trialCapOk = [...new Set(trialPicks.map((p) => p.raceId))].every((id) => {
+  return trialPicks.filter((p) => p.raceId === id).length <= DEFAULT_TRIO_LANE.topNPerRace;
 });
+const trialNotWatchOk = trialPicks.every((p) => p.label === "検討");
 const evSortedOk = [...byRace.values()].every((list) => {
   for (let i = 1; i < list.length; i += 1) {
     if ((list[i - 1].evScore ?? 0) < (list[i].evScore ?? 0)) return false;
@@ -77,11 +84,12 @@ console.log(
         topNPerRace: DEFAULT_TRIO_LANE.topNPerRace,
       },
       pickCount: density.pickCount,
+      trialPickCount: trialPicks.length,
       racesWithPicks: density.raceCount,
       avgPerRace: Number(density.avgPerRace.toFixed(2)),
       minPerRace: density.minPerRace,
       maxPerRace: density.maxPerRace,
-      patternCounts: density.patternCounts,
+      patternCounts: allDensity.patternCounts,
       labelCounts: {
         研究所注目: picks.filter((p) => p.label === "研究所注目").length,
         抑え: picks.filter((p) => p.label === "抑え").length,
@@ -97,14 +105,42 @@ console.log(
         label: p.label,
         pattern: p.pattern,
       })),
-      checks: { oddsOk, patternOk, favHoleHoleOk, sortedOk, noHoleAxis, indexOk, watchOk, coreCapOk, evSortedOk, allRacesOk },
+      checks: {
+        oddsOk,
+        corePatternOk,
+        trialPatternOk,
+        favHoleHoleOk,
+        sortedOk,
+        noHoleAxis,
+        indexOk,
+        watchOk,
+        coreCapOk,
+        trialCapOk,
+        trialNotWatchOk,
+        evSortedOk,
+        allRacesOk,
+      },
     },
     null,
     2,
   ),
 );
 
-if (!oddsOk || !patternOk || !favHoleHoleOk || !sortedOk || !noHoleAxis || !indexOk || !watchOk || !coreCapOk || !evSortedOk || !allRacesOk) {
+if (
+  !oddsOk ||
+  !corePatternOk ||
+  !trialPatternOk ||
+  !favHoleHoleOk ||
+  !sortedOk ||
+  !noHoleAxis ||
+  !indexOk ||
+  !watchOk ||
+  !coreCapOk ||
+  !trialCapOk ||
+  !trialNotWatchOk ||
+  !evSortedOk ||
+  !allRacesOk
+) {
   console.error("S2B_FAIL checks");
   process.exit(1);
 }

@@ -10,6 +10,7 @@ import { findPayoutYen } from "@/domain/results";
 import {
   DEFAULT_TRIO_LANE,
   DEFAULT_TRIFECTA_LANE,
+  isSanrenCorePick,
   selectTrioLab,
   selectTrifectaLab,
   summarizeSanrenLabDensity,
@@ -42,7 +43,12 @@ function TicketSummaryBar({
     let hits = 0;
     let misses = 0;
     let pending = 0;
+    let trial = 0;
     for (const p of picks) {
+      if (!isSanrenCorePick(p)) {
+        trial += 1;
+        continue;
+      }
       const race = byId.get(p.raceId);
       if (!race?.result?.finishes?.length) {
         pending += 1;
@@ -59,6 +65,7 @@ function TicketSummaryBar({
       misses,
       pending,
       settled,
+      trial,
       rate: settled === 0 ? null : Math.round((hits / settled) * 1000) / 10,
     };
   }, [picks, byId]);
@@ -82,10 +89,11 @@ function TicketSummaryBar({
           {summary.pending > 0 ? ` · 待ち ${summary.pending}` : ""}
           {" · "}
           はずれ {summary.misses}
+          {summary.trial > 0 ? ` · 検討 ${summary.trial}` : ""}
         </p>
       </div>
       <p className="mt-1 text-xs text-ink/50">
-        研究所は複勝圏ではなく、その券種の払戻があればヒットとします（板つき買い目のみ）
+        研究所は複勝圏ではなく、その券種の払戻があればヒットとします（板つき・既定候補のみ。検討は分母に入れない）
       </p>
     </section>
   );
@@ -147,7 +155,11 @@ export function SanrenLabBoard({ lane, races: racesProp }: Props) {
     return [...list].sort(compareSanrenRaceOrder);
   }, [dayRaces, venue, track]);
 
-  const density = useMemo(() => summarizeSanrenLabDensity(picks), [picks]);
+  const coreDensity = useMemo(
+    () => summarizeSanrenLabDensity(picks.filter(isSanrenCorePick)),
+    [picks],
+  );
+  const trialCount = picks.length - coreDensity.pickCount;
 
   const defaultThreshold =
     lane === "trio"
@@ -261,9 +273,12 @@ export function SanrenLabBoard({ lane, races: racesProp }: Props) {
             </button>
           ))}
           <span className="ml-auto text-ink/50">
-            {density.pickCount} 点 · {visibleRaces.length} R
-            {density.raceCount > 0
-              ? ` · 候補あり ${density.raceCount} · 平均 ${density.avgPerRace.toFixed(1)} 点/R`
+            {coreDensity.pickCount} 点
+            {trialCount > 0 ? ` · 検討 ${trialCount}` : ""}
+            {" · "}
+            {visibleRaces.length} R
+            {coreDensity.raceCount > 0
+              ? ` · 候補あり ${coreDensity.raceCount} · 平均 ${coreDensity.avgPerRace.toFixed(1)} 点/R`
               : ""}
             {" · "}最低スコア {laneSettings.scoreMin}
           </span>

@@ -1,6 +1,6 @@
 # UMANOTE 3連系研究所 構成計画書
 
-最終更新: 2026-09-20（R2: 3連単の研究所注目を EV 上位へ）  
+最終更新: 2026-09-21（G6: 3連複の既定から fav_hole_hole を外す）  
 親計画: [PLAN.md](./PLAN.md)（JRA・全券種の高配当選別）  
 関連: [DATA-AND-LOOP.md](./DATA-AND-LOOP.md)、[HIT-RATE-PLAN.md](./HIT-RATE-PLAN.md)、[IMPROVEMENT-PLAN.md](./IMPROVEMENT-PLAN.md)、[NAR-PLAN.md](./NAR-PLAN.md)  
 位置づけ: PLAN §5.5 **X4（軸×穴コンボ生成）** の自然な後継。券種を **3連系（`trio` / `trifecta`）** に特化した別施策。  
@@ -387,6 +387,7 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 9. 次の週次実験は **どちらか一方のレーンだけ**（例: trifecta 閾値、または trio `popularRankMax`）
 10. ~~**M1/M2:** 的中ファネルと Miss 分解~~ → **済（2026-09-20）** `scripts/lib/sanren-funnel.mjs`。再 `loop:sanren:evaluate` で evaluations / trends に載る
 11. ~~**R2:** 3連単の研究所注目を EV 上位へ~~ → **済（2026-09-20）** HOT_SCORE 帯を単に使わない。候補集合（閾値・topN）は据え置き
+12. ~~**G6:** 3連複の既定から fav_hole_hole を外す~~ → **済（2026-09-21）** 既定は fav_fav_hole のみ。副型は検討ラベル。閾値100・topN12 は据え置き
 
 ### S1 メモ（2026-08-11）
 
@@ -407,7 +408,8 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 
 ### S2b メモ（2026-08-12）
 
-- `selectTrioLab`: 人気1〜5から軸・相手、6人気以下を穴枠 → **fav_fav_hole のみ**（穴×穴×穴は出さない）
+- `selectTrioLab`: 人気1〜5から軸・相手、6人気以下を穴枠 → **既定は fav_fav_hole のみ**（穴×穴×穴は出さない）
+- **G6（2026-09-21）:** fav_hole_hole は既定 topN / 研究所注目 / 主KPIから外し、候補（検討）として残す。閾値100・topN12 は据え置き
 - ゲート: oddsBoard 上の trio、`odds≥100`、買い目は昇順 `"1-5-13"`、危険人気は軸・人気相手から除外
 - 確認: 8/9 で 91件/30R（平均≈3.0）、8/8 で 104件/27R。全件 `pattern=fav_fav_hole`
 - `selectSanrenLab` ラッパあり（KPI 合算には使わない）
@@ -426,6 +428,7 @@ S2a / S2b は並行可。S5 は同時変更禁止。
 - セレクタ: `scripts/lib/sanren-lab-domain.mjs`（`selectTrioLab` / `selectTrifectaLab`）
 - 主指標: レーン別 `ticketPrecision` + 仮想 RR。比較 JSON は並記のみ（合算フィールドなし）
 - **M1/M2（2026-09-20）:** evaluate / report / trends に払戻起点ファネル `payouts→onBoard→gated→generated→scorePass→topN→watch` と Miss（板なし / ゲート落ち / 未生成 / scoreMin落ち / topN落ち）。`npm run test:sanren-funnel`
+- **G6（2026-09-21）:** 3連複の既定生成は fav_fav_hole。fav_hole_hole は検討。ファネル・主KPIは検討を含めない
 - 次週次実験は S5 スイープツールを使う
 
 ### S5 メモ（2026-08-12）

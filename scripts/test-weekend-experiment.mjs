@@ -209,7 +209,15 @@ assert.equal(isWeekendExperiment(latestRaces[0]?.raceDate), false);
     extras.every((p) => p.odds == null || p.odds >= DEFAULT_TRIO_LANE.oddsThreshold),
   );
   const sameDay = selectTrioLab(latestRaces, DEFAULT_TRIO_LANE);
-  assert.equal(sameDay.filter((p) => p.label === "検討").length, 0);
+  assert.equal(
+    sameDay.filter((p) => p.label === "検討" && p.pattern === "fav_fav_hole").length,
+    0,
+  );
+  assert.ok(
+    sameDay
+      .filter((p) => p.label === "検討")
+      .every((p) => p.pattern === "fav_hole_hole"),
+  );
 }
 
 {

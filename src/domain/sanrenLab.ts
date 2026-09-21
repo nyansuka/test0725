@@ -61,6 +61,11 @@ export const DEFAULT_SANREN_LAB: SanrenLabSettings = {
   trifecta: DEFAULT_TRIFECTA_LANE,
 };
 
+/** 既定KPI・注目・topNの対象。検討（副型・週末追加）は含めない。 */
+export function isSanrenCorePick(pick: Pick<SanrenPick, "label">): boolean {
+  return pick.label !== EXPERIMENT_LABEL;
+}
+
 function combinePlace(scores: number[]): number {
   if (scores.length === 0) return 0;
   return Math.min(...scores);
@@ -173,6 +178,45 @@ function buildTrioFavHoleHoleComment(
     `×穴 ${holeA.number} ×穴 ${holeB.number}`,
     `hit=${Math.round(hitScore)} ev=${Math.round(evScore)}`,
   ].join(" ");
+}
+
+function decorateTrioPick(
+  pick: SanrenPick,
+  race: Race,
+  pops: Map<number, number>,
+  label: SanrenLabLabel,
+): void {
+  pick.label = label;
+  const axisH = race.horses.find((h) => h.number === pick.axisHorseNumber);
+  const partnerH = race.horses.find((h) => h.number === pick.secondHorseNumber);
+  const holeH = race.horses.find((h) => h.number === pick.thirdHorseNumber);
+  if (!axisH || !partnerH || !holeH) return;
+  const axisPop = pops.get(axisH.number) ?? 99;
+  const hit = pick.hitScore ?? pick.relatedScore;
+  const ev = pick.evScore ?? pick.relatedScore;
+  pick.comment =
+    pick.pattern === "fav_hole_hole"
+      ? buildTrioFavHoleHoleComment(axisH, partnerH, holeH, axisPop, label, hit, ev)
+      : buildTrioComment(axisH, partnerH, holeH, axisPop, label, hit, ev);
+}
+
+function assignTrioWatchLabels(
+  picks: SanrenPick[],
+  race: Race,
+  pops: Map<number, number>,
+): void {
+  const ranked = [...picks].sort((a, b) => {
+    const ev = comboSortScore(b) - comboSortScore(a);
+    if (ev !== 0) return ev;
+    return (b.odds ?? 0) - (a.odds ?? 0);
+  });
+  const rank = new Map(ranked.map((p, i) => [p.selection, i]));
+  for (const pick of picks) {
+    const i = rank.get(pick.selection) ?? Number.POSITIVE_INFINITY;
+    const label: SanrenLabLabel =
+      i < TRIO_WATCH_TOP_N ? "研究所注目" : "抑え";
+    decorateTrioPick(pick, race, pops, label);
+  }
 }
 
 /**
@@ -417,9 +461,9 @@ export function selectTrifectaLab(
 }
 
 /**
- * 3連複研究所: 人気軸 × 人気相手 × 穴（fav_fav_hole）と
- * 人気軸 × 穴 × 穴（fav_hole_hole）。穴×穴×穴は出さない。
- * TRIFECTA-LAB §8.3 / S2b。topN 内で ev 順に混ぜる。
+ * 3連複研究所: 既定は人気軸 × 人気相手 × 穴（fav_fav_hole）のみ。
+ * 人気軸 × 穴 × 穴（fav_hole_hole）は G6 で既定から外し、検討ラベルで残す。
+ * 穴×穴×穴は出さない。閾値は触らない。TRIFECTA-LAB §8.3 / S2b / G6。
  */
 export function selectTrioLab(
   races: Race[],
@@ -488,6 +532,7 @@ export function selectTrioLab(
     const seen = new Set<string>();
 
     const pushPick = (
+      dest: SanrenPick[],
       nums: number[],
       axis: (typeof scored)[number],
       second: (typeof scored)[number],
@@ -511,7 +556,7 @@ export function selectTrioLab(
       const evScore = trioEvScore(hitScore, odds);
       const sortedNums = [...nums].sort((a, b) => a - b);
 
-      racePicks.push({
+      dest.push({
         raceId: race.id,
         venue: race.venue,
         raceNumber: race.raceNumber,
@@ -554,6 +599,7 @@ export function selectTrioLab(
             racePlaces,
           });
           pushPick(
+            racePicks,
             [axis.horse.number, partner.horse.number, hole.horse.number],
             axis,
             partner,
@@ -565,6 +611,17 @@ export function selectTrioLab(
       }
     }
 
+    racePicks.sort((a, b) => {
+      const ev = comboSortScore(b) - comboSortScore(a);
+      if (ev !== 0) return ev;
+      return (b.odds ?? 0) - (a.odds ?? 0);
+    });
+
+    const kept = racePicks.slice(0, settings.topNPerRace);
+    assignTrioWatchLabels(kept, race, pops);
+    out.push(...kept);
+
+    const trialPicks: SanrenPick[] = [];
     if (holePool.length >= 2) {
       for (const axis of axisList) {
         for (let i = 0; i < holePool.length; i += 1) {
@@ -583,6 +640,7 @@ export function selectTrioLab(
               racePlaces,
             });
             pushPick(
+              trialPicks,
               [axis.horse.number, holeA.horse.number, holeB.horse.number],
               axis,
               holeA,
@@ -595,46 +653,16 @@ export function selectTrioLab(
       }
     }
 
-    racePicks.sort((a, b) => {
+    trialPicks.sort((a, b) => {
       const ev = comboSortScore(b) - comboSortScore(a);
       if (ev !== 0) return ev;
       return (b.odds ?? 0) - (a.odds ?? 0);
     });
-
-    const kept = racePicks.slice(0, settings.topNPerRace);
-    for (let i = 0; i < kept.length; i += 1) {
-      const pick = kept[i];
-      const label: SanrenLabLabel =
-        i < TRIO_WATCH_TOP_N ? "研究所注目" : "抑え";
-      pick.label = label;
-      const axisH = race.horses.find((h) => h.number === pick.axisHorseNumber);
-      const partnerH = race.horses.find((h) => h.number === pick.secondHorseNumber);
-      const holeH = race.horses.find((h) => h.number === pick.thirdHorseNumber);
-      if (axisH && partnerH && holeH) {
-        pick.comment =
-          pick.pattern === "fav_hole_hole"
-            ? buildTrioFavHoleHoleComment(
-                axisH,
-                partnerH,
-                holeH,
-                pops.get(axisH.number) ?? 99,
-                label,
-                pick.hitScore ?? pick.relatedScore,
-                pick.evScore ?? pick.relatedScore,
-              )
-            : buildTrioComment(
-                axisH,
-                partnerH,
-                holeH,
-                pops.get(axisH.number) ?? 99,
-                label,
-                pick.hitScore ?? pick.relatedScore,
-                pick.evScore ?? pick.relatedScore,
-              );
-      }
+    const trialKept = trialPicks.slice(0, settings.topNPerRace);
+    for (const pick of trialKept) {
+      decorateTrioPick(pick, race, pops, EXPERIMENT_LABEL);
     }
-
-    out.push(...kept);
+    out.push(...trialKept);
 
     if (isWeekendExperiment(race.raceDate)) {
       const keptKeys = new Set(kept.map((p) => p.selection));

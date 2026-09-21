@@ -10,7 +10,7 @@
  * ゲート落ちは 未生成 を汚さないための5つ目。M2 の4種に加えて数える。
  */
 import { parseSelectionNumbers } from "./loop-domain.mjs";
-import { selectSanrenLane } from "./sanren-lab-domain.mjs";
+import { isSanrenCorePick, selectSanrenLane } from "./sanren-lab-domain.mjs";
 
 export const SANREN_WATCH_LABEL = "研究所注目";
 export const OPEN_TOP_N = 10_000;
@@ -168,9 +168,18 @@ export function analyzeSanrenHitFunnel({
       openSettings(settings, settings.scoreMin),
     );
 
-  const produced = pickIndex(productionPicks, betType);
-  const generatedIdx = pickIndex(generated, betType);
-  const scorePassIdx = pickIndex(scorePass, betType);
+  const produced = pickIndex(
+    (productionPicks ?? []).filter(isSanrenCorePick),
+    betType,
+  );
+  const generatedIdx = pickIndex(
+    (generated ?? []).filter(isSanrenCorePick),
+    betType,
+  );
+  const scorePassIdx = pickIndex(
+    (scorePass ?? []).filter(isSanrenCorePick),
+    betType,
+  );
 
   const funnel = emptyFunnel();
   const missCounts = emptyMissCounts();

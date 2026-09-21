@@ -23,6 +23,7 @@ import {
 import {
   SANREN_LANES,
   defaultLaneSettings,
+  isSanrenCorePick,
   selectSanrenLane,
   summarizeSanrenLabDensity,
 } from "./lib/sanren-lab-domain.mjs";
@@ -185,7 +186,9 @@ async function cmdFreezeLane(raceDate, lane, { force = false } = {}) {
   const dirs = laneDirs(lane);
   const settings = laneSettingsFromEnv(lane);
   const picks = selectSanrenLane(lane, frozen.races ?? [], settings);
-  const density = summarizeSanrenLabDensity(picks);
+  const corePicks = picks.filter(isSanrenCorePick);
+  const density = summarizeSanrenLabDensity(corePicks);
+  const trialPickCount = picks.length - corePicks.length;
   const predPath = path.join(dirs.predictions, `${raceDate}.json`);
   const prediction = {
     savedAt: new Date().toISOString(),
@@ -196,20 +199,22 @@ async function cmdFreezeLane(raceDate, lane, { force = false } = {}) {
     settings,
     sourceFrozenSnapshot: path.relative(root, frozenPath).replace(/\\/g, "/"),
     raceCount: frozen.races?.length ?? 0,
-    pickCount: picks.length,
+    pickCount: corePicks.length,
+    trialPickCount,
     density: {
       racesWithPicks: density.raceCount,
       avgPerRace: density.avgPerRace,
       minPerRace: density.minPerRace,
       maxPerRace: density.maxPerRace,
       patternCounts: density.patternCounts,
+      trialPickCount,
     },
     picks,
-    note: "研究所レーン。本体 predictions と合算しない。",
+    note: "研究所レーン。本体 predictions と合算しない。検討は副型・実験で既定KPIに入れない。",
   };
   await writeJson(predPath, prediction);
   console.log(
-    `[${lane}] Predictions → ${path.relative(root, predPath)} (${picks.length} picks · ${density.raceCount} R · avg ${density.avgPerRace.toFixed(1)})`,
+    `[${lane}] Predictions → ${path.relative(root, predPath)} (${corePicks.length} core · ${trialPickCount} 検討 · ${density.raceCount} R · avg ${density.avgPerRace.toFixed(1)})`,
   );
   return prediction;
 }
@@ -238,6 +243,9 @@ async function cmdEvaluateLane(raceDate, lane) {
     (live.data.races ?? []).map((r) => [r.id, r.result]),
   );
 
+  const allPicks = prediction.picks ?? [];
+  const corePicks = allPicks.filter(isSanrenCorePick);
+
   const rows = [];
   let placeHits = 0;
   let ticketHits = 0;
@@ -248,7 +256,7 @@ async function cmdEvaluateLane(raceDate, lane) {
   const byLabel = {};
   const byPattern = {};
 
-  for (const pick of prediction.picks ?? []) {
+  for (const pick of allPicks) {
     const result = resultByRace.get(pick.raceId);
     const outcome = evaluatePick(pick, result);
     const placeHit = outcome === "win" || outcome === "place";
@@ -256,19 +264,22 @@ async function cmdEvaluateLane(raceDate, lane) {
     const isTicketHit = pay != null && pay > 0;
     const onBoard = pick.odds != null;
     const virtualStake = 100;
+    const core = isSanrenCorePick(pick);
 
-    if (outcome !== "pending") {
-      if (onBoard) {
-        ticketSettled += 1;
-        stakeYen += virtualStake;
-        if (isTicketHit) {
-          ticketHits += 1;
-          payoutYen += pay;
+    if (core) {
+      if (outcome !== "pending") {
+        if (onBoard) {
+          ticketSettled += 1;
+          stakeYen += virtualStake;
+          if (isTicketHit) {
+            ticketHits += 1;
+            payoutYen += pay;
+          }
         }
+        if (placeHit) placeHits += 1;
+      } else {
+        pending += 1;
       }
-      if (placeHit) placeHits += 1;
-    } else {
-      pending += 1;
     }
 
     const lab =
@@ -313,7 +324,7 @@ async function cmdEvaluateLane(raceDate, lane) {
     });
   }
 
-  const candidates = prediction.picks?.length ?? 0;
+  const candidates = corePicks.length;
   const settled = candidates - pending;
   const placePrecision = settled > 0 ? placeHits / settled : null;
   const ticketPrecision = ticketSettled > 0 ? ticketHits / ticketSettled : null;
@@ -327,7 +338,7 @@ async function cmdEvaluateLane(raceDate, lane) {
     settings,
     frozenRaces: frozen.races ?? [],
     liveRaces: live.data.races ?? [],
-    productionPicks: prediction.picks ?? [],
+    productionPicks: corePicks,
   });
 
   const evaluation = {
@@ -355,7 +366,7 @@ async function cmdEvaluateLane(raceDate, lane) {
       virtualPayoutYen: payoutYen,
       virtualReturnRatePercent: virtualReturnRate,
       primaryMetric: "ticketPrecision",
-      note: "主指標は ticketPrecision（払戻突合）。placePrecision は参考のみ。レーン合算禁止。",
+      note: "主指標は ticketPrecision（払戻突合）。placePrecision は参考のみ。レーン合算禁止。検討は既定KPIに入れない。",
       funnel: hitFunnel.funnel,
       funnelRates: hitFunnel.rates,
       missCounts: hitFunnel.missCounts,

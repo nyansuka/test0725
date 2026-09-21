@@ -55,6 +55,11 @@ export const DEFAULT_SANREN_LAB = {
   trifecta: DEFAULT_TRIFECTA_LANE,
 };
 
+/** 既定KPI・注目・topNの対象。検討（副型・週末追加）は含めない。 */
+export function isSanrenCorePick(pick) {
+  return pick?.label !== "検討";
+}
+
 const EXPERIMENT_DATES = new Set(["2026-09-12", "2026-09-13"]);
 function isWeekendExperiment(raceDate) {
   return EXPERIMENT_DATES.has(raceDate);
@@ -136,6 +141,35 @@ function buildTrioFavHoleHoleComment(axis, holeA, holeB, axisPop, label, hitScor
     `×穴 ${holeA.number} ×穴 ${holeB.number}`,
     `hit=${Math.round(hitScore)} ev=${Math.round(evScore)}`,
   ].join(" ");
+}
+
+function decorateTrioPick(pick, race, pops, label) {
+  pick.label = label;
+  const axisH = race.horses.find((h) => h.number === pick.axisHorseNumber);
+  const partnerH = race.horses.find((h) => h.number === pick.secondHorseNumber);
+  const holeH = race.horses.find((h) => h.number === pick.thirdHorseNumber);
+  if (!axisH || !partnerH || !holeH) return;
+  const axisPop = pops.get(axisH.number) ?? 99;
+  const hit = pick.hitScore ?? pick.relatedScore;
+  const ev = pick.evScore ?? pick.relatedScore;
+  pick.comment =
+    pick.pattern === "fav_hole_hole"
+      ? buildTrioFavHoleHoleComment(axisH, partnerH, holeH, axisPop, label, hit, ev)
+      : buildTrioComment(axisH, partnerH, holeH, axisPop, label, hit, ev);
+}
+
+function assignTrioWatchLabels(picks, race, pops) {
+  const ranked = [...picks].sort((a, b) => {
+    const ev = comboSortScore(b) - comboSortScore(a);
+    if (ev !== 0) return ev;
+    return (b.odds ?? 0) - (a.odds ?? 0);
+  });
+  const rank = new Map(ranked.map((p, i) => [p.selection, i]));
+  for (const pick of picks) {
+    const i = rank.get(pick.selection) ?? Number.POSITIVE_INFINITY;
+    const label = i < TRIO_WATCH_TOP_N ? "研究所注目" : "抑え";
+    decorateTrioPick(pick, race, pops, label);
+  }
 }
 
 function sortSanrenPicks(picks) {
@@ -432,7 +466,7 @@ export function selectTrioLab(races, settings = DEFAULT_TRIO_LANE) {
     const racePicks = [];
     const seen = new Set();
 
-    const pushPick = (nums, axis, second, third, pattern, hitScore) => {
+    const pushPick = (dest, nums, axis, second, third, pattern, hitScore) => {
       const selection = sortedSelection(nums);
       if (seen.has(selection)) return;
       seen.add(selection);
@@ -449,7 +483,7 @@ export function selectTrioLab(races, settings = DEFAULT_TRIO_LANE) {
       const evScore = trioEvScore(hitScore, odds);
       const sortedNums = [...nums].sort((a, b) => a - b);
 
-      racePicks.push({
+      dest.push({
         raceId: race.id,
         venue: race.venue,
         raceNumber: race.raceNumber,
@@ -492,6 +526,7 @@ export function selectTrioLab(races, settings = DEFAULT_TRIO_LANE) {
             racePlaces,
           });
           pushPick(
+            racePicks,
             [axis.horse.number, partner.horse.number, hole.horse.number],
             axis,
             partner,
@@ -503,6 +538,17 @@ export function selectTrioLab(races, settings = DEFAULT_TRIO_LANE) {
       }
     }
 
+    racePicks.sort((a, b) => {
+      const ev = comboSortScore(b) - comboSortScore(a);
+      if (ev !== 0) return ev;
+      return (b.odds ?? 0) - (a.odds ?? 0);
+    });
+
+    const kept = racePicks.slice(0, settings.topNPerRace);
+    assignTrioWatchLabels(kept, race, pops);
+    out.push(...kept);
+
+    const trialPicks = [];
     if (holePool.length >= 2) {
       for (const axis of axisList) {
         for (let i = 0; i < holePool.length; i += 1) {
@@ -521,6 +567,7 @@ export function selectTrioLab(races, settings = DEFAULT_TRIO_LANE) {
               racePlaces,
             });
             pushPick(
+              trialPicks,
               [axis.horse.number, holeA.horse.number, holeB.horse.number],
               axis,
               holeA,
@@ -533,45 +580,16 @@ export function selectTrioLab(races, settings = DEFAULT_TRIO_LANE) {
       }
     }
 
-    racePicks.sort((a, b) => {
+    trialPicks.sort((a, b) => {
       const ev = comboSortScore(b) - comboSortScore(a);
       if (ev !== 0) return ev;
       return (b.odds ?? 0) - (a.odds ?? 0);
     });
-
-    const kept = racePicks.slice(0, settings.topNPerRace);
-    for (let i = 0; i < kept.length; i += 1) {
-      const pick = kept[i];
-      const label = i < TRIO_WATCH_TOP_N ? "研究所注目" : "抑え";
-      pick.label = label;
-      const axisH = race.horses.find((h) => h.number === pick.axisHorseNumber);
-      const partnerH = race.horses.find((h) => h.number === pick.secondHorseNumber);
-      const holeH = race.horses.find((h) => h.number === pick.thirdHorseNumber);
-      if (axisH && partnerH && holeH) {
-        pick.comment =
-          pick.pattern === "fav_hole_hole"
-            ? buildTrioFavHoleHoleComment(
-                axisH,
-                partnerH,
-                holeH,
-                pops.get(axisH.number) ?? 99,
-                label,
-                pick.hitScore ?? pick.relatedScore,
-                pick.evScore ?? pick.relatedScore,
-              )
-            : buildTrioComment(
-                axisH,
-                partnerH,
-                holeH,
-                pops.get(axisH.number) ?? 99,
-                label,
-                pick.hitScore ?? pick.relatedScore,
-                pick.evScore ?? pick.relatedScore,
-              );
-      }
+    const trialKept = trialPicks.slice(0, settings.topNPerRace);
+    for (const pick of trialKept) {
+      decorateTrioPick(pick, race, pops, "検討");
     }
-
-    out.push(...kept);
+    out.push(...trialKept);
 
     if (isWeekendExperiment(race.raceDate)) {
       const keptKeys = new Set(kept.map((p) => p.selection));
