@@ -1,10 +1,10 @@
 {
-  "builtAt": "2026-09-21T10:52:40.019Z",
+  "builtAt": "2026-09-26T16:38:32.707Z",
   "lab": "sanren",
   "lane": "trifecta",
   "source": "src/data/loop/sanren/trifecta/evaluations",
   "primaryMetric": "ticketPrecision",
-  "dayCount": 11,
+  "dayCount": 12,
   "dates": [
     "2026-08-08",
     "2026-08-09",
@@ -16,18 +16,19 @@
     "2026-09-06",
     "2026-09-19",
     "2026-09-20",
-    "2026-09-21"
+    "2026-09-21",
+    "2026-09-26"
   ],
   "minSamples": 20,
   "overall": {
-    "candidates": 5275,
-    "hits": 4219,
-    "ticketHits": 13,
+    "candidates": 5830,
+    "hits": 4638,
+    "ticketHits": 14,
     "pending": 0,
-    "settled": 5275,
-    "placePrecision": 0.7998104265402843,
-    "precision": 0.7998104265402843,
-    "ticketPrecision": 0.0024644549763033177
+    "settled": 5830,
+    "placePrecision": 0.795540308747856,
+    "precision": 0.795540308747856,
+    "ticketPrecision": 0.0024013722126929675
   },
   "byDay": {
     "2026-08-08": {
@@ -139,85 +140,95 @@
       "placePrecision": 0.7940379403794038,
       "precision": 0.7940379403794038,
       "ticketPrecision": 0.008130081300813009
+    },
+    "2026-09-26": {
+      "candidates": 555,
+      "hits": 419,
+      "ticketHits": 1,
+      "pending": 0,
+      "settled": 555,
+      "placePrecision": 0.7549549549549549,
+      "precision": 0.7549549549549549,
+      "ticketPrecision": 0.0018018018018018018
     }
   },
   "byLabel": {
     "研究所注目": {
-      "candidates": 915,
-      "hits": 711,
+      "candidates": 978,
+      "hits": 763,
       "ticketHits": 3,
       "pending": 0,
-      "settled": 915,
-      "placePrecision": 0.7770491803278688,
-      "precision": 0.7770491803278688,
-      "ticketPrecision": 0.003278688524590164
+      "settled": 978,
+      "placePrecision": 0.7801635991820041,
+      "precision": 0.7801635991820041,
+      "ticketPrecision": 0.003067484662576687
     },
     "抑え": {
-      "candidates": 4360,
-      "hits": 3508,
-      "ticketHits": 10,
+      "candidates": 4852,
+      "hits": 3875,
+      "ticketHits": 11,
       "pending": 0,
-      "settled": 4360,
-      "placePrecision": 0.8045871559633028,
-      "precision": 0.8045871559633028,
-      "ticketPrecision": 0.0022935779816513763
+      "settled": 4852,
+      "placePrecision": 0.7986397361912614,
+      "precision": 0.7986397361912614,
+      "ticketPrecision": 0.002267106347897774
     }
   },
   "byPattern": {
     "ordered_axis": {
-      "candidates": 5275,
-      "hits": 4219,
-      "ticketHits": 13,
+      "candidates": 5830,
+      "hits": 4638,
+      "ticketHits": 14,
       "pending": 0,
-      "settled": 5275,
-      "placePrecision": 0.7998104265402843,
-      "precision": 0.7998104265402843,
-      "ticketPrecision": 0.0024644549763033177
+      "settled": 5830,
+      "placePrecision": 0.795540308747856,
+      "precision": 0.795540308747856,
+      "ticketPrecision": 0.0024013722126929675
     }
   },
   "byOddsBand": {
     "500+": {
-      "candidates": 2114,
-      "hits": 1630,
+      "candidates": 2286,
+      "hits": 1761,
       "ticketHits": 3,
       "pending": 0,
-      "settled": 2114,
-      "placePrecision": 0.771050141911069,
-      "precision": 0.771050141911069,
-      "ticketPrecision": 0.0014191106906338694
+      "settled": 2286,
+      "placePrecision": 0.7703412073490814,
+      "precision": 0.7703412073490814,
+      "ticketPrecision": 0.0013123359580052493
     },
     "200-499": {
-      "candidates": 3161,
-      "hits": 2589,
-      "ticketHits": 10,
+      "candidates": 3544,
+      "hits": 2877,
+      "ticketHits": 11,
       "pending": 0,
-      "settled": 3161,
-      "placePrecision": 0.8190446061372983,
-      "precision": 0.8190446061372983,
-      "ticketPrecision": 0.0031635558367605187
+      "settled": 3544,
+      "placePrecision": 0.8117945823927766,
+      "precision": 0.8117945823927766,
+      "ticketPrecision": 0.0031038374717832955
     }
   },
   "funnel": {
-    "payouts": 345,
-    "onBoard": 113,
-    "gated": 89,
-    "generated": 27,
-    "scorePass": 13,
-    "topN": 13,
+    "payouts": 368,
+    "onBoard": 119,
+    "gated": 94,
+    "generated": 28,
+    "scorePass": 14,
+    "topN": 14,
     "watch": 3,
     "rates": {
-      "boardRate": 0.32753623188405795,
-      "gateRate": 0.7876106194690266,
-      "generatedRate": 0.30337078651685395,
-      "scorePassRate": 0.48148148148148145,
+      "boardRate": 0.3233695652173913,
+      "gateRate": 0.7899159663865546,
+      "generatedRate": 0.2978723404255319,
+      "scorePassRate": 0.5,
       "topNRate": 1,
-      "watchRate": 0.23076923076923078,
-      "catchRate": 0.14606741573033707
+      "watchRate": 0.21428571428571427,
+      "catchRate": 0.14893617021276595
     },
     "missCounts": {
-      "板なし": 232,
-      "ゲート落ち": 24,
-      "未生成": 62,
+      "板なし": 249,
+      "ゲート落ち": 25,
+      "未生成": 66,
       "scoreMin落ち": 14,
       "topN落ち": 0
     }
@@ -497,12 +508,37 @@
         "scoreMin落ち": 0,
         "topN落ち": 0
       }
+    },
+    "2026-09-26": {
+      "payouts": 23,
+      "onBoard": 6,
+      "gated": 5,
+      "generated": 1,
+      "scorePass": 1,
+      "topN": 1,
+      "watch": 0,
+      "rates": {
+        "boardRate": 0.2608695652173913,
+        "gateRate": 0.8333333333333334,
+        "generatedRate": 0.2,
+        "scorePassRate": 1,
+        "topNRate": 1,
+        "watchRate": 0,
+        "catchRate": 0.2
+      },
+      "missCounts": {
+        "板なし": 17,
+        "ゲート落ち": 1,
+        "未生成": 4,
+        "scoreMin落ち": 0,
+        "topN落ち": 0
+      }
     }
   },
   "missCounts": {
-    "板なし": 232,
-    "ゲート落ち": 24,
-    "未生成": 62,
+    "板なし": 249,
+    "ゲート落ち": 25,
+    "未生成": 66,
     "scoreMin落ち": 14,
     "topN落ち": 0
   },
@@ -1505,6 +1541,99 @@
           "板なし": 6,
           "ゲート落ち": 2,
           "未生成": 1,
+          "scoreMin落ち": 0,
+          "topN落ち": 0
+        }
+      }
+    },
+    "2026-09-26": {
+      "overall": {
+        "candidates": 555,
+        "hits": 419,
+        "ticketHits": 1,
+        "pending": 0,
+        "settled": 555,
+        "placePrecision": 0.7549549549549549,
+        "precision": 0.7549549549549549,
+        "ticketPrecision": 0.0018018018018018018
+      },
+      "byLabel": {
+        "研究所注目": {
+          "candidates": 63,
+          "hits": 52,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 63,
+          "placePrecision": 0.8253968253968254,
+          "precision": 0.8253968253968254,
+          "ticketPrecision": 0
+        },
+        "抑え": {
+          "candidates": 492,
+          "hits": 367,
+          "ticketHits": 1,
+          "pending": 0,
+          "settled": 492,
+          "placePrecision": 0.7459349593495935,
+          "precision": 0.7459349593495935,
+          "ticketPrecision": 0.0020325203252032522
+        }
+      },
+      "byPattern": {
+        "ordered_axis": {
+          "candidates": 555,
+          "hits": 419,
+          "ticketHits": 1,
+          "pending": 0,
+          "settled": 555,
+          "placePrecision": 0.7549549549549549,
+          "precision": 0.7549549549549549,
+          "ticketPrecision": 0.0018018018018018018
+        }
+      },
+      "byOddsBand": {
+        "500+": {
+          "candidates": 172,
+          "hits": 131,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 172,
+          "placePrecision": 0.7616279069767442,
+          "precision": 0.7616279069767442,
+          "ticketPrecision": 0
+        },
+        "200-499": {
+          "candidates": 383,
+          "hits": 288,
+          "ticketHits": 1,
+          "pending": 0,
+          "settled": 383,
+          "placePrecision": 0.7519582245430809,
+          "precision": 0.7519582245430809,
+          "ticketPrecision": 0.0026109660574412533
+        }
+      },
+      "funnel": {
+        "payouts": 23,
+        "onBoard": 6,
+        "gated": 5,
+        "generated": 1,
+        "scorePass": 1,
+        "topN": 1,
+        "watch": 0,
+        "rates": {
+          "boardRate": 0.2608695652173913,
+          "gateRate": 0.8333333333333334,
+          "generatedRate": 0.2,
+          "scorePassRate": 1,
+          "topNRate": 1,
+          "watchRate": 0,
+          "catchRate": 0.2
+        },
+        "missCounts": {
+          "板なし": 17,
+          "ゲート落ち": 1,
+          "未生成": 4,
           "scoreMin落ち": 0,
           "topN落ち": 0
         }
