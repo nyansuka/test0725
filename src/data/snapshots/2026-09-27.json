@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-27T01:05:51.481Z",
+  "fetchedAt": "2026-09-27T01:36:45.869Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-09-27",
   "raceCount": 24,
@@ -32391,7 +32391,158 @@
         }
       ],
       "oddsUpdatedAt": "2026-09-27 09:17:17",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-09-27T01:36:45.432Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 5,
+            "bracket": 5,
+            "name": "セーニョレガーレ",
+            "jockey": "斎藤",
+            "time": "1:34.5",
+            "popularity": 5,
+            "oddsWin": 25.3
+          },
+          {
+            "rank": 2,
+            "number": 8,
+            "bracket": 8,
+            "name": "デュアルサイン",
+            "jockey": "北村友",
+            "time": "1:34.6",
+            "popularity": 4,
+            "oddsWin": 4.5
+          },
+          {
+            "rank": 3,
+            "number": 3,
+            "bracket": 3,
+            "name": "ナイトインチュニス",
+            "jockey": "川田",
+            "time": "1:35.0",
+            "popularity": 1,
+            "oddsWin": 2.4
+          },
+          {
+            "rank": 4,
+            "number": 1,
+            "bracket": 1,
+            "name": "プレシャスタイム",
+            "jockey": "☆田山",
+            "time": "1:35.3",
+            "popularity": 2,
+            "oddsWin": 3.7
+          },
+          {
+            "rank": 5,
+            "number": 2,
+            "bracket": 2,
+            "name": "シュプレヒコール",
+            "jockey": "吉村",
+            "time": "1:35.4",
+            "popularity": 3,
+            "oddsWin": 3.8
+          },
+          {
+            "rank": 6,
+            "number": 6,
+            "bracket": 6,
+            "name": "ティエルニート",
+            "jockey": "◇永島",
+            "time": "1:36.0",
+            "popularity": 8
+          },
+          {
+            "rank": 7,
+            "number": 7,
+            "bracket": 7,
+            "name": "カローナ",
+            "jockey": "Ｍデム",
+            "time": "1:36.7",
+            "popularity": 6
+          },
+          {
+            "rank": 8,
+            "number": 4,
+            "bracket": 4,
+            "name": "グルード",
+            "jockey": "松若",
+            "time": "1:36.9",
+            "popularity": 7
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "5",
+            "payoutYen": 2530,
+            "popularity": 5
+          },
+          {
+            "betType": "place",
+            "selection": "5",
+            "payoutYen": 410,
+            "popularity": 6
+          },
+          {
+            "betType": "place",
+            "selection": "8",
+            "payoutYen": 150,
+            "popularity": 3
+          },
+          {
+            "betType": "place",
+            "selection": "3",
+            "payoutYen": 110,
+            "popularity": 2
+          },
+          {
+            "betType": "quinella",
+            "selection": "5-8",
+            "payoutYen": 3940,
+            "popularity": 10
+          },
+          {
+            "betType": "wide",
+            "selection": "5-8",
+            "payoutYen": 840,
+            "popularity": 10
+          },
+          {
+            "betType": "wide",
+            "selection": "3-5",
+            "payoutYen": 760,
+            "popularity": 8
+          },
+          {
+            "betType": "wide",
+            "selection": "3-8",
+            "payoutYen": 260,
+            "popularity": 4
+          },
+          {
+            "betType": "exacta",
+            "selection": "5-8",
+            "payoutYen": 9160,
+            "popularity": 23
+          },
+          {
+            "betType": "trio",
+            "selection": "3-5-8",
+            "payoutYen": 2200,
+            "popularity": 7
+          },
+          {
+            "betType": "trifecta",
+            "selection": "5-8-3",
+            "payoutYen": 32210,
+            "popularity": 88
+          }
+        ]
+      }
     },
     {
       "id": "hanshin-20260927-3",
