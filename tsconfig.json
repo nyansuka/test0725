@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@race-sim": ["./src/components/raceSimFallback.tsx"]
     }
   },
   "include": [
