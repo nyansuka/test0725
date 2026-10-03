@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-03T01:43:21.266Z",
+  "fetchedAt": "2026-10-03T02:09:12.340Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-10-03",
   "raceCount": 24,
@@ -36722,7 +36722,135 @@
         }
       ],
       "oddsUpdatedAt": "2026-10-03 09:45:56",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-10-03T02:09:11.686Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 2,
+            "bracket": 1,
+            "name": "ワイズギャング",
+            "jockey": "古川吉",
+            "time": "1:23.4",
+            "popularity": 4,
+            "oddsWin": 8.5
+          },
+          {
+            "rank": 2,
+            "number": 13,
+            "bracket": 7,
+            "name": "キンダープンシュ",
+            "jockey": "Ｍデム",
+            "time": "クビ",
+            "popularity": 5
+          },
+          {
+            "rank": 3,
+            "number": 6,
+            "bracket": 3,
+            "name": "チリーゴールド",
+            "jockey": "菱田",
+            "time": "2.1/2",
+            "popularity": 13
+          },
+          {
+            "rank": 4,
+            "number": 1,
+            "bracket": 1,
+            "name": "スターフュージョン",
+            "jockey": "鮫島駿",
+            "time": "クビ",
+            "popularity": 1,
+            "oddsWin": 2.7
+          },
+          {
+            "rank": 5,
+            "number": 11,
+            "bracket": 6,
+            "name": "ヒルノプーリア",
+            "jockey": "秋山稔",
+            "time": "3/4",
+            "popularity": 2,
+            "oddsWin": 3.7
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "2",
+            "payoutYen": 850,
+            "popularity": 4
+          },
+          {
+            "betType": "place",
+            "selection": "2",
+            "payoutYen": 260,
+            "popularity": 4
+          },
+          {
+            "betType": "place",
+            "selection": "13",
+            "payoutYen": 360,
+            "popularity": 5
+          },
+          {
+            "betType": "place",
+            "selection": "6",
+            "payoutYen": 2550,
+            "popularity": 14
+          },
+          {
+            "betType": "bracket_quinella",
+            "selection": "1-7",
+            "payoutYen": 340,
+            "popularity": 1
+          },
+          {
+            "betType": "quinella",
+            "selection": "2-13",
+            "payoutYen": 4740,
+            "popularity": 15
+          },
+          {
+            "betType": "wide",
+            "selection": "2-13",
+            "payoutYen": 1630,
+            "popularity": 16
+          },
+          {
+            "betType": "wide",
+            "selection": "2-6",
+            "payoutYen": 7700,
+            "popularity": 53
+          },
+          {
+            "betType": "wide",
+            "selection": "6-13",
+            "payoutYen": 16050,
+            "popularity": 70
+          },
+          {
+            "betType": "exacta",
+            "selection": "2-13",
+            "payoutYen": 8380,
+            "popularity": 27
+          },
+          {
+            "betType": "trio",
+            "selection": "2-6-13",
+            "payoutYen": 179860,
+            "popularity": 224
+          },
+          {
+            "betType": "trifecta",
+            "selection": "2-13-6",
+            "payoutYen": 707280,
+            "popularity": 26
+          }
+        ]
+      }
     },
     {
       "id": "kyoto-20261003-4",
