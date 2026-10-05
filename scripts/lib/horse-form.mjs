@@ -50,8 +50,8 @@ function extractWrapCells(cells) {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "../..");
 const CACHE_DIR = path.join(root, "src", "data", "cache", "horse-form");
-/** 通過・ペース・上りを runs に載せる。旧キャッシュは再取得 */
-const RUNS_SCHEMA = 2;
+/** 通過の全地点も runs に載せる。schema が違う馬は、次に読むときだけ再取得する */
+const RUNS_SCHEMA = 3;
 
 const UA =
   "Mozilla/5.0 (compatible; UMANOTE-demo/0.1; +https://github.com/nyansuka/test0725)";
@@ -192,6 +192,7 @@ export function parseHorseResultHtml(html) {
       bracket,
       passFirst: wrap.passing?.first ?? null,
       passLast: wrap.passing?.last ?? null,
+      passParts: wrap.passing?.parts ?? null,
       paceFrontSec: wrap.pace?.frontSec ?? null,
       paceBackSec: wrap.pace?.backSec ?? null,
       last3fSec: wrap.last3f ?? null,

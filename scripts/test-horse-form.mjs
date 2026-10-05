@@ -50,6 +50,7 @@ assert.equal(runs[0].fieldSize, 8);
 assert.equal(runs[0].bracket, 1);
 assert.equal(runs[0].passFirst, 6);
 assert.equal(runs[0].passLast, 5);
+assert.deepEqual(runs[0].passParts, [6, 5]);
 assert.equal(runs[0].paceFrontSec, 34.8);
 assert.equal(runs[0].paceBackSec, 35.2);
 assert.equal(runs[0].last3fSec, 36.3);
