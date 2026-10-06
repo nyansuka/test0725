@@ -49,7 +49,10 @@ function extractWrapCells(cells) {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "../..");
-const CACHE_DIR = path.join(root, "src", "data", "cache", "horse-form");
+/** Vercel の関数はプロジェクト直下へ書けない。温まっている間だけ /tmp に置く */
+const CACHE_DIR = process.env.VERCEL
+  ? path.join("/tmp", "horse-form")
+  : path.join(root, "src", "data", "cache", "horse-form");
 /** 通過の全地点も runs に載せる。schema が違う馬は、次に読むときだけ再取得する */
 const RUNS_SCHEMA = 3;
 
@@ -258,7 +261,11 @@ export async function loadHorseRuns(horseId, opts = {}) {
   if (sleepMs) await sleep(sleepMs);
   const runs = parseHorseResultHtml(html);
   const payload = { horseId, schema: RUNS_SCHEMA, fetchedAt: new Date().toISOString(), runs };
-  await writeCache(horseId, payload);
+  try {
+    await writeCache(horseId, payload);
+  } catch (error) {
+    console.error("[horse-form] cache write skipped", horseId, error);
+  }
   return payload;
 }
 

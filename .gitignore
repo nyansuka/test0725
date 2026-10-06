@@ -60,7 +60,3 @@ next-env.d.ts
 # TARGET frontier JV など外部エクスポート（大容量・再配置可）
 /src/data/external/
 
-# 中山芝1200 走行シミュレーションのローカル見本。本番へは載せない
-/src/app/lab/sim/
-/src/components/sim/
-/src/domain/sim/
