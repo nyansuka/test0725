@@ -1,3 +1,5 @@
+import { asRaw, assembleFlat, spanOf, withSpan } from "@/domain/sim/flatPath";
+
 /**
  * 新潟の平地テンプレート。障害コースは入れない。
  * Aコース（芝内1623m・直線358.7m、芝外2223m・直線658.7m、ダート1472.5m・直線353.9m）。
@@ -1116,3 +1118,86 @@ function checkTemplates() {
 }
 
 checkTemplates();
+
+/** 直線1000、2200以上の芝、全ダート。1400と2000は内と外が同じ距離なので呼ばない */
+export function niigataFlatGeom(templateId: string) {
+  const template = NIIGATA_TEMPLATES.find((item) => item.id === templateId);
+  if (!template) return null;
+  const g = GEOM;
+  if (template.id === "turf-1000") {
+    return assembleFlat({
+      meters: 1000,
+      head: [asRaw(g.straight)],
+      loop: null,
+      resume: 0,
+      lap: STRAIGHT_RACE,
+      finishJoinRace: 0,
+      finishJoinRail: 0,
+      c1: 80,
+      c3: 140,
+      c4: 200,
+      straight: 800,
+      hillsBeforeFinish: [],
+      fixed: { corner1: 80, corner3: 140, corner4: 200, straightFrom: 200 },
+    });
+  }
+  const along = homeExtension(template.id);
+  if (along != null) {
+    const ext = asRaw(slice(g.straight, STRAIGHT_RACE - along, STRAIGHT_RACE));
+    const inner = asRaw(g.inner);
+    return assembleFlat({
+      meters: template.meters,
+      head: [ext, inner],
+      loop: spanOf(ext) + spanOf(inner) + 8 < template.meters ? asRaw(g.inner) : null,
+      resume: 0,
+      lap: INNER_LAP,
+      finishJoinRace: spanOf(ext),
+      finishJoinRail: 0,
+      c1: g.innerCornerM.c1,
+      c3: g.innerCornerM.c3,
+      c4: g.innerCornerM.c4,
+      straight: INNER_STRAIGHT,
+      hillsBeforeFinish: [],
+    });
+  }
+  if (template.id === "dirt-1200") {
+    const len = g.dirtPocket;
+    const chutePts = withSpan(dirtPocket(), len);
+    const after = asRaw(slice(g.dirt, g.dirtBackJoinM, DIRT_LAP));
+    return assembleFlat({
+      meters: template.meters,
+      head: [chutePts, after],
+      loop: len + spanOf(after) + 8 < template.meters ? asRaw(g.dirt) : null,
+      resume: 0,
+      lap: DIRT_LAP,
+      finishJoinRace: len,
+      finishJoinRail: g.dirtBackJoinM,
+      c1: g.dirtCornerM.c1,
+      c3: g.dirtCornerM.c3,
+      c4: g.dirtCornerM.c4,
+      straight: DIRT_STRAIGHT,
+      hillsBeforeFinish: [],
+    });
+  }
+  const dirt = template.track === "ダート";
+  const rail = template.rail === "outer" ? g.outer : dirt ? g.dirt : g.inner;
+  const lap = rail[rail.length - 1].m;
+  const start = station(lap, template.meters);
+  const head = asRaw(slice(rail, start, lap));
+  const corners = dirt ? g.dirtCornerM : template.rail === "outer" ? g.outerCornerM : g.innerCornerM;
+  return assembleFlat({
+    meters: template.meters,
+    head: [head],
+    idle: template.meters + 0.05 < lap ? asRaw(slice(rail, 0, start)) : [],
+    loop: spanOf(head) + 8 < template.meters ? asRaw(rail) : null,
+    resume: 0,
+    lap,
+    finishJoinRace: 0,
+    finishJoinRail: start,
+    c1: corners.c1,
+    c3: corners.c3,
+    c4: corners.c4,
+    straight: dirt ? DIRT_STRAIGHT : template.rail === "outer" ? OUTER_STRAIGHT : INNER_STRAIGHT,
+    hillsBeforeFinish: [],
+  });
+}

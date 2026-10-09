@@ -79,7 +79,7 @@ export function buildFinishHillPhases(horses: SimHorse[], marks: FinishHillMarks
       label: "直線",
       m: marks.straightFrom,
       title: "急坂でも変えない",
-      body: "直線は473.6m。ゴール前の急坂で並びは作り直さない。前が残る。差しは詰めない。",
+      body: "直線は473.6m。ゴール前の急坂で並びは作り直さない。前が残る。差しはわずかに詰める。",
     },
     {
       id: "goal",

@@ -2,7 +2,7 @@ import { loadRaceCatalog } from "@/data/loadCatalog";
 import { parseDistanceMeters } from "@/domain/courseNotes.mjs";
 import { simFieldFromRuns } from "@/domain/sim/nakayamaTurf1200Field";
 import type { StyleRun } from "@/domain/sim/runningStyle";
-import { turfOneTurnId } from "@/domain/sim/turfOneTurn";
+import { flatSimId } from "@/domain/sim/flatSimCatalog";
 import { loadHorseRuns } from "../../../../../scripts/lib/horse-form.mjs";
 
 export const dynamic = "force-dynamic";
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
   const id = new URL(request.url).searchParams.get("id") ?? "";
   const catalog = await loadRaceCatalog();
   const race = catalog.races.find((item) => item.id === id);
-  const courseId = race ? turfOneTurnId(race) : null;
+  const courseId = race ? flatSimId(race) : null;
   if (!race || !courseId) {
     return Response.json({ error: "このレースの走行はありません" }, { status: 404 });
   }
@@ -49,7 +49,7 @@ export async function GET(request: Request) {
     })),
     runsByNumber,
     race.raceDate,
-    { venue: race.venue, distanceM: parseDistanceMeters(race.distance) },
+    { venue: race.venue, distanceM: parseDistanceMeters(race.distance), track: race.track === "ダート" ? "ダート" : "芝" },
   );
 
   return Response.json({

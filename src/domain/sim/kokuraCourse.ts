@@ -1,3 +1,5 @@
+import { asRaw, assembleFlat, spanOf, withSpan } from "@/domain/sim/flatPath";
+
 /**
  * 小倉の平地テンプレート。障害コースは入れない。内・外の別はない。
  * Aコースの公表値（芝1615.1m・直線293m、ダート1445.4m・直線291.3m）。
@@ -892,3 +894,31 @@ function checkTemplates() {
 }
 
 checkTemplates();
+
+/** 1700以上の芝と全ダート。直線は短く平坦なので上限は short */
+export function kokuraFlatGeom(templateId: string) {
+  const template = KOKURA_TEMPLATES.find((item) => item.id === templateId);
+  if (!template) return null;
+  const g = GEOM;
+  const dirt = template.track === "ダート";
+  const rail = dirt ? g.dirt : g.turf;
+  const lap = rail[rail.length - 1].m;
+  const start = station(lap, template.meters);
+  const head = asRaw(slice(rail, start, lap));
+  const corners = dirt ? g.dirtCornerM : g.turfCornerM;
+  return assembleFlat({
+    meters: template.meters,
+    head: [head],
+    idle: template.meters + 0.05 < lap ? asRaw(slice(rail, 0, start)) : [],
+    loop: spanOf(head) + 8 < template.meters ? asRaw(rail) : null,
+    resume: 0,
+    lap,
+    finishJoinRace: 0,
+    finishJoinRail: start,
+    c1: corners.c1,
+    c3: corners.c3,
+    c4: corners.c4,
+    straight: dirt ? DIRT_STRAIGHT : TURF_STRAIGHT,
+    hillsBeforeFinish: [],
+  });
+}

@@ -90,6 +90,55 @@ assert.equal(tight[1].behind[3], 30);
 assert.equal(tight[1].behind[4], 38);
 assert.equal(tight[1].behind[5], 28);
 
+const stretchLane = [1, 1, 1, 1, 1, 1];
+const stretchRow = { behind: [0, 10, 20, 30, 40, 28], lane: stretchLane };
+const weakClose = shapeFieldScript(
+  phases,
+  { 1: stretchRow },
+  [{ number: 1, bracket: 1, name: "差", style: "差", corner4Rate: 0.45, stretchGainM: 5 }],
+  "long",
+);
+assert.equal(weakClose[1].behind[3], 36);
+assert.equal(weakClose[1].behind[5], 23);
+const strongClose = shapeFieldScript(
+  phases,
+  { 1: stretchRow },
+  [{ number: 1, bracket: 1, name: "差", style: "差", corner4Rate: 0.45, stretchGainM: 20 }],
+  "long",
+);
+assert.equal(strongClose[1].behind[5], 16);
+const capped = shapeFieldScript(
+  phases,
+  { 1: stretchRow },
+  [{ number: 1, bracket: 1, name: "差", style: "差", corner4Rate: 0.45, stretchGainM: 20 }],
+  "short",
+);
+assert.equal(capped[1].behind[5], 30);
+const stalk = shapeFieldScript(
+  phases,
+  { 1: stretchRow },
+  [{ number: 1, bracket: 1, name: "先", style: "先", corner4Rate: 0.2 }],
+  "long",
+);
+assert.equal(stalk[1].behind[3], 16);
+assert.equal(stalk[1].behind[5], 20);
+const leader = shapeFieldScript(
+  phases,
+  { 1: { behind: [0, 0, 0, 0, 0, 0], lane: [0, 0, 0, 0, 0, 0] } },
+  [{ number: 1, bracket: 1, name: "逃", style: "逃", corner4Rate: 0 }],
+  "long",
+);
+assert.deepEqual(leader[1].behind, [0, 0, 0, 0, 0, 0]);
+
+const outerEscape = shapeFieldScript(
+  phases,
+  { 8: { behind: [0, 4, 7, 30, 38, 42], lane: [2, 2, 2, 3, 3, 3] } },
+  [{ number: 8, bracket: 4, name: "外", style: "逃", corner3Rate: 0.5, corner4Rate: 0.8 }],
+);
+assert.equal(outerEscape[8].behind[2], 7);
+assert.equal(outerEscape[8].behind[3], 30);
+assert.deepEqual(outerEscape[8].lane, [2, 2, 2, 3, 3, 3]);
+
 const ordered = byStyle(
   [
     { number: 2, bracket: 1, name: "後", style: "先", posRate: 0.4 },

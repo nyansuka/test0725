@@ -4,6 +4,7 @@ import { byStyle, type SimHorse, type SimPhase } from "@/domain/sim/nakayamaTurf
  * 外回りの一周超（京都芝2400）の台本。
  * 中山芝1200は使わない。坂は3〜4角に一度あり、最後の直線は平坦。
  * 中盤は緩む。坂から直線にかけて、先頭の余裕は小さくなり、好位と差しが詰める。
+ * 坂の位相 id は c4。過去の4角位置を、この地点に載せる。
  * 脚質は発走前の直近5走。着順・当日オッズ・馬場は使わない。
  */
 
@@ -51,7 +52,7 @@ export function buildOuterLapPhases(horses: SimHorse[], marks: OuterLapMarks): S
       body: "中盤は緩む。前との差はここで広がらない。",
     },
     {
-      id: "hill",
+      id: "c4",
       label: "坂",
       m: marks.hillM,
       title: "3〜4角の坂",

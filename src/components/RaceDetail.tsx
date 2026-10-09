@@ -25,7 +25,7 @@ import {
 import { SupplementNotesPanel } from "@/components/SupplementNotesPanel";
 import { CourseNotesPanel } from "@/components/CourseNotesPanel";
 import { NakayamaRaceSim } from "@race-sim";
-import { isTurfOneTurnSimRace } from "@/domain/nakayamaTurf1200Sim";
+import { isFlatSimRace } from "@/domain/sim/flatSimCatalog";
 import { supplementCandidatesFromPicks } from "@/domain/supplementNotes";
 import {
   formatPopularity,
@@ -421,7 +421,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
 
       {tipster ? <TipsterRefPanel tipster={tipster} /> : null}
       <CourseNotesPanel venue={race.venue} track={race.track} distance={race.distance} />
-      {isTurfOneTurnSimRace(race) ? <NakayamaRaceSim race={race} /> : null}
+      {isFlatSimRace(race) ? <NakayamaRaceSim race={race} /> : null}
       <SupplementNotesPanel
         venue={race.venue}
         raceDate={race.raceDate}

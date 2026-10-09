@@ -1,4 +1,4 @@
-import { shapeFieldScript } from "@/domain/sim/fieldShape";
+import { settleFieldScript, shapeFieldScript } from "@/domain/sim/fieldShape";
 import { pointAt, RACE_METERS } from "@/domain/sim/nakayamaTurf1200Path";
 import { buildPhases, buildScript, byStyle, type SimHorse, type SimPhase } from "@/domain/sim/nakayamaTurf1200Script";
 
@@ -96,7 +96,7 @@ function placed(along: number, inward: number) {
 export function createTurf1200(horses: SimHorse[]) {
   const phases = buildPhases(horses);
   const keyM = phases.map((phase) => phase.m);
-  const script = shapeFieldScript(phases, buildScript(horses), horses);
+  const script = settleFieldScript(shapeFieldScript(phases, buildScript(horses), horses, "middle"), horses);
   const focus = byStyle(horses, "逃")[0] ?? horses[0];
 
   function fieldAt(raceM: number): Placement[] {
@@ -140,10 +140,18 @@ export function createTurf1200(horses: SimHorse[]) {
   return { phases, fieldAt, phaseAt, focusNumber: focus?.number ?? 1 };
 }
 
-export function lengthsLabel(behindM: number) {
+export function lengthsLabel(behindM: number, passUnknown = false) {
+  if (passUnknown) return "位置不明";
   if (behindM < 0.6) return "先頭";
   const lengths = behindM / LENGTH_M;
   return `${lengths.toFixed(1)}馬身`;
+}
+
+/** 選んだ馬の一文。数字は直前の馬ではなく、その時点の先頭との差。通過が無い馬は馬身にしない */
+export function gapPhrase(behindM: number, passUnknown = false) {
+  if (passUnknown) return "位置不明";
+  const label = lengthsLabel(behindM);
+  return label === "先頭" ? "先頭" : `先頭から${label}`;
 }
 
 /** レーン0をレール側に、外へ行くほどプラス */

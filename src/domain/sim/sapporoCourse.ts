@@ -1,3 +1,5 @@
+import { asRaw, assembleFlat, spanOf, withSpan } from "@/domain/sim/flatPath";
+
 /**
  * 札幌の平地テンプレート。障害コースは入れない。内・外の別はない。
  * Aコースの公表値（芝1640.9m・直線266.1m、ダート1487m・直線264.3m）。
@@ -744,3 +746,67 @@ function checkTemplates() {
 }
 
 checkTemplates();
+
+/** 1500のポケット、1800以上の芝、全ダート */
+export function sapporoFlatGeom(templateId: string) {
+  const template = SAPPORO_TEMPLATES.find((item) => item.id === templateId);
+  if (!template) return null;
+  const g = GEOM;
+  if (template.id === "turf-1500") {
+    const chutePts = withSpan(chute(g.turf, g.chute1500Join, g.chute1500, POCKET_1500_SIDE), g.chute1500);
+    const after = asRaw(slice(g.turf, g.chute1500Join, TURF_LAP));
+    return assembleFlat({
+      meters: template.meters,
+      head: [chutePts, after],
+      loop: g.chute1500 + spanOf(after) + 8 < template.meters ? asRaw(g.turf) : null,
+      resume: 0,
+      lap: TURF_LAP,
+      finishJoinRace: g.chute1500,
+      finishJoinRail: g.chute1500Join,
+      c1: g.turfCornerM.c1,
+      c3: g.turfCornerM.c3,
+      c4: g.turfCornerM.c4,
+      straight: TURF_STRAIGHT,
+      hillsBeforeFinish: [],
+    });
+  }
+  if (template.id === "turf-2000") {
+    const chutePts = withSpan(homeChute(sampleAt(g.turf, g.straightJoinM), g.chute2000), g.chute2000);
+    const after = asRaw(slice(g.turf, g.straightJoinM, TURF_LAP));
+    return assembleFlat({
+      meters: template.meters,
+      head: [chutePts, after],
+      loop: g.chute2000 + spanOf(after) + 8 < template.meters ? asRaw(g.turf) : null,
+      resume: 0,
+      lap: TURF_LAP,
+      finishJoinRace: g.chute2000,
+      finishJoinRail: g.straightJoinM,
+      c1: g.turfCornerM.c1,
+      c3: g.turfCornerM.c3,
+      c4: g.turfCornerM.c4,
+      straight: TURF_STRAIGHT,
+      hillsBeforeFinish: [],
+    });
+  }
+  const dirt = template.track === "ダート";
+  const rail = dirt ? g.dirt : g.turf;
+  const lap = rail[rail.length - 1].m;
+  const start = station(lap, template.meters);
+  const head = asRaw(slice(rail, start, lap));
+  const corners = dirt ? g.dirtCornerM : g.turfCornerM;
+  return assembleFlat({
+    meters: template.meters,
+    head: [head],
+    idle: template.meters + 0.05 < lap ? asRaw(slice(rail, 0, start)) : [],
+    loop: spanOf(head) + 8 < template.meters ? asRaw(rail) : null,
+    resume: 0,
+    lap,
+    finishJoinRace: 0,
+    finishJoinRail: start,
+    c1: corners.c1,
+    c3: corners.c3,
+    c4: corners.c4,
+    straight: dirt ? DIRT_STRAIGHT : TURF_STRAIGHT,
+    hillsBeforeFinish: [],
+  });
+}

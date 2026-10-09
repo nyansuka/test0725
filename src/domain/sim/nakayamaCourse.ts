@@ -1,3 +1,5 @@
+import { asRaw, assembleFlat, spanOf, withSpan } from "@/domain/sim/flatPath";
+
 /**
  * 中山の平地テンプレート。障害コースは入れない。
  * Aコースの公表値（芝内1667.1m、芝外1839.7m、ダート1493m、直線は芝310m・ダート308m）。
@@ -982,3 +984,73 @@ function runPoint(run: CoursePoint[], meter: number): CoursePoint {
 }
 
 checkTemplates();
+
+/** ワンターン以外の中山。図のレールを発走0mにつなぐ */
+export function nakayamaFlatGeom(templateId: string) {
+  const template = NAKAYAMA_TEMPLATES.find((item) => item.id === templateId);
+  if (!template) return null;
+  const g = GEOM;
+  const hills: Array<[number, number]> = [[180, 70]];
+  if (template.rail === "outer-inner") {
+    const startM = OUTER_LAP + INNER_LAP - template.meters;
+    const outer = asRaw(slice(g.outer, startM, g.outerJoinM));
+    const inner = asRaw(g.inner);
+    return assembleFlat({
+      meters: template.meters,
+      head: [outer, inner],
+      loop: spanOf(outer) + spanOf(inner) + 8 < template.meters ? asRaw(g.inner) : null,
+      resume: 0,
+      lap: INNER_LAP,
+      finishJoinRace: spanOf(outer),
+      finishJoinRail: 0,
+      c1: g.innerCornerM.c1,
+      c3: g.innerCornerM.c3,
+      c4: g.innerCornerM.c4,
+      straight: TURF_STRAIGHT,
+      hillsBeforeFinish: hills,
+    });
+  }
+  if (template.id === "dirt-1200") {
+    const chutePts = withSpan(chute(g.dirt, g.dirtJoin1200, g.chute1200Len, 28), g.chute1200Len);
+    const after = asRaw(slice(g.dirt, g.dirtJoin1200, DIRT_LAP));
+    return assembleFlat({
+      meters: template.meters,
+      head: [chutePts, after],
+      loop: g.chute1200Len + spanOf(after) + 8 < template.meters ? asRaw(g.dirt) : null,
+      resume: 0,
+      lap: DIRT_LAP,
+      finishJoinRace: g.chute1200Len,
+      finishJoinRail: g.dirtJoin1200,
+      c1: g.dirtCornerM.c1,
+      c3: g.dirtCornerM.c3,
+      c4: g.dirtCornerM.c4,
+      straight: DIRT_STRAIGHT,
+      hillsBeforeFinish: hills,
+    });
+  }
+  const dirt = template.track === "ダート";
+  const rail = template.rail === "outer" ? g.outer : dirt ? g.dirt : g.inner;
+  const lap = rail[rail.length - 1].m;
+  const start = station(lap, template.meters);
+  const head = asRaw(slice(rail, start, lap));
+  const corners = dirt
+    ? g.dirtCornerM
+    : template.rail === "outer"
+      ? { c1: g.outerSplitM, c3: g.outerCorner3M, c4: nearestM(g.outer, sampleAt(g.inner, g.innerCornerM.c4)) }
+      : g.innerCornerM;
+  return assembleFlat({
+    meters: template.meters,
+    head: [head],
+    idle: template.meters + 0.05 < lap ? asRaw(slice(rail, 0, start)) : [],
+    loop: spanOf(head) + 8 < template.meters ? asRaw(rail) : null,
+    resume: 0,
+    lap,
+    finishJoinRace: 0,
+    finishJoinRail: start,
+    c1: corners.c1,
+    c3: corners.c3,
+    c4: corners.c4,
+    straight: dirt ? DIRT_STRAIGHT : TURF_STRAIGHT,
+    hillsBeforeFinish: hills,
+  });
+}

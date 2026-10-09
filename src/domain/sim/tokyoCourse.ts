@@ -1,3 +1,5 @@
+import { asRaw, assembleFlat, spanOf, withSpan } from "@/domain/sim/flatPath";
+
 /**
  * 東京の平地テンプレート。障害コースは入れない。
  * Aコースの公表値（芝2083.1m・直線525.9m、ダート1899m・直線501.6m）。
@@ -876,3 +878,50 @@ function checkTemplates() {
 }
 
 checkTemplates();
+
+/** 2300以上の芝と、全ダート。図のレールを発走0mにつなぐ */
+export function tokyoFlatGeom(templateId: string) {
+  const template = TOKYO_TEMPLATES.find((item) => item.id === templateId);
+  if (!template) return null;
+  const g = GEOM;
+  const hills: Array<[number, number]> = [[460, 300]];
+  if (template.id === "dirt-1600") {
+    const chutePts = withSpan(chute(g.dirt, g.dirt1600Join, g.dirt1600Len, 32), g.dirt1600Len);
+    const after = asRaw(slice(g.dirt, g.dirt1600Join, DIRT_LAP));
+    return assembleFlat({
+      meters: template.meters,
+      head: [chutePts, after],
+      loop: g.dirt1600Len + spanOf(after) + 8 < template.meters ? asRaw(g.dirt) : null,
+      resume: 0,
+      lap: DIRT_LAP,
+      finishJoinRace: g.dirt1600Len,
+      finishJoinRail: g.dirt1600Join,
+      c1: g.dirtCornerM.c1,
+      c3: g.dirtCornerM.c3,
+      c4: g.dirtCornerM.c4,
+      straight: DIRT_STRAIGHT,
+      hillsBeforeFinish: hills,
+    });
+  }
+  const dirt = template.track === "ダート";
+  const rail = dirt ? g.dirt : g.turf;
+  const lap = rail[rail.length - 1].m;
+  const start = station(lap, template.meters);
+  const head = asRaw(slice(rail, start, lap));
+  const corners = dirt ? g.dirtCornerM : g.turfCornerM;
+  return assembleFlat({
+    meters: template.meters,
+    head: [head],
+    idle: template.meters + 0.05 < lap ? asRaw(slice(rail, 0, start)) : [],
+    loop: spanOf(head) + 8 < template.meters ? asRaw(rail) : null,
+    resume: 0,
+    lap,
+    finishJoinRace: 0,
+    finishJoinRail: start,
+    c1: corners.c1,
+    c3: corners.c3,
+    c4: corners.c4,
+    straight: dirt ? DIRT_STRAIGHT : TURF_STRAIGHT,
+    hillsBeforeFinish: hills,
+  });
+}

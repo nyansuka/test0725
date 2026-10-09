@@ -25,6 +25,13 @@ export type SimHorse = {
   paceFrontSec?: number | null;
   /** 道悪で前が残る距離だけ true */
   squeezeStraight?: boolean;
+  /**
+   * 発走前の同じ馬場で、最後の通過から着順まで詰めたメートルの平均。
+   * 無い馬は、コース上限の6割だけ詰める。
+   */
+  stretchGainM?: number | null;
+  /** 発走前のこの馬場の通過が無い。馬身は出さず、通過がある馬の後ろにまとめる */
+  passUnknown?: boolean;
 };
 
 export const HORSES: SimHorse[] = [

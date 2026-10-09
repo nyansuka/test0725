@@ -22,6 +22,7 @@ import { buildShortPocketPhases, buildShortPocketScript } from "@/domain/sim/sho
 import { buildStraightHillPhases, buildStraightHillScript } from "@/domain/sim/straightHillScript";
 import { buildTightFlatPhases, buildTightFlatScript } from "@/domain/sim/tightFlatScript";
 import type { SimHorse, SimPhase } from "@/domain/sim/nakayamaTurf1200Script";
+import type { StretchKind } from "@/domain/sim/fieldShape";
 import { createTurfCourse } from "@/domain/sim/turfCoursePlay";
 import type { TurfOneTurnId } from "@/domain/sim/turfOneTurn";
 import { tokyoTurf1400Run, tokyoTurf1600Run, tokyoTurf1800Run, tokyoTurf2000Run } from "@/domain/sim/tokyoCourse";
@@ -122,6 +123,7 @@ function buildKyoto(): Built {
         pointAt: picture.pointAt,
         phases: buildCornerHillPhases(horses, marks),
         script: buildCornerHillScript(horses),
+        stretch: "middle",
       });
     },
   };
@@ -165,6 +167,7 @@ function buildHanshin(): Built {
         pointAt: picture.pointAt,
         phases: buildCornerHillPhases(horses, marks),
         script: buildCornerHillScript(horses),
+        stretch: "middle",
       });
     },
   };
@@ -208,6 +211,7 @@ function buildTokyo(meters: 1400 | 1600): Built {
           meters,
         }),
         script: buildLongStraightScript(horses),
+        stretch: "long",
       });
     },
   };
@@ -246,6 +250,7 @@ function buildNakayama1600(): Built {
           meters: 1600,
         }),
         script: buildShortPocketScript(horses),
+        stretch: "short",
       });
     },
   };
@@ -283,6 +288,7 @@ function buildNakayama1800(): Built {
           meters: 1800,
         }),
         script: buildOpeningHillScript(horses),
+        stretch: "middle",
       });
     },
   };
@@ -327,6 +333,7 @@ function buildTokyoPocket(meters: 1800 | 2000): Built {
           meters,
         }),
         script: buildLongPocketScript(horses),
+        stretch: "long",
       });
     },
   };
@@ -363,6 +370,7 @@ function buildKyoto2400(): Built {
           meters: 2400,
         }),
         script: buildOuterLapScript(horses),
+        stretch: "long",
       });
     },
   };
@@ -371,6 +379,7 @@ function buildKyoto2400(): Built {
 function pack(
   meta: Pick<Built, "id" | "raceMeters" | "titleText" | "subtitle" | "noteText" | "aria" | "facts" | "labels">,
   pictured: { run: TurfPoint[]; idle: TurfPoint[]; approach?: TurfPoint[]; hills: Array<[number, number]> },
+  stretch: StretchKind,
   motion: (horses: SimHorse[]) => { phases: SimPhase[]; script: ReturnType<typeof buildCornerHillScript> },
 ): Built {
   const picture = viewOf(pictured.idle, pictured.run, pictured.hills, pictured.approach);
@@ -384,6 +393,7 @@ function pack(
         pointAt: picture.pointAt,
         phases: moved.phases,
         script: moved.script,
+        stretch,
       });
     },
   };
@@ -422,6 +432,7 @@ function buildSapporo(meters: 1000 | 1200): Built {
       labels: cornerLabels(meters, run.corner3, run.corner4, run.straightFrom, pocket ? [{ m: run.pocketJoin, text: "本線", out: 58 }] : []),
     },
     run,
+    "short",
     (horses) => ({
       phases: buildRoundFlatPhases(horses, {
         pocket,
@@ -455,6 +466,7 @@ function buildHakodate(meters: 1000 | 1200): Built {
       ]),
     },
     run,
+    "short",
     (horses) => ({
       phases: buildCornerHillPhases(horses, {
         course: "hakodate",
@@ -489,6 +501,7 @@ function buildFukushima(meters: 1000 | 1200): Built {
       ]),
     },
     run,
+    "short",
     (horses) => ({
       phases: buildHomeUphillPhases(horses, {
         pocket,
@@ -525,6 +538,7 @@ function buildKokura(meters: 1000 | 1200): Built {
       ),
     },
     run,
+    "short",
     (horses) => ({
       phases: buildTightFlatPhases(horses, {
         downhill,
@@ -552,6 +566,7 @@ function buildNiigataInner(): Built {
       labels: cornerLabels(1200, run.corner3, run.corner4, run.straightFrom),
     },
     run,
+    "middle",
     (horses) => ({
       phases: buildInnerFlatPhases(horses, {
         corner3: run.corner3,
@@ -578,6 +593,7 @@ function buildNiigataOuter(meters: 1600 | 1800): Built {
       labels: cornerLabels(meters, run.corner3, run.corner4, run.straightFrom, [{ m: (run.hills[0][0] + run.hills[0][1]) / 2, text: "上り", out: 58 }]),
     },
     run,
+    "long",
     (horses) => ({
       phases: buildLongStraightPhases(horses, {
         place: "niigata",
@@ -607,6 +623,7 @@ function buildChukyo(meters: 1200 | 1300 | 1400): Built {
       labels: cornerLabels(meters, run.corner3, run.corner4, run.straightFrom, [{ m: (run.homeFrom + run.homeTo) / 2, text: "急坂", out: 58 }]),
     },
     run,
+    "long",
     (horses) => ({
       phases: buildStraightHillPhases(horses, {
         opening: run.opening,
@@ -638,6 +655,7 @@ function buildLongChute(place: "kyoto" | "chukyo"): Built {
         ]),
       },
       { run: run.run, idle: run.idle, approach: run.approach, hills: [[run.hillFrom, run.hillTo]] },
+      "middle",
       (horses) => ({
         phases: buildLongChutePhases(horses, {
           place,
@@ -667,6 +685,7 @@ function buildLongChute(place: "kyoto" | "chukyo"): Built {
       ]),
     },
     { run: run.run, idle: run.idle, approach: run.approach, hills: run.hills },
+    "middle",
     (horses) => ({
       phases: buildLongChutePhases(horses, {
         place,
@@ -706,6 +725,7 @@ function buildHanshinOuter(meters: 1600 | 1800): Built {
       ]),
     },
     { run: run.run, idle: run.idle, hills: [[run.hillFrom, run.hillTo]] },
+    "finishHill",
     (horses) => ({
       phases: buildFinishHillPhases(horses, {
         place: meters === 1600 ? "1600" : "1800",
@@ -752,4 +772,8 @@ const COURSES: Record<TurfCourseId, Built> = {
 
 export function turfCourseView(id: TurfCourseId) {
   return COURSES[id];
+}
+
+export function isPlayedTurfCourse(id: string): id is TurfCourseId {
+  return Object.prototype.hasOwnProperty.call(COURSES, id);
 }

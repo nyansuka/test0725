@@ -4,6 +4,7 @@ import { useEffect, useId, useMemo, useState } from "react";
 import {
   BRACKET_COLOR,
   createTurf1200,
+  gapPhrase,
   lengthsLabel,
   MARKER_R,
   TRACK_STROKE,
@@ -246,11 +247,14 @@ export function NakayamaTurfSim({ horses = HORSES }: { horses?: SimHorse[] }) {
       </div>
 
       <aside className="lg:pt-1">
-        <p className="text-xs tracking-wider text-ink/45">想定の並び</p>
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="text-xs tracking-wider text-ink/45">想定の並び</p>
+          <p className="text-xs text-ink/45">先頭差</p>
+        </div>
         <p className="mt-1 text-sm text-ink/60">
           {meter < 140
             ? `${selectedRow.horse.number}番 ${selectedRow.horse.name}（${selectedRow.horse.style}）· 枠なり`
-            : `${selectedRow.rank}番手 ${selectedRow.horse.name}（${selectedRow.horse.style}）· ${lengthsLabel(selectedRow.behindM)}`}
+            : `${selectedRow.rank}番手 ${selectedRow.horse.name}（${selectedRow.horse.style}）· ${gapPhrase(selectedRow.behindM, selectedRow.horse.passUnknown)}`}
         </p>
         <ol className="mt-3 divide-y divide-ink/10 border-y border-ink/10">
           {field.map((row) => {
@@ -274,8 +278,11 @@ export function NakayamaTurfSim({ horses = HORSES }: { horses?: SimHorse[] }) {
                   </span>
                   <span className="min-w-0 flex-1 truncate font-medium text-ink">{row.horse.name}</span>
                   <span className="shrink-0 text-ink/55">{row.horse.style}</span>
-                  <span className="w-14 shrink-0 text-right text-xs tabular-nums text-ink/50">
-                    {meter < 140 ? "枠" : lengthsLabel(row.behindM)}
+                  <span
+                    className="w-14 shrink-0 text-right text-xs tabular-nums text-ink/50"
+                    title="その時点の先頭との差"
+                  >
+                    {meter < 140 ? "枠" : lengthsLabel(row.behindM, row.horse.passUnknown)}
                   </span>
                 </button>
               </li>
@@ -283,7 +290,7 @@ export function NakayamaTurfSim({ horses = HORSES }: { horses?: SimHorse[] }) {
           })}
         </ol>
         <p className="mt-3 text-xs leading-relaxed text-ink/45">
-          馬身は論理値。脚質は発走前の直近5走。着順の予想ではない。枠色はJRAの枠番。
+          馬身はその時点の先頭との差。脚質は発走前の直近5走。着順の予想ではない。枠色はJRAの枠番。
         </p>
       </aside>
     </div>

@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useId, useMemo, useState } from "react";
-import { BRACKET_COLOR, lengthsLabel, MARKER_R, TRACK_STROKE } from "@/domain/sim/nakayamaTurf1200Play";
+import { BRACKET_COLOR, gapPhrase, lengthsLabel, MARKER_R, TRACK_STROKE } from "@/domain/sim/nakayamaTurf1200Play";
 import type { SimHorse } from "@/domain/sim/nakayamaTurf1200Script";
+import { flatCourseView } from "@/domain/sim/flatCourse";
 import { RELEASE_M } from "@/domain/sim/turfCoursePlay";
-import { turfCourseView, type TurfCourseId } from "@/domain/sim/turfOneTurnCourse";
+import { isPlayedTurfCourse, turfCourseView } from "@/domain/sim/turfOneTurnCourse";
 
 const DURATION_MS = 22000;
 
@@ -12,13 +13,13 @@ function px(n: number) {
   return Math.round(n * 10) / 10;
 }
 
-export function TurfCourseSim({ courseId, horses }: { courseId: TurfCourseId; horses: SimHorse[] }) {
-  const course = turfCourseView(courseId);
-  const run = useMemo(() => course.play(horses), [course, horses]);
+export function TurfCourseSim({ courseId, horses }: { courseId: string; horses: SimHorse[] }) {
+  const course = isPlayedTurfCourse(courseId) ? turfCourseView(courseId) : flatCourseView(courseId);
+  const run = useMemo(() => (course ? course.play(horses) : null), [course, horses]);
   const [meter, setMeter] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
-  const [selected, setSelected] = useState<number>(run.focusNumber);
+  const [selected, setSelected] = useState<number>(run?.focusNumber ?? 1);
   const [mounted, setMounted] = useState(false);
   const sliderId = useId();
 
@@ -29,7 +30,7 @@ export function TurfCourseSim({ courseId, horses }: { courseId: TurfCourseId; ho
   }, []);
 
   useEffect(() => {
-    if (!playing) return;
+    if (!playing || !course) return;
     let frame = 0;
     let last = performance.now();
     const loop = (now: number) => {
@@ -47,7 +48,9 @@ export function TurfCourseSim({ courseId, horses }: { courseId: TurfCourseId; ho
     };
     frame = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(frame);
-  }, [playing, speed, course.raceMeters]);
+  }, [playing, speed, course]);
+
+  if (!course || !run) return null;
 
   const field = run.fieldAt(meter);
   const phase = run.phaseAt(meter);
@@ -195,11 +198,14 @@ export function TurfCourseSim({ courseId, horses }: { courseId: TurfCourseId; ho
       </div>
 
       <aside className="lg:pt-1">
-        <p className="text-xs tracking-wider text-ink/45">想定の並び</p>
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="text-xs tracking-wider text-ink/45">想定の並び</p>
+          <p className="text-xs text-ink/45">先頭差</p>
+        </div>
         <p className="mt-1 text-sm text-ink/60">
           {meter < RELEASE_M
             ? `${selectedRow.horse.number}番 ${selectedRow.horse.name}（${selectedRow.horse.style}）· 枠なり`
-            : `${selectedRow.rank}番手 ${selectedRow.horse.name}（${selectedRow.horse.style}）· ${lengthsLabel(selectedRow.behindM)}`}
+            : `${selectedRow.rank}番手 ${selectedRow.horse.name}（${selectedRow.horse.style}）· ${gapPhrase(selectedRow.behindM, selectedRow.horse.passUnknown)}`}
         </p>
         <ol className="mt-3 divide-y divide-ink/10 border-y border-ink/10">
           {field.map((row) => {
@@ -221,8 +227,11 @@ export function TurfCourseSim({ courseId, horses }: { courseId: TurfCourseId; ho
                   </span>
                   <span className="min-w-0 flex-1 truncate font-medium text-ink">{row.horse.name}</span>
                   <span className="shrink-0 text-ink/55">{row.horse.style}</span>
-                  <span className="w-14 shrink-0 text-right text-xs tabular-nums text-ink/50">
-                    {meter < RELEASE_M ? "枠" : lengthsLabel(row.behindM)}
+                  <span
+                    className="w-14 shrink-0 text-right text-xs tabular-nums text-ink/50"
+                    title="その時点の先頭との差"
+                  >
+                    {meter < RELEASE_M ? "枠" : lengthsLabel(row.behindM, row.horse.passUnknown)}
                   </span>
                 </button>
               </li>
@@ -230,7 +239,7 @@ export function TurfCourseSim({ courseId, horses }: { courseId: TurfCourseId; ho
           })}
         </ol>
         <p className="mt-3 text-xs leading-relaxed text-ink/45">
-          馬身は論理値。脚質は発走前の直近5走。着順の予想ではない。枠色はJRAの枠番。
+          馬身はその時点の先頭との差。脚質は発走前の直近5走。着順の予想ではない。枠色はJRAの枠番。
         </p>
       </aside>
     </div>

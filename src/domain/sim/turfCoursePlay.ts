@@ -1,4 +1,4 @@
-import { shapeFieldScript } from "@/domain/sim/fieldShape";
+import { settleFieldScript, shapeFieldScript, type StretchKind } from "@/domain/sim/fieldShape";
 import type { SimHorse, SimPhase } from "@/domain/sim/nakayamaTurf1200Script";
 import { byStyle } from "@/domain/sim/nakayamaTurf1200Script";
 
@@ -72,10 +72,11 @@ export function createTurfCourse(
     pointAt: (meter: number) => Sample;
     phases: SimPhase[];
     script: Record<number, { behind: number[]; lane: number[] }>;
+    stretch: StretchKind;
   },
 ) {
   const keyM = course.phases.map((phase) => phase.m);
-  const script = shapeFieldScript(course.phases, course.script, horses);
+  const script = settleFieldScript(shapeFieldScript(course.phases, course.script, horses, course.stretch), horses);
   const focus = byStyle(horses, "逃")[0] ?? horses[0];
 
   function placed(along: number, inward: number) {

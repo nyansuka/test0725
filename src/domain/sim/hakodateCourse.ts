@@ -1,3 +1,5 @@
+import { asRaw, assembleFlat, spanOf, withSpan } from "@/domain/sim/flatPath";
+
 /**
  * 函館の平地テンプレート。障害コースは入れない。内・外の別はない。
  * Aコースの公表値（芝1626.6m・直線262.1m、ダート1475.8m・直線260.3m）。
@@ -749,3 +751,31 @@ function checkTemplates() {
 }
 
 checkTemplates();
+
+/** 1700以上の芝と全ダート。直線は短く、上限は short */
+export function hakodateFlatGeom(templateId: string) {
+  const template = HAKODATE_TEMPLATES.find((item) => item.id === templateId);
+  if (!template) return null;
+  const g = GEOM;
+  const dirt = template.track === "ダート";
+  const rail = dirt ? g.dirt : g.turf;
+  const lap = rail[rail.length - 1].m;
+  const start = station(lap, template.meters);
+  const head = asRaw(slice(rail, start, lap));
+  const corners = dirt ? g.dirtCornerM : g.turfCornerM;
+  return assembleFlat({
+    meters: template.meters,
+    head: [head],
+    idle: template.meters + 0.05 < lap ? asRaw(slice(rail, 0, start)) : [],
+    loop: spanOf(head) + 8 < template.meters ? asRaw(rail) : null,
+    resume: 0,
+    lap,
+    finishJoinRace: 0,
+    finishJoinRail: start,
+    c1: corners.c1,
+    c3: corners.c3,
+    c4: corners.c4,
+    straight: dirt ? DIRT_STRAIGHT : TURF_STRAIGHT,
+    hillsBeforeFinish: [],
+  });
+}

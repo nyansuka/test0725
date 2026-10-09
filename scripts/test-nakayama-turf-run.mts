@@ -152,6 +152,7 @@ assert.notEqual(behindAt("nakayama-turf-1600", "c4"), nakayamaAt4?.behindM);
 assert.notEqual(behindAt("nakayama-turf-1800", "c4"), nakayamaAt4?.behindM);
 assert.equal(behindAt("nakayama-turf-1600", "c4"), mileScript[8].behind[3]);
 assert.equal(behindAt("kyoto-turf-2400", "goal"), outerLap[8].behind[5]);
+assert.ok(turfCourseView("kyoto-turf-2400").play(HORSES).phases.some((phase) => phase.id === "c4"));
 assert.equal(behindAt("sapporo-turf-1000", "c4"), behindAt("sapporo-turf-1200", "c4"));
 assert.equal(behindAt("sapporo-turf-1200", "c4"), roundFlat[8].behind[3]);
 assert.equal(behindAt("hakodate-turf-1000", "c4"), behindAt("hakodate-turf-1200", "c4"));

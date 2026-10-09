@@ -45,6 +45,8 @@ assert.deepEqual(
   ],
 );
 assert.deepEqual(empty.withoutPass, ["通過なし"]);
+assert.equal(empty.horses[0].passUnknown, false);
+assert.equal(empty.horses[1].passUnknown, true);
 assert.equal(empty.horses[0].turfPasses[0].date, "2026-09-01");
 assert.equal(empty.horses[0].turfPasses[0].passFirst, 8);
 
@@ -75,7 +77,23 @@ assert.deepEqual(
   ["逃", "先", "追"],
 );
 assert.equal(styled.horses[0].turfPasses.length, 5);
+assert.equal(styled.horses[2].stretchGainM, null);
 assert.deepEqual(styled.withoutPass, []);
+
+const gained = simFieldFromRuns(
+  [{ number: 1, bracket: 1, name: "詰める" }],
+  new Map([
+    [
+      1,
+      [
+        run({ date: "2026-09-01", passLast: 10, rank: 4, fieldSize: 16 }),
+        run({ date: "2026-08-01", passLast: 8, rank: 4, fieldSize: 16 }),
+      ],
+    ],
+  ]),
+  "2026-09-26",
+);
+assert.equal(gained.horses[0].stretchGainM, 25);
 
 const mixed = [
   run({ date: "2026-09-01", venue: "東京", distanceM: 1800, passFirst: 1, fieldSize: 16 }),
@@ -100,6 +118,27 @@ const thin = simFieldFromRuns(
   { venue: "東京", distanceM: 1800 },
 );
 assert.notEqual(thin.horses[0].style, "逃");
+
+const otherVenue = simFieldFromRuns(
+  [{ number: 1, bracket: 1, name: "別場" }],
+  new Map([
+    [
+      1,
+      [1, 1, 2].map((pass, index) =>
+        run({
+          date: `2026-0${index + 1}-15`,
+          venue: "阪神",
+          distanceM: 1400,
+          passFirst: pass,
+          fieldSize: 12,
+        }),
+      ),
+    ],
+  ]),
+  "2026-09-26",
+  { venue: "中山", distanceM: 1200 },
+);
+assert.equal(otherVenue.horses[0].style, "先");
 
 const snap = JSON.parse(await readFile(path.join(root, "src/data/snapshots/2026-09-26.json"), "utf8"));
 const race = snap.races.find((item: { id: string }) => item.id === "nakayama-20260926-10");

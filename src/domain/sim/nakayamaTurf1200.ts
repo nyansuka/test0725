@@ -26,6 +26,7 @@ export {
   MARKER_R,
   TRACK_STROKE,
   createTurf1200,
+  gapPhrase,
   horseXY,
   lengthsLabel,
   type Placement,

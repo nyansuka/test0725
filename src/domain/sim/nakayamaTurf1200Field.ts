@@ -1,16 +1,19 @@
+import { SPAN_M } from "@/domain/sim/fieldShape";
 import {
   cornerRates,
+  stretchGainRate,
   styleFromTurfRuns,
   styleRuns,
-  turfRunsBefore,
+  passRunsBefore,
   type StyleFocus,
   type StyleRun,
 } from "@/domain/sim/runningStyle";
 import type { RunningStyle } from "@/domain/sim/nakayamaTurf1200Script";
 
 /**
- * レースの出走馬と過去走から、芝ワンターンの走行に渡す馬を作る。
- * 馬番・枠・馬名と、脚質に使った発走前の芝の通過だけ。着順・オッズは見ない。
+ * レースの出走馬と過去走から、平地の走行に渡す馬を作る。
+ * 馬番・枠・馬名と、脚質に使った発走前の通過。芝のレースは芝、ダートはダート。
+ * 着順は、最後の通過から直線で詰めた幅だけに使う。オッズと上がりは見ない。
  */
 
 export type TurfPass = {
@@ -30,6 +33,9 @@ export type FieldHorse = {
   corner3Rate?: number | null;
   corner4Rate?: number | null;
   paceFrontSec?: number | null;
+  stretchGainM?: number | null;
+  /** 発走前のこの馬場の通過が無い */
+  passUnknown: boolean;
 };
 
 export type FieldEntry = {
@@ -47,9 +53,11 @@ export function simFieldFromRuns(
   const horses = entries
     .map((entry) => {
       const runs = runsByNumber.get(entry.number) ?? [];
+      const surface = focus?.track === "ダート" ? "ダート" : "芝";
       const used = styleRuns(runs, raceDate, focus);
       const rates = cornerRates(used);
-      const turfPasses = turfRunsBefore(runs, raceDate).map((run) => ({
+      const gainRate = stretchGainRate(used);
+      const turfPasses = passRunsBefore(runs, raceDate, surface).map((run) => ({
         date: run.date,
         passFirst: run.passFirst ?? null,
         passLast: run.passLast ?? null,
@@ -65,12 +73,14 @@ export function simFieldFromRuns(
         corner3Rate: rates.corner3Rate,
         corner4Rate: rates.corner4Rate,
         paceFrontSec: rates.paceFrontSec,
+        stretchGainM: gainRate == null ? null : gainRate * SPAN_M,
+        passUnknown: turfPasses.length === 0,
       };
     })
     .sort((a, b) => a.number - b.number);
 
   return {
     horses,
-    withoutPass: horses.filter((horse) => horse.turfPasses.length === 0).map((horse) => horse.name),
+    withoutPass: horses.filter((horse) => horse.passUnknown).map((horse) => horse.name),
   };
 }

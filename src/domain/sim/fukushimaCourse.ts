@@ -1,3 +1,5 @@
+import { asRaw, assembleFlat, spanOf, withSpan } from "@/domain/sim/flatPath";
+
 /**
  * 福島の平地テンプレート。障害コースは入れない。内・外の別はない。
  * Aコースの公表値（芝1600m・直線292.0m、ダート1444.6m・直線295.7m）。
@@ -899,3 +901,31 @@ function checkTemplates() {
 }
 
 checkTemplates();
+
+/** 1700以上の芝と全ダート。直線の上りがあるので上限は short */
+export function fukushimaFlatGeom(templateId: string) {
+  const template = FUKUSHIMA_TEMPLATES.find((item) => item.id === templateId);
+  if (!template) return null;
+  const g = GEOM;
+  const dirt = template.track === "ダート";
+  const rail = dirt ? g.dirt : g.turf;
+  const lap = rail[rail.length - 1].m;
+  const start = station(lap, template.meters);
+  const head = asRaw(slice(rail, start, lap));
+  const corners = dirt ? g.dirtCornerM : g.turfCornerM;
+  return assembleFlat({
+    meters: template.meters,
+    head: [head],
+    idle: template.meters + 0.05 < lap ? asRaw(slice(rail, 0, start)) : [],
+    loop: spanOf(head) + 8 < template.meters ? asRaw(rail) : null,
+    resume: 0,
+    lap,
+    finishJoinRace: 0,
+    finishJoinRail: start,
+    c1: corners.c1,
+    c3: corners.c3,
+    c4: corners.c4,
+    straight: dirt ? DIRT_STRAIGHT : TURF_STRAIGHT,
+    hillsBeforeFinish: dirt ? [] : [[170, 50]],
+  });
+}
