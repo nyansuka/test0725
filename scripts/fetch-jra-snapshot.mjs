@@ -190,6 +190,7 @@ function parseRaceMeta(html, raceId) {
   }
   const weather = weatherMatch?.[1] ?? "—";
   const condition = conditionMatch?.[1] ?? "—";
+  const courseRail = courseRailOf(dataPlain, venue, track, distance);
 
   // クラス条件をタイトルに補足（特別名がない未勝利など）
   const data02 = html.match(/class="RaceData02"[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? "";
@@ -209,7 +210,18 @@ function parseRaceMeta(html, raceId) {
     distance,
     weather,
     condition,
+    ...(courseRail ? { courseRail } : {}),
   };
+}
+
+/** 見出しの括弧。京都芝1400・1600・2000は「外」が無いとき内回り */
+function courseRailOf(dataPlain, venue, track, distance) {
+  const paren = String(dataPlain).match(/\(([^)]*)\)/);
+  const inside = (paren?.[1] ?? "").replace(/&nbsp;|\u00a0/g, " ");
+  if (inside.includes("外")) return "外";
+  if (inside.includes("内")) return "内";
+  if (venue === "京都" && track === "芝" && /^芝(?:1400|1600|2000)m$/.test(distance)) return "内";
+  return undefined;
 }
 
 function parseHorses(html) {
@@ -758,6 +770,7 @@ async function fetchHistoricalResultRace(raceId, raceDate) {
     startTime: meta.startTime,
     weather: meta.weather,
     condition: meta.condition,
+    ...(meta.courseRail ? { courseRail: meta.courseRail } : {}),
     fieldSize,
     horses,
     oddsBoard: horses.map((horse) => ({
@@ -850,6 +863,7 @@ async function fetchOneRace(raceId, raceDate, { withResult = true, withForm = fa
     startTime: meta.startTime,
     weather: meta.weather,
     condition: meta.condition,
+    ...(meta.courseRail ? { courseRail: meta.courseRail } : {}),
     fieldSize: horses.length,
     horses,
     oddsBoard: board,

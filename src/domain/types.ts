@@ -112,6 +112,8 @@ export type Race = {
   title: string;
   distance: string;
   track: "芝" | "ダート";
+  /** 内回りと外回りが同じ距離のときだけ。外回りの表記が無い京都芝は内回り */
+  courseRail?: "内" | "外";
   startTime: string;
   weather: string;
   condition: string;

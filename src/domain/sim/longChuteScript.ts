@@ -13,6 +13,8 @@ const MAX_LANE = 4;
 
 export type LongChuteMarks = {
   place: "kyoto" | "chukyo";
+  /** 京都芝1600だけ。1800は外回りの既定文 */
+  rail?: "内" | "外";
   /** 本線に入る地点。140より大きい */
   joinM: number;
   corner3: number;
@@ -42,7 +44,11 @@ export function buildLongChutePhases(horses: SimHorse[], marks: LongChuteMarks):
       : `外の${outer.map(horseLabel).join("と")}は開いた分だけ外。${pace.name}は先頭のまま。`;
   const gate =
     marks.place === "kyoto"
-      ? "引き込みのいちばん奥。外回り1600の200m奥。"
+      ? marks.rail === "内"
+        ? "2角の奥の引き込み。内回り。"
+        : marks.rail === "外"
+          ? "2角の奥の引き込み。外回り。"
+          : "引き込みのいちばん奥。外回り1600の200m奥。"
       : "1〜2角の外側の引き込み。";
   const joinBody =
     marks.place === "kyoto"
@@ -54,7 +60,9 @@ export function buildLongChutePhases(horses: SimHorse[], marks: LongChuteMarks):
       : `3角まで約${Math.round(marks.corner3)}m。${cornerLine}`;
   const straightBody =
     marks.place === "kyoto"
-      ? "直線は平坦で404m。引き込みで付いた前が残る。差しは少し詰める。"
+      ? marks.rail === "内"
+        ? "直線は平坦で328m。引き込みで付いた前が残る。差しは少し詰める。"
+        : "直線は平坦で404m。引き込みで付いた前が残る。差しは少し詰める。"
       : "直線は412.5m。入口の急坂でも並びは大きく変えない。差しは少し詰める。";
 
   return [

@@ -7,7 +7,7 @@ import { hanshinTurf1200Run, hanshinTurf1600Run, hanshinTurf1800Run } from "@/do
 import { buildHomeUphillPhases, buildHomeUphillScript } from "@/domain/sim/homeUphillScript";
 import { buildInnerFlatPhases, buildInnerFlatScript } from "@/domain/sim/innerFlatScript";
 import { kokuraTurf1000Run, kokuraTurf1200Run } from "@/domain/sim/kokuraCourse";
-import { kyotoTurf1200Run, kyotoTurf1800Run, kyotoTurf2400Run } from "@/domain/sim/kyotoCourse";
+import { kyotoTurf1200Run, kyotoTurf1600Run, kyotoTurf1800Run, kyotoTurf2400Run } from "@/domain/sim/kyotoCourse";
 import { buildLongChutePhases, buildLongChuteScript } from "@/domain/sim/longChuteScript";
 import { buildLongPocketPhases, buildLongPocketScript } from "@/domain/sim/longPocketScript";
 import { buildLongStraightPhases, buildLongStraightScript } from "@/domain/sim/longStraightScript";
@@ -32,7 +32,7 @@ import { tokyoTurf1400Run, tokyoTurf1600Run, tokyoTurf1800Run, tokyoTurf2000Run 
  * 中山芝1200の台本はここから呼ばない。
  * 残り6場のワンターンも同じ。2角のポケットは本線を戻した位置に置かない。
  * 阪神の外回り1600・1800は本線上。前が残る台本で、東京の長い直線は使わない。
- * 長い引き込みは京都芝1800と中京芝1600。140m地点はまだ引き込み。本線の戻り位置には置かない。
+ * 長い引き込みは京都芝1600・1800と中京芝1600。140m地点はまだ引き込み。本線の戻り位置には置かない。
  */
 
 export type TurfCourseId = Exclude<TurfOneTurnId, "nakayama-turf-1200">;
@@ -637,6 +637,47 @@ function buildChukyo(meters: 1200 | 1300 | 1400): Built {
   );
 }
 
+function buildKyoto1600(rail: "内" | "外"): Built {
+  const run = kyotoTurf1600Run(rail === "外" ? "outer" : "inner");
+  const outer = rail === "外";
+  return pack(
+    {
+      id: outer ? "kyoto-turf-1600-outer" : "kyoto-turf-1600",
+      raceMeters: 1600,
+      titleText: "京都芝1600",
+      subtitle: outer ? "外回り・右回り" : "内回り・右回り",
+      noteText: "140m地点はまだ引き込み",
+      aria: outer
+        ? "京都芝1600の想定走行。右回りの外回りを、引き込みの端から平坦な直線まで進む"
+        : "京都芝1600の想定走行。右回りの内回りを、引き込みの端から平坦な直線まで進む",
+      facts: [
+        outer ? "右回り・外回り" : "右回り・内回り",
+        "2角の奥の引き込み",
+        "140m地点はまだ引き込み",
+        outer ? "直線404m・平坦" : "直線328m・平坦",
+      ],
+      labels: cornerLabels(1600, run.corner3, run.corner4, run.straightFrom, [
+        { m: run.join, text: "本線", out: 58 },
+        { m: (run.hillFrom + run.hillTo) / 2, text: "坂", out: 58 },
+      ]),
+    },
+    { run: run.run, idle: run.idle, approach: run.approach, hills: [[run.hillFrom, run.hillTo]] },
+    "middle",
+    (horses) => ({
+      phases: buildLongChutePhases(horses, {
+        place: "kyoto",
+        rail,
+        joinM: run.join,
+        corner3: run.corner3,
+        corner4: run.corner4,
+        straightFrom: run.straightFrom,
+        meters: 1600,
+      }),
+      script: buildLongChuteScript(horses),
+    }),
+  );
+}
+
 function buildLongChute(place: "kyoto" | "chukyo"): Built {
   if (place === "kyoto") {
     const run = kyotoTurf1800Run();
@@ -744,6 +785,8 @@ const COURSES: Record<TurfCourseId, Built> = {
   "nakayama-turf-1600": buildNakayama1600(),
   "nakayama-turf-1800": buildNakayama1800(),
   "kyoto-turf-1200": buildKyoto(),
+  "kyoto-turf-1600": buildKyoto1600("内"),
+  "kyoto-turf-1600-outer": buildKyoto1600("外"),
   "kyoto-turf-1800": buildLongChute("kyoto"),
   "kyoto-turf-2400": buildKyoto2400(),
   "hanshin-turf-1200": buildHanshin(),

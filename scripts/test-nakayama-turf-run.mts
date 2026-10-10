@@ -17,7 +17,7 @@ import { hanshinTurf1200Run, hanshinTurf1600Run, hanshinTurf1800Run } from "../s
 import { buildHomeUphillScript } from "../src/domain/sim/homeUphillScript.ts";
 import { buildInnerFlatScript } from "../src/domain/sim/innerFlatScript.ts";
 import { kokuraTurf1200Run } from "../src/domain/sim/kokuraCourse.ts";
-import { kyotoTurf1200Run, kyotoTurf1800Run, kyotoTurf2400Run } from "../src/domain/sim/kyotoCourse.ts";
+import { kyotoTurf1200Run, kyotoTurf1600Run, kyotoTurf1800Run, kyotoTurf2400Run } from "../src/domain/sim/kyotoCourse.ts";
 import { buildLongChuteScript } from "../src/domain/sim/longChuteScript.ts";
 import { buildLongPocketScript } from "../src/domain/sim/longPocketScript.ts";
 import { buildLongStraightScript } from "../src/domain/sim/longStraightScript.ts";
@@ -207,6 +207,8 @@ for (const id of [
   "chukyo-turf-1300",
   "chukyo-turf-1400",
   "chukyo-turf-1600",
+  "kyoto-turf-1600",
+  "kyoto-turf-1600-outer",
   "kyoto-turf-1800",
   "kokura-turf-1000",
   "kokura-turf-1200",
@@ -297,6 +299,16 @@ assert.ok(2400 - kyoto2400.passFinish > 1800);
 assert.ok(Math.abs(2400 - kyoto2400.straightFrom - 403.7) < 0.05);
 assert.ok(kyoto2400.passFinish < kyoto2400.corner1 && kyoto2400.hillTo < kyoto2400.straightFrom);
 assert.ok(kyoto2400.run.every((point, index) => index === 0 || point.m > kyoto2400.run[index - 1].m));
+
+const kyoto1600 = kyotoTurf1600Run("inner");
+const kyoto1600Outer = kyotoTurf1600Run("outer");
+assert.equal(kyoto1600.run.at(-1)?.m, 1600);
+assert.equal(kyoto1600Outer.run.at(-1)?.m, 1600);
+assert.ok(kyoto1600.join > RELEASE_M && kyoto1600Outer.join > RELEASE_M);
+assert.ok(Math.abs(1600 - kyoto1600.straightFrom - 328.4) < 0.05);
+assert.ok(Math.abs(1600 - kyoto1600Outer.straightFrom - 403.7) < 0.05);
+assert.ok(kyoto1600.join < kyoto1600.corner3 && kyoto1600.corner4 < kyoto1600.straightFrom);
+assert.ok(kyoto1600Outer.join < kyoto1600Outer.corner3 && kyoto1600Outer.corner4 < kyoto1600Outer.straightFrom);
 
 const kyoto1800 = kyotoTurf1800Run();
 const chukyo1600 = chukyoTurf1600Run();

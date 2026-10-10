@@ -5,7 +5,8 @@ import { TURF_SIM_FROM, turfOneTurnId } from "@/domain/nakayamaTurf1200Sim";
 /**
  * 平地の走行をレース詳細に出す入口。
  * 2026-09-01 以降。障害は出さない。
- * 内と外が同じ距離の芝は、距離以外で回りを決めるまで出さない。
+ * 内と外が同じ距離の芝は、回りが分かるまで出さない。
+ * 京都芝1400・1600・2000は courseRail があるときだけ出す。
  *
  * 新しい距離の直線は、次のどれかに乗せる。14本の台本は詰め幅を個別に変えない。
  * - short … 直線が短く、後方から届かない（札幌・函館・福島・小倉、阪神ダートの前残り）
@@ -160,7 +161,19 @@ export const FLAT_NEW: FlatRow[] = [
 const BY_KEY = new Map(FLAT_NEW.map((item) => [`${item.venue}:${item.track}:${item.meters}`, item]));
 
 export function flatRow(id: string) {
-  return FLAT_NEW.find((item) => item.id === id) ?? null;
+  return FLAT_NEW.find((item) => item.id === id) ?? RAIL_FLAT.find((item) => item.id === id) ?? null;
+}
+
+/** 京都は外回りだけ見出しに「外」と出る。内回りは courseRail が「内」のとき */
+function kyotoRailId(race: FlatRace): string | null {
+  if (normalizeVenue(race.venue) !== "京都" || race.track !== "芝") return null;
+  const meters = parseDistanceMeters(race.distance);
+  const rail = race.courseRail;
+  if (rail !== "内" && rail !== "外") return null;
+  if (meters === 1400) return rail === "外" ? "kyoto-turf-1400-outer" : "kyoto-turf-1400";
+  if (meters === 1600) return rail === "外" ? "kyoto-turf-1600-outer" : "kyoto-turf-1600";
+  if (meters === 2000) return rail === "外" ? "kyoto-turf-2000-outer" : "kyoto-turf-2000";
+  return null;
 }
 
 export type FlatRace = {
@@ -168,7 +181,16 @@ export type FlatRace = {
   track: string;
   distance: string;
   raceDate: string;
+  courseRail?: "内" | "外";
 };
+
+/** 距離が同じ内・外。FLAT_NEW のキーには入れない */
+const RAIL_FLAT: FlatRow[] = [
+  { id: "kyoto-turf-1400", venue: "京都", track: "芝", meters: 1400, stretch: "middle" },
+  { id: "kyoto-turf-1400-outer", venue: "京都", track: "芝", meters: 1400, stretch: "middle" },
+  { id: "kyoto-turf-2000", venue: "京都", track: "芝", meters: 2000, stretch: "long" },
+  { id: "kyoto-turf-2000-outer", venue: "京都", track: "芝", meters: 2000, stretch: "long" },
+];
 
 /** レース詳細に出す平地。未対応・後回し・障害は null */
 export function flatSimId(race: FlatRace): string | null {
@@ -179,7 +201,7 @@ export function flatSimId(race: FlatRace): string | null {
   if (meters == null) return null;
   const venue = normalizeVenue(race.venue);
   const key = `${venue}:${race.track}:${meters}`;
-  if (DEFERRED.has(key)) return null;
+  if (DEFERRED.has(key)) return kyotoRailId(race);
   if (race.track === "芝") {
     const legacy = turfOneTurnId(race);
     if (legacy) return legacy;

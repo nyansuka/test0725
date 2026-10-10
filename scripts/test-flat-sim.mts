@@ -34,11 +34,29 @@ for (const key of DEFERRED_FLAT) {
   assert.equal(flatSimId({ venue, track, distance: `${track}${meters}`, raceDate: "2026-09-02" }), null, key);
 }
 
+const kyotoDay = { venue: "京都", track: "芝", raceDate: "2026-10-10" };
+assert.equal(flatSimId({ ...kyotoDay, distance: "芝1600m", courseRail: "内" }), "kyoto-turf-1600");
+assert.equal(flatSimId({ ...kyotoDay, distance: "芝1600m", courseRail: "外" }), "kyoto-turf-1600-outer");
+assert.equal(flatSimId({ ...kyotoDay, distance: "芝1400m", courseRail: "外" }), "kyoto-turf-1400-outer");
+assert.equal(flatSimId({ ...kyotoDay, distance: "芝2000m", courseRail: "内" }), "kyoto-turf-2000");
+assert.equal(flatSimId({ ...kyotoDay, distance: "芝2000m", courseRail: "外" }), "kyoto-turf-2000-outer");
+assert.equal(flatSimId({ venue: "阪神", track: "芝", distance: "芝1400m", raceDate: "2026-10-10", courseRail: "外" }), null);
+
 const horses = [
   { number: 1, bracket: 1, name: "逃げ", style: "逃" as const, stretchGainM: 80 },
   { number: 2, bracket: 2, name: "差し", style: "差" as const, stretchGainM: 80 },
   { number: 3, bracket: 3, name: "追込", style: "追" as const, stretchGainM: 80 },
 ];
+
+for (const id of ["kyoto-turf-1400", "kyoto-turf-1400-outer", "kyoto-turf-2000", "kyoto-turf-2000-outer"]) {
+  const view = flatCourseView(id);
+  assert.ok(view, id);
+  const play = view.play(horses);
+  const meters = play.phases.map((phase) => phase.m);
+  assert.equal(meters[0], 0, id);
+  assert.equal(meters.at(-1), view.raceMeters, id);
+  for (let i = 1; i < meters.length; i += 1) assert.ok(meters[i] > meters[i - 1], `${id} ${meters.join(",")}`);
+}
 
 for (const row of FLAT_NEW) {
   const view = flatCourseView(row.id);

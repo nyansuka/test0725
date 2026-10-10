@@ -7,7 +7,7 @@ import { asRaw, assembleFlat, spanOf, withSpan } from "@/domain/sim/flatPath";
  * ゴールから1角までを105mにし、芝3000の3角までが208mになる。
  * 外回りは3角で分かれ、4角の出口で内回りに戻る。坂は3〜4角。ゴール前は平坦。
  * 芝1600（内・外）と芝1800は、2角の奥へまっすぐ伸ばした引き込み。
- * 芝1800の走行は、その引き込みの端から。本線をゴールから戻した位置には置かない。
+ * 芝1600と芝1800の走行は、その引き込みの端から。本線をゴールから戻した位置には置かない。
  * ダート1400だけ芝スタート。
  */
 
@@ -887,6 +887,43 @@ export function kyotoTurf1800Run() {
 }
 
 /**
+ * 芝1600。内は直線328.4m、外は403.7m。どちらも引き込みの端から。
+ * 140m地点はまだ引き込み。本線をゴールから戻した位置には置かない。
+ */
+export function kyotoTurf1600Run(rail: "inner" | "outer") {
+  const g = GEOM;
+  const outer = rail === "outer";
+  const samples = outer ? g.outer : g.inner;
+  const lap = outer ? OUTER_LAP : INNER_LAP;
+  const straight = outer ? OUTER_STRAIGHT : INNER_STRAIGHT;
+  const len = outer ? g.chute1600Outer : g.chute1600Inner;
+  const join = sampleAt(samples, g.backJoinM);
+  const chutePts = backChute(join, len);
+  const last = chutePts.length - 1;
+  const run = chutePts.map((p, i) => projectPoint(p, len * (i / last)));
+  const railPts = slice(samples, g.backJoinM, lap);
+  for (let i = 1; i < railPts.length; i += 1) {
+    const p = railPts[i];
+    const atEnd = i === railPts.length - 1;
+    run.push(projectPoint(p, atEnd ? 1600 : len + (p.m - g.backJoinM)));
+  }
+  const race = (railM: number) => len + (railM - g.backJoinM);
+  const turnEnd = lap - straight;
+  const corner4Rail = outer ? g.corner3M + (turnEnd - g.corner3M) * 0.72 : g.innerCornerM.c4;
+  return {
+    run,
+    idle: slice(samples, 0, g.backJoinM).map((p) => projectPoint(p, p.m)),
+    approach: backApproach(join, len),
+    join: len,
+    corner3: race(outer ? g.outerCornerM.c3 : g.innerCornerM.c3),
+    corner4: race(corner4Rail),
+    straightFrom: race(turnEnd),
+    hillFrom: race(g.corner3M),
+    hillTo: race(g.corner3M) + 180,
+  };
+}
+
+/**
  * 芝1200内。2角の出口から内回りを1200m。
  * 坂は3角側（図と同じく corner3 から180m）。ゴール前は平坦。
  */
@@ -1063,6 +1100,18 @@ function checkTemplates() {
   if (!turf1800.run.every((point, index) => index === 0 || point.m > turf1800.run[index - 1].m)) {
     throw new Error("芝1800の点列が戻っている");
   }
+  for (const rail of ["inner", "outer"] as const) {
+    const turf1600 = kyotoTurf1600Run(rail);
+    const straight = rail === "outer" ? OUTER_STRAIGHT : INNER_STRAIGHT;
+    assertNear(turf1600.run[turf1600.run.length - 1].m, 1600, `芝1600${rail}のゴール`);
+    assertNear(1600 - turf1600.straightFrom, straight, `芝1600${rail}の直線`);
+    if (!(140 < turf1600.join && turf1600.join < turf1600.corner3 && turf1600.corner4 < turf1600.straightFrom)) {
+      throw new Error(`芝1600${rail}の並び 引き込み${turf1600.join.toFixed(0)} 3角${turf1600.corner3.toFixed(0)}`);
+    }
+    if (!turf1600.run.every((point, index) => index === 0 || point.m > turf1600.run[index - 1].m)) {
+      throw new Error(`芝1600${rail}の点列が戻っている`);
+    }
+  }
   const atCorner = runPoint(turf2400.run, turf2400.corner1);
   if (hypot(atCorner.x - c1.x, atCorner.y - c1.y) > 8) throw new Error("芝2400の1角が入口にない");
   const atHill = runPoint(turf2400.run, turf2400.hillFrom);
@@ -1085,7 +1134,7 @@ function checkTemplates() {
 
 checkTemplates();
 
-/** 内・外が同じ距離（1400・1600・2000）はここを呼ばない */
+/** 芝1600は引き込みなので呼ばない。1400と2000は回りが決まっているときだけ */
 export function kyotoFlatGeom(templateId: string) {
   const template = KYOTO_TEMPLATES.find((item) => item.id === templateId);
   if (!template) return null;

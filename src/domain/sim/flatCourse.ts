@@ -71,7 +71,8 @@ function buildFlatCourse(id: string) {
   const row = flatRow(id);
   const slug = id.split("-")[0];
   if (!row || !GEOM[slug] || !WORDS[slug]) return null;
-  const templateId = `${row.track === "芝" ? "turf" : "dirt"}-${row.meters}`;
+  const surface = row.track === "芝" ? "turf" : "dirt";
+  const templateId = id.endsWith("-outer") ? `${surface}-${row.meters}-outer` : `${surface}-${row.meters}`;
   const path = GEOM[slug](templateId);
   const words = WORDS[slug].find((item) => item.id === templateId);
   if (!path || !words) return null;

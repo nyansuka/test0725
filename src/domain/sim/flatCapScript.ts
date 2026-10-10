@@ -36,7 +36,8 @@ function horseLabel(horse: SimHorse) {
 function increasing(meters: number, corner3: number, corner4: number, straightFrom: number, corner1: number) {
   const c3 = Math.min(Math.max(corner3, 80), meters - 120);
   const c4 = Math.min(Math.max(corner4, c3 + 24), meters - 40);
-  const straight = Math.min(Math.max(straightFrom, c4), meters - 12);
+  let straight = Math.min(Math.max(straightFrom, c4), meters - 12);
+  if (straight <= c4) straight = Math.min(meters - 12, c4 + 16);
   const early = corner1 > 24 && corner1 < c3 - 12 ? corner1 : Math.min(140, c3 * 0.45);
   return { early, c3, c4, straight };
 }
