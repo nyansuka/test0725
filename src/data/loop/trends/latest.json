@@ -1,8 +1,8 @@
 {
-  "builtAt": "2026-09-26T16:38:29.998Z",
+  "builtAt": "2026-10-11T09:13:26.031Z",
   "source": "src/data/loop/evaluations",
   "primaryMetric": "ticketPrecision",
-  "dayCount": 19,
+  "dayCount": 20,
   "dates": [
     "2026-07-25",
     "2026-07-26",
@@ -22,18 +22,19 @@
     "2026-09-19",
     "2026-09-20",
     "2026-09-21",
-    "2026-09-26"
+    "2026-09-26",
+    "2026-10-11"
   ],
   "minSamples": 20,
   "overall": {
-    "candidates": 5167,
-    "hits": 1782,
-    "ticketHits": 64,
+    "candidates": 5293,
+    "hits": 1811,
+    "ticketHits": 65,
     "pending": 0,
-    "settled": 5167,
-    "precision": 0.3448809754209406,
-    "placePrecision": 0.3448809754209406,
-    "ticketPrecision": 0.0123862976582156
+    "settled": 5293,
+    "precision": 0.3421500094464387,
+    "placePrecision": 0.3421500094464387,
+    "ticketPrecision": 0.01228037030039675
   },
   "byDay": {
     "2026-07-25": {
@@ -225,38 +226,48 @@
       "precision": 0.29914529914529914,
       "placePrecision": 0.29914529914529914,
       "ticketPrecision": 0
+    },
+    "2026-10-11": {
+      "candidates": 126,
+      "hits": 29,
+      "ticketHits": 1,
+      "pending": 0,
+      "settled": 126,
+      "precision": 0.23015873015873015,
+      "placePrecision": 0.23015873015873015,
+      "ticketPrecision": 0.007936507936507936
     }
   },
   "byBetType": {
     "win": {
-      "candidates": 1086,
-      "hits": 92,
-      "ticketHits": 18,
+      "candidates": 1137,
+      "hits": 94,
+      "ticketHits": 19,
       "pending": 0,
-      "settled": 1086,
-      "precision": 0.0847145488029466,
-      "placePrecision": 0.0847145488029466,
-      "ticketPrecision": 0.016574585635359115
+      "settled": 1137,
+      "precision": 0.08267370272647317,
+      "placePrecision": 0.08267370272647317,
+      "ticketPrecision": 0.016710642040457344
     },
     "quinella": {
-      "candidates": 633,
-      "hits": 314,
+      "candidates": 640,
+      "hits": 318,
       "ticketHits": 4,
       "pending": 0,
-      "settled": 633,
-      "precision": 0.4960505529225908,
-      "placePrecision": 0.4960505529225908,
-      "ticketPrecision": 0.00631911532385466
+      "settled": 640,
+      "precision": 0.496875,
+      "placePrecision": 0.496875,
+      "ticketPrecision": 0.00625
     },
     "wide": {
-      "candidates": 1911,
-      "hits": 596,
+      "candidates": 1945,
+      "hits": 605,
       "ticketHits": 20,
       "pending": 0,
-      "settled": 1911,
-      "precision": 0.31187859759288333,
-      "placePrecision": 0.31187859759288333,
-      "ticketPrecision": 0.010465724751439037
+      "settled": 1945,
+      "precision": 0.3110539845758355,
+      "placePrecision": 0.3110539845758355,
+      "ticketPrecision": 0.010282776349614395
     },
     "exacta": {
       "candidates": 422,
@@ -269,14 +280,14 @@
       "ticketPrecision": 0.002369668246445498
     },
     "place": {
-      "candidates": 81,
+      "candidates": 84,
       "hits": 2,
       "ticketHits": 2,
       "pending": 0,
-      "settled": 81,
-      "precision": 0.024691358024691357,
-      "placePrecision": 0.024691358024691357,
-      "ticketPrecision": 0.024691358024691357
+      "settled": 84,
+      "precision": 0.023809523809523808,
+      "placePrecision": 0.023809523809523808,
+      "ticketPrecision": 0.023809523809523808
     },
     "trio": {
       "candidates": 69,
@@ -289,14 +300,14 @@
       "ticketPrecision": 0
     },
     "bracket_quinella": {
-      "candidates": 952,
-      "hits": 508,
+      "candidates": 983,
+      "hits": 522,
       "ticketHits": 19,
       "pending": 0,
-      "settled": 952,
-      "precision": 0.5336134453781513,
-      "placePrecision": 0.5336134453781513,
-      "ticketPrecision": 0.01995798319327731
+      "settled": 983,
+      "precision": 0.5310274669379451,
+      "placePrecision": 0.5310274669379451,
+      "ticketPrecision": 0.019328585961342827
     },
     "trifecta": {
       "candidates": 13,
@@ -359,50 +370,70 @@
       "precision": 0.37305699481865284,
       "placePrecision": 0.37305699481865284,
       "ticketPrecision": 0.010362694300518135
+    },
+    "東京": {
+      "candidates": 64,
+      "hits": 10,
+      "ticketHits": 0,
+      "pending": 0,
+      "settled": 64,
+      "precision": 0.15625,
+      "placePrecision": 0.15625,
+      "ticketPrecision": 0
+    },
+    "京都": {
+      "candidates": 62,
+      "hits": 19,
+      "ticketHits": 1,
+      "pending": 0,
+      "settled": 62,
+      "precision": 0.3064516129032258,
+      "placePrecision": 0.3064516129032258,
+      "ticketPrecision": 0.016129032258064516
     }
   },
   "byTrack": {
     "芝": {
-      "candidates": 3268,
-      "hits": 1163,
+      "candidates": 3361,
+      "hits": 1188,
       "ticketHits": 43,
       "pending": 0,
-      "settled": 3268,
-      "precision": 0.35587515299877603,
-      "placePrecision": 0.35587515299877603,
-      "ticketPrecision": 0.013157894736842105
+      "settled": 3361,
+      "precision": 0.3534662302886046,
+      "placePrecision": 0.3534662302886046,
+      "ticketPrecision": 0.012793811365664981
     },
     "ダート": {
-      "candidates": 1899,
-      "hits": 619,
-      "ticketHits": 21,
+      "candidates": 1932,
+      "hits": 623,
+      "ticketHits": 22,
       "pending": 0,
-      "settled": 1899,
-      "precision": 0.32596103212216954,
-      "placePrecision": 0.32596103212216954,
-      "ticketPrecision": 0.011058451816745656
+      "settled": 1932,
+      "precision": 0.322463768115942,
+      "placePrecision": 0.322463768115942,
+      "ticketPrecision": 0.011387163561076604
     }
   },
   "byLabel": {
     "注目穴": {
-      "candidates": 3451,
-      "hits": 1151,
-      "ticketHits": 44,
+      "candidates": 3558,
+      "hits": 1178,
+      "ticketHits": 45,
       "pending": 0,
-      "settled": 3451,
-      "precision": 0.33352651405389744,
-      "placePrecision": 0.33352651405389744,
-      "ticketPrecision": 0.012749927557229788
+      "settled": 3558,
+      "precision": 0.33108487914558743,
+      "placePrecision": 0.33108487914558743,
+      "ticketPrecision": 0.012647554806070826
     },
     "抑え候補": {
-      "candidates": 1670,
-      "hits": 607,
+      "candidates": 1689,
+      "hits": 609,
       "ticketHits": 20,
       "pending": 0,
-      "settled": 1670,
-      "precision": 0.36347305389221557,
-      "placePrecision": 0.36347305389221557,
-      "ticketPrecision": 0.011976047904191617
+      "settled": 1689,
+      "precision": 0.3605683836589698,
+      "placePrecision": 0.3605683836589698,
+      "ticketPrecision": 0.011841326228537596
     },
     "検討": {
       "candidates": 46,
@@ -417,14 +448,14 @@
   },
   "byOddsBand": {
     "20-49": {
-      "candidates": 2411,
-      "hits": 888,
-      "ticketHits": 49,
+      "candidates": 2479,
+      "hits": 902,
+      "ticketHits": 50,
       "pending": 0,
-      "settled": 2411,
-      "precision": 0.36831190377436746,
-      "placePrecision": 0.36831190377436746,
-      "ticketPrecision": 0.020323517212774783
+      "settled": 2479,
+      "precision": 0.36385639370713996,
+      "placePrecision": 0.36385639370713996,
+      "ticketPrecision": 0.02016942315449778
     },
     "100+": {
       "candidates": 873,
@@ -437,14 +468,14 @@
       "ticketPrecision": 0
     },
     "50-99": {
-      "candidates": 1883,
-      "hits": 648,
+      "candidates": 1941,
+      "hits": 663,
       "ticketHits": 15,
       "pending": 0,
-      "settled": 1883,
-      "precision": 0.3441317047265003,
-      "placePrecision": 0.3441317047265003,
-      "ticketPrecision": 0.007966011683483803
+      "settled": 1941,
+      "precision": 0.3415765069551777,
+      "placePrecision": 0.3415765069551777,
+      "ticketPrecision": 0.0077279752704791345
     }
   },
   "byVenueTrack": {
@@ -547,6 +578,46 @@
       "precision": 0.35947712418300654,
       "placePrecision": 0.35947712418300654,
       "ticketPrecision": 0.00980392156862745
+    },
+    "東京|芝": {
+      "candidates": 46,
+      "hits": 10,
+      "ticketHits": 0,
+      "pending": 0,
+      "settled": 46,
+      "precision": 0.21739130434782608,
+      "placePrecision": 0.21739130434782608,
+      "ticketPrecision": 0
+    },
+    "京都|芝": {
+      "candidates": 47,
+      "hits": 15,
+      "ticketHits": 0,
+      "pending": 0,
+      "settled": 47,
+      "precision": 0.3191489361702128,
+      "placePrecision": 0.3191489361702128,
+      "ticketPrecision": 0
+    },
+    "東京|ダート": {
+      "candidates": 18,
+      "hits": 0,
+      "ticketHits": 0,
+      "pending": 0,
+      "settled": 18,
+      "precision": 0,
+      "placePrecision": 0,
+      "ticketPrecision": 0
+    },
+    "京都|ダート": {
+      "candidates": 15,
+      "hits": 4,
+      "ticketHits": 1,
+      "pending": 0,
+      "settled": 15,
+      "precision": 0.26666666666666666,
+      "placePrecision": 0.26666666666666666,
+      "ticketPrecision": 0.06666666666666667
     }
   },
   "daySlices": {
@@ -4813,6 +4884,200 @@
           "precision": 0.5714285714285714,
           "placePrecision": 0.5714285714285714,
           "ticketPrecision": 0
+        }
+      }
+    },
+    "2026-10-11": {
+      "overall": {
+        "candidates": 126,
+        "hits": 29,
+        "ticketHits": 1,
+        "pending": 0,
+        "settled": 126,
+        "precision": 0.23015873015873015,
+        "placePrecision": 0.23015873015873015,
+        "ticketPrecision": 0.007936507936507936
+      },
+      "byBetType": {
+        "wide": {
+          "candidates": 34,
+          "hits": 9,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 34,
+          "precision": 0.2647058823529412,
+          "placePrecision": 0.2647058823529412,
+          "ticketPrecision": 0
+        },
+        "bracket_quinella": {
+          "candidates": 31,
+          "hits": 14,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 31,
+          "precision": 0.45161290322580644,
+          "placePrecision": 0.45161290322580644,
+          "ticketPrecision": 0
+        },
+        "quinella": {
+          "candidates": 7,
+          "hits": 4,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 7,
+          "precision": 0.5714285714285714,
+          "placePrecision": 0.5714285714285714,
+          "ticketPrecision": 0
+        },
+        "win": {
+          "candidates": 51,
+          "hits": 2,
+          "ticketHits": 1,
+          "pending": 0,
+          "settled": 51,
+          "precision": 0.0392156862745098,
+          "placePrecision": 0.0392156862745098,
+          "ticketPrecision": 0.0196078431372549
+        },
+        "place": {
+          "candidates": 3,
+          "hits": 0,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 3,
+          "precision": 0,
+          "placePrecision": 0,
+          "ticketPrecision": 0
+        }
+      },
+      "byVenue": {
+        "東京": {
+          "candidates": 64,
+          "hits": 10,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 64,
+          "precision": 0.15625,
+          "placePrecision": 0.15625,
+          "ticketPrecision": 0
+        },
+        "京都": {
+          "candidates": 62,
+          "hits": 19,
+          "ticketHits": 1,
+          "pending": 0,
+          "settled": 62,
+          "precision": 0.3064516129032258,
+          "placePrecision": 0.3064516129032258,
+          "ticketPrecision": 0.016129032258064516
+        }
+      },
+      "byTrack": {
+        "芝": {
+          "candidates": 93,
+          "hits": 25,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 93,
+          "precision": 0.26881720430107525,
+          "placePrecision": 0.26881720430107525,
+          "ticketPrecision": 0
+        },
+        "ダート": {
+          "candidates": 33,
+          "hits": 4,
+          "ticketHits": 1,
+          "pending": 0,
+          "settled": 33,
+          "precision": 0.12121212121212122,
+          "placePrecision": 0.12121212121212122,
+          "ticketPrecision": 0.030303030303030304
+        }
+      },
+      "byLabel": {
+        "注目穴": {
+          "candidates": 107,
+          "hits": 27,
+          "ticketHits": 1,
+          "pending": 0,
+          "settled": 107,
+          "precision": 0.2523364485981308,
+          "placePrecision": 0.2523364485981308,
+          "ticketPrecision": 0.009345794392523364
+        },
+        "抑え候補": {
+          "candidates": 19,
+          "hits": 2,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 19,
+          "precision": 0.10526315789473684,
+          "placePrecision": 0.10526315789473684,
+          "ticketPrecision": 0
+        }
+      },
+      "byOddsBand": {
+        "20-49": {
+          "candidates": 68,
+          "hits": 14,
+          "ticketHits": 1,
+          "pending": 0,
+          "settled": 68,
+          "precision": 0.20588235294117646,
+          "placePrecision": 0.20588235294117646,
+          "ticketPrecision": 0.014705882352941176
+        },
+        "50-99": {
+          "candidates": 58,
+          "hits": 15,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 58,
+          "precision": 0.25862068965517243,
+          "placePrecision": 0.25862068965517243,
+          "ticketPrecision": 0
+        }
+      },
+      "byVenueTrack": {
+        "東京|芝": {
+          "candidates": 46,
+          "hits": 10,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 46,
+          "precision": 0.21739130434782608,
+          "placePrecision": 0.21739130434782608,
+          "ticketPrecision": 0
+        },
+        "京都|芝": {
+          "candidates": 47,
+          "hits": 15,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 47,
+          "precision": 0.3191489361702128,
+          "placePrecision": 0.3191489361702128,
+          "ticketPrecision": 0
+        },
+        "東京|ダート": {
+          "candidates": 18,
+          "hits": 0,
+          "ticketHits": 0,
+          "pending": 0,
+          "settled": 18,
+          "precision": 0,
+          "placePrecision": 0,
+          "ticketPrecision": 0
+        },
+        "京都|ダート": {
+          "candidates": 15,
+          "hits": 4,
+          "ticketHits": 1,
+          "pending": 0,
+          "settled": 15,
+          "precision": 0.26666666666666666,
+          "placePrecision": 0.26666666666666666,
+          "ticketPrecision": 0.06666666666666667
         }
       }
     }
