@@ -16,6 +16,7 @@
     "fetch:nar:official:all": "node scripts/fetch-nar-official-snapshot.mjs --venues=all",
     "test:payout-parse": "node scripts/test-payout-parse.mjs",
     "test:combo-odds-keep": "node scripts/test-combo-odds-keep.mjs",
+    "test:win-odds-cap": "node scripts/test-win-odds-cap.mjs",
     "test:sanren-trio-index": "node scripts/test-sanren-trio-index.mjs",
     "test:sanren-trifecta-index": "node scripts/test-sanren-trifecta-index.mjs",
     "test:horse-form": "node scripts/test-horse-form.mjs",

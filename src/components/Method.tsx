@@ -3,7 +3,7 @@ import { PADDOCK_SECTION, WEIGHT_SECTION, WORKOUT_SECTION } from "@/domain/suppl
 const steps = [
   {
     title: "オッズゲート",
-    body: "各券種でオッズが設定閾値未満、または上限を超える買い目は除外。初期は下限25・上限80。複勝を含む全券種が対象です。",
+    body: "各券種でオッズが設定閾値未満、または上限を超える買い目は除外。初期は下限25・上限80。単勝だけは40倍未満です。複勝を含む全券種が対象です。",
   },
   {
     title: "複勝圏スコア（穴）",

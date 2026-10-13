@@ -47,7 +47,7 @@ export function SettingsForm() {
             nullStepTo={DEFAULT_SETTINGS.oddsMax ?? 80}
           />
           <p className="mt-2 text-xs text-ink/50">
-            初期値 {DEFAULT_SETTINGS.oddsMax ?? "なし"}。−で下限未満にすると上限なし。この値を超えるオッズは除外。
+            初期値 {DEFAULT_SETTINGS.oddsMax ?? "なし"}。−で下限未満にすると上限なし。この値を超えるオッズは除外。単勝は別に40倍未満です。
           </p>
         </div>
         <div className="min-w-0">

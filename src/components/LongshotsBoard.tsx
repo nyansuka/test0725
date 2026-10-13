@@ -81,7 +81,7 @@ export function LongshotsBoard({ races: racesProp }: Props) {
             />
           </label>
           <label className="block text-sm">
-            <span className="text-ink/60">オッズ上限（以下）</span>
+            <span className="text-ink/60">オッズ上限（以下、単勝は40倍未満）</span>
             <input
               type="number"
               min={1}

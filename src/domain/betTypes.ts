@@ -24,9 +24,26 @@ export const BET_TYPE_LABELS: Record<BetType, string> = {
   trifecta: "3連単",
 };
 
+/**
+ * 単勝だけこの値未満（2026-10-13）。
+ * 21開催で 40 倍以上は複勝圏 5.1%・券種的中 0.66%。25–40 倍は 11.0% / 2.62%。
+ */
+export const WIN_ODDS_MAX = 40;
+
+/** 共通上限を超える、または単勝が {@link WIN_ODDS_MAX} 以上。 */
+export function isAboveOddsCap(
+  betType: BetType | string,
+  odds: number,
+  oddsMax: number | null,
+): boolean {
+  if (oddsMax != null && odds > oddsMax) return true;
+  if (betType === "win" && odds >= WIN_ODDS_MAX) return true;
+  return false;
+}
+
 export const DEFAULT_SETTINGS = {
   oddsThreshold: 25,
-  /** B3: 上限80（感度スイープ推奨。null で上限なし） */
+  /** B3: 上限80（感度スイープ推奨。null で上限なし）。単勝は別途 WIN_ODDS_MAX 未満 */
   oddsMax: 80 as number | null,
   /**
    * 2026-08-13: 60→65（VERIFY 8/9 の次の1変更）。

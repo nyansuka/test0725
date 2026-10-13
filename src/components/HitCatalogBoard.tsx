@@ -217,7 +217,7 @@ function BetTypeOverview({
     <section className="mt-6 overflow-hidden rounded-xl border border-ink/10 bg-white">
       <h2 className="border-b border-ink/10 px-4 py-3 text-sm font-semibold text-ink">券種別</h2>
       <p className="px-4 pt-3 text-xs text-ink/50">
-        基本設定（下限25・上限80）を通った払戻だけ。捕捉は当日の候補に載っていた件数。3連複・3連単は上のレーンへ。券種は合算しません。行を選ぶと発生条件が出ます。
+        基本設定（下限25・上限80、単勝は40倍未満）を通った払戻だけ。捕捉は当日の候補に載っていた件数。3連複・3連単は上のレーンへ。券種は合算しません。行を選ぶと発生条件が出ます。
       </p>
       <div className="overflow-x-auto">
         <table className="mt-2 w-full min-w-[36rem] text-left text-sm">

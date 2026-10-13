@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url";
 import {
   DEFAULT_SETTINGS,
   classifyOddsEntry,
+  isAboveOddsCap,
   parseSelectionNumbers,
   popularityByNumber,
 } from "./lib/loop-domain.mjs";
@@ -167,10 +168,10 @@ function findPick(picks, raceId, betType, selection) {
   return (picks ?? []).find((p) => p.raceId === raceId && selKey(p.betType, p.selection) === want);
 }
 
-function inOddsGate(odds, settings) {
+function inOddsGate(odds, settings, betType) {
   if (odds == null || !Number.isFinite(odds)) return false;
   if (odds < settings.oddsThreshold) return false;
-  if (settings.oddsMax != null && odds > settings.oddsMax) return false;
+  if (isAboveOddsCap(betType, odds, settings.oddsMax)) return false;
   return true;
 }
 
@@ -225,7 +226,7 @@ function extractLaneHits({
       if (!board) continue;
       coverage.onBoard += 1;
       coverageByBetType[payout.betType].onBoard += 1;
-      if (!inOddsGate(board.odds, settings)) continue;
+      if (!inOddsGate(board.odds, settings, payout.betType)) continue;
       coverage.gated += 1;
       coverageByBetType[payout.betType].gated += 1;
       if (pickKnown) {

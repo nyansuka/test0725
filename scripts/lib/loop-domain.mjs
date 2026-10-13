@@ -24,9 +24,18 @@ export const ALL_BET_TYPES = [
   "trifecta",
 ];
 
+/** src/domain/betTypes.ts の WIN_ODDS_MAX と揃える。単勝はこの値未満。 */
+export const WIN_ODDS_MAX = 40;
+
+export function isAboveOddsCap(betType, odds, oddsMax) {
+  if (oddsMax != null && odds > oddsMax) return true;
+  if (betType === "win" && odds >= WIN_ODDS_MAX) return true;
+  return false;
+}
+
 export const DEFAULT_SETTINGS = {
   oddsThreshold: 25,
-  /** B3: 上限80（感度スイープ推奨。null で上限なし） */
+  /** B3: 上限80。単勝は別途 WIN_ODDS_MAX 未満 */
   oddsMax: 80,
   /**
    * 2026-08-13: 60→65（凍結6日 scoreMin スイープ）。
@@ -305,7 +314,7 @@ export function classifyOddsEntry(race, entry, settings) {
   if (entry.odds < settings.oddsThreshold) {
     return { status: "below_threshold", relatedHorseNumbers: [], relatedPlacePotential: 0 };
   }
-  if (settings.oddsMax != null && entry.odds > settings.oddsMax) {
+  if (isAboveOddsCap(entry.betType, entry.odds, settings.oddsMax)) {
     return { status: "above_max", relatedHorseNumbers: [], relatedPlacePotential: 0 };
   }
   const related = resolveRelatedHorses(race, entry.selection, entry.betType);

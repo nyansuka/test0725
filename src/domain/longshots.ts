@@ -1,5 +1,5 @@
 import type { BetType, LongshotLabel, LongshotPick, OddsEntry, Race, UserSelectionSettings } from "./types";
-import { parseSelectionNumbers } from "./betTypes";
+import { isAboveOddsCap, parseSelectionNumbers } from "./betTypes";
 import { getScorer } from "./scoring";
 import { buildPickComment } from "./comment";
 import { getTrendIndex } from "./trendData";
@@ -173,7 +173,7 @@ export function classifyOddsEntry(
       relatedPlacePotential: 0,
     };
   }
-  if (settings.oddsMax != null && entry.odds > settings.oddsMax) {
+  if (isAboveOddsCap(entry.betType, entry.odds, settings.oddsMax)) {
     return {
       entry,
       status: "above_max",
