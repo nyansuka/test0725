@@ -25,6 +25,11 @@ on:
           - results
           - odds
           - full
+      date:
+        description: "YYYYMMDD または YYYY-MM-DD。空なら JST 当日（金曜夜に翌日を取るとき用）"
+        required: false
+        default: ""
+        type: string
 
 permissions:
   contents: write
@@ -64,24 +69,34 @@ jobs:
           fi
           echo "JST=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M')" >> "$GITHUB_OUTPUT"
 
-      - name: Refresh today's snapshot
+      - name: Refresh snapshot
         env:
           MODE: ${{ steps.mode.outputs.mode }}
+          RACE_DATE: ${{ github.event.inputs.date }}
         run: |
-          echo "mode=$MODE JST=${{ steps.mode.outputs.JST }}"
+          DATE="${RACE_DATE:-}"
+          if [ -n "$DATE" ] && ! [[ "$DATE" =~ ^[0-9]{8}$|^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+            echo "invalid date: $DATE"
+            exit 1
+          fi
+          echo "mode=$MODE date=${DATE:-JST-today} JST=${{ steps.mode.outputs.JST }}"
+          extra=()
+          if [ -n "$DATE" ]; then
+            extra+=("$DATE")
+          fi
           case "$MODE" in
             full)
               echo "Running full fetch:jra (shutuba + odds + results)"
-              npm run fetch:jra
+              npm run fetch:jra -- "${extra[@]}"
               ;;
             odds)
               echo "Running odds then results"
-              npm run fetch:jra:odds
-              npm run fetch:jra:results
+              npm run fetch:jra:odds -- "${extra[@]}"
+              npm run fetch:jra:results -- "${extra[@]}"
               ;;
             *)
               echo "Running results only"
-              npm run fetch:jra:results
+              npm run fetch:jra:results -- "${extra[@]}"
               ;;
           esac
 
