@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-11T09:13:26.870Z",
+  "builtAt": "2026-10-17T12:18:16.403Z",
   "kind": "gated-hit-conditions",
   "note": "Freeze odds met that day's settings and the payout hit. Main = non-sanren bet types at board settings. Trio/trifecta are separate. Do not merge KPI.",
   "scannedDates": [
@@ -23,7 +23,9 @@
     "2026-09-21",
     "2026-09-22",
     "2026-09-26",
-    "2026-10-11"
+    "2026-10-11",
+    "2026-10-12",
+    "2026-10-17"
   ],
   "dates": [
     "2026-07-25",
@@ -45,7 +47,9 @@
     "2026-09-20",
     "2026-09-21",
     "2026-09-26",
-    "2026-10-11"
+    "2026-10-11",
+    "2026-10-12",
+    "2026-10-17"
   ],
   "byLane": {
     "main": {
@@ -55,77 +59,77 @@
         "oddsMax": 80,
         "scoreMin": 65
       },
-      "n": 297,
-      "picked": 65,
-      "missed": 232,
-      "catchRate": 0.21885521885521886,
-      "payoutYen": 2423650,
+      "n": 313,
+      "picked": 64,
+      "missed": 249,
+      "catchRate": 0.20447284345047922,
+      "payoutYen": 2465390,
       "coverage": {
-        "payouts": 6222,
-        "onBoard": 3268,
-        "gated": 297,
-        "knownGated": 297,
-        "picked": 65,
-        "boardRate": 0.5252330440372871,
-        "gateRate": 0.0908812729498164,
-        "catchRate": 0.21885521885521886
+        "payouts": 6797,
+        "onBoard": 3564,
+        "gated": 313,
+        "knownGated": 313,
+        "picked": 64,
+        "boardRate": 0.5243489774900691,
+        "gateRate": 0.08782267115600449,
+        "catchRate": 0.20447284345047922
       },
       "byVenue": {
         "中京": {
-          "n": 71,
+          "n": 70,
           "picked": 15,
-          "payoutYen": 458310,
-          "catchRate": 0.2112676056338028
+          "payoutYen": 451960,
+          "catchRate": 0.21428571428571427
         },
         "新潟": {
-          "n": 53,
-          "picked": 10,
-          "payoutYen": 771800,
-          "catchRate": 0.18867924528301888
+          "n": 54,
+          "picked": 9,
+          "payoutYen": 773010,
+          "catchRate": 0.16666666666666666
         },
         "札幌": {
-          "n": 106,
-          "picked": 23,
-          "payoutYen": 851990,
-          "catchRate": 0.2169811320754717
+          "n": 104,
+          "picked": 21,
+          "payoutYen": 838340,
+          "catchRate": 0.20192307692307693
         },
         "阪神": {
-          "n": 40,
+          "n": 39,
           "picked": 6,
-          "payoutYen": 201510,
-          "catchRate": 0.15
+          "payoutYen": 196070,
+          "catchRate": 0.15384615384615385
         },
         "中山": {
-          "n": 23,
-          "picked": 10,
-          "payoutYen": 125760,
-          "catchRate": 0.43478260869565216
+          "n": 22,
+          "picked": 9,
+          "payoutYen": 119280,
+          "catchRate": 0.4090909090909091
         },
         "京都": {
-          "n": 3,
-          "picked": 1,
-          "payoutYen": 8560,
-          "catchRate": 0.3333333333333333
+          "n": 14,
+          "picked": 3,
+          "payoutYen": 41690,
+          "catchRate": 0.21428571428571427
         },
         "東京": {
-          "n": 1,
-          "picked": 0,
-          "payoutYen": 5720,
-          "catchRate": 0
+          "n": 10,
+          "picked": 1,
+          "payoutYen": 45040,
+          "catchRate": 0.1
         }
       },
       "byTrack": {
         "ダート": {
-          "n": 118,
+          "n": 123,
           "picked": 24,
-          "payoutYen": 701390,
-          "catchRate": 0.2033898305084746
+          "payoutYen": 707930,
+          "catchRate": 0.1951219512195122
         },
         "芝": {
-          "n": 179,
-          "picked": 41,
-          "payoutYen": 1722260,
-          "catchRate": 0.22905027932960895
+          "n": 190,
+          "picked": 40,
+          "payoutYen": 1757460,
+          "catchRate": 0.21052631578947367
         }
       },
       "byBetType": {
@@ -136,74 +140,74 @@
           "catchRate": 1
         },
         "bracket_quinella": {
-          "n": 124,
+          "n": 137,
           "picked": 19,
-          "payoutYen": 749720,
-          "catchRate": 0.1532258064516129
+          "payoutYen": 801460,
+          "catchRate": 0.1386861313868613
         },
         "quinella": {
-          "n": 39,
-          "picked": 4,
-          "payoutYen": 528710,
-          "catchRate": 0.10256410256410256
+          "n": 43,
+          "picked": 5,
+          "payoutYen": 543890,
+          "catchRate": 0.11627906976744186
         },
         "exacta": {
-          "n": 20,
+          "n": 21,
           "picked": 1,
-          "payoutYen": 556160,
-          "catchRate": 0.05
+          "payoutYen": 561810,
+          "catchRate": 0.047619047619047616
         },
         "win": {
-          "n": 32,
-          "picked": 19,
-          "payoutYen": 146670,
-          "catchRate": 0.59375
+          "n": 27,
+          "picked": 16,
+          "payoutYen": 106300,
+          "catchRate": 0.5925925925925926
         },
         "wide": {
-          "n": 80,
-          "picked": 20,
-          "payoutYen": 437240,
-          "catchRate": 0.25
+          "n": 83,
+          "picked": 21,
+          "payoutYen": 446780,
+          "catchRate": 0.25301204819277107
         }
       },
       "byOddsBand": {
         "25-49": {
-          "n": 195,
+          "n": 210,
           "picked": 50,
-          "payoutYen": 794050,
-          "catchRate": 0.2564102564102564
+          "payoutYen": 831770,
+          "catchRate": 0.23809523809523808
         },
         "50-79": {
-          "n": 69,
-          "picked": 15,
-          "payoutYen": 527020,
-          "catchRate": 0.21739130434782608
+          "n": 71,
+          "picked": 14,
+          "payoutYen": 537390,
+          "catchRate": 0.19718309859154928
         },
         "80+": {
-          "n": 33,
+          "n": 32,
           "picked": 0,
-          "payoutYen": 1102580,
+          "payoutYen": 1096230,
           "catchRate": 0
         }
       },
       "byClass": {
         "未勝利": {
-          "n": 83,
-          "picked": 11,
-          "payoutYen": 820540,
-          "catchRate": 0.13253012048192772
+          "n": 84,
+          "picked": 9,
+          "payoutYen": 815270,
+          "catchRate": 0.10714285714285714
         },
         "1勝": {
-          "n": 81,
+          "n": 87,
           "picked": 21,
-          "payoutYen": 761110,
-          "catchRate": 0.25925925925925924
+          "payoutYen": 780910,
+          "catchRate": 0.2413793103448276
         },
         "新馬": {
-          "n": 35,
+          "n": 36,
           "picked": 7,
-          "payoutYen": 202300,
-          "catchRate": 0.2
+          "payoutYen": 199710,
+          "catchRate": 0.19444444444444445
         },
         "障害": {
           "n": 10,
@@ -212,36 +216,36 @@
           "catchRate": 0.2
         },
         "特別他": {
-          "n": 85,
-          "picked": 23,
-          "payoutYen": 587430,
-          "catchRate": 0.27058823529411763
+          "n": 91,
+          "picked": 24,
+          "payoutYen": 610640,
+          "catchRate": 0.26373626373626374
         },
         "2勝": {
-          "n": 3,
+          "n": 5,
           "picked": 1,
-          "payoutYen": 13350,
-          "catchRate": 0.3333333333333333
+          "payoutYen": 19940,
+          "catchRate": 0.2
         }
       },
       "byDistance": {
         "1800-2000": {
-          "n": 99,
-          "picked": 20,
-          "payoutYen": 1003660,
-          "catchRate": 0.20202020202020202
+          "n": 109,
+          "picked": 21,
+          "payoutYen": 1030970,
+          "catchRate": 0.1926605504587156
         },
         "1400-1600": {
-          "n": 101,
-          "picked": 18,
-          "payoutYen": 826350,
-          "catchRate": 0.1782178217821782
+          "n": 105,
+          "picked": 19,
+          "payoutYen": 837220,
+          "catchRate": 0.18095238095238095
         },
         "〜1200": {
-          "n": 68,
-          "picked": 17,
-          "payoutYen": 456160,
-          "catchRate": 0.25
+          "n": 70,
+          "picked": 14,
+          "payoutYen": 459720,
+          "catchRate": 0.2
         },
         "2200+": {
           "n": 29,
@@ -252,62 +256,62 @@
       },
       "byField": {
         "15頭+": {
-          "n": 83,
-          "picked": 16,
-          "payoutYen": 986890,
-          "catchRate": 0.1927710843373494
+          "n": 90,
+          "picked": 13,
+          "payoutYen": 1006210,
+          "catchRate": 0.14444444444444443
         },
         "11-14頭": {
-          "n": 149,
-          "picked": 41,
-          "payoutYen": 823040,
-          "catchRate": 0.2751677852348993
+          "n": 156,
+          "picked": 43,
+          "payoutYen": 842880,
+          "catchRate": 0.27564102564102566
         },
         "〜10頭": {
-          "n": 65,
+          "n": 67,
           "picked": 8,
-          "payoutYen": 613720,
-          "catchRate": 0.12307692307692308
+          "payoutYen": 616300,
+          "catchRate": 0.11940298507462686
         }
       },
       "byWeekday": {
         "土": {
-          "n": 146,
-          "picked": 38,
-          "payoutYen": 1231110,
-          "catchRate": 0.2602739726027397
+          "n": 153,
+          "picked": 35,
+          "payoutYen": 1250200,
+          "catchRate": 0.22875816993464052
         },
         "日": {
-          "n": 146,
+          "n": 144,
           "picked": 26,
-          "payoutYen": 1158810,
-          "catchRate": 0.1780821917808219
+          "payoutYen": 1143030,
+          "catchRate": 0.18055555555555555
         },
         "月": {
-          "n": 5,
-          "picked": 1,
-          "payoutYen": 33730,
-          "catchRate": 0.2
+          "n": 16,
+          "picked": 3,
+          "payoutYen": 72160,
+          "catchRate": 0.1875
         }
       },
       "byWeather": {
         "晴": {
-          "n": 176,
-          "picked": 37,
-          "payoutYen": 1297950,
-          "catchRate": 0.21022727272727273
+          "n": 195,
+          "picked": 38,
+          "payoutYen": 1358240,
+          "catchRate": 0.19487179487179487
         },
         "曇": {
-          "n": 98,
-          "picked": 21,
-          "payoutYen": 955440,
-          "catchRate": 0.21428571428571427
+          "n": 96,
+          "picked": 20,
+          "payoutYen": 943370,
+          "catchRate": 0.20833333333333334
         },
         "雨": {
-          "n": 16,
-          "picked": 5,
-          "payoutYen": 142410,
-          "catchRate": 0.3125
+          "n": 15,
+          "picked": 4,
+          "payoutYen": 135930,
+          "catchRate": 0.26666666666666666
         },
         "小雨": {
           "n": 7,
@@ -320,28 +324,28 @@
         "注目穴": {
           "n": 45,
           "picked": 45,
-          "payoutYen": 222700,
+          "payoutYen": 217270,
           "catchRate": 1
         },
         "未捕捉": {
-          "n": 232,
+          "n": 249,
           "picked": 0,
-          "payoutYen": 2112090,
+          "payoutYen": 2169190,
           "catchRate": 0
         },
         "抑え候補": {
-          "n": 20,
-          "picked": 20,
-          "payoutYen": 88860,
+          "n": 19,
+          "picked": 19,
+          "payoutYen": 78930,
           "catchRate": 1
         }
       },
       "byDay": {
         "2026-07-25": {
-          "n": 26,
-          "picked": 4,
-          "payoutYen": 597270,
-          "catchRate": 0.15384615384615385
+          "n": 25,
+          "picked": 3,
+          "payoutYen": 591150,
+          "catchRate": 0.12
         },
         "2026-07-26": {
           "n": 23,
@@ -356,10 +360,10 @@
           "catchRate": 0
         },
         "2026-08-02": {
-          "n": 33,
+          "n": 32,
           "picked": 3,
-          "payoutYen": 414940,
-          "catchRate": 0.09090909090909091
+          "payoutYen": 408590,
+          "catchRate": 0.09375
         },
         "2026-08-08": {
           "n": 12,
@@ -374,22 +378,22 @@
           "catchRate": 0.4
         },
         "2026-08-15": {
-          "n": 13,
-          "picked": 4,
-          "payoutYen": 61000,
-          "catchRate": 0.3076923076923077
+          "n": 12,
+          "picked": 3,
+          "payoutYen": 57220,
+          "catchRate": 0.25
         },
         "2026-08-16": {
-          "n": 20,
+          "n": 19,
           "picked": 3,
-          "payoutYen": 110250,
-          "catchRate": 0.15
+          "payoutYen": 100820,
+          "catchRate": 0.15789473684210525
         },
         "2026-08-22": {
-          "n": 12,
+          "n": 11,
           "picked": 2,
-          "payoutYen": 61260,
-          "catchRate": 0.16666666666666666
+          "payoutYen": 55310,
+          "catchRate": 0.18181818181818182
         },
         "2026-08-23": {
           "n": 20,
@@ -410,10 +414,10 @@
           "catchRate": 0.15384615384615385
         },
         "2026-09-05": {
-          "n": 17,
-          "picked": 6,
-          "payoutYen": 74270,
-          "catchRate": 0.35294117647058826
+          "n": 16,
+          "picked": 5,
+          "payoutYen": 66740,
+          "catchRate": 0.3125
         },
         "2026-09-06": {
           "n": 13,
@@ -422,16 +426,16 @@
           "catchRate": 0.23076923076923078
         },
         "2026-09-12": {
-          "n": 9,
-          "picked": 3,
-          "payoutYen": 53840,
-          "catchRate": 0.3333333333333333
+          "n": 8,
+          "picked": 2,
+          "payoutYen": 47360,
+          "catchRate": 0.25
         },
         "2026-09-19": {
-          "n": 13,
+          "n": 12,
           "picked": 3,
-          "payoutYen": 70970,
-          "catchRate": 0.23076923076923078
+          "payoutYen": 65530,
+          "catchRate": 0.25
         },
         "2026-09-20": {
           "n": 10,
@@ -456,68 +460,80 @@
           "picked": 1,
           "payoutYen": 14280,
           "catchRate": 0.25
+        },
+        "2026-10-12": {
+          "n": 11,
+          "picked": 2,
+          "payoutYen": 38430,
+          "catchRate": 0.18181818181818182
+        },
+        "2026-10-17": {
+          "n": 13,
+          "picked": 1,
+          "payoutYen": 54390,
+          "catchRate": 0.07692307692307693
         }
       },
       "coverageByBetType": {
         "win": {
-          "payouts": 636,
-          "onBoard": 636,
-          "gated": 32,
-          "knownGated": 32,
-          "picked": 19,
+          "payouts": 696,
+          "onBoard": 696,
+          "gated": 27,
+          "knownGated": 27,
+          "picked": 16,
           "boardRate": 1,
-          "gateRate": 0.050314465408805034,
-          "catchRate": 0.59375
+          "gateRate": 0.03879310344827586,
+          "catchRate": 0.5925925925925926
         },
         "place": {
-          "payouts": 1864,
-          "onBoard": 1864,
+          "payouts": 2036,
+          "onBoard": 2036,
           "gated": 2,
           "knownGated": 2,
           "picked": 2,
           "boardRate": 1,
-          "gateRate": 0.001072961373390558,
+          "gateRate": 0.0009823182711198428,
           "catchRate": 1
         },
         "quinella": {
-          "payouts": 630,
-          "onBoard": 97,
-          "gated": 39,
-          "knownGated": 39,
-          "picked": 4,
-          "boardRate": 0.15396825396825398,
-          "gateRate": 0.4020618556701031,
-          "catchRate": 0.10256410256410256
+          "payouts": 688,
+          "onBoard": 107,
+          "gated": 43,
+          "knownGated": 43,
+          "picked": 5,
+          "boardRate": 0.1555232558139535,
+          "gateRate": 0.40186915887850466,
+          "catchRate": 0.11627906976744186
         },
         "wide": {
-          "payouts": 1890,
-          "onBoard": 226,
-          "gated": 80,
-          "knownGated": 80,
-          "picked": 20,
-          "boardRate": 0.11957671957671957,
-          "gateRate": 0.35398230088495575,
-          "catchRate": 0.25
+          "payouts": 2064,
+          "onBoard": 242,
+          "gated": 83,
+          "knownGated": 83,
+          "picked": 21,
+          "boardRate": 0.11724806201550388,
+          "gateRate": 0.34297520661157027,
+          "catchRate": 0.25301204819277107
         },
         "exacta": {
-          "payouts": 630,
-          "onBoard": 46,
-          "gated": 20,
-          "knownGated": 20,
+          "payouts": 688,
+          "onBoard": 50,
+          "gated": 21,
+          "knownGated": 21,
           "picked": 1,
-          "boardRate": 0.07301587301587302,
-          "gateRate": 0.43478260869565216,
-          "catchRate": 0.05
+          "boardRate": 0.07267441860465117,
+          "gateRate": 0.42,
+          "catchRate": 0.047619047619047616
         },
         "bracket_quinella": {
-          "payouts": 572,
-          "onBoard": 399,
-          "gated": 124,
-          "knownGated": 124,
+          "payouts": 625,
+          "onBoard": 433,
+          "gated": 137,
+          "knownGated": 137,
           "picked": 19,
-          "boardRate": 0.6975524475524476,
-          "gateRate": 0.3107769423558897,
-          "catchRate": 0.1532258064516129
+          "boardRate": 0.6928,
+          "gateRate": 0.3163972286374134,
+          "catchRate": 0.1386861313868613
         }
       },
       "byBetTypeDetail": {
@@ -528,50 +544,50 @@
             "oddsMax": 80,
             "scoreMin": 65
           },
-          "n": 32,
-          "picked": 19,
-          "missed": 13,
-          "catchRate": 0.59375,
-          "payoutYen": 146670,
+          "n": 27,
+          "picked": 16,
+          "missed": 11,
+          "catchRate": 0.5925925925925926,
+          "payoutYen": 106300,
           "coverage": {
-            "payouts": 636,
-            "onBoard": 636,
-            "gated": 32,
-            "knownGated": 32,
-            "picked": 19,
+            "payouts": 696,
+            "onBoard": 696,
+            "gated": 27,
+            "knownGated": 27,
+            "picked": 16,
             "boardRate": 1,
-            "gateRate": 0.050314465408805034,
-            "catchRate": 0.59375
+            "gateRate": 0.03879310344827586,
+            "catchRate": 0.5925925925925926
           },
           "byVenue": {
             "新潟": {
-              "n": 9,
-              "picked": 5,
-              "payoutYen": 42270,
-              "catchRate": 0.5555555555555556
+              "n": 6,
+              "picked": 4,
+              "payoutYen": 23110,
+              "catchRate": 0.6666666666666666
             },
             "札幌": {
-              "n": 8,
-              "picked": 6,
-              "payoutYen": 39100,
-              "catchRate": 0.75
+              "n": 6,
+              "picked": 4,
+              "payoutYen": 25450,
+              "catchRate": 0.6666666666666666
             },
             "中京": {
-              "n": 8,
+              "n": 7,
               "picked": 4,
-              "payoutYen": 35760,
-              "catchRate": 0.5
+              "payoutYen": 29410,
+              "catchRate": 0.5714285714285714
             },
             "中山": {
-              "n": 4,
-              "picked": 3,
-              "payoutYen": 16960,
-              "catchRate": 0.75
+              "n": 3,
+              "picked": 2,
+              "payoutYen": 10480,
+              "catchRate": 0.6666666666666666
             },
             "阪神": {
-              "n": 2,
+              "n": 1,
               "picked": 0,
-              "payoutYen": 9950,
+              "payoutYen": 4510,
               "catchRate": 0
             },
             "京都": {
@@ -579,74 +595,68 @@
               "picked": 1,
               "payoutYen": 2630,
               "catchRate": 1
+            },
+            "東京": {
+              "n": 3,
+              "picked": 1,
+              "payoutYen": 10710,
+              "catchRate": 0.3333333333333333
             }
           },
           "byTrack": {
             "芝": {
-              "n": 18,
-              "picked": 12,
-              "payoutYen": 76320,
+              "n": 15,
+              "picked": 10,
+              "payoutYen": 56180,
               "catchRate": 0.6666666666666666
             },
             "ダート": {
-              "n": 14,
-              "picked": 7,
-              "payoutYen": 70350,
+              "n": 12,
+              "picked": 6,
+              "payoutYen": 50120,
               "catchRate": 0.5
             }
           },
           "byBetType": {
             "win": {
-              "n": 32,
-              "picked": 19,
-              "payoutYen": 146670,
-              "catchRate": 0.59375
+              "n": 27,
+              "picked": 16,
+              "payoutYen": 106300,
+              "catchRate": 0.5925925925925926
             }
           },
           "byOddsBand": {
             "25-49": {
-              "n": 28,
-              "picked": 18,
-              "payoutYen": 122810,
-              "catchRate": 0.6428571428571429
-            },
-            "50-79": {
-              "n": 3,
-              "picked": 1,
-              "payoutYen": 17510,
-              "catchRate": 0.3333333333333333
-            },
-            "80+": {
-              "n": 1,
-              "picked": 0,
-              "payoutYen": 6350,
-              "catchRate": 0
+              "n": 27,
+              "picked": 16,
+              "payoutYen": 106300,
+              "catchRate": 0.5925925925925926
             }
           },
           "byClass": {
             "1勝": {
-              "n": 8,
-              "picked": 6,
-              "payoutYen": 34250,
-              "catchRate": 0.75
+              "n": 7,
+              "picked": 5,
+              "payoutYen": 28130,
+              "catchRate": 0.7142857142857143
             },
             "新馬": {
               "n": 4,
               "picked": 2,
-              "payoutYen": 18760,
+              "payoutYen": 14580,
               "catchRate": 0.5
             },
             "未勝利": {
-              "n": 12,
-              "picked": 7,
-              "payoutYen": 55190,
-              "catchRate": 0.5833333333333334
+              "n": 7,
+              "picked": 4,
+              "payoutYen": 26010,
+              "catchRate": 0.5714285714285714
             },
             "特別他": {
-              "n": 7,
-              "picked": 3,
-              "payoutYen": 34440,
-              "catchRate": 0.42857142857142855
+              "n": 8,
+              "picked": 4,
+              "payoutYen": 33550,
+              "catchRate": 0.5
             },
             "2勝": {
               "n": 1,
@@ -657,22 +667,22 @@
           },
           "byDistance": {
             "1400-1600": {
-              "n": 12,
-              "picked": 6,
-              "payoutYen": 57020,
-              "catchRate": 0.5
+              "n": 11,
+              "picked": 7,
+              "payoutYen": 48880,
+              "catchRate": 0.6363636363636364
             },
             "〜1200": {
-              "n": 12,
-              "picked": 8,
-              "payoutYen": 47970,
-              "catchRate": 0.6666666666666666
+              "n": 10,
+              "picked": 5,
+              "payoutYen": 32710,
+              "catchRate": 0.5
             },
             "1800-2000": {
-              "n": 7,
-              "picked": 4,
-              "payoutYen": 37930,
-              "catchRate": 0.5714285714285714
+              "n": 5,
+              "picked": 3,
+              "payoutYen": 20960,
+              "catchRate": 0.6
             },
             "2200+": {
               "n": 1,
@@ -683,50 +693,50 @@
           },
           "byField": {
             "15頭+": {
-              "n": 16,
-              "picked": 11,
-              "payoutYen": 68330,
-              "catchRate": 0.6875
+              "n": 13,
+              "picked": 8,
+              "payoutYen": 48170,
+              "catchRate": 0.6153846153846154
             },
             "11-14頭": {
               "n": 14,
               "picked": 8,
-              "payoutYen": 66550,
+              "payoutYen": 58130,
               "catchRate": 0.5714285714285714
-            },
-            "〜10頭": {
-              "n": 2,
-              "picked": 0,
-              "payoutYen": 11790,
-              "catchRate": 0
             }
           },
           "byWeekday": {
             "土": {
-              "n": 15,
-              "picked": 9,
-              "payoutYen": 68060,
-              "catchRate": 0.6
+              "n": 11,
+              "picked": 6,
+              "payoutYen": 41300,
+              "catchRate": 0.5454545454545454
             },
             "日": {
-              "n": 17,
+              "n": 15,
               "picked": 10,
-              "payoutYen": 78610,
-              "catchRate": 0.5882352941176471
+              "payoutYen": 62830,
+              "catchRate": 0.6666666666666666
+            },
+            "月": {
+              "n": 1,
+              "picked": 0,
+              "payoutYen": 2170,
+              "catchRate": 0
             }
           },
           "byWeather": {
             "晴": {
-              "n": 16,
-              "picked": 9,
-              "payoutYen": 79120,
-              "catchRate": 0.5625
+              "n": 14,
+              "picked": 8,
+              "payoutYen": 57300,
+              "catchRate": 0.5714285714285714
             },
             "曇": {
-              "n": 13,
-              "picked": 9,
-              "payoutYen": 54510,
-              "catchRate": 0.6923076923076923
+              "n": 11,
+              "picked": 8,
+              "payoutYen": 42440,
+              "catchRate": 0.7272727272727273
             },
             "小雨": {
               "n": 1,
@@ -735,38 +745,38 @@
               "catchRate": 0
             },
             "雨": {
-              "n": 2,
-              "picked": 1,
-              "payoutYen": 9380,
-              "catchRate": 0.5
+              "n": 1,
+              "picked": 0,
+              "payoutYen": 2900,
+              "catchRate": 0
             }
           },
           "byLabel": {
             "未捕捉": {
-              "n": 13,
+              "n": 11,
               "picked": 0,
-              "payoutYen": 59580,
+              "payoutYen": 38960,
               "catchRate": 0
             },
             "注目穴": {
-              "n": 11,
-              "picked": 11,
-              "payoutYen": 51260,
+              "n": 10,
+              "picked": 10,
+              "payoutYen": 42820,
               "catchRate": 1
             },
             "抑え候補": {
-              "n": 8,
-              "picked": 8,
-              "payoutYen": 35830,
+              "n": 6,
+              "picked": 6,
+              "payoutYen": 24520,
               "catchRate": 1
             }
           },
           "byDay": {
             "2026-07-25": {
-              "n": 4,
-              "picked": 2,
-              "payoutYen": 16150,
-              "catchRate": 0.5
+              "n": 3,
+              "picked": 1,
+              "payoutYen": 10030,
+              "catchRate": 0.3333333333333333
             },
             "2026-07-26": {
               "n": 1,
@@ -775,10 +785,10 @@
               "catchRate": 1
             },
             "2026-08-02": {
-              "n": 4,
+              "n": 3,
               "picked": 2,
-              "payoutYen": 17220,
-              "catchRate": 0.5
+              "payoutYen": 10870,
+              "catchRate": 0.6666666666666666
             },
             "2026-08-08": {
               "n": 1,
@@ -793,22 +803,16 @@
               "catchRate": 0.75
             },
             "2026-08-15": {
-              "n": 2,
-              "picked": 2,
-              "payoutYen": 8350,
+              "n": 1,
+              "picked": 1,
+              "payoutYen": 4570,
               "catchRate": 1
             },
             "2026-08-16": {
-              "n": 4,
+              "n": 3,
               "picked": 1,
-              "payoutYen": 18970,
-              "catchRate": 0.25
-            },
-            "2026-08-22": {
-              "n": 1,
-              "picked": 0,
-              "payoutYen": 5950,
-              "catchRate": 0
+              "payoutYen": 9540,
+              "catchRate": 0.3333333333333333
             },
             "2026-08-23": {
               "n": 2,
@@ -823,9 +827,9 @@
               "catchRate": 0
             },
             "2026-09-05": {
-              "n": 2,
-              "picked": 2,
-              "payoutYen": 8930,
+              "n": 1,
+              "picked": 1,
+              "payoutYen": 1400,
               "catchRate": 1
             },
             "2026-09-06": {
@@ -834,17 +838,11 @@
               "payoutYen": 4510,
               "catchRate": 0
             },
-            "2026-09-12": {
+            "2026-09-19": {
               "n": 1,
               "picked": 1,
-              "payoutYen": 6480,
+              "payoutYen": 6180,
               "catchRate": 1
-            },
-            "2026-09-19": {
-              "n": 2,
-              "picked": 1,
-              "payoutYen": 11620,
-              "catchRate": 0.5
             },
             "2026-09-26": {
               "n": 1,
@@ -857,6 +855,18 @@
               "picked": 1,
               "payoutYen": 2630,
               "catchRate": 1
+            },
+            "2026-10-12": {
+              "n": 1,
+              "picked": 0,
+              "payoutYen": 2170,
+              "catchRate": 0
+            },
+            "2026-10-17": {
+              "n": 2,
+              "picked": 1,
+              "payoutYen": 8540,
+              "catchRate": 0.5
             }
           }
         },
@@ -873,13 +883,13 @@
           "catchRate": 1,
           "payoutYen": 5150,
           "coverage": {
-            "payouts": 1864,
-            "onBoard": 1864,
+            "payouts": 2036,
+            "onBoard": 2036,
             "gated": 2,
             "knownGated": 2,
             "picked": 2,
             "boardRate": 1,
-            "gateRate": 0.001072961373390558,
+            "gateRate": 0.0009823182711198428,
             "catchRate": 1
           },
           "byVenue": {
@@ -990,20 +1000,20 @@
             "oddsMax": 80,
             "scoreMin": 65
           },
-          "n": 124,
+          "n": 137,
           "picked": 19,
-          "missed": 105,
-          "catchRate": 0.1532258064516129,
-          "payoutYen": 749720,
+          "missed": 118,
+          "catchRate": 0.1386861313868613,
+          "payoutYen": 801460,
           "coverage": {
-            "payouts": 572,
-            "onBoard": 399,
-            "gated": 124,
-            "knownGated": 124,
+            "payouts": 625,
+            "onBoard": 433,
+            "gated": 137,
+            "knownGated": 137,
             "picked": 19,
-            "boardRate": 0.6975524475524476,
-            "gateRate": 0.3107769423558897,
-            "catchRate": 0.1532258064516129
+            "boardRate": 0.6928,
+            "gateRate": 0.3163972286374134,
+            "catchRate": 0.1386861313868613
           },
           "byVenue": {
             "中京": {
@@ -1013,10 +1023,10 @@
               "catchRate": 0.1724137931034483
             },
             "新潟": {
-              "n": 24,
+              "n": 28,
               "picked": 3,
-              "payoutYen": 198830,
-              "catchRate": 0.125
+              "payoutYen": 219200,
+              "catchRate": 0.10714285714285714
             },
             "札幌": {
               "n": 39,
@@ -1037,46 +1047,46 @@
               "catchRate": 0.23076923076923078
             },
             "京都": {
-              "n": 2,
+              "n": 8,
               "picked": 0,
-              "payoutYen": 5930,
+              "payoutYen": 25110,
               "catchRate": 0
             },
             "東京": {
-              "n": 1,
+              "n": 4,
               "picked": 0,
-              "payoutYen": 5720,
+              "payoutYen": 17910,
               "catchRate": 0
             }
           },
           "byTrack": {
             "ダート": {
-              "n": 54,
+              "n": 60,
               "picked": 7,
-              "payoutYen": 286200,
-              "catchRate": 0.12962962962962962
+              "payoutYen": 311590,
+              "catchRate": 0.11666666666666667
             },
             "芝": {
-              "n": 70,
+              "n": 77,
               "picked": 12,
-              "payoutYen": 463520,
-              "catchRate": 0.17142857142857143
+              "payoutYen": 489870,
+              "catchRate": 0.15584415584415584
             }
           },
           "byBetType": {
             "bracket_quinella": {
-              "n": 124,
+              "n": 137,
               "picked": 19,
-              "payoutYen": 749720,
-              "catchRate": 0.1532258064516129
+              "payoutYen": 801460,
+              "catchRate": 0.1386861313868613
             }
           },
           "byOddsBand": {
             "50-79": {
-              "n": 32,
+              "n": 34,
               "picked": 6,
-              "payoutYen": 279610,
-              "catchRate": 0.1875
+              "payoutYen": 288550,
+              "catchRate": 0.17647058823529413
             },
             "80+": {
               "n": 5,
@@ -1085,62 +1095,68 @@
               "catchRate": 0
             },
             "25-49": {
-              "n": 87,
+              "n": 98,
               "picked": 13,
-              "payoutYen": 334870,
-              "catchRate": 0.14942528735632185
+              "payoutYen": 377670,
+              "catchRate": 0.1326530612244898
             }
           },
           "byClass": {
             "1勝": {
-              "n": 33,
+              "n": 39,
               "picked": 6,
-              "payoutYen": 186300,
-              "catchRate": 0.18181818181818182
+              "payoutYen": 209210,
+              "catchRate": 0.15384615384615385
             },
             "未勝利": {
-              "n": 40,
+              "n": 41,
               "picked": 1,
-              "payoutYen": 277660,
-              "catchRate": 0.025
+              "payoutYen": 283720,
+              "catchRate": 0.024390243902439025
             },
             "新馬": {
-              "n": 16,
+              "n": 17,
               "picked": 3,
-              "payoutYen": 81070,
-              "catchRate": 0.1875
+              "payoutYen": 82660,
+              "catchRate": 0.17647058823529413
             },
             "特別他": {
-              "n": 33,
+              "n": 37,
               "picked": 8,
-              "payoutYen": 197280,
-              "catchRate": 0.24242424242424243
+              "payoutYen": 215000,
+              "catchRate": 0.21621621621621623
             },
             "障害": {
               "n": 2,
               "picked": 1,
               "payoutYen": 7410,
               "catchRate": 0.5
+            },
+            "2勝": {
+              "n": 1,
+              "picked": 0,
+              "payoutYen": 3460,
+              "catchRate": 0
             }
           },
           "byDistance": {
             "1400-1600": {
-              "n": 45,
+              "n": 48,
               "picked": 5,
-              "payoutYen": 234650,
-              "catchRate": 0.1111111111111111
+              "payoutYen": 245500,
+              "catchRate": 0.10416666666666667
             },
             "〜1200": {
-              "n": 30,
+              "n": 34,
               "picked": 4,
-              "payoutYen": 155190,
-              "catchRate": 0.13333333333333333
+              "payoutYen": 174010,
+              "catchRate": 0.11764705882352941
             },
             "1800-2000": {
-              "n": 42,
+              "n": 48,
               "picked": 7,
-              "payoutYen": 333280,
-              "catchRate": 0.16666666666666666
+              "payoutYen": 355350,
+              "catchRate": 0.14583333333333334
             },
             "2200+": {
               "n": 7,
@@ -1151,30 +1167,30 @@
           },
           "byField": {
             "15頭+": {
-              "n": 52,
+              "n": 62,
               "picked": 3,
-              "payoutYen": 369890,
-              "catchRate": 0.057692307692307696
+              "payoutYen": 409370,
+              "catchRate": 0.04838709677419355
             },
             "11-14頭": {
-              "n": 58,
+              "n": 60,
               "picked": 12,
-              "payoutYen": 291590,
-              "catchRate": 0.20689655172413793
+              "payoutYen": 300390,
+              "catchRate": 0.2
             },
             "〜10頭": {
-              "n": 14,
+              "n": 15,
               "picked": 4,
-              "payoutYen": 88240,
-              "catchRate": 0.2857142857142857
+              "payoutYen": 91700,
+              "catchRate": 0.26666666666666666
             }
           },
           "byWeekday": {
             "土": {
-              "n": 65,
+              "n": 72,
               "picked": 14,
-              "payoutYen": 335380,
-              "catchRate": 0.2153846153846154
+              "payoutYen": 363940,
+              "catchRate": 0.19444444444444445
             },
             "日": {
               "n": 58,
@@ -1183,18 +1199,18 @@
               "catchRate": 0.08620689655172414
             },
             "月": {
-              "n": 1,
+              "n": 7,
               "picked": 0,
-              "payoutYen": 5460,
+              "payoutYen": 28640,
               "catchRate": 0
             }
           },
           "byWeather": {
             "晴": {
-              "n": 71,
+              "n": 84,
               "picked": 12,
-              "payoutYen": 395390,
-              "catchRate": 0.16901408450704225
+              "payoutYen": 447130,
+              "catchRate": 0.14285714285714285
             },
             "曇": {
               "n": 41,
@@ -1217,9 +1233,9 @@
           },
           "byLabel": {
             "未捕捉": {
-              "n": 105,
+              "n": 118,
               "picked": 0,
-              "payoutYen": 650040,
+              "payoutYen": 701780,
               "catchRate": 0
             },
             "抑え候補": {
@@ -1355,6 +1371,18 @@
               "picked": 0,
               "payoutYen": 11650,
               "catchRate": 0
+            },
+            "2026-10-12": {
+              "n": 6,
+              "picked": 0,
+              "payoutYen": 23180,
+              "catchRate": 0
+            },
+            "2026-10-17": {
+              "n": 7,
+              "picked": 0,
+              "payoutYen": 28560,
+              "catchRate": 0
             }
           }
         },
@@ -1399,20 +1427,20 @@
             "oddsMax": 80,
             "scoreMin": 65
           },
-          "n": 39,
-          "picked": 4,
-          "missed": 35,
-          "catchRate": 0.10256410256410256,
-          "payoutYen": 528710,
+          "n": 43,
+          "picked": 5,
+          "missed": 38,
+          "catchRate": 0.11627906976744186,
+          "payoutYen": 543890,
           "coverage": {
-            "payouts": 630,
-            "onBoard": 97,
-            "gated": 39,
-            "knownGated": 39,
-            "picked": 4,
-            "boardRate": 0.15396825396825398,
-            "gateRate": 0.4020618556701031,
-            "catchRate": 0.10256410256410256
+            "payouts": 688,
+            "onBoard": 107,
+            "gated": 43,
+            "knownGated": 43,
+            "picked": 5,
+            "boardRate": 0.1555232558139535,
+            "gateRate": 0.40186915887850466,
+            "catchRate": 0.11627906976744186
           },
           "byVenue": {
             "中京": {
@@ -1444,6 +1472,18 @@
               "picked": 2,
               "payoutYen": 16460,
               "catchRate": 0.6666666666666666
+            },
+            "京都": {
+              "n": 2,
+              "picked": 1,
+              "payoutYen": 5140,
+              "catchRate": 0.5
+            },
+            "東京": {
+              "n": 2,
+              "picked": 0,
+              "payoutYen": 10040,
+              "catchRate": 0
             }
           },
           "byTrack": {
@@ -1454,18 +1494,18 @@
               "catchRate": 0
             },
             "芝": {
-              "n": 28,
-              "picked": 4,
-              "payoutYen": 423030,
-              "catchRate": 0.14285714285714285
+              "n": 32,
+              "picked": 5,
+              "payoutYen": 438210,
+              "catchRate": 0.15625
             }
           },
           "byBetType": {
             "quinella": {
-              "n": 39,
-              "picked": 4,
-              "payoutYen": 528710,
-              "catchRate": 0.10256410256410256
+              "n": 43,
+              "picked": 5,
+              "payoutYen": 543890,
+              "catchRate": 0.11627906976744186
             }
           },
           "byOddsBand": {
@@ -1476,29 +1516,29 @@
               "catchRate": 0
             },
             "25-49": {
-              "n": 17,
-              "picked": 2,
-              "payoutYen": 61830,
-              "catchRate": 0.11764705882352941
+              "n": 20,
+              "picked": 3,
+              "payoutYen": 70100,
+              "catchRate": 0.15
             },
             "50-79": {
-              "n": 10,
+              "n": 11,
               "picked": 2,
-              "payoutYen": 69410,
-              "catchRate": 0.2
+              "payoutYen": 76320,
+              "catchRate": 0.18181818181818182
             }
           },
           "byClass": {
             "1勝": {
-              "n": 10,
-              "picked": 2,
-              "payoutYen": 189200,
-              "catchRate": 0.2
+              "n": 11,
+              "picked": 3,
+              "payoutYen": 192210,
+              "catchRate": 0.2727272727272727
             },
             "未勝利": {
-              "n": 10,
+              "n": 12,
               "picked": 0,
-              "payoutYen": 213790,
+              "payoutYen": 222830,
               "catchRate": 0
             },
             "新馬": {
@@ -1518,6 +1558,12 @@
               "picked": 0,
               "payoutYen": 4170,
               "catchRate": 0
+            },
+            "2勝": {
+              "n": 1,
+              "picked": 0,
+              "payoutYen": 3130,
+              "catchRate": 0
             }
           },
           "byDistance": {
@@ -1534,10 +1580,10 @@
               "catchRate": 0.3333333333333333
             },
             "1800-2000": {
-              "n": 21,
-              "picked": 2,
-              "payoutYen": 287960,
-              "catchRate": 0.09523809523809523
+              "n": 25,
+              "picked": 3,
+              "payoutYen": 303140,
+              "catchRate": 0.12
             },
             "2200+": {
               "n": 2,
@@ -1554,24 +1600,24 @@
               "catchRate": 0
             },
             "〜10頭": {
-              "n": 25,
+              "n": 27,
               "picked": 2,
-              "payoutYen": 203870,
-              "catchRate": 0.08
+              "payoutYen": 209130,
+              "catchRate": 0.07407407407407407
             },
             "11-14頭": {
-              "n": 10,
-              "picked": 2,
-              "payoutYen": 82140,
-              "catchRate": 0.2
+              "n": 12,
+              "picked": 3,
+              "payoutYen": 92060,
+              "catchRate": 0.25
             }
           },
           "byWeekday": {
             "土": {
-              "n": 18,
+              "n": 20,
               "picked": 2,
-              "payoutYen": 277040,
-              "catchRate": 0.1111111111111111
+              "payoutYen": 282300,
+              "catchRate": 0.1
             },
             "日": {
               "n": 20,
@@ -1580,18 +1626,18 @@
               "catchRate": 0.1
             },
             "月": {
-              "n": 1,
-              "picked": 0,
-              "payoutYen": 5360,
-              "catchRate": 0
+              "n": 3,
+              "picked": 1,
+              "payoutYen": 15280,
+              "catchRate": 0.3333333333333333
             }
           },
           "byWeather": {
             "晴": {
-              "n": 27,
-              "picked": 2,
-              "payoutYen": 264900,
-              "catchRate": 0.07407407407407407
+              "n": 31,
+              "picked": 3,
+              "payoutYen": 280080,
+              "catchRate": 0.0967741935483871
             },
             "曇": {
               "n": 9,
@@ -1614,15 +1660,15 @@
           },
           "byLabel": {
             "未捕捉": {
-              "n": 35,
+              "n": 38,
               "picked": 0,
-              "payoutYen": 504240,
+              "payoutYen": 516410,
               "catchRate": 0
             },
             "注目穴": {
-              "n": 4,
-              "picked": 4,
-              "payoutYen": 24470,
+              "n": 5,
+              "picked": 5,
+              "payoutYen": 27480,
               "catchRate": 1
             }
           },
@@ -1728,6 +1774,18 @@
               "picked": 0,
               "payoutYen": 5360,
               "catchRate": 0
+            },
+            "2026-10-12": {
+              "n": 2,
+              "picked": 1,
+              "payoutYen": 9920,
+              "catchRate": 0.5
+            },
+            "2026-10-17": {
+              "n": 2,
+              "picked": 0,
+              "payoutYen": 5260,
+              "catchRate": 0
             }
           }
         },
@@ -1738,20 +1796,20 @@
             "oddsMax": 80,
             "scoreMin": 65
           },
-          "n": 80,
-          "picked": 20,
-          "missed": 60,
-          "catchRate": 0.25,
-          "payoutYen": 437240,
+          "n": 83,
+          "picked": 21,
+          "missed": 62,
+          "catchRate": 0.25301204819277107,
+          "payoutYen": 446780,
           "coverage": {
-            "payouts": 1890,
-            "onBoard": 226,
-            "gated": 80,
-            "knownGated": 80,
-            "picked": 20,
-            "boardRate": 0.11957671957671957,
-            "gateRate": 0.35398230088495575,
-            "catchRate": 0.25
+            "payouts": 2064,
+            "onBoard": 242,
+            "gated": 83,
+            "knownGated": 83,
+            "picked": 21,
+            "boardRate": 0.11724806201550388,
+            "gateRate": 0.34297520661157027,
+            "catchRate": 0.25301204819277107
           },
           "byVenue": {
             "新潟": {
@@ -1783,36 +1841,48 @@
               "picked": 2,
               "payoutYen": 10090,
               "catchRate": 1
+            },
+            "京都": {
+              "n": 2,
+              "picked": 1,
+              "payoutYen": 3160,
+              "catchRate": 0.5
+            },
+            "東京": {
+              "n": 1,
+              "picked": 0,
+              "payoutYen": 6380,
+              "catchRate": 0
             }
           },
           "byTrack": {
             "芝": {
-              "n": 47,
+              "n": 49,
               "picked": 12,
-              "payoutYen": 241060,
-              "catchRate": 0.2553191489361702
+              "payoutYen": 249220,
+              "catchRate": 0.24489795918367346
             },
             "ダート": {
-              "n": 33,
-              "picked": 8,
-              "payoutYen": 196180,
-              "catchRate": 0.24242424242424243
+              "n": 34,
+              "picked": 9,
+              "payoutYen": 197560,
+              "catchRate": 0.2647058823529412
             }
           },
           "byBetType": {
             "wide": {
-              "n": 80,
-              "picked": 20,
-              "payoutYen": 437240,
-              "catchRate": 0.25
+              "n": 83,
+              "picked": 21,
+              "payoutYen": 446780,
+              "catchRate": 0.25301204819277107
             }
           },
           "byOddsBand": {
             "25-49": {
-              "n": 53,
-              "picked": 15,
-              "payoutYen": 232190,
-              "catchRate": 0.2830188679245283
+              "n": 55,
+              "picked": 16,
+              "payoutYen": 235350,
+              "catchRate": 0.2909090909090909
             },
             "80+": {
               "n": 4,
@@ -1821,10 +1891,10 @@
               "catchRate": 0
             },
             "50-79": {
-              "n": 23,
+              "n": 24,
               "picked": 5,
-              "payoutYen": 153310,
-              "catchRate": 0.21739130434782608
+              "payoutYen": 159690,
+              "catchRate": 0.20833333333333334
             }
           },
           "byClass": {
@@ -1835,16 +1905,16 @@
               "catchRate": 0.16666666666666666
             },
             "特別他": {
-              "n": 25,
+              "n": 26,
               "picked": 9,
-              "payoutYen": 142440,
-              "catchRate": 0.36
+              "payoutYen": 148820,
+              "catchRate": 0.34615384615384615
             },
             "未勝利": {
-              "n": 17,
-              "picked": 2,
-              "payoutYen": 113290,
-              "catchRate": 0.11764705882352941
+              "n": 19,
+              "picked": 3,
+              "payoutYen": 116450,
+              "catchRate": 0.15789473684210525
             },
             "1勝": {
               "n": 22,
@@ -1879,16 +1949,16 @@
               "catchRate": 0.19047619047619047
             },
             "1400-1600": {
-              "n": 22,
+              "n": 24,
               "picked": 5,
-              "payoutYen": 104800,
-              "catchRate": 0.22727272727272727
+              "payoutYen": 112960,
+              "catchRate": 0.20833333333333334
             },
             "1800-2000": {
-              "n": 20,
-              "picked": 6,
-              "payoutYen": 142920,
-              "catchRate": 0.3
+              "n": 21,
+              "picked": 7,
+              "payoutYen": 144300,
+              "catchRate": 0.3333333333333333
             }
           },
           "byField": {
@@ -1899,10 +1969,10 @@
               "catchRate": 0.1
             },
             "11-14頭": {
-              "n": 64,
-              "picked": 19,
-              "payoutYen": 317700,
-              "catchRate": 0.296875
+              "n": 67,
+              "picked": 20,
+              "payoutYen": 327240,
+              "catchRate": 0.29850746268656714
             },
             "15頭+": {
               "n": 6,
@@ -1913,10 +1983,10 @@
           },
           "byWeekday": {
             "土": {
-              "n": 37,
+              "n": 38,
               "picked": 11,
-              "payoutYen": 207330,
-              "catchRate": 0.2972972972972973
+              "payoutYen": 213710,
+              "catchRate": 0.2894736842105263
             },
             "日": {
               "n": 40,
@@ -1925,10 +1995,10 @@
               "catchRate": 0.2
             },
             "月": {
-              "n": 3,
-              "picked": 1,
-              "payoutYen": 22910,
-              "catchRate": 0.3333333333333333
+              "n": 5,
+              "picked": 2,
+              "payoutYen": 26070,
+              "catchRate": 0.4
             }
           },
           "byWeather": {
@@ -1939,10 +2009,10 @@
               "catchRate": 0.2
             },
             "晴": {
-              "n": 47,
-              "picked": 12,
-              "payoutYen": 258630,
-              "catchRate": 0.2553191489361702
+              "n": 50,
+              "picked": 13,
+              "payoutYen": 268170,
+              "catchRate": 0.26
             },
             "小雨": {
               "n": 2,
@@ -1959,9 +2029,9 @@
           },
           "byLabel": {
             "未捕捉": {
-              "n": 60,
+              "n": 62,
               "picked": 0,
-              "payoutYen": 349250,
+              "payoutYen": 357410,
               "catchRate": 0
             },
             "注目穴": {
@@ -1971,9 +2041,9 @@
               "catchRate": 1
             },
             "抑え候補": {
-              "n": 6,
-              "picked": 6,
-              "payoutYen": 29060,
+              "n": 7,
+              "picked": 7,
+              "payoutYen": 30440,
               "catchRate": 1
             }
           },
@@ -2091,6 +2161,18 @@
               "picked": 0,
               "payoutYen": 9180,
               "catchRate": 0
+            },
+            "2026-10-12": {
+              "n": 2,
+              "picked": 1,
+              "payoutYen": 3160,
+              "catchRate": 0.5
+            },
+            "2026-10-17": {
+              "n": 1,
+              "picked": 0,
+              "payoutYen": 6380,
+              "catchRate": 0
             }
           }
         },
@@ -2101,20 +2183,20 @@
             "oddsMax": 80,
             "scoreMin": 65
           },
-          "n": 20,
+          "n": 21,
           "picked": 1,
-          "missed": 19,
-          "catchRate": 0.05,
-          "payoutYen": 556160,
+          "missed": 20,
+          "catchRate": 0.047619047619047616,
+          "payoutYen": 561810,
           "coverage": {
-            "payouts": 630,
-            "onBoard": 46,
-            "gated": 20,
-            "knownGated": 20,
+            "payouts": 688,
+            "onBoard": 50,
+            "gated": 21,
+            "knownGated": 21,
             "picked": 1,
-            "boardRate": 0.07301587301587302,
-            "gateRate": 0.43478260869565216,
-            "catchRate": 0.05
+            "boardRate": 0.07267441860465117,
+            "gateRate": 0.42,
+            "catchRate": 0.047619047619047616
           },
           "byVenue": {
             "新潟": {
@@ -2146,14 +2228,20 @@
               "picked": 0,
               "payoutYen": 2840,
               "catchRate": 0
+            },
+            "京都": {
+              "n": 1,
+              "picked": 0,
+              "payoutYen": 5650,
+              "catchRate": 0
             }
           },
           "byTrack": {
             "芝": {
-              "n": 16,
+              "n": 17,
               "picked": 1,
-              "payoutYen": 518330,
-              "catchRate": 0.0625
+              "payoutYen": 523980,
+              "catchRate": 0.058823529411764705
             },
             "ダート": {
               "n": 4,
@@ -2164,10 +2252,10 @@
           },
           "byBetType": {
             "exacta": {
-              "n": 20,
+              "n": 21,
               "picked": 1,
-              "payoutYen": 556160,
-              "catchRate": 0.05
+              "payoutYen": 561810,
+              "catchRate": 0.047619047619047616
             }
           },
           "byOddsBand": {
@@ -2184,17 +2272,17 @@
               "catchRate": 0
             },
             "50-79": {
-              "n": 1,
+              "n": 2,
               "picked": 1,
-              "payoutYen": 7180,
-              "catchRate": 1
+              "payoutYen": 12830,
+              "catchRate": 0.5
             }
           },
           "byClass": {
             "未勝利": {
-              "n": 3,
+              "n": 4,
               "picked": 0,
-              "payoutYen": 157630,
+              "payoutYen": 163280,
               "catchRate": 0
             },
             "1勝": {
@@ -2236,9 +2324,9 @@
               "catchRate": 0.125
             },
             "1800-2000": {
-              "n": 8,
+              "n": 9,
               "picked": 0,
-              "payoutYen": 198590,
+              "payoutYen": 204240,
               "catchRate": 0
             },
             "2200+": {
@@ -2256,10 +2344,10 @@
               "catchRate": 0
             },
             "〜10頭": {
-              "n": 14,
+              "n": 15,
               "picked": 1,
-              "payoutYen": 254300,
-              "catchRate": 0.07142857142857142
+              "payoutYen": 259950,
+              "catchRate": 0.06666666666666667
             },
             "11-14頭": {
               "n": 3,
@@ -2270,9 +2358,9 @@
           },
           "byWeekday": {
             "土": {
-              "n": 9,
+              "n": 10,
               "picked": 0,
-              "payoutYen": 338150,
+              "payoutYen": 343800,
               "catchRate": 0
             },
             "日": {
@@ -2290,9 +2378,9 @@
               "catchRate": 0.2
             },
             "晴": {
-              "n": 13,
+              "n": 14,
               "picked": 0,
-              "payoutYen": 294760,
+              "payoutYen": 300410,
               "catchRate": 0
             },
             "雨": {
@@ -2304,9 +2392,9 @@
           },
           "byLabel": {
             "未捕捉": {
-              "n": 19,
+              "n": 20,
               "picked": 0,
-              "payoutYen": 548980,
+              "payoutYen": 554630,
               "catchRate": 0
             },
             "抑え候補": {
@@ -2370,6 +2458,12 @@
               "picked": 0,
               "payoutYen": 2840,
               "catchRate": 0
+            },
+            "2026-10-17": {
+              "n": 1,
+              "picked": 0,
+              "payoutYen": 5650,
+              "catchRate": 0
             }
           }
         }
@@ -2382,19 +2476,19 @@
         "oddsMax": null,
         "scoreMin": 60
       },
-      "n": 100,
+      "n": 114,
       "picked": 11,
       "missed": 62,
       "catchRate": 0.1506849315068493,
-      "payoutYen": 2137510,
+      "payoutYen": 2343700,
       "coverage": {
-        "payouts": 630,
-        "onBoard": 135,
-        "gated": 100,
+        "payouts": 688,
+        "onBoard": 153,
+        "gated": 114,
         "knownGated": 73,
         "picked": 11,
-        "boardRate": 0.21428571428571427,
-        "gateRate": 0.7407407407407407,
+        "boardRate": 0.22238372093023256,
+        "gateRate": 0.7450980392156863,
         "catchRate": 0.1506849315068493
       },
       "byVenue": {
@@ -2405,9 +2499,9 @@
           "catchRate": 0.09090909090909091
         },
         "新潟": {
-          "n": 11,
+          "n": 14,
           "picked": 0,
-          "payoutYen": 441240,
+          "payoutYen": 476260,
           "catchRate": 0
         },
         "中京": {
@@ -2429,45 +2523,45 @@
           "catchRate": 0.18181818181818182
         },
         "京都": {
-          "n": 2,
+          "n": 4,
           "picked": 0,
-          "payoutYen": 37210,
+          "payoutYen": 63800,
           "catchRate": null
         },
         "東京": {
-          "n": 1,
+          "n": 10,
           "picked": 0,
-          "payoutYen": 9460,
+          "payoutYen": 154040,
           "catchRate": null
         }
       },
       "byTrack": {
         "芝": {
-          "n": 55,
+          "n": 66,
           "picked": 7,
-          "payoutYen": 1185020,
+          "payoutYen": 1368160,
           "catchRate": 0.17073170731707318
         },
         "ダート": {
-          "n": 45,
+          "n": 48,
           "picked": 4,
-          "payoutYen": 952490,
+          "payoutYen": 975540,
           "catchRate": 0.125
         }
       },
       "byBetType": {
         "trio": {
-          "n": 100,
+          "n": 114,
           "picked": 11,
-          "payoutYen": 2137510,
+          "payoutYen": 2343700,
           "catchRate": 0.1506849315068493
         }
       },
       "byOddsBand": {
         "100-149": {
-          "n": 37,
+          "n": 46,
           "picked": 1,
-          "payoutYen": 438950,
+          "payoutYen": 546900,
           "catchRate": 0.04
         },
         "500+": {
@@ -2477,47 +2571,47 @@
           "catchRate": null
         },
         "150-299": {
-          "n": 41,
+          "n": 44,
           "picked": 7,
-          "payoutYen": 800820,
+          "payoutYen": 862960,
           "catchRate": 0.21875
         },
         "300-499": {
-          "n": 17,
+          "n": 19,
           "picked": 3,
-          "payoutYen": 508070,
+          "payoutYen": 544170,
           "catchRate": 0.1875
         }
       },
       "byClass": {
         "未勝利": {
-          "n": 33,
+          "n": 35,
           "picked": 5,
-          "payoutYen": 876750,
+          "payoutYen": 902170,
           "catchRate": 0.20833333333333334
         },
         "特別他": {
-          "n": 25,
+          "n": 28,
           "picked": 3,
-          "payoutYen": 496330,
+          "payoutYen": 547820,
           "catchRate": 0.17647058823529413
         },
         "新馬": {
-          "n": 15,
+          "n": 18,
           "picked": 1,
-          "payoutYen": 308890,
+          "payoutYen": 340110,
           "catchRate": 0.1
         },
         "1勝": {
-          "n": 25,
+          "n": 30,
           "picked": 2,
-          "payoutYen": 396180,
+          "payoutYen": 477230,
           "catchRate": 0.1
         },
         "障害": {
-          "n": 1,
+          "n": 2,
           "picked": 0,
-          "payoutYen": 27320,
+          "payoutYen": 44330,
           "catchRate": 0
         },
         "2勝": {
@@ -2529,27 +2623,27 @@
       },
       "byDistance": {
         "〜1200": {
-          "n": 25,
+          "n": 28,
           "picked": 3,
-          "payoutYen": 576250,
+          "payoutYen": 602820,
           "catchRate": 0.16666666666666666
         },
         "1400-1600": {
-          "n": 36,
+          "n": 40,
           "picked": 3,
-          "payoutYen": 716510,
+          "payoutYen": 802670,
           "catchRate": 0.1111111111111111
         },
         "1800-2000": {
-          "n": 28,
+          "n": 34,
           "picked": 2,
-          "payoutYen": 605800,
+          "payoutYen": 682250,
           "catchRate": 0.1111111111111111
         },
         "2200+": {
-          "n": 11,
+          "n": 12,
           "picked": 3,
-          "payoutYen": 238950,
+          "payoutYen": 255960,
           "catchRate": 0.3
         }
       },
@@ -2561,23 +2655,23 @@
           "catchRate": 0
         },
         "15頭+": {
-          "n": 41,
+          "n": 48,
           "picked": 4,
-          "payoutYen": 1040030,
+          "payoutYen": 1107300,
           "catchRate": 0.14285714285714285
         },
         "11-14頭": {
-          "n": 49,
+          "n": 56,
           "picked": 7,
-          "payoutYen": 951090,
+          "payoutYen": 1090010,
           "catchRate": 0.1794871794871795
         }
       },
       "byWeekday": {
         "土": {
-          "n": 48,
+          "n": 54,
           "picked": 2,
-          "payoutYen": 996500,
+          "payoutYen": 1088470,
           "catchRate": 0.06896551724137931
         },
         "日": {
@@ -2587,9 +2681,9 @@
           "catchRate": 0.175
         },
         "月": {
-          "n": 4,
+          "n": 12,
           "picked": 2,
-          "payoutYen": 45030,
+          "payoutYen": 159250,
           "catchRate": 0.5
         }
       },
@@ -2607,9 +2701,9 @@
           "catchRate": 0.25
         },
         "晴": {
-          "n": 46,
+          "n": 60,
           "picked": 3,
-          "payoutYen": 859240,
+          "payoutYen": 1065430,
           "catchRate": 0.08823529411764706
         },
         "小雨": {
@@ -2621,9 +2715,9 @@
       },
       "byLabel": {
         "予測なし": {
-          "n": 27,
+          "n": 41,
           "picked": 0,
-          "payoutYen": 748450,
+          "payoutYen": 954640,
           "catchRate": null
         },
         "未捕捉": {
@@ -2753,6 +2847,18 @@
           "picked": 0,
           "payoutYen": 46670,
           "catchRate": null
+        },
+        "2026-10-12": {
+          "n": 8,
+          "picked": 0,
+          "payoutYen": 114220,
+          "catchRate": null
+        },
+        "2026-10-17": {
+          "n": 6,
+          "picked": 0,
+          "payoutYen": 91970,
+          "catchRate": null
         }
       }
     },
@@ -2763,26 +2869,26 @@
         "oddsMax": null,
         "scoreMin": 60
       },
-      "n": 132,
+      "n": 147,
       "picked": 14,
       "missed": 80,
       "catchRate": 0.14893617021276595,
-      "payoutYen": 5690190,
+      "payoutYen": 6169260,
       "coverage": {
-        "payouts": 630,
-        "onBoard": 166,
-        "gated": 132,
+        "payouts": 688,
+        "onBoard": 184,
+        "gated": 147,
         "knownGated": 94,
         "picked": 14,
-        "boardRate": 0.2634920634920635,
-        "gateRate": 0.7951807228915663,
+        "boardRate": 0.26744186046511625,
+        "gateRate": 0.7989130434782609,
         "catchRate": 0.14893617021276595
       },
       "byVenue": {
         "新潟": {
-          "n": 26,
+          "n": 29,
           "picked": 2,
-          "payoutYen": 1207300,
+          "payoutYen": 1302660,
           "catchRate": 0.08695652173913043
         },
         "札幌": {
@@ -2810,59 +2916,59 @@
           "catchRate": 0.1875
         },
         "京都": {
-          "n": 5,
+          "n": 11,
           "picked": 0,
-          "payoutYen": 315100,
+          "payoutYen": 538220,
           "catchRate": null
         },
         "東京": {
-          "n": 5,
+          "n": 11,
           "picked": 0,
-          "payoutYen": 175530,
+          "payoutYen": 336120,
           "catchRate": null
         }
       },
       "byTrack": {
         "芝": {
-          "n": 78,
+          "n": 88,
           "picked": 10,
-          "payoutYen": 3347800,
+          "payoutYen": 3675100,
           "catchRate": 0.16666666666666666
         },
         "ダート": {
-          "n": 54,
+          "n": 59,
           "picked": 4,
-          "payoutYen": 2342390,
+          "payoutYen": 2494160,
           "catchRate": 0.11764705882352941
         }
       },
       "byBetType": {
         "trifecta": {
-          "n": 132,
+          "n": 147,
           "picked": 14,
-          "payoutYen": 5690190,
+          "payoutYen": 6169260,
           "catchRate": 0.14893617021276595
         }
       },
       "byOddsBand": {
         "500-999": {
-          "n": 43,
+          "n": 46,
           "picked": 3,
-          "payoutYen": 2710970,
+          "payoutYen": 2873520,
           "catchRate": 0.1111111111111111
         },
         "200-499": {
-          "n": 89,
+          "n": 101,
           "picked": 11,
-          "payoutYen": 2979220,
+          "payoutYen": 3295740,
           "catchRate": 0.16417910447761194
         }
       },
       "byClass": {
         "特別他": {
-          "n": 38,
+          "n": 42,
           "picked": 2,
-          "payoutYen": 1759400,
+          "payoutYen": 1961700,
           "catchRate": 0.07142857142857142
         },
         "障害": {
@@ -2872,35 +2978,35 @@
           "catchRate": 0.3333333333333333
         },
         "新馬": {
-          "n": 15,
+          "n": 17,
           "picked": 0,
-          "payoutYen": 668840,
+          "payoutYen": 745410,
           "catchRate": 0
         },
         "未勝利": {
-          "n": 35,
+          "n": 38,
           "picked": 7,
-          "payoutYen": 1527670,
+          "payoutYen": 1591440,
           "catchRate": 0.25925925925925924
         },
         "1勝": {
-          "n": 37,
+          "n": 42,
           "picked": 4,
-          "payoutYen": 1457030,
+          "payoutYen": 1575240,
           "catchRate": 0.15384615384615385
         },
         "2勝": {
-          "n": 2,
+          "n": 3,
           "picked": 0,
-          "payoutYen": 68150,
+          "payoutYen": 86370,
           "catchRate": 0
         }
       },
       "byDistance": {
         "1400-1600": {
-          "n": 40,
+          "n": 45,
           "picked": 5,
-          "payoutYen": 1654120,
+          "payoutYen": 1866320,
           "catchRate": 0.19230769230769232
         },
         "2200+": {
@@ -2910,43 +3016,43 @@
           "catchRate": 0.21428571428571427
         },
         "1800-2000": {
-          "n": 44,
+          "n": 51,
           "picked": 4,
-          "payoutYen": 1792830,
+          "payoutYen": 1974220,
           "catchRate": 0.125
         },
         "〜1200": {
-          "n": 30,
+          "n": 33,
           "picked": 2,
-          "payoutYen": 1335040,
+          "payoutYen": 1420520,
           "catchRate": 0.09090909090909091
         }
       },
       "byField": {
         "15頭+": {
-          "n": 58,
+          "n": 67,
           "picked": 7,
-          "payoutYen": 2700980,
+          "payoutYen": 3046790,
           "catchRate": 0.1794871794871795
         },
         "〜10頭": {
-          "n": 16,
+          "n": 19,
           "picked": 2,
-          "payoutYen": 802250,
+          "payoutYen": 856320,
           "catchRate": 0.2
         },
         "11-14頭": {
-          "n": 58,
+          "n": 61,
           "picked": 5,
-          "payoutYen": 2186960,
+          "payoutYen": 2266150,
           "catchRate": 0.1111111111111111
         }
       },
       "byWeekday": {
         "土": {
-          "n": 65,
+          "n": 76,
           "picked": 4,
-          "payoutYen": 2561020,
+          "payoutYen": 2925180,
           "catchRate": 0.0975609756097561
         },
         "日": {
@@ -2956,9 +3062,9 @@
           "catchRate": 0.14285714285714285
         },
         "月": {
-          "n": 4,
+          "n": 8,
           "picked": 3,
-          "payoutYen": 139450,
+          "payoutYen": 254360,
           "catchRate": 0.75
         }
       },
@@ -2970,9 +3076,9 @@
           "catchRate": 0.21621621621621623
         },
         "晴": {
-          "n": 59,
+          "n": 74,
           "picked": 4,
-          "payoutYen": 2600230,
+          "payoutYen": 3079300,
           "catchRate": 0.10256410256410256
         },
         "小雨": {
@@ -2990,9 +3096,9 @@
       },
       "byLabel": {
         "予測なし": {
-          "n": 38,
+          "n": 53,
           "picked": 0,
-          "payoutYen": 1807750,
+          "payoutYen": 2286820,
           "catchRate": null
         },
         "未捕捉": {
@@ -3121,6 +3227,18 @@
           "n": 10,
           "picked": 0,
           "payoutYen": 490630,
+          "catchRate": null
+        },
+        "2026-10-12": {
+          "n": 4,
+          "picked": 0,
+          "payoutYen": 114910,
+          "catchRate": null
+        },
+        "2026-10-17": {
+          "n": 11,
+          "picked": 0,
+          "payoutYen": 364160,
           "catchRate": null
         }
       }
