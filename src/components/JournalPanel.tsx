@@ -273,7 +273,7 @@ export function JournalPanel() {
           <p className="mt-1 text-sm text-ink/55">
             現在の設定（オッズ閾値 {settings.oddsThreshold}
             {settings.oddsMax != null ? `〜${settings.oddsMax}` : "〜上限なし"}
-            （単勝は40倍未満） / 最低スコア{" "}
+            （単勝は40倍未満、ワイドは50倍未満） / 最低スコア{" "}
             {settings.scoreMin}
             ）で候補を再選別し、期待度 S〜D ごとの複勝圏的中率と仮想回収率を集計します。設定変更ですぐ反映されます。
           </p>

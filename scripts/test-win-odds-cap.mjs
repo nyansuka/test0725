@@ -1,5 +1,5 @@
 /**
- * 単勝は 40 倍未満。他券種は共通上限のまま。
+ * 単勝は 40 倍未満。ワイドは 50 倍未満。他券種は共通上限のまま。
  *   node scripts/test-win-odds-cap.mjs
  */
 import assert from "node:assert/strict";
@@ -18,6 +18,10 @@ assert.equal(status("win", 79), "above_max");
 assert.equal(status("win", 24), "below_threshold");
 assert.equal(status("quinella", 79), "no_related");
 assert.equal(status("wide", 35.6), "no_related");
+assert.equal(status("wide", 49.9), "no_related");
+assert.equal(status("wide", 50), "above_max");
+assert.equal(status("wide", 79), "above_max");
+assert.equal(status("bracket_quinella", 79), "no_related");
 assert.equal(status("quinella", 81), "above_max");
 
 const open = { ...settings, oddsMax: null };
@@ -27,6 +31,14 @@ assert.equal(
 );
 assert.equal(
   classifyOddsEntry(race, { betType: "quinella", selection: "1-2", odds: 50 }, open).status,
+  "no_related",
+);
+assert.equal(
+  classifyOddsEntry(race, { betType: "wide", selection: "1-2", odds: 50 }, open).status,
+  "above_max",
+);
+assert.equal(
+  classifyOddsEntry(race, { betType: "wide", selection: "1-2", odds: 49.9 }, open).status,
   "no_related",
 );
 

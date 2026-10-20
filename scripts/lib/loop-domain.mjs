@@ -24,18 +24,20 @@ export const ALL_BET_TYPES = [
   "trifecta",
 ];
 
-/** src/domain/betTypes.ts の WIN_ODDS_MAX と揃える。単勝はこの値未満。 */
+/** src/domain/betTypes.ts の WIN_ODDS_MAX / WIDE_ODDS_MAX と揃える。この値未満。 */
 export const WIN_ODDS_MAX = 40;
+export const WIDE_ODDS_MAX = 50;
 
 export function isAboveOddsCap(betType, odds, oddsMax) {
   if (oddsMax != null && odds > oddsMax) return true;
   if (betType === "win" && odds >= WIN_ODDS_MAX) return true;
+  if (betType === "wide" && odds >= WIDE_ODDS_MAX) return true;
   return false;
 }
 
 export const DEFAULT_SETTINGS = {
   oddsThreshold: 25,
-  /** B3: 上限80。単勝は別途 WIN_ODDS_MAX 未満 */
+  /** B3: 上限80。単勝は WIN_ODDS_MAX 未満、ワイドは WIDE_ODDS_MAX 未満 */
   oddsMax: 80,
   /**
    * 2026-08-13: 60→65（凍結6日 scoreMin スイープ）。

@@ -30,7 +30,14 @@ export const BET_TYPE_LABELS: Record<BetType, string> = {
  */
 export const WIN_ODDS_MAX = 40;
 
-/** 共通上限を超える、または単勝が {@link WIN_ODDS_MAX} 以上。 */
+/**
+ * ワイドだけこの値未満（2026-10-20）。
+ * 8/15–10/18 の 17 開催で 50–80 倍は 3/583・回収 31%。
+ * 同じ帯の枠連は 136%、馬連は 115% なので共通上限は動かさない。
+ */
+export const WIDE_ODDS_MAX = 50;
+
+/** 共通上限を超える、単勝が {@link WIN_ODDS_MAX} 以上、またはワイドが {@link WIDE_ODDS_MAX} 以上。 */
 export function isAboveOddsCap(
   betType: BetType | string,
   odds: number,
@@ -38,12 +45,13 @@ export function isAboveOddsCap(
 ): boolean {
   if (oddsMax != null && odds > oddsMax) return true;
   if (betType === "win" && odds >= WIN_ODDS_MAX) return true;
+  if (betType === "wide" && odds >= WIDE_ODDS_MAX) return true;
   return false;
 }
 
 export const DEFAULT_SETTINGS = {
   oddsThreshold: 25,
-  /** B3: 上限80（感度スイープ推奨。null で上限なし）。単勝は別途 WIN_ODDS_MAX 未満 */
+  /** B3: 上限80（感度スイープ推奨。null で上限なし）。単勝は WIN_ODDS_MAX 未満、ワイドは WIDE_ODDS_MAX 未満 */
   oddsMax: 80 as number | null,
   /**
    * 2026-08-13: 60→65（VERIFY 8/9 の次の1変更）。
