@@ -8,6 +8,9 @@ const raceSim = fs.existsSync(simEntry)
   : "./src/components/raceSimFallback.tsx";
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    "/lab/sim/field": ["./src/data/sim-fields/**/*"],
+  },
   turbopack: {
     resolveAlias: {
       "@race-sim": raceSim,

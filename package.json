@@ -21,6 +21,7 @@
     "test:sanren-trifecta-index": "node scripts/test-sanren-trifecta-index.mjs",
     "test:horse-form": "node scripts/test-horse-form.mjs",
     "test:sim-field": "npx tsx scripts/test-sim-field.mts",
+    "sim:fields": "npx tsx scripts/build-sim-fields.mts",
     "test:nakayama-run": "npx tsx scripts/test-nakayama-turf-run.mts",
     "test:corner-compare": "npx tsx scripts/test-corner-compare.mts",
     "test:form-context": "node scripts/test-form-context.mjs",
