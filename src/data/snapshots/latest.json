@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-07T11:36:45.518Z",
+  "fetchedAt": "2026-11-07T12:18:03.213Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-11-07",
   "raceCount": 36,
@@ -2220,7 +2220,7 @@
       "oddsUpdatedAt": "2026-11-07 09:52:10",
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:30:34.454Z",
+        "finishedAt": "2026-11-07T12:17:22.547Z",
         "finishes": [
           {
             "rank": 1,
@@ -5325,7 +5325,7 @@
       "oddsUpdatedAt": "2026-11-07 10:22:20",
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:30:37.435Z",
+        "finishedAt": "2026-11-07T12:17:23.278Z",
         "finishes": [
           {
             "rank": 1,
@@ -8226,7 +8226,7 @@
       "oddsUpdatedAt": "2026-11-07 10:52:49",
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:30:40.389Z",
+        "finishedAt": "2026-11-07T12:17:24.011Z",
         "finishes": [
           {
             "rank": 1,
@@ -11268,7 +11268,7 @@
       "oddsUpdatedAt": "2026-11-07 11:23:29",
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:30:43.703Z",
+        "finishedAt": "2026-11-07T12:17:24.932Z",
         "finishes": [
           {
             "rank": 1,
@@ -14106,7 +14106,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T04:57:14.800Z",
+        "finishedAt": "2026-11-07T12:17:26.731Z",
         "finishes": [
           {
             "rank": 1,
@@ -17182,7 +17182,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T04:57:15.543Z",
+        "finishedAt": "2026-11-07T12:17:28.010Z",
         "finishes": [
           {
             "rank": 1,
@@ -20119,7 +20119,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T04:57:16.194Z",
+        "finishedAt": "2026-11-07T12:17:28.753Z",
         "finishes": [
           {
             "rank": 1,
@@ -23234,7 +23234,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T04:57:17.404Z",
+        "finishedAt": "2026-11-07T12:17:30.017Z",
         "finishes": [
           {
             "rank": 1,
@@ -26114,7 +26114,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:29.957Z",
+        "finishedAt": "2026-11-07T12:17:31.712Z",
         "finishes": [
           {
             "rank": 1,
@@ -29269,7 +29269,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:30.695Z",
+        "finishedAt": "2026-11-07T12:17:32.469Z",
         "finishes": [
           {
             "rank": 1,
@@ -32187,7 +32187,7 @@
       "featured": true,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:31.338Z",
+        "finishedAt": "2026-11-07T12:17:33.620Z",
         "finishes": [
           {
             "rank": 1,
@@ -35042,7 +35042,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:32.016Z",
+        "finishedAt": "2026-11-07T12:17:34.829Z",
         "finishes": [
           {
             "rank": 1,
@@ -36973,7 +36973,7 @@
       "oddsUpdatedAt": "2026-11-07 10:04:05",
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:31:13.193Z",
+        "finishedAt": "2026-11-07T12:17:36.079Z",
         "finishes": [
           {
             "rank": 1,
@@ -39019,7 +39019,7 @@
       "oddsUpdatedAt": "2026-11-07 10:32:25",
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:31:16.567Z",
+        "finishedAt": "2026-11-07T12:17:37.499Z",
         "finishes": [
           {
             "rank": 1,
@@ -41344,7 +41344,7 @@
       "oddsUpdatedAt": "2026-11-07 11:03:36",
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:31:20.096Z",
+        "finishedAt": "2026-11-07T12:17:38.593Z",
         "finishes": [
           {
             "rank": 1,
@@ -43122,22 +43122,175 @@
       "oddsUpdatedAt": "2026-11-07 11:20:35",
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:31:23.233Z",
+        "finishedAt": "2026-11-07T12:17:39.721Z",
         "finishes": [
           {
             "rank": 1,
             "number": 8,
             "bracket": 7,
             "name": "レインボーフライト",
+            "jockey": "津村",
+            "time": "1:48.5",
             "popularity": 1,
             "oddsWin": 2.1
+          },
+          {
+            "rank": 2,
+            "number": 6,
+            "bracket": 6,
+            "name": "スワーヴバシレウス",
+            "jockey": "プーシ",
+            "time": "1:48.6",
+            "popularity": 2,
+            "oddsWin": 3.1
+          },
+          {
+            "rank": 3,
+            "number": 7,
+            "bracket": 7,
+            "name": "ドナズエクリプス",
+            "jockey": "マーカ",
+            "time": "1:49.2",
+            "popularity": 5
+          },
+          {
+            "rank": 4,
+            "number": 9,
+            "bracket": 8,
+            "name": "ブレイズフォート",
+            "jockey": "Ｃデム",
+            "time": "1:49.3",
+            "popularity": 4,
+            "oddsWin": 6.5
+          },
+          {
+            "rank": 5,
+            "number": 2,
+            "bracket": 2,
+            "name": "ランブリングガール",
+            "jockey": "原",
+            "time": "1:49.6",
+            "popularity": 6
+          },
+          {
+            "rank": 6,
+            "number": 5,
+            "bracket": 5,
+            "name": "ゴーゼンチュー",
+            "jockey": "▲佐藤",
+            "time": "1:49.7",
+            "popularity": 9
+          },
+          {
+            "rank": 7,
+            "number": 3,
+            "bracket": 3,
+            "name": "マイネルカピラリス",
+            "jockey": "木幡巧",
+            "time": "1:49.7",
+            "popularity": 8
+          },
+          {
+            "rank": 8,
+            "number": 4,
+            "bracket": 4,
+            "name": "ソウカイウォーリア",
+            "jockey": "戸崎圭",
+            "time": "1:49.8",
+            "popularity": 3,
+            "oddsWin": 4.5
+          },
+          {
+            "rank": 9,
+            "number": 10,
+            "bracket": 8,
+            "name": "ジーティーカッサイ",
+            "jockey": "▲遠藤",
+            "time": "1:50.5",
+            "popularity": 7
+          },
+          {
+            "rank": 10,
+            "number": 1,
+            "bracket": 1,
+            "name": "テングカゼ",
+            "jockey": "的場",
+            "time": "1:50.6",
+            "popularity": 10
           }
         ],
         "payouts": [
           {
             "betType": "win",
             "selection": "8",
-            "payoutYen": 210
+            "payoutYen": 210,
+            "popularity": 1
+          },
+          {
+            "betType": "place",
+            "selection": "8",
+            "payoutYen": 110,
+            "popularity": 1
+          },
+          {
+            "betType": "place",
+            "selection": "6",
+            "payoutYen": 110,
+            "popularity": 2
+          },
+          {
+            "betType": "place",
+            "selection": "7",
+            "payoutYen": 200,
+            "popularity": 5
+          },
+          {
+            "betType": "bracket_quinella",
+            "selection": "6-7",
+            "payoutYen": 290,
+            "popularity": 1
+          },
+          {
+            "betType": "quinella",
+            "selection": "6-8",
+            "payoutYen": 320,
+            "popularity": 1
+          },
+          {
+            "betType": "wide",
+            "selection": "6-8",
+            "payoutYen": 160,
+            "popularity": 1
+          },
+          {
+            "betType": "wide",
+            "selection": "7-8",
+            "payoutYen": 420,
+            "popularity": 6
+          },
+          {
+            "betType": "wide",
+            "selection": "6-7",
+            "payoutYen": 470,
+            "popularity": 7
+          },
+          {
+            "betType": "exacta",
+            "selection": "8-6",
+            "payoutYen": 540,
+            "popularity": 1
+          },
+          {
+            "betType": "trio",
+            "selection": "6-7-8",
+            "payoutYen": 910,
+            "popularity": 3
+          },
+          {
+            "betType": "trifecta",
+            "selection": "8-6-7",
+            "payoutYen": 2880,
+            "popularity": 8
           }
         ]
       },
@@ -45666,7 +45819,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T04:57:19.100Z",
+        "finishedAt": "2026-11-07T12:17:40.905Z",
         "finishes": [
           {
             "rank": 1,
@@ -48281,7 +48434,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T04:57:20.050Z",
+        "finishedAt": "2026-11-07T12:17:41.981Z",
         "finishes": [
           {
             "rank": 1,
@@ -51109,7 +51262,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T04:57:21.110Z",
+        "finishedAt": "2026-11-07T12:17:43.168Z",
         "finishes": [
           {
             "rank": 1,
@@ -53328,7 +53481,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:33.780Z",
+        "finishedAt": "2026-11-07T12:17:43.841Z",
         "finishes": [
           {
             "rank": 1,
@@ -55932,7 +56085,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:35.007Z",
+        "finishedAt": "2026-11-07T12:17:45.685Z",
         "finishes": [
           {
             "rank": 1,
@@ -58414,7 +58567,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:36.146Z",
+        "finishedAt": "2026-11-07T12:17:46.911Z",
         "finishes": [
           {
             "rank": 1,
@@ -60943,7 +61096,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:37.622Z",
+        "finishedAt": "2026-11-07T12:17:47.585Z",
         "finishes": [
           {
             "rank": 1,
@@ -63853,7 +64006,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:39.279Z",
+        "finishedAt": "2026-11-07T12:17:48.412Z",
         "finishes": [
           {
             "rank": 1,
@@ -65697,7 +65850,7 @@
       "oddsUpdatedAt": "2026-11-07 10:12:46",
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:31:53.228Z",
+        "finishedAt": "2026-11-07T12:17:49.060Z",
         "finishes": [
           {
             "rank": 1,
@@ -68369,7 +68522,7 @@
       "oddsUpdatedAt": "2026-11-07 10:43:46",
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:31:56.651Z",
+        "finishedAt": "2026-11-07T12:17:50.781Z",
         "finishes": [
           {
             "rank": 1,
@@ -70391,7 +70544,7 @@
       "oddsUpdatedAt": "2026-11-07 11:12:06",
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:32:00.346Z",
+        "finishedAt": "2026-11-07T12:17:51.908Z",
         "finishes": [
           {
             "rank": 1,
@@ -73214,7 +73367,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T02:57:41.242Z",
+        "finishedAt": "2026-11-07T12:17:52.991Z",
         "finishes": [
           {
             "rank": 1,
@@ -74683,7 +74836,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T04:57:22.827Z",
+        "finishedAt": "2026-11-07T12:17:54.081Z",
         "finishes": [
           {
             "rank": 1,
@@ -76900,7 +77053,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T04:57:24.538Z",
+        "finishedAt": "2026-11-07T12:17:55.294Z",
         "finishes": [
           {
             "rank": 1,
@@ -79220,7 +79373,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T04:57:25.849Z",
+        "finishedAt": "2026-11-07T12:17:56.351Z",
         "finishes": [
           {
             "rank": 1,
@@ -80919,7 +81072,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:40.508Z",
+        "finishedAt": "2026-11-07T12:17:57.493Z",
         "finishes": [
           {
             "rank": 1,
@@ -83095,7 +83248,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:41.606Z",
+        "finishedAt": "2026-11-07T12:17:59.227Z",
         "finishes": [
           {
             "rank": 1,
@@ -85499,7 +85652,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:42.840Z",
+        "finishedAt": "2026-11-07T12:18:00.326Z",
         "finishes": [
           {
             "rank": 1,
@@ -88451,7 +88604,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:44.545Z",
+        "finishedAt": "2026-11-07T12:18:01.774Z",
         "finishes": [
           {
             "rank": 1,
@@ -91467,7 +91620,7 @@
       "featured": false,
       "result": {
         "status": "official",
-        "finishedAt": "2026-11-07T11:36:45.217Z",
+        "finishedAt": "2026-11-07T12:18:02.871Z",
         "finishes": [
           {
             "rank": 1,
