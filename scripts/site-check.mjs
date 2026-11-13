@@ -5,7 +5,7 @@
  *   docker compose exec web npm run site:check
  */
 import http from "node:http";
-import { readFile, access } from "node:fs/promises";
+import { readFile, access, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
@@ -234,17 +234,14 @@ async function checkTrendsAndComments() {
     ok(`trends dayCount=${trends.dayCount}`);
   }
 
-  // ドメイン経由で短評に 評価/傾向 が入ること
-  const r = spawnSync(
-    "npx",
-    [
-      "--yes",
-      "tsx",
-      "-e",
-      `
+  // ドメイン経由で短評に 評価/傾向 が入ること。
+  // Windows の shell:true は複数行の -e をコマンドとして分解し、結果を落とす。
+  // 一時ファイル経由なら npx の引数はパスだけになる。
+  const scriptPath = path.join(root, "scripts", ".tmp-comment-check.mts");
+  const script = `
 import { readFileSync } from "fs";
-import { selectLongshots } from "./src/domain/longshots.ts";
-import { DEFAULT_SETTINGS } from "./src/domain/betTypes.ts";
+import { selectLongshots } from "../src/domain/longshots.ts";
+import { DEFAULT_SETTINGS } from "../src/domain/betTypes.ts";
 const snap = JSON.parse(readFileSync("src/data/snapshots/latest.json","utf8"));
 const picks = selectLongshots(snap.races || [], DEFAULT_SETTINGS).slice(0, 5);
 if (!picks.length) { console.log("NO_PICKS"); process.exit(2); }
@@ -257,10 +254,18 @@ for (const p of picks) {
 }
 console.log(bad === 0 ? "COMMENT_OK " + picks.length : "COMMENT_BAD " + bad);
 process.exit(bad === 0 ? 0 : 1);
-`,
-    ],
-    { cwd: root, encoding: "utf8", shell: process.platform === "win32" },
-  );
+`;
+  let r;
+  try {
+    await writeFile(scriptPath, script, "utf8");
+    r = spawnSync("npx", ["--yes", "tsx", scriptPath], {
+      cwd: root,
+      encoding: "utf8",
+      shell: process.platform === "win32",
+    });
+  } finally {
+    await rm(scriptPath, { force: true });
+  }
 
   const out = `${r.stdout || ""}${r.stderr || ""}`;
   if (r.status === 0 && out.includes("COMMENT_OK")) {
