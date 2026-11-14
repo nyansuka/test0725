@@ -38,6 +38,7 @@ import {
   displayPopularityMap,
   findPayoutYen,
   formatTicketOutcome,
+  horseFinishRank,
 } from "@/domain/results";
 import { axisIndexByNumber, selectAxisHorses } from "@/domain/axis";
 import {
@@ -74,6 +75,12 @@ const statusLabel: Record<OddsBoardStatus, string> = {
   no_related: "関係馬なし",
 };
 
+function ticketTone(outcome: "hit" | "miss" | "pending"): string {
+  if (outcome === "hit") return "font-medium text-signal";
+  if (outcome === "miss") return "text-ink/40";
+  return "text-ink/55";
+}
+
 const statusClass: Record<OddsBoardStatus, string> = {
   candidate: "text-signal font-medium",
   pass: "text-ink/55",
@@ -85,6 +92,7 @@ const statusClass: Record<OddsBoardStatus, string> = {
 
 const SORT_LABELS: Record<EntrySortKey, string> = {
   number: "馬番",
+  finish: "着",
   name: "馬名",
   jockey: "騎手",
   popularity: "人気",
@@ -116,6 +124,8 @@ function sortValue(
   switch (key) {
     case "number":
       return horse.number;
+    case "finish":
+      return horseFinishRank(horse.number, race.result) ?? 99;
     case "name":
       return horse.name;
     case "jockey":
@@ -153,6 +163,13 @@ function compareHorses(
   }
   if (cmp === 0) cmp = a.number - b.number;
   return sort.dir === "asc" ? cmp : -cmp;
+}
+
+function finishTone(rank: number | null): string {
+  if (rank === 1) return "font-semibold text-signal";
+  if (rank != null && rank <= 3) return "font-semibold text-turf";
+  if (rank != null) return "text-ink/55";
+  return "text-ink/30";
 }
 
 function SortableTh({
@@ -298,6 +315,8 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
   );
 
   const isDefaultPinned = entrySortPrefEquals(sort, savedSort);
+  const showFinish = Boolean(race.result?.finishes?.length);
+  const entryColSpan = 9 + Number(showFinish) + Number(Boolean(tipster));
 
   function handleSort(key: EntrySortKey, dir: EntrySortDir) {
     setSort({ key, dir });
@@ -360,6 +379,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
         <ul className="mt-2 divide-y divide-ink/10 border-y border-ink/10">
           {axisPicks.map((ax) => {
             const horse = horses.find((h) => h.number === ax.horseNumber);
+            const finish = horseFinishRank(ax.horseNumber, race.result);
             return (
               <li
                 key={ax.horseNumber}
@@ -375,6 +395,9 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                   {ax.horseNumber}
                 </span>
                 <span className="font-medium">{horse?.name ?? "—"}</span>
+                {finish != null ? (
+                  <span className={`text-xs tabular-nums ${finishTone(finish)}`}>{finish}着</span>
+                ) : null}
                 <span className="text-xs text-ink/50">{horse?.jockey}</span>
                 <span className="text-xs font-medium text-signal">
                   {horse ? formatWinOdds(displayHorseWinOdds(horse, race)) : "—"}
@@ -474,7 +497,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
               className="min-w-0 flex-1 border border-ink/15 bg-sand px-2 py-1.5 text-sm text-ink"
             >
               {(Object.entries(SORT_LABELS) as [EntrySortKey, string][])
-                .filter(([key]) => key !== "tipScore" || Boolean(tipster))
+                .filter(([key]) => (key !== "tipScore" || Boolean(tipster)) && (key !== "finish" || showFinish))
                 .map(([key, label]) => (
                   <option key={key} value={key}>
                     {label}
@@ -501,6 +524,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
             const tip = tipsterByNum.get(horse.number);
             const tipMarked = Boolean(tip?.mark);
             const highlight = marked || Boolean(axis) || tipMarked;
+            const finish = showFinish ? horseFinishRank(horse.number, race.result) : null;
             return (
               <li
                 key={horse.number}
@@ -537,6 +561,11 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                         {horse.number}
                       </span>
                       {horse.name}
+                      {showFinish ? (
+                        <span className={`ml-1.5 text-xs tabular-nums ${finishTone(finish)}`}>
+                          {finish != null ? `${finish}着` : "—"}
+                        </span>
+                      ) : null}
                     </span>
                     <span className="mt-0.5 block text-[11px] text-ink/55">
                       {horse.jockey} · {formatPopularity(popularity.get(horse.number))} · 単{" "}
@@ -588,6 +617,9 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
               <tr className="border-b border-ink/15 bg-sand-dim/50 text-[11px] text-ink/45">
                 <th className="w-10 px-1.5 py-1.5 font-medium">印</th>
                 <SortableTh label="馬番" sortKey="number" sort={sort} onSort={handleSort} className="w-12" />
+                {showFinish ? (
+                  <SortableTh label="着" sortKey="finish" sort={sort} onSort={handleSort} className="w-12" />
+                ) : null}
                 <SortableTh label="馬名" sortKey="name" sort={sort} onSort={handleSort} />
                 <SortableTh label="騎手" sortKey="jockey" sort={sort} onSort={handleSort} />
                 <SortableTh label="人気" sortKey="popularity" sort={sort} onSort={handleSort} className="w-14" />
@@ -608,6 +640,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                 const tip = tipsterByNum.get(horse.number);
                 const tipMarked = Boolean(tip?.mark);
                 const highlight = marked || Boolean(axis) || tipMarked;
+                const finish = showFinish ? horseFinishRank(horse.number, race.result) : null;
                 return (
                   <Fragment key={horse.number}>
                     <tr
@@ -651,6 +684,11 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                           {horse.number}
                         </button>
                       </td>
+                      {showFinish ? (
+                        <td className={`px-1.5 py-1 tabular-nums ${finishTone(finish)}`}>
+                          {finish != null ? finish : "—"}
+                        </td>
+                      ) : null}
                       <td className="px-1.5 py-1 font-medium">
                         <button
                           type="button"
@@ -680,7 +718,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                     </tr>
                     {open ? (
                       <tr className="border-b border-ink/10 bg-sand-dim/25">
-                        <td colSpan={tipster ? 10 : 9} className="px-3 py-2.5">
+                        <td colSpan={entryColSpan} className="px-3 py-2.5">
                           <p className="text-xs leading-relaxed text-ink/70">{horse.rationale}</p>
                           <div className="mt-2 grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-6">
                             {factorLabels.map(([key, label]) => {
@@ -728,10 +766,14 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
         ) : (
           <div className="mt-2">
             <ul className="space-y-1.5 md:hidden">
-              {boardRows.map((row) => (
+              {boardRows.map((row) => {
+                const ticket = showFinish ? formatTicketOutcome(row.entry, race.result) : null;
+                return (
                 <li
                   key={`${row.entry.betType}-${row.entry.selection}`}
-                  className="border border-ink/10 bg-sand-dim/20 px-2.5 py-2"
+                  className={`border border-ink/10 px-2.5 py-2 ${
+                    ticket?.outcome === "hit" ? "bg-signal/10" : "bg-sand-dim/20"
+                  }`}
                 >
                   <div className="flex items-start justify-between gap-2 text-sm">
                     <div className="min-w-0">
@@ -750,9 +792,11 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                       {statusLabel[row.status]}
                       {row.label ? `（${row.label}）` : ""}
                     </span>
+                    {ticket ? <span className={ticketTone(ticket.outcome)}>{ticket.label}</span> : null}
                   </div>
                 </li>
-              ))}
+                );
+              })}
             </ul>
             <div className="hidden overflow-x-auto md:block">
               <table className="w-full min-w-[520px] text-left text-xs">
@@ -763,14 +807,21 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                     <th className="px-2 py-1.5 font-medium">オッズ</th>
                     <th className="px-2 py-1.5 font-medium">スコア</th>
                     <th className="px-2 py-1.5 font-medium">判定</th>
+                    {showFinish ? <th className="px-2 py-1.5 font-medium">結果</th> : null}
                   </tr>
                 </thead>
                 <tbody>
-                  {boardRows.map((row) => (
+                  {boardRows.map((row) => {
+                    const ticket = showFinish ? formatTicketOutcome(row.entry, race.result) : null;
+                    return (
                     <tr
                       key={`${row.entry.betType}-${row.entry.selection}`}
                       className={`border-b border-ink/10 ${
-                        row.status === "candidate" ? "bg-signal/5" : ""
+                        ticket?.outcome === "hit"
+                          ? "bg-signal/10"
+                          : row.status === "candidate"
+                            ? "bg-signal/5"
+                            : ""
                       }`}
                     >
                       <td className="px-2 py-1">{BET_TYPE_LABELS[row.entry.betType]}</td>
@@ -783,8 +834,12 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
                         {statusLabel[row.status]}
                         {row.label ? `（${row.label}）` : ""}
                       </td>
+                      {ticket ? (
+                        <td className={`px-2 py-1 ${ticketTone(ticket.outcome)}`}>{ticket.label}</td>
+                      ) : null}
                     </tr>
-                  ))}
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

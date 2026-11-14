@@ -1,5 +1,5 @@
-import type { BetType, Horse, Race, RaceResult } from "./types";
-import { parseSelectionNumbers } from "./betTypes";
+import type { BetType, Horse, HorseFinish, PayoutLine, Race, RaceResult } from "./types";
+import { ALL_BET_TYPES, parseSelectionNumbers } from "./betTypes";
 import {
   formatWinOdds,
   oddsFromPayoutYen,
@@ -88,6 +88,32 @@ export function horseFinishRank(
   const finish = result.finishes.find((f) => f.number === horseNumber);
   if (finish?.rank == null || finish.rank < 1) return null;
   return finish.rank;
+}
+
+/**
+ * 結果表の騎手名は省略される（ルメール→ルメー）。
+ * 出馬表に名前があればそちらを使う。
+ */
+export function displayFinishJockey(race: Race, finish: Pick<HorseFinish, "number" | "jockey">): string {
+  const fromEntry = race.horses.find((h) => h.number === finish.number)?.jockey?.trim();
+  if (fromEntry && fromEntry !== "—") return fromEntry;
+  const fromResult = finish.jockey?.trim();
+  return fromResult || "—";
+}
+
+/** 払戻を券種順にまとめる。単勝の並びに 3連単を混ぜない */
+export function groupPayouts(payouts: PayoutLine[]): { betType: BetType; lines: PayoutLine[] }[] {
+  const buckets = new Map<string, PayoutLine[]>();
+  for (const line of payouts) {
+    const list = buckets.get(line.betType);
+    if (list) list.push(line);
+    else buckets.set(line.betType, [line]);
+  }
+  const ordered: BetType[] = ALL_BET_TYPES.filter((betType) => buckets.has(betType));
+  for (const key of buckets.keys()) {
+    if (!ordered.includes(key as BetType)) ordered.push(key as BetType);
+  }
+  return ordered.map((betType) => ({ betType, lines: buckets.get(betType) ?? [] }));
 }
 
 export type FeaturedHorseSummary = {

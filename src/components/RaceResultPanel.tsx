@@ -1,5 +1,5 @@
 import type { Race } from "@/domain/types";
-import { formatFinishLine, payoutLabel } from "@/domain/results";
+import { displayFinishJockey, formatFinishLine, groupPayouts, payoutLabel } from "@/domain/results";
 
 type Props = {
   race: Race;
@@ -22,6 +22,7 @@ export function RaceResultPanel({ race, compact = false }: Props) {
   const finishes = [...result.finishes].sort(
     (a, b) => (a.rank ?? 99) - (b.rank ?? 99) || a.number - b.number,
   );
+  const payoutGroups = groupPayouts(result.payouts);
 
   return (
     <section className={compact ? "space-y-2" : "space-y-6"}>
@@ -48,7 +49,7 @@ export function RaceResultPanel({ race, compact = false }: Props) {
               <span className="ml-1.5 font-medium">{f.name}</span>
             </p>
             <p className="mt-0.5 text-[11px] text-ink/55">
-              {f.jockey ?? "—"}
+              {displayFinishJockey(race, f)}
               {f.time ? ` · ${f.time}` : ""}
               {f.popularity != null ? ` · ${f.popularity}人` : ""}
             </p>
@@ -80,7 +81,7 @@ export function RaceResultPanel({ race, compact = false }: Props) {
                 </td>
                 <td className="px-1.5 py-1 font-semibold tabular-nums">{f.number}</td>
                 <td className="px-1.5 py-1 font-medium">{f.name}</td>
-                <td className="px-1.5 py-1 text-ink/60">{f.jockey ?? "—"}</td>
+                <td className="px-1.5 py-1 text-ink/60">{displayFinishJockey(race, f)}</td>
                 <td className="px-1.5 py-1">{f.time ?? "—"}</td>
                 <td className="px-1.5 py-1">{f.popularity != null ? `${f.popularity}人` : "—"}</td>
               </tr>
@@ -89,24 +90,37 @@ export function RaceResultPanel({ race, compact = false }: Props) {
         </table>
       </div>
 
-      {result.payouts.length > 0 && (
+      {payoutGroups.length > 0 && (
         <div>
-          {!compact ? <h3 className="text-base font-semibold text-ink">払戻</h3> : null}
+          <h3 className={`font-semibold text-ink ${compact ? "text-xs" : "text-base"}`}>払戻</h3>
           <ul
-            className={`flex flex-wrap gap-x-4 gap-y-1 text-ink/75 ${
-              compact ? "text-xs" : "mt-3 space-y-1.5 text-sm"
+            className={`grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2 ${
+              compact ? "mt-1.5 text-xs" : "mt-3 text-sm"
             }`}
           >
-            {result.payouts.map((p, i) => (
-              <li key={`${p.betType}-${p.selection}-${i}`}>
-                <span className="text-ink/50">{payoutLabel(p.betType)}</span>{" "}
-                <span className="font-[family-name:var(--font-display)] font-semibold">
-                  {p.selection}
-                </span>{" "}
-                <span className="font-medium text-signal">{p.payoutYen.toLocaleString()}円</span>
-                {p.popularity != null && (
-                  <span className="text-ink/45"> · {p.popularity}人気</span>
-                )}
+            {payoutGroups.map((group) => (
+              <li key={group.betType} className="min-w-0 border-t border-ink/10 pt-1.5">
+                <p className="text-[11px] text-ink/45">{payoutLabel(group.betType)}</p>
+                <ul className="mt-0.5 space-y-0.5">
+                  {group.lines.map((line, i) => (
+                    <li
+                      key={`${line.selection}-${i}`}
+                      className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3"
+                    >
+                      <span className="min-w-0 break-words font-[family-name:var(--font-display)] font-semibold">
+                        {line.selection}
+                        {line.popularity != null && (
+                          <span className="ml-1.5 text-[11px] font-normal text-ink/45">
+                            {line.popularity}人気
+                          </span>
+                        )}
+                      </span>
+                      <span className="text-right font-medium tabular-nums text-signal">
+                        {line.payoutYen.toLocaleString()}円
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>

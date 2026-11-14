@@ -2,6 +2,7 @@
 
 export type EntrySortKey =
   | "number"
+  | "finish"
   | "name"
   | "jockey"
   | "popularity"
@@ -27,6 +28,7 @@ const STORAGE_KEY = "umanote-entry-table-sort-v1";
 
 const SORT_KEYS = new Set<EntrySortKey>([
   "number",
+  "finish",
   "name",
   "jockey",
   "popularity",

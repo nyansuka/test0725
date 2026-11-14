@@ -149,6 +149,62 @@ function textOf(htmlFragment) {
   return decodeHtml(String(htmlFragment ?? "").replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
 }
 
+/** Icon_W01 などは aria-label が空のときの予備。netkeiba の天候スプライト */
+const WEATHER_BY_ICON_CODE = {
+  "01": "晴",
+  "02": "曇",
+  "03": "雨",
+  "04": "小雨",
+  "05": "雪",
+  "06": "小雪",
+};
+
+/**
+ * 天候は RaceData01 の文字ではなくアイコン span にある。
+ * `<span class="Icon_Weather02 Icon_W01" aria-label="晴" title="晴">` を読む。
+ * タグを落としてから「天候:」を探すとラベルが消える。
+ */
+function weatherFromRaceHtml(data01, html) {
+  const scoped = String(data01 ?? "");
+  const fromDataIcon = weatherIconLabel(scoped);
+  if (fromDataIcon) return fromDataIcon;
+  if (!scoped.trim()) {
+    const fromPage = weatherIconLabel(html);
+    if (fromPage) return fromPage;
+  }
+  const dataPlain = decodeHtml(scoped.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ");
+  const weatherMatch =
+    dataPlain.match(/天候[:：]\s*([^\s/]+)/) ??
+    (!scoped.trim() ? String(html ?? "").match(/WeatherData">\s*([^\s<]+)/) : null);
+  return weatherMatch?.[1] ?? "—";
+}
+
+function weatherIconLabel(fragment) {
+  const tags = [...String(fragment ?? "").matchAll(/<span\b[^>]*class="[^"]*Icon_W\d+[^"]*"[^>]*>/gi)];
+  for (const match of tags) {
+    const tag = match[0];
+    const label = tag.match(/(?:aria-label|title)="([^"]*)"/i)?.[1];
+    const text = label ? decodeHtml(label).replace(/\s+/g, "") : "";
+    if (text && text !== "—") return text;
+    const code = tag.match(/Icon_W(\d+)/)?.[1];
+    if (code && WEATHER_BY_ICON_CODE[code]) return WEATHER_BY_ICON_CODE[code];
+  }
+  return null;
+}
+
+/** 結果表は騎手名を詰める（ルメール→ルメー）。出馬表の表記を着順側へ写す */
+function applyEntryJockeyNames(horses, result) {
+  if (!result?.finishes?.length || !horses?.length) return result;
+  const byNumber = new Map(horses.map((h) => [h.number, h.jockey]));
+  for (const finish of result.finishes) {
+    const name = byNumber.get(finish.number);
+    if (typeof name === "string" && name.trim() && name.trim() !== "—") {
+      finish.jockey = name.trim();
+    }
+  }
+  return result;
+}
+
 function parseRaceMeta(html, raceId) {
   const venueCode = raceId.slice(4, 6);
   const raceNumber = Number(raceId.slice(10, 12));
@@ -170,8 +226,6 @@ function parseRaceMeta(html, raceId) {
   const timeMatch = dataPlain.match(/(\d{1,2}:\d{2})\s*発走/) ?? dataPlain.match(/(\d{1,2}:\d{2})/);
   // netkeiba はダートを「ダ1000m」と略記する（「ダート」表記は稀）
   const distMatch = dataPlain.match(/(芝|ダート|ダ|障)\s*(\d+)\s*m/);
-  const weatherMatch =
-    dataPlain.match(/天候[:：]\s*([^\s/]+)/) ?? html.match(/WeatherData">\s*([^\s<]+)/);
   const conditionMatch =
     dataPlain.match(/馬場[:：]\s*([^\s/]+)/) ??
     html.match(/class="Item0[34]">\s*(稍重|不良|良|重)/) ??
@@ -188,7 +242,7 @@ function parseRaceMeta(html, raceId) {
     track = isDirt ? "ダート" : "芝";
     distance = `${surfaceLabel}${distMatch[2]}m`;
   }
-  const weather = weatherMatch?.[1] ?? "—";
+  const weather = weatherFromRaceHtml(data01, html);
   const condition = conditionMatch?.[1] ?? "—";
   const courseRail = courseRailOf(dataPlain, venue, track, distance);
 
@@ -876,7 +930,7 @@ async function fetchOneRace(raceId, raceDate, { withResult = true, withForm = fa
 
   if (withResult) {
     const result = await fetchRaceResult(raceId);
-    if (result) race.result = result;
+    if (result) race.result = applyEntryJockeyNames(horses, result);
   }
 
   return race;
@@ -1079,7 +1133,7 @@ async function updateResultsOnly(raceDate, { graceMinutes = 8, force = false } =
     try {
       const result = await fetchRaceResult(race.sourceRaceId);
       if (result) {
-        race.result = result;
+        race.result = applyEntryJockeyNames(race.horses, result);
         updated += 1;
         const trio = result.payouts.filter((p) => p.betType === "trio" || p.betType === "trifecta").length;
         console.log(
@@ -1275,6 +1329,9 @@ export {
   fetchRaceResult,
   parseResultHtml,
   parseHorses,
+  parseRaceMeta,
+  weatherFromRaceHtml,
+  applyEntryJockeyNames,
   updateOddsOnly,
   updateResultsOnly,
   enrichSnapshotWithForm,
