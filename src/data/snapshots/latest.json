@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-15T02:24:11.495Z",
+  "fetchedAt": "2026-11-15T02:54:08.194Z",
   "source": "netkeiba (public pages / odds API + results)",
   "raceDate": "2026-11-15",
   "raceCount": 36,
@@ -70670,7 +70670,233 @@
         }
       ],
       "oddsUpdatedAt": "2026-11-15 11:20:41",
-      "featured": false
+      "featured": false,
+      "result": {
+        "status": "official",
+        "finishedAt": "2026-11-15T02:54:07.728Z",
+        "finishes": [
+          {
+            "rank": 1,
+            "number": 13,
+            "bracket": 7,
+            "name": "レイオウロンド",
+            "jockey": "古川吉",
+            "time": "1:24.2",
+            "popularity": 4,
+            "oddsWin": 11.7
+          },
+          {
+            "rank": 2,
+            "number": 3,
+            "bracket": 2,
+            "name": "ドラゴンジョルノ",
+            "jockey": "北村友",
+            "time": "1:24.4",
+            "popularity": 3
+          },
+          {
+            "rank": 3,
+            "number": 12,
+            "bracket": 6,
+            "name": "ユーキャンダンス",
+            "jockey": "川田",
+            "time": "1:24.9",
+            "popularity": 1,
+            "oddsWin": 1.5
+          },
+          {
+            "rank": 4,
+            "number": 9,
+            "bracket": 5,
+            "name": "アマル",
+            "jockey": "☆田山",
+            "time": "1:25.0",
+            "popularity": 11
+          },
+          {
+            "rank": 5,
+            "number": 5,
+            "bracket": 3,
+            "name": "ゴッドスカーレット",
+            "jockey": "◇今村",
+            "time": "1:25.2",
+            "popularity": 6
+          },
+          {
+            "rank": 6,
+            "number": 1,
+            "bracket": 1,
+            "name": "ゴールドビスケッツ",
+            "jockey": "丹内",
+            "time": "1:25.3",
+            "popularity": 8
+          },
+          {
+            "rank": 7,
+            "number": 16,
+            "bracket": 8,
+            "name": "スターペスアサミ",
+            "jockey": "太宰",
+            "time": "1:25.6",
+            "popularity": 15
+          },
+          {
+            "rank": 8,
+            "number": 7,
+            "bracket": 4,
+            "name": "モズデキマリ",
+            "jockey": "坂井",
+            "time": "1:25.8",
+            "popularity": 2
+          },
+          {
+            "rank": 9,
+            "number": 2,
+            "bracket": 1,
+            "name": "アリエスアルバ",
+            "jockey": "松若",
+            "time": "1:26.0",
+            "popularity": 10
+          },
+          {
+            "rank": 10,
+            "number": 6,
+            "bracket": 3,
+            "name": "ヤマニンウラカン",
+            "jockey": "武豊",
+            "time": "1:26.2",
+            "popularity": 9
+          },
+          {
+            "rank": 11,
+            "number": 14,
+            "bracket": 7,
+            "name": "アンソフィリア",
+            "jockey": "Ｃデムーロ",
+            "time": "1:26.2",
+            "popularity": 7
+          },
+          {
+            "rank": 12,
+            "number": 10,
+            "bracket": 5,
+            "name": "ジェリーロラム",
+            "jockey": "マーカンド",
+            "time": "1:26.2",
+            "popularity": 5
+          },
+          {
+            "rank": 13,
+            "number": 8,
+            "bracket": 4,
+            "name": "タマモマカロン",
+            "jockey": "幸",
+            "time": "1:27.1",
+            "popularity": 12
+          },
+          {
+            "rank": 14,
+            "number": 11,
+            "bracket": 6,
+            "name": "ヴァシロピタ",
+            "jockey": "田口",
+            "time": "1:27.2",
+            "popularity": 14
+          },
+          {
+            "rank": 15,
+            "number": 15,
+            "bracket": 8,
+            "name": "モズノンノン",
+            "jockey": "西塚",
+            "time": "1:30.1",
+            "popularity": 16
+          },
+          {
+            "rank": 16,
+            "number": 4,
+            "bracket": 2,
+            "name": "デルマヨシノ",
+            "jockey": "西村淳",
+            "time": "1:32.4",
+            "popularity": 13
+          }
+        ],
+        "payouts": [
+          {
+            "betType": "win",
+            "selection": "13",
+            "payoutYen": 1170,
+            "popularity": 4
+          },
+          {
+            "betType": "place",
+            "selection": "13",
+            "payoutYen": 190,
+            "popularity": 2
+          },
+          {
+            "betType": "place",
+            "selection": "3",
+            "payoutYen": 200,
+            "popularity": 4
+          },
+          {
+            "betType": "place",
+            "selection": "12",
+            "payoutYen": 110,
+            "popularity": 1
+          },
+          {
+            "betType": "bracket_quinella",
+            "selection": "2-7",
+            "payoutYen": 2970,
+            "popularity": 8
+          },
+          {
+            "betType": "quinella",
+            "selection": "3-13",
+            "payoutYen": 4900,
+            "popularity": 13
+          },
+          {
+            "betType": "wide",
+            "selection": "3-13",
+            "payoutYen": 1330,
+            "popularity": 12
+          },
+          {
+            "betType": "wide",
+            "selection": "12-13",
+            "payoutYen": 380,
+            "popularity": 3
+          },
+          {
+            "betType": "wide",
+            "selection": "3-12",
+            "payoutYen": 320,
+            "popularity": 1
+          },
+          {
+            "betType": "exacta",
+            "selection": "13-3",
+            "payoutYen": 9770,
+            "popularity": 21
+          },
+          {
+            "betType": "trio",
+            "selection": "3-12-13",
+            "payoutYen": 2580,
+            "popularity": 4
+          },
+          {
+            "betType": "trifecta",
+            "selection": "13-3-12",
+            "payoutYen": 28210,
+            "popularity": 87
+          }
+        ]
+      }
     },
     {
       "id": "kyoto-20261115-5",
