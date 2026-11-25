@@ -84,3 +84,20 @@ export function simFieldFromRuns(
     withoutPass: horses.filter((horse) => horse.passUnknown).map((horse) => horse.name),
   };
 }
+
+/**
+ * 発走前の通過が1頭も無い、または並びファイルが無いとき。
+ * 枠順の差し並びで走らせ、馬身は出さない。
+ */
+export function cardSimHorses(entries: FieldEntry[]): FieldHorse[] {
+  return entries
+    .map((entry) => ({
+      number: entry.number,
+      bracket: entry.bracket ?? 1,
+      name: entry.name,
+      style: "差" as const,
+      turfPasses: [],
+      passUnknown: true,
+    }))
+    .sort((a, b) => a.number - b.number);
+}

@@ -7,7 +7,8 @@ import assert from "node:assert/strict";
 import { STRETCH_CAP } from "../src/domain/sim/fieldShape.ts";
 import { DEFERRED_FLAT, FLAT_NEW, flatSimId } from "../src/domain/sim/flatSimCatalog.ts";
 import { flatCourseView } from "../src/domain/sim/flatCourse.ts";
-import { simFieldFromRuns } from "../src/domain/sim/nakayamaTurf1200Field.ts";
+import { cardSimHorses, simFieldFromRuns } from "../src/domain/sim/nakayamaTurf1200Field.ts";
+import { createTurf1200 } from "../src/domain/sim/nakayamaTurf1200Play.ts";
 import type { StyleRun } from "../src/domain/sim/runningStyle.ts";
 import { isTurfOneTurnSimRace } from "../src/domain/nakayamaTurf1200Sim.ts";
 
@@ -122,5 +123,33 @@ assert.equal(openLead?.behindM, 0);
 assert.ok(openCloser && openLead && openCloser.behindM > openLead.behindM);
 assert.ok(openMissing && openCloser && openMissing.behindM > openCloser.behindM);
 assert.equal(openLead?.lane, 0);
+
+const card = cardSimHorses([
+  { number: 2, bracket: 2, name: "イ" },
+  { number: 1, name: "ア" },
+]);
+assert.deepEqual(
+  card.map((horse) => [horse.number, horse.bracket, horse.style, horse.passUnknown]),
+  [
+    [1, 1, "差", true],
+    [2, 2, "差", true],
+  ],
+);
+const tokyo = flatCourseView("tokyo-dirt-1600");
+assert.ok(tokyo);
+const cardRun = tokyo.play(card);
+const atGate = cardRun.fieldAt(0);
+const atMid = cardRun.fieldAt(800);
+for (const row of atMid) {
+  const before = atGate.find((item) => item.horse.number === row.horse.number);
+  assert.ok(before && row.along > before.along + 200, `${row.horse.number}`);
+}
+const naka = createTurf1200(card);
+const nakaGate = naka.fieldAt(0);
+const nakaMid = naka.fieldAt(600);
+for (const row of nakaMid) {
+  const before = nakaGate.find((item) => item.horse.number === row.horse.number);
+  assert.ok(before && row.along > before.along + 200, `${row.horse.number}`);
+}
 
 console.log(`flat sim ok (${FLAT_NEW.length})`);
