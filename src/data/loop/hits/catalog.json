@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-11-23T02:27:12.784Z",
+  "builtAt": "2026-11-26T12:14:15.654Z",
   "kind": "gated-ticket-hits",
   "note": "Freeze odds met that day's settings and the payout hit. Main = non-sanren bet types at board settings. Trio/trifecta are separate. Do not merge KPI.",
   "scannedDates": [
@@ -33,7 +33,8 @@
     "2026-11-07",
     "2026-11-08",
     "2026-11-21",
-    "2026-11-22"
+    "2026-11-22",
+    "2026-11-23"
   ],
   "dates": [
     "2026-07-25",
@@ -65,9 +66,10 @@
     "2026-11-07",
     "2026-11-08",
     "2026-11-21",
-    "2026-11-22"
+    "2026-11-22",
+    "2026-11-23"
   ],
-  "hitCount": 743,
+  "hitCount": 761,
   "hits": [
     {
       "id": "main|2026-07-25|chukyo-20260725-4|place:9",
@@ -38605,6 +38607,960 @@
       "odds": 128.1,
       "oddsBand": "100-149",
       "payoutYen": 12260,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "main|2026-11-23|fukushima-20261123-9|bracket_quinella:6-7",
+      "lane": "main",
+      "raceDate": "2026-11-23",
+      "raceId": "fukushima-20261123-9",
+      "venue": "福島",
+      "raceNumber": 9,
+      "title": "磐梯山特別",
+      "track": "芝",
+      "distanceM": 2600,
+      "distanceBand": "2200+",
+      "classBand": "特別他",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "14:05",
+      "betType": "bracket_quinella",
+      "selection": "6-7",
+      "horses": [
+        {
+          "number": 11,
+          "name": "ペリプルス",
+          "popularity": 14
+        },
+        {
+          "number": 12,
+          "name": "トラストボス",
+          "popularity": 11
+        },
+        {
+          "number": 13,
+          "name": "ボンボンベイビー",
+          "popularity": 1
+        },
+        {
+          "number": 14,
+          "name": "カドドゥディエ",
+          "popularity": 6
+        }
+      ],
+      "odds": 57.6,
+      "oddsBand": "50-79",
+      "payoutYen": 5870,
+      "score": 60,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "pass",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "main|2026-11-23|tokyo-20261123-10|win:11",
+      "lane": "main",
+      "raceDate": "2026-11-23",
+      "raceId": "tokyo-20261123-10",
+      "venue": "東京",
+      "raceNumber": 10,
+      "title": "レジェンドトレーナーC",
+      "track": "ダート",
+      "distanceM": 2100,
+      "distanceBand": "1800-2000",
+      "classBand": "特別他",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "14:55",
+      "betType": "win",
+      "selection": "11",
+      "horses": [
+        {
+          "number": 11,
+          "name": "シャルクハフト",
+          "popularity": 13
+        }
+      ],
+      "odds": 37.8,
+      "oddsBand": "25-49",
+      "payoutYen": 3570,
+      "score": 61,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "pass",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "main|2026-11-23|tokyo-20261123-8|bracket_quinella:1-5",
+      "lane": "main",
+      "raceDate": "2026-11-23",
+      "raceId": "tokyo-20261123-8",
+      "venue": "東京",
+      "raceNumber": 8,
+      "title": "3歳以上2勝クラス",
+      "track": "ダート",
+      "distanceM": 1400,
+      "distanceBand": "1400-1600",
+      "classBand": "2勝",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "13:50",
+      "betType": "bracket_quinella",
+      "selection": "1-5",
+      "horses": [
+        {
+          "number": 1,
+          "name": "マーゴットサンズ",
+          "popularity": 2
+        },
+        {
+          "number": 2,
+          "name": "グラティアム",
+          "popularity": 6
+        },
+        {
+          "number": 9,
+          "name": "レディゴディヴァ",
+          "popularity": 14
+        },
+        {
+          "number": 10,
+          "name": "メルシージュテーム",
+          "popularity": 9
+        }
+      ],
+      "odds": 42.3,
+      "oddsBand": "25-49",
+      "payoutYen": 2090,
+      "score": 57,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "pass",
+      "settings": {
+        "oddsThreshold": 25,
+        "oddsMax": 80,
+        "scoreMin": 65
+      }
+    },
+    {
+      "id": "trifecta|2026-11-23|fukushima-20261123-12|trifecta:6-10-4",
+      "lane": "trifecta",
+      "raceDate": "2026-11-23",
+      "raceId": "fukushima-20261123-12",
+      "venue": "福島",
+      "raceNumber": 12,
+      "title": "3歳以上1勝クラス",
+      "track": "芝",
+      "distanceM": 2000,
+      "distanceBand": "1800-2000",
+      "classBand": "1勝",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "15:55",
+      "betType": "trifecta",
+      "selection": "6-10-4",
+      "horses": [
+        {
+          "number": 6,
+          "name": "カテドラルクォーツ",
+          "popularity": 6
+        },
+        {
+          "number": 10,
+          "name": "レッドレグルス",
+          "popularity": 7
+        },
+        {
+          "number": 4,
+          "name": "ポッドクロス",
+          "popularity": 2
+        }
+      ],
+      "odds": 386.3,
+      "oddsBand": "200-499",
+      "payoutYen": 37890,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-11-23|fukushima-20261123-3|trifecta:11-8-5",
+      "lane": "trifecta",
+      "raceDate": "2026-11-23",
+      "raceId": "fukushima-20261123-3",
+      "venue": "福島",
+      "raceNumber": 3,
+      "title": "3歳以上1勝クラス",
+      "track": "ダート",
+      "distanceM": 1700,
+      "distanceBand": "1400-1600",
+      "classBand": "1勝",
+      "fieldSize": 15,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "—",
+      "weekday": "月",
+      "startTime": "10:45",
+      "betType": "trifecta",
+      "selection": "11-8-5",
+      "horses": [
+        {
+          "number": 11,
+          "name": "キープシャイニング",
+          "popularity": 1
+        },
+        {
+          "number": 8,
+          "name": "ゼルダ",
+          "popularity": 8
+        },
+        {
+          "number": 5,
+          "name": "サムシングニュー",
+          "popularity": 3
+        }
+      ],
+      "odds": 264.5,
+      "oddsBand": "200-499",
+      "payoutYen": 26450,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-11-23|fukushima-20261123-4|trifecta:4-10-3",
+      "lane": "trifecta",
+      "raceDate": "2026-11-23",
+      "raceId": "fukushima-20261123-4",
+      "venue": "福島",
+      "raceNumber": 4,
+      "title": "3歳以上障害未勝利",
+      "track": "芝",
+      "distanceM": 2770,
+      "distanceBand": "2200+",
+      "classBand": "障害",
+      "fieldSize": 14,
+      "fieldBand": "11-14頭",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "11:15",
+      "betType": "trifecta",
+      "selection": "4-10-3",
+      "horses": [
+        {
+          "number": 4,
+          "name": "アウスヴァール",
+          "popularity": 1
+        },
+        {
+          "number": 10,
+          "name": "トータルクラリティ",
+          "popularity": 3
+        },
+        {
+          "number": 3,
+          "name": "ディズレーリ",
+          "popularity": 9
+        }
+      ],
+      "odds": 242.6,
+      "oddsBand": "200-499",
+      "payoutYen": 24260,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-11-23|fukushima-20261123-5|trifecta:16-10-4",
+      "lane": "trifecta",
+      "raceDate": "2026-11-23",
+      "raceId": "fukushima-20261123-5",
+      "venue": "福島",
+      "raceNumber": 5,
+      "title": "2歳新馬",
+      "track": "芝",
+      "distanceM": 1800,
+      "distanceBand": "1800-2000",
+      "classBand": "新馬",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "12:05",
+      "betType": "trifecta",
+      "selection": "16-10-4",
+      "horses": [
+        {
+          "number": 16,
+          "name": "マージナルゲイン",
+          "popularity": 4
+        },
+        {
+          "number": 10,
+          "name": "ミッキーラビット",
+          "popularity": 1
+        },
+        {
+          "number": 4,
+          "name": "エンポリアム",
+          "popularity": 3
+        }
+      ],
+      "odds": 720.2,
+      "oddsBand": "500-999",
+      "payoutYen": 29700,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-11-23|fukushima-20261123-7|trifecta:12-8-14",
+      "lane": "trifecta",
+      "raceDate": "2026-11-23",
+      "raceId": "fukushima-20261123-7",
+      "venue": "福島",
+      "raceNumber": 7,
+      "title": "3歳以上1勝クラス",
+      "track": "ダート",
+      "distanceM": 1150,
+      "distanceBand": "〜1200",
+      "classBand": "1勝",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "—",
+      "weekday": "月",
+      "startTime": "13:05",
+      "betType": "trifecta",
+      "selection": "12-8-14",
+      "horses": [
+        {
+          "number": 12,
+          "name": "ベラジオリン",
+          "popularity": 2
+        },
+        {
+          "number": 8,
+          "name": "ララバッカナール",
+          "popularity": 1
+        },
+        {
+          "number": 14,
+          "name": "アツキヤマト",
+          "popularity": 10
+        }
+      ],
+      "odds": 315.1,
+      "oddsBand": "200-499",
+      "payoutYen": 21140,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-11-23|fukushima-20261123-8|trifecta:11-14-5",
+      "lane": "trifecta",
+      "raceDate": "2026-11-23",
+      "raceId": "fukushima-20261123-8",
+      "venue": "福島",
+      "raceNumber": 8,
+      "title": "3歳以上1勝クラス",
+      "track": "芝",
+      "distanceM": 1200,
+      "distanceBand": "〜1200",
+      "classBand": "1勝",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "13:35",
+      "betType": "trifecta",
+      "selection": "11-14-5",
+      "horses": [
+        {
+          "number": 11,
+          "name": "スウィッチインラヴ",
+          "popularity": 2
+        },
+        {
+          "number": 14,
+          "name": "シヴィータス",
+          "popularity": 1
+        },
+        {
+          "number": 5,
+          "name": "スプリングデイ",
+          "popularity": 12
+        }
+      ],
+      "odds": 499.2,
+      "oddsBand": "200-499",
+      "payoutYen": 56180,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-11-23|tokyo-20261123-11|trifecta:12-10-8",
+      "lane": "trifecta",
+      "raceDate": "2026-11-23",
+      "raceId": "tokyo-20261123-11",
+      "venue": "東京",
+      "raceNumber": 11,
+      "title": "東スポ2歳S",
+      "track": "芝",
+      "distanceM": 1800,
+      "distanceBand": "1800-2000",
+      "classBand": "特別他",
+      "fieldSize": 12,
+      "fieldBand": "11-14頭",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "15:30",
+      "betType": "trifecta",
+      "selection": "12-10-8",
+      "horses": [
+        {
+          "number": 12,
+          "name": "オンユアマークス",
+          "popularity": 6
+        },
+        {
+          "number": 10,
+          "name": "ショウナンガレオン",
+          "popularity": 1
+        },
+        {
+          "number": 8,
+          "name": "コラリオン",
+          "popularity": 4
+        }
+      ],
+      "odds": 435.6,
+      "oddsBand": "200-499",
+      "payoutYen": 44340,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-11-23|tokyo-20261123-12|trifecta:6-18-17",
+      "lane": "trifecta",
+      "raceDate": "2026-11-23",
+      "raceId": "tokyo-20261123-12",
+      "venue": "東京",
+      "raceNumber": 12,
+      "title": "3歳以上1勝クラス",
+      "track": "芝",
+      "distanceM": 1600,
+      "distanceBand": "1400-1600",
+      "classBand": "1勝",
+      "fieldSize": 18,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "16:05",
+      "betType": "trifecta",
+      "selection": "6-18-17",
+      "horses": [
+        {
+          "number": 6,
+          "name": "ミスターライト",
+          "popularity": 1
+        },
+        {
+          "number": 18,
+          "name": "マツリダイコ",
+          "popularity": 4
+        },
+        {
+          "number": 17,
+          "name": "モントゥリエ",
+          "popularity": 5
+        }
+      ],
+      "odds": 333.2,
+      "oddsBand": "200-499",
+      "payoutYen": 8380,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-11-23|tokyo-20261123-3|trifecta:8-2-7",
+      "lane": "trifecta",
+      "raceDate": "2026-11-23",
+      "raceId": "tokyo-20261123-3",
+      "venue": "東京",
+      "raceNumber": 3,
+      "title": "2歳未勝利",
+      "track": "芝",
+      "distanceM": 2000,
+      "distanceBand": "1800-2000",
+      "classBand": "未勝利",
+      "fieldSize": 11,
+      "fieldBand": "11-14頭",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "11:00",
+      "betType": "trifecta",
+      "selection": "8-2-7",
+      "horses": [
+        {
+          "number": 8,
+          "name": "タッカーヴィーナス",
+          "popularity": 5
+        },
+        {
+          "number": 2,
+          "name": "アスクゴクジョウ",
+          "popularity": 1
+        },
+        {
+          "number": 7,
+          "name": "カペラテソーロ",
+          "popularity": 6
+        }
+      ],
+      "odds": 486.2,
+      "oddsBand": "200-499",
+      "payoutYen": 48620,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-11-23|tokyo-20261123-7|trifecta:2-14-15",
+      "lane": "trifecta",
+      "raceDate": "2026-11-23",
+      "raceId": "tokyo-20261123-7",
+      "venue": "東京",
+      "raceNumber": 7,
+      "title": "3歳以上1勝クラス",
+      "track": "ダート",
+      "distanceM": 1400,
+      "distanceBand": "1400-1600",
+      "classBand": "1勝",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "13:20",
+      "betType": "trifecta",
+      "selection": "2-14-15",
+      "horses": [
+        {
+          "number": 2,
+          "name": "ゴールドブレイズ",
+          "popularity": 5
+        },
+        {
+          "number": 14,
+          "name": "クアロアランチ",
+          "popularity": 1
+        },
+        {
+          "number": 15,
+          "name": "デスサイズ",
+          "popularity": 2
+        }
+      ],
+      "odds": 231.5,
+      "oddsBand": "200-499",
+      "payoutYen": 14980,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trifecta|2026-11-23|tokyo-20261123-9|trifecta:4-2-7",
+      "lane": "trifecta",
+      "raceDate": "2026-11-23",
+      "raceId": "tokyo-20261123-9",
+      "venue": "東京",
+      "raceNumber": 9,
+      "title": "レジェンドジョッキーC",
+      "track": "芝",
+      "distanceM": 2400,
+      "distanceBand": "2200+",
+      "classBand": "特別他",
+      "fieldSize": 12,
+      "fieldBand": "11-14頭",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "14:20",
+      "betType": "trifecta",
+      "selection": "4-2-7",
+      "horses": [
+        {
+          "number": 4,
+          "name": "スカイスプレンダー",
+          "popularity": 4
+        },
+        {
+          "number": 2,
+          "name": "アロンズロッド",
+          "popularity": 2
+        },
+        {
+          "number": 7,
+          "name": "ニュークレド",
+          "popularity": 5
+        }
+      ],
+      "odds": 315,
+      "oddsBand": "200-499",
+      "payoutYen": 32480,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 200,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-11-23|fukushima-20261123-10|trio:3-4-11",
+      "lane": "trio",
+      "raceDate": "2026-11-23",
+      "raceId": "fukushima-20261123-10",
+      "venue": "福島",
+      "raceNumber": 10,
+      "title": "五色沼特別",
+      "track": "芝",
+      "distanceM": 2000,
+      "distanceBand": "1800-2000",
+      "classBand": "特別他",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "14:40",
+      "betType": "trio",
+      "selection": "3-4-11",
+      "horses": [
+        {
+          "number": 3,
+          "name": "アストリル",
+          "popularity": 1
+        },
+        {
+          "number": 4,
+          "name": "アイドクレース",
+          "popularity": 10
+        },
+        {
+          "number": 11,
+          "name": "ロートホルン",
+          "popularity": 8
+        }
+      ],
+      "odds": 113.1,
+      "oddsBand": "100-149",
+      "payoutYen": 17920,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-11-23|fukushima-20261123-2|trio:4-5-8",
+      "lane": "trio",
+      "raceDate": "2026-11-23",
+      "raceId": "fukushima-20261123-2",
+      "venue": "福島",
+      "raceNumber": 2,
+      "title": "3歳以上1勝クラス",
+      "track": "ダート",
+      "distanceM": 1700,
+      "distanceBand": "1400-1600",
+      "classBand": "1勝",
+      "fieldSize": 15,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "—",
+      "weekday": "月",
+      "startTime": "10:15",
+      "betType": "trio",
+      "selection": "4-5-8",
+      "horses": [
+        {
+          "number": 4,
+          "name": "ミヤジテン",
+          "popularity": 7
+        },
+        {
+          "number": 5,
+          "name": "ルージュボニート",
+          "popularity": 1
+        },
+        {
+          "number": 8,
+          "name": "フィデリス",
+          "popularity": 10
+        }
+      ],
+      "odds": 119.5,
+      "oddsBand": "100-149",
+      "payoutYen": 11950,
+      "score": null,
+      "label": null,
+      "pattern": null,
+      "axisHorseNumber": null,
+      "picked": false,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-11-23|fukushima-20261123-9|trio:12-13-15",
+      "lane": "trio",
+      "raceDate": "2026-11-23",
+      "raceId": "fukushima-20261123-9",
+      "venue": "福島",
+      "raceNumber": 9,
+      "title": "磐梯山特別",
+      "track": "芝",
+      "distanceM": 2600,
+      "distanceBand": "2200+",
+      "classBand": "特別他",
+      "fieldSize": 16,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "14:05",
+      "betType": "trio",
+      "selection": "12-13-15",
+      "horses": [
+        {
+          "number": 12,
+          "name": "トラストボス",
+          "popularity": 11
+        },
+        {
+          "number": 13,
+          "name": "ボンボンベイビー",
+          "popularity": 1
+        },
+        {
+          "number": 15,
+          "name": "ダノンミッドナイト",
+          "popularity": 4
+        }
+      ],
+      "odds": 176.3,
+      "oddsBand": "150-299",
+      "payoutYen": 17500,
+      "score": 65.9,
+      "label": "抑え",
+      "pattern": "fav_fav_hole",
+      "axisHorseNumber": 13,
+      "picked": true,
+      "pickKnown": true,
+      "gateStatus": "lab",
+      "settings": {
+        "oddsThreshold": 100,
+        "oddsMax": null,
+        "scoreMin": 60
+      }
+    },
+    {
+      "id": "trio|2026-11-23|tokyo-20261123-12|trio:6-17-18",
+      "lane": "trio",
+      "raceDate": "2026-11-23",
+      "raceId": "tokyo-20261123-12",
+      "venue": "東京",
+      "raceNumber": 12,
+      "title": "3歳以上1勝クラス",
+      "track": "芝",
+      "distanceM": 1600,
+      "distanceBand": "1400-1600",
+      "classBand": "1勝",
+      "fieldSize": 18,
+      "fieldBand": "15頭+",
+      "weather": "晴",
+      "condition": "良",
+      "weekday": "月",
+      "startTime": "16:05",
+      "betType": "trio",
+      "selection": "6-17-18",
+      "horses": [
+        {
+          "number": 6,
+          "name": "ミスターライト",
+          "popularity": 1
+        },
+        {
+          "number": 17,
+          "name": "モントゥリエ",
+          "popularity": 5
+        },
+        {
+          "number": 18,
+          "name": "マツリダイコ",
+          "popularity": 4
+        }
+      ],
+      "odds": 104.9,
+      "oddsBand": "100-149",
+      "payoutYen": 2610,
       "score": null,
       "label": null,
       "pattern": null,
