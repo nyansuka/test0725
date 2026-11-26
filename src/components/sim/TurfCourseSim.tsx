@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useId, useMemo, useState } from "react";
+import type { WatchHorse } from "@/domain/sim/commentator";
+import { RaceCommentator } from "@/components/sim/RaceCommentator";
 import { BRACKET_COLOR, gapPhrase, lengthsLabel, MARKER_R, TRACK_STROKE } from "@/domain/sim/nakayamaTurf1200Play";
 import type { SimHorse } from "@/domain/sim/nakayamaTurf1200Script";
 import { flatCourseView } from "@/domain/sim/flatCourse";
@@ -13,7 +15,15 @@ function px(n: number) {
   return Math.round(n * 10) / 10;
 }
 
-export function TurfCourseSim({ courseId, horses }: { courseId: string; horses: SimHorse[] }) {
+export function TurfCourseSim({
+  courseId,
+  horses,
+  watches = [],
+}: {
+  courseId: string;
+  horses: SimHorse[];
+  watches?: WatchHorse[];
+}) {
   const course = isPlayedTurfCourse(courseId) ? turfCourseView(courseId) : flatCourseView(courseId);
   const run = useMemo(() => (course ? course.play(horses) : null), [course, horses]);
   const [meter, setMeter] = useState(0);
@@ -190,11 +200,15 @@ export function TurfCourseSim({ courseId, horses }: { courseId: string; horses: 
           className="mt-1 w-full"
         />
 
-        <div className="mt-4 rounded-md border border-ink/10 bg-white px-4 py-3">
-          <p className="text-xs tracking-wider text-ink/45">{phase.label}</p>
-          <p className="mt-1 text-sm font-bold text-ink">{phase.title}</p>
-          <p className="mt-1 text-sm leading-relaxed text-ink/70">{phase.body}</p>
-        </div>
+        <RaceCommentator
+          courseName={course.titleText}
+          facts={course.facts}
+          phases={run.phases}
+          phase={phase}
+          field={field}
+          released={meter >= RELEASE_M}
+          watches={watches}
+        />
       </div>
 
       <aside className="lg:pt-1">

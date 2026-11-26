@@ -9,6 +9,7 @@ import type { SimHorse } from "@/domain/sim/nakayamaTurf1200";
 import { flatSimId } from "@/domain/sim/flatSimCatalog";
 import { cardSimHorses } from "@/domain/sim/nakayamaTurf1200Field";
 import { isPlayedTurfCourse, turfCourseView } from "@/domain/sim/turfOneTurnCourse";
+import type { WatchHorse } from "@/domain/sim/commentator";
 import type { Race } from "@/domain/types";
 
 type Field = {
@@ -20,7 +21,7 @@ type Field = {
   withoutPass: string[];
 };
 
-export function NakayamaRaceSim({ race }: { race: Race }) {
+export function NakayamaRaceSim({ race, watches = [] }: { race: Race; watches?: WatchHorse[] }) {
   const courseId = flatSimId(race);
   const played = courseId && isPlayedTurfCourse(courseId) ? turfCourseView(courseId) : null;
   const flat = courseId && !played && courseId !== "nakayama-turf-1200" ? flatCourseView(courseId) : null;
@@ -87,9 +88,18 @@ export function NakayamaRaceSim({ race }: { race: Race }) {
       {ready && horses.length ? (
         <div className="mt-4">
           {courseId === "nakayama-turf-1200" ? (
-            <NakayamaTurfSim key={race.id} horses={squeeze ? horses.map((horse) => ({ ...horse, squeezeStraight: true })) : horses} />
+            <NakayamaTurfSim
+              key={race.id}
+              horses={squeeze ? horses.map((horse) => ({ ...horse, squeezeStraight: true })) : horses}
+              watches={watches}
+            />
           ) : (
-            <TurfCourseSim key={race.id} courseId={courseId} horses={squeeze ? horses.map((horse) => ({ ...horse, squeezeStraight: true })) : horses} />
+            <TurfCourseSim
+              key={race.id}
+              courseId={courseId}
+              horses={squeeze ? horses.map((horse) => ({ ...horse, squeezeStraight: true })) : horses}
+              watches={watches}
+            />
           )}
         </div>
       ) : null}

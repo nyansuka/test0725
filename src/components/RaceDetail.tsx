@@ -270,6 +270,15 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
   const scoredPassCount = boardRows.filter((r) => r.status === "pass").length;
   const markedHorses = useMemo(() => longshotHorseNumbers(picks, race.id), [picks, race.id]);
   const axisPicks = useMemo(() => selectAxisHorses(race, picks), [race, picks]);
+  const watchHorses = useMemo(() => {
+    const superNums = new Set(axisPicks.filter((axis) => axis.isSuperWatch).map((axis) => axis.horseNumber));
+    return [...markedHorses]
+      .sort((a, b) => a - b)
+      .flatMap((number) => {
+        const horse = horses.find((row) => row.number === number);
+        return horse ? [{ number, name: horse.name, superWatch: superNums.has(number) }] : [];
+      });
+  }, [markedHorses, horses, axisPicks]);
   const axisByNum = useMemo(() => axisIndexByNumber(axisPicks), [axisPicks]);
   const dangerousFav = useMemo(() => findDangerousFirstFavorite(race), [race]);
   const dangerousFavReasons = useMemo(
@@ -444,7 +453,7 @@ export function RaceDetail({ race, initialTipster = null }: Props) {
 
       {tipster ? <TipsterRefPanel tipster={tipster} /> : null}
       <CourseNotesPanel venue={race.venue} track={race.track} distance={race.distance} />
-      {isFlatSimRace(race) ? <NakayamaRaceSim race={race} /> : null}
+      {isFlatSimRace(race) ? <NakayamaRaceSim race={race} watches={watchHorses} /> : null}
       <SupplementNotesPanel
         venue={race.venue}
         raceDate={race.raceDate}

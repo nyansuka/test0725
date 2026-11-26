@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useMemo, useState } from "react";
+import { RaceCommentator } from "@/components/sim/RaceCommentator";
 import {
   BRACKET_COLOR,
   createTurf1200,
@@ -21,6 +22,7 @@ import {
   pointAt,
   unusedPathD,
 } from "@/domain/sim/nakayamaTurf1200Path";
+import type { WatchHorse } from "@/domain/sim/commentator";
 import { HORSES, type SimHorse } from "@/domain/sim/nakayamaTurf1200Script";
 
 const DURATION_MS = 22000;
@@ -29,7 +31,13 @@ function px(n: number) {
   return Math.round(n * 10) / 10;
 }
 
-export function NakayamaTurfSim({ horses = HORSES }: { horses?: SimHorse[] }) {
+export function NakayamaTurfSim({
+  horses = HORSES,
+  watches = [],
+}: {
+  horses?: SimHorse[];
+  watches?: WatchHorse[];
+}) {
   const run = useMemo(() => createTurf1200(horses), [horses]);
   const [meter, setMeter] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -239,11 +247,15 @@ export function NakayamaTurfSim({ horses = HORSES }: { horses?: SimHorse[] }) {
           className="mt-1 w-full"
         />
 
-        <div className="mt-4 rounded-md border border-ink/10 bg-white px-4 py-3">
-          <p className="text-xs tracking-wider text-ink/45">{phase.label}</p>
-          <p className="mt-1 text-sm font-bold text-ink">{phase.title}</p>
-          <p className="mt-1 text-sm leading-relaxed text-ink/70">{phase.body}</p>
-        </div>
+        <RaceCommentator
+          courseName="中山芝1200"
+          facts={["右回り・外回り", "2角奥スタート", "3角まで約440m・下り", "直線310m・急坂"]}
+          phases={run.phases}
+          phase={phase}
+          field={field}
+          released={meter >= 140}
+          watches={watches}
+        />
       </div>
 
       <aside className="lg:pt-1">
